@@ -1,0 +1,416 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DC0C91B82073325A008A0B05 /* cookie.png in Resources */ = {isa = PBXBuildFile; fileRef = DC0C91B72073325A008A0B05 /* cookie.png */; };
+		DC0C91BA20733370008A0B05 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0C91B920733370008A0B05 /* CustomTableViewCell.swift */; };
+		DC0C91BD2073400B008A0B05 /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0C91BB2073400B008A0B05 /* test.swift */; };
+		DC0C91BE2073400B008A0B05 /* test.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC0C91BC2073400B008A0B05 /* test.xib */; };
+		DC0C91C120734066008A0B05 /* SportfolioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0C91BF20734066008A0B05 /* SportfolioCell.swift */; };
+		DC0C91C220734066008A0B05 /* SportfolioCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC0C91C020734066008A0B05 /* SportfolioCell.xib */; };
+		DC0EE76C204F78D700D550F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EE76B204F78D700D550F5 /* AppDelegate.swift */; };
+		DC0EE76E204F78D700D550F5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EE76D204F78D700D550F5 /* ViewController.swift */; };
+		DC0EE771204F78D700D550F5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC0EE76F204F78D700D550F5 /* Main.storyboard */; };
+		DC0EE774204F78D700D550F5 /* Statlete_Mobile_App.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DC0EE772204F78D700D550F5 /* Statlete_Mobile_App.xcdatamodeld */; };
+		DC0EE776204F78D700D550F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC0EE775204F78D700D550F5 /* Assets.xcassets */; };
+		DC0EE779204F78D700D550F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC0EE777204F78D700D550F5 /* LaunchScreen.storyboard */; };
+		DC0EE7812050FC1E00D550F5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EE7802050FC1E00D550F5 /* User.swift */; };
+		DC0EE783205111C700D550F5 /* Sportfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EE782205111C700D550F5 /* Sportfolio.swift */; };
+		DC0EE7852051128100D550F5 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EE7842051128100D550F5 /* Game.swift */; };
+		DC4FDB6520705723005DAD60 /* UserHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4FDB6320705723005DAD60 /* UserHomeViewController.swift */; };
+		DCC50790206A0E2A00F64717 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC5078F206A0E2A00F64717 /* CreateAccountViewController.swift */; };
+		DCE472102072B3D000921A19 /* GameCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE4720E2072B3D000921A19 /* GameCellTableViewCell.swift */; };
+		DCE472112072B3D000921A19 /* GameCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCE4720F2072B3D000921A19 /* GameCellTableViewCell.xib */; };
+		DCE472132072BD6400921A19 /* SportfolioPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE472122072BD6400921A19 /* SportfolioPageViewController.swift */; };
+		DCFD0EF92072C22E0048B7E0 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFD0EF82072C22E0048B7E0 /* LoginViewController.swift */; };
+		DCFD0EFB2072C4630048B7E0 /* SportChooserPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCFD0EFA2072C4630048B7E0 /* SportChooserPopup.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		DC0C91B72073325A008A0B05 /* cookie.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cookie.png; path = ../../cookie.png; sourceTree = "<group>"; };
+		DC0C91B920733370008A0B05 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
+		DC0C91BB2073400B008A0B05 /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
+		DC0C91BC2073400B008A0B05 /* test.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = test.xib; sourceTree = "<group>"; };
+		DC0C91BF20734066008A0B05 /* SportfolioCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportfolioCell.swift; sourceTree = "<group>"; };
+		DC0C91C020734066008A0B05 /* SportfolioCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SportfolioCell.xib; sourceTree = "<group>"; };
+		DC0EE768204F78D700D550F5 /* Statlete Mobile App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Statlete Mobile App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC0EE76B204F78D700D550F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DC0EE76D204F78D700D550F5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		DC0EE770204F78D700D550F5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DC0EE773204F78D700D550F5 /* Statlete_Mobile_App.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Statlete_Mobile_App.xcdatamodel; sourceTree = "<group>"; };
+		DC0EE775204F78D700D550F5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DC0EE778204F78D700D550F5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		DC0EE77A204F78D700D550F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DC0EE7802050FC1E00D550F5 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		DC0EE782205111C700D550F5 /* Sportfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sportfolio.swift; sourceTree = "<group>"; };
+		DC0EE7842051128100D550F5 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		DC4FDB6320705723005DAD60 /* UserHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHomeViewController.swift; sourceTree = "<group>"; };
+		DCC5078F206A0E2A00F64717 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
+		DCE4720E2072B3D000921A19 /* GameCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCellTableViewCell.swift; sourceTree = "<group>"; };
+		DCE4720F2072B3D000921A19 /* GameCellTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameCellTableViewCell.xib; sourceTree = "<group>"; };
+		DCE472122072BD6400921A19 /* SportfolioPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportfolioPageViewController.swift; sourceTree = "<group>"; };
+		DCFD0EF82072C22E0048B7E0 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		DCFD0EFA2072C4630048B7E0 /* SportChooserPopup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SportChooserPopup.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DC0EE765204F78D700D550F5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DC0EE75F204F78D700D550F5 = {
+			isa = PBXGroup;
+			children = (
+				DC0C91B72073325A008A0B05 /* cookie.png */,
+				DC0EE76A204F78D700D550F5 /* Statlete Mobile App */,
+				DC0EE769204F78D700D550F5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DC0EE769204F78D700D550F5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DC0EE768204F78D700D550F5 /* Statlete Mobile App.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DC0EE76A204F78D700D550F5 /* Statlete Mobile App */ = {
+			isa = PBXGroup;
+			children = (
+				DC0EE76B204F78D700D550F5 /* AppDelegate.swift */,
+				DC0EE76D204F78D700D550F5 /* ViewController.swift */,
+				DCC5078F206A0E2A00F64717 /* CreateAccountViewController.swift */,
+				DCFD0EF82072C22E0048B7E0 /* LoginViewController.swift */,
+				DC0EE76F204F78D700D550F5 /* Main.storyboard */,
+				DC0EE775204F78D700D550F5 /* Assets.xcassets */,
+				DC0EE777204F78D700D550F5 /* LaunchScreen.storyboard */,
+				DC0EE77A204F78D700D550F5 /* Info.plist */,
+				DC0EE772204F78D700D550F5 /* Statlete_Mobile_App.xcdatamodeld */,
+				DC4FDB6320705723005DAD60 /* UserHomeViewController.swift */,
+				DCE4720E2072B3D000921A19 /* GameCellTableViewCell.swift */,
+				DCE4720F2072B3D000921A19 /* GameCellTableViewCell.xib */,
+				DCFD0EFA2072C4630048B7E0 /* SportChooserPopup.xib */,
+				DCE472122072BD6400921A19 /* SportfolioPageViewController.swift */,
+				DCFD0EF72072C1BE0048B7E0 /* Model */,
+				DC0C91B920733370008A0B05 /* CustomTableViewCell.swift */,
+				DC0C91BB2073400B008A0B05 /* test.swift */,
+				DC0C91BC2073400B008A0B05 /* test.xib */,
+				DC0C91BF20734066008A0B05 /* SportfolioCell.swift */,
+				DC0C91C020734066008A0B05 /* SportfolioCell.xib */,
+			);
+			path = "Statlete Mobile App";
+			sourceTree = "<group>";
+		};
+		DCFD0EF72072C1BE0048B7E0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DC0EE7802050FC1E00D550F5 /* User.swift */,
+				DC0EE782205111C700D550F5 /* Sportfolio.swift */,
+				DC0EE7842051128100D550F5 /* Game.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DC0EE767204F78D700D550F5 /* Statlete Mobile App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC0EE77D204F78D700D550F5 /* Build configuration list for PBXNativeTarget "Statlete Mobile App" */;
+			buildPhases = (
+				DC0EE764204F78D700D550F5 /* Sources */,
+				DC0EE765204F78D700D550F5 /* Frameworks */,
+				DC0EE766204F78D700D550F5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Statlete Mobile App";
+			productName = "Statlete Mobile App";
+			productReference = DC0EE768204F78D700D550F5 /* Statlete Mobile App.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DC0EE760204F78D700D550F5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0920;
+				LastUpgradeCheck = 0920;
+				ORGANIZATIONNAME = "Taylor M de Jonge";
+				TargetAttributes = {
+					DC0EE767204F78D700D550F5 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = DC0EE763204F78D700D550F5 /* Build configuration list for PBXProject "Statlete Mobile App" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DC0EE75F204F78D700D550F5;
+			productRefGroup = DC0EE769204F78D700D550F5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DC0EE767204F78D700D550F5 /* Statlete Mobile App */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DC0EE766204F78D700D550F5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC0C91B82073325A008A0B05 /* cookie.png in Resources */,
+				DC0C91BE2073400B008A0B05 /* test.xib in Resources */,
+				DC0EE779204F78D700D550F5 /* LaunchScreen.storyboard in Resources */,
+				DC0EE776204F78D700D550F5 /* Assets.xcassets in Resources */,
+				DC0C91C220734066008A0B05 /* SportfolioCell.xib in Resources */,
+				DCFD0EFB2072C4630048B7E0 /* SportChooserPopup.xib in Resources */,
+				DCE472112072B3D000921A19 /* GameCellTableViewCell.xib in Resources */,
+				DC0EE771204F78D700D550F5 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DC0EE764204F78D700D550F5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DCFD0EF92072C22E0048B7E0 /* LoginViewController.swift in Sources */,
+				DCC50790206A0E2A00F64717 /* CreateAccountViewController.swift in Sources */,
+				DC0EE7812050FC1E00D550F5 /* User.swift in Sources */,
+				DC0EE7852051128100D550F5 /* Game.swift in Sources */,
+				DC0EE76E204F78D700D550F5 /* ViewController.swift in Sources */,
+				DCE472132072BD6400921A19 /* SportfolioPageViewController.swift in Sources */,
+				DC0EE774204F78D700D550F5 /* Statlete_Mobile_App.xcdatamodeld in Sources */,
+				DC0EE76C204F78D700D550F5 /* AppDelegate.swift in Sources */,
+				DCE472102072B3D000921A19 /* GameCellTableViewCell.swift in Sources */,
+				DC4FDB6520705723005DAD60 /* UserHomeViewController.swift in Sources */,
+				DC0EE783205111C700D550F5 /* Sportfolio.swift in Sources */,
+				DC0C91C120734066008A0B05 /* SportfolioCell.swift in Sources */,
+				DC0C91BA20733370008A0B05 /* CustomTableViewCell.swift in Sources */,
+				DC0C91BD2073400B008A0B05 /* test.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		DC0EE76F204F78D700D550F5 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DC0EE770204F78D700D550F5 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		DC0EE777204F78D700D550F5 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DC0EE778204F78D700D550F5 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DC0EE77B204F78D700D550F5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		DC0EE77C204F78D700D550F5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DC0EE77E204F78D700D550F5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MKW5RX37LJ;
+				INFOPLIST_FILE = "Statlete Mobile App/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "eng.utah.Statlete-Mobile-App";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DC0EE77F204F78D700D550F5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MKW5RX37LJ;
+				INFOPLIST_FILE = "Statlete Mobile App/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "eng.utah.Statlete-Mobile-App";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DC0EE763204F78D700D550F5 /* Build configuration list for PBXProject "Statlete Mobile App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC0EE77B204F78D700D550F5 /* Debug */,
+				DC0EE77C204F78D700D550F5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC0EE77D204F78D700D550F5 /* Build configuration list for PBXNativeTarget "Statlete Mobile App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC0EE77E204F78D700D550F5 /* Debug */,
+				DC0EE77F204F78D700D550F5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		DC0EE772204F78D700D550F5 /* Statlete_Mobile_App.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				DC0EE773204F78D700D550F5 /* Statlete_Mobile_App.xcdatamodel */,
+			);
+			currentVersion = DC0EE773204F78D700D550F5 /* Statlete_Mobile_App.xcdatamodel */;
+			path = Statlete_Mobile_App.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = DC0EE760204F78D700D550F5 /* Project object */;
+}
