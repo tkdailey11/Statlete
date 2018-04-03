@@ -104,8 +104,19 @@ class SoccerShotChartEntryView: UIControl {
                 context.fillEllipse(in: CGRect(x: loc.x - shotDimensions/2, y: loc.y - shotDimensions/2, width: shotDimensions, height: shotDimensions))
             }
             if shot.type == .shotOnGoal {
-                context.setFillColor(UIColor.clear.cgColor)
+                let circlePath = UIBezierPath(arcCenter: loc, radius: shotDimensions/2, startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
                 
+                let shapeLayer = CAShapeLayer()
+                shapeLayer.path = circlePath.cgPath
+                
+                //change the fill color
+                shapeLayer.fillColor = UIColor.clear.cgColor
+                //you can change the stroke color
+                shapeLayer.strokeColor = UIColor(red: 108.0/255.0, green: 12.0/255.0, blue: 12.0/255.0, alpha: 1.0).cgColor
+                //you can change the line width
+                shapeLayer.lineWidth = 2.0
+                
+                layer.addSublayer(shapeLayer)
                 
                 /*
                 context.setFillColor(UIColor(red: 108.0/255.0, green: 12.0/255.0, blue: 12.0/255.0, alpha: 1.0).cgColor)
