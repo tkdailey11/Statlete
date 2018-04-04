@@ -9,7 +9,7 @@
 import UIKit
 
 class StatCell: UITableViewCell {
-
+    
     @IBOutlet weak var cell: UIView!
     
     @IBOutlet weak var plusButton: UIButton!

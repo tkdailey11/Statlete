@@ -49,16 +49,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		043A437220755869005E481C /* SoccerGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SoccerGame.swift; path = "../../../../../Xcode Projects/Statlete/Soccer/Soccer/SoccerGame.swift"; sourceTree = "<group>"; };
-		043A43732075586A005E481C /* PossessionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PossessionView.swift; path = "../../../../../Xcode Projects/Statlete/Soccer/Soccer/PossessionView.swift"; sourceTree = "<group>"; };
-		043A43742075586A005E481C /* SubstitutionBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SubstitutionBar.swift; path = "../../../../../Xcode Projects/Statlete/Soccer/Soccer/SubstitutionBar.swift"; sourceTree = "<group>"; };
-		043A43752075586A005E481C /* SoccerShotChartEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SoccerShotChartEntryView.swift; path = "../../../../../Xcode Projects/Statlete/Soccer/Soccer/SoccerShotChartEntryView.swift"; sourceTree = "<group>"; };
-		043A43762075586B005E481C /* ScoreboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ScoreboardView.swift; path = "../../../../../Xcode Projects/Statlete/Soccer/Soccer/ScoreboardView.swift"; sourceTree = "<group>"; };
-		043A43772075586B005E481C /* TopBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TopBar.swift; path = "../../../../../Xcode Projects/Statlete/Soccer/Soccer/TopBar.swift"; sourceTree = "<group>"; };
-		043A43782075586B005E481C /* BottomBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BottomBar.swift; path = "../../../../../Xcode Projects/Statlete/Soccer/Soccer/BottomBar.swift"; sourceTree = "<group>"; };
-		043A43792075586B005E481C /* SoccerTeamEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SoccerTeamEntryView.swift; path = "../../../../../Xcode Projects/Statlete/Soccer/Soccer/SoccerTeamEntryView.swift"; sourceTree = "<group>"; };
-		043A437A2075586C005E481C /* SoccerEntryModeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SoccerEntryModeController.swift; path = "../../../../../Xcode Projects/Statlete/Soccer/Soccer/SoccerEntryModeController.swift"; sourceTree = "<group>"; };
-		043A437B2075586C005E481C /* SoccerEntryLiveStatsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SoccerEntryLiveStatsView.swift; path = "../../../../../Xcode Projects/Statlete/Soccer/Soccer/SoccerEntryLiveStatsView.swift"; sourceTree = "<group>"; };
+		043A437220755869005E481C /* SoccerGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoccerGame.swift; sourceTree = "<group>"; };
+		043A43732075586A005E481C /* PossessionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PossessionView.swift; sourceTree = "<group>"; };
+		043A43742075586A005E481C /* SubstitutionBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubstitutionBar.swift; sourceTree = "<group>"; };
+		043A43752075586A005E481C /* SoccerShotChartEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoccerShotChartEntryView.swift; sourceTree = "<group>"; };
+		043A43762075586B005E481C /* ScoreboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreboardView.swift; sourceTree = "<group>"; };
+		043A43772075586B005E481C /* TopBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopBar.swift; sourceTree = "<group>"; };
+		043A43782075586B005E481C /* BottomBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomBar.swift; sourceTree = "<group>"; };
+		043A43792075586B005E481C /* SoccerTeamEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoccerTeamEntryView.swift; sourceTree = "<group>"; };
+		043A437A2075586C005E481C /* SoccerEntryModeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoccerEntryModeController.swift; sourceTree = "<group>"; };
+		043A437B2075586C005E481C /* SoccerEntryLiveStatsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoccerEntryLiveStatsView.swift; sourceTree = "<group>"; };
 		0451D45020744CF700AF6524 /* ScoreboardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScoreboardView.xib; sourceTree = "<group>"; };
 		04E3ED6F20755DA5000F7839 /* StatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatCell.swift; sourceTree = "<group>"; };
 		04E3ED7020755DA5000F7839 /* StatCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatCell.xib; sourceTree = "<group>"; };
