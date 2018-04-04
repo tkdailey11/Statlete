@@ -12,10 +12,13 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var SportfoliosTitleLabel: UILabel!
+    @IBOutlet weak var AddButton: UIButton!
     var dataset: [String] = ["name1", "name2", "name3"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.hidesBarsOnTap = true
         tableView.delegate = self
         tableView.delegate = self
         // Do any additional setup after loading the view.

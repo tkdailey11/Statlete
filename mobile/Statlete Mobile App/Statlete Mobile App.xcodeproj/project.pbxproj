@@ -7,13 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0451D44A207448BC00AF6524 /* cookie.png in Resources */ = {isa = PBXBuildFile; fileRef = 0451D449207448BB00AF6524 /* cookie.png */; };
 		0451D44C20744A5D00AF6524 /* DataEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0451D44B20744A5D00AF6524 /* DataEntryViewController.swift */; };
 		0451D45120744CF700AF6524 /* ScoreboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0451D45020744CF700AF6524 /* ScoreboardView.xib */; };
 		0451D45520744DB800AF6524 /* ScoreboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0451D45420744DB800AF6524 /* ScoreboardView.swift */; };
-		DC0C91BA20733370008A0B05 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0C91B920733370008A0B05 /* CustomTableViewCell.swift */; };
-		DC0C91BD2073400B008A0B05 /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0C91BB2073400B008A0B05 /* test.swift */; };
-		DC0C91BE2073400B008A0B05 /* test.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC0C91BC2073400B008A0B05 /* test.xib */; };
 		DC0C91C120734066008A0B05 /* SportfolioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0C91BF20734066008A0B05 /* SportfolioCell.swift */; };
 		DC0C91C220734066008A0B05 /* SportfolioCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC0C91C020734066008A0B05 /* SportfolioCell.xib */; };
 		DC0EE76C204F78D700D550F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EE76B204F78D700D550F5 /* AppDelegate.swift */; };
@@ -26,6 +22,14 @@
 		DC0EE783205111C700D550F5 /* Sportfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EE782205111C700D550F5 /* Sportfolio.swift */; };
 		DC0EE7852051128100D550F5 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EE7842051128100D550F5 /* Game.swift */; };
 		DC4FDB6520705723005DAD60 /* UserHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4FDB6320705723005DAD60 /* UserHomeViewController.swift */; };
+		DC5DFA03207479C900B7BD02 /* ViewExistingTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5DFA02207479C900B7BD02 /* ViewExistingTeamViewController.swift */; };
+		DC6F8DDD2074896C00C38E4D /* AddTeamSportfolioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6F8DDC2074896C00C38E4D /* AddTeamSportfolioViewController.swift */; };
+		DC6F8DE12074940A00C38E4D /* SportfolioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6F8DE02074940A00C38E4D /* SportfolioViewController.swift */; };
+		DC6F8DE52074959C00C38E4D /* PlayerInTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6F8DE42074959C00C38E4D /* PlayerInTeamViewController.swift */; };
+		DC6F8DE72074983600C38E4D /* TeamSportfolioSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6F8DE62074983600C38E4D /* TeamSportfolioSetupViewController.swift */; };
+		DC6F8DE92074988400C38E4D /* PlayerSportfolioSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6F8DE82074988400C38E4D /* PlayerSportfolioSetupViewController.swift */; };
+		DC6F8DEB20749C2400C38E4D /* ChoosePlayersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6F8DEA20749C2400C38E4D /* ChoosePlayersViewController.swift */; };
+		DC6F8DED2074A0B800C38E4D /* NewGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6F8DEC2074A0B800C38E4D /* NewGameViewController.swift */; };
 		DCC50790206A0E2A00F64717 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC5078F206A0E2A00F64717 /* CreateAccountViewController.swift */; };
 		DCE472102072B3D000921A19 /* GameCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE4720E2072B3D000921A19 /* GameCellTableViewCell.swift */; };
 		DCE472112072B3D000921A19 /* GameCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCE4720F2072B3D000921A19 /* GameCellTableViewCell.xib */; };
@@ -35,13 +39,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0451D449207448BB00AF6524 /* cookie.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cookie.png; path = ../../../../../../Downloads/cookie.png; sourceTree = "<group>"; };
 		0451D44B20744A5D00AF6524 /* DataEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataEntryViewController.swift; sourceTree = "<group>"; };
 		0451D45020744CF700AF6524 /* ScoreboardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScoreboardView.xib; sourceTree = "<group>"; };
 		0451D45420744DB800AF6524 /* ScoreboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreboardView.swift; sourceTree = "<group>"; };
-		DC0C91B920733370008A0B05 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
-		DC0C91BB2073400B008A0B05 /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
-		DC0C91BC2073400B008A0B05 /* test.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = test.xib; sourceTree = "<group>"; };
 		DC0C91BF20734066008A0B05 /* SportfolioCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportfolioCell.swift; sourceTree = "<group>"; };
 		DC0C91C020734066008A0B05 /* SportfolioCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SportfolioCell.xib; sourceTree = "<group>"; };
 		DC0EE768204F78D700D550F5 /* Statlete Mobile App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Statlete Mobile App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,6 +56,14 @@
 		DC0EE782205111C700D550F5 /* Sportfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sportfolio.swift; sourceTree = "<group>"; };
 		DC0EE7842051128100D550F5 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		DC4FDB6320705723005DAD60 /* UserHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHomeViewController.swift; sourceTree = "<group>"; };
+		DC5DFA02207479C900B7BD02 /* ViewExistingTeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExistingTeamViewController.swift; sourceTree = "<group>"; };
+		DC6F8DDC2074896C00C38E4D /* AddTeamSportfolioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTeamSportfolioViewController.swift; sourceTree = "<group>"; };
+		DC6F8DE02074940A00C38E4D /* SportfolioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportfolioViewController.swift; sourceTree = "<group>"; };
+		DC6F8DE42074959C00C38E4D /* PlayerInTeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerInTeamViewController.swift; sourceTree = "<group>"; };
+		DC6F8DE62074983600C38E4D /* TeamSportfolioSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSportfolioSetupViewController.swift; sourceTree = "<group>"; };
+		DC6F8DE82074988400C38E4D /* PlayerSportfolioSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerSportfolioSetupViewController.swift; sourceTree = "<group>"; };
+		DC6F8DEA20749C2400C38E4D /* ChoosePlayersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePlayersViewController.swift; sourceTree = "<group>"; };
+		DC6F8DEC2074A0B800C38E4D /* NewGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGameViewController.swift; sourceTree = "<group>"; };
 		DCC5078F206A0E2A00F64717 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		DCE4720E2072B3D000921A19 /* GameCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCellTableViewCell.swift; sourceTree = "<group>"; };
 		DCE4720F2072B3D000921A19 /* GameCellTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameCellTableViewCell.xib; sourceTree = "<group>"; };
@@ -87,6 +95,7 @@
 		DC0EE75F204F78D700D550F5 = {
 			isa = PBXGroup;
 			children = (
+				DC6F8DE02074940A00C38E4D /* SportfolioViewController.swift */,
 				DC0EE76A204F78D700D550F5 /* Statlete Mobile App */,
 				DC0EE769204F78D700D550F5 /* Products */,
 			);
@@ -104,30 +113,65 @@
 			isa = PBXGroup;
 			children = (
 				DC0EE76B204F78D700D550F5 /* AppDelegate.swift */,
-				DC0EE76D204F78D700D550F5 /* ViewController.swift */,
-				DCC5078F206A0E2A00F64717 /* CreateAccountViewController.swift */,
-				DCFD0EF82072C22E0048B7E0 /* LoginViewController.swift */,
 				DC0EE76F204F78D700D550F5 /* Main.storyboard */,
-				DC0EE775204F78D700D550F5 /* Assets.xcassets */,
 				DC0EE777204F78D700D550F5 /* LaunchScreen.storyboard */,
+				DC6F8DF02074AB2600C38E4D /* User Home */,
+				DC6F8DEF2074AAA500C38E4D /* Sportfolio */,
+				DC6F8DEE2074AA7F00C38E4D /* Sportfolio Setup */,
+				DC6F8DE2207494AF00C38E4D /* InitalUserOptions */,
+				DC0EE775204F78D700D550F5 /* Assets.xcassets */,
 				DC0EE77A204F78D700D550F5 /* Info.plist */,
 				DC0EE772204F78D700D550F5 /* Statlete_Mobile_App.xcdatamodeld */,
-				DC4FDB6320705723005DAD60 /* UserHomeViewController.swift */,
-				DCE4720E2072B3D000921A19 /* GameCellTableViewCell.swift */,
-				DCE4720F2072B3D000921A19 /* GameCellTableViewCell.xib */,
-				DCFD0EFA2072C4630048B7E0 /* SportChooserPopup.xib */,
-				DCE472122072BD6400921A19 /* SportfolioPageViewController.swift */,
-				DCFD0EF72072C1BE0048B7E0 /* Model */,
-				DC0C91B920733370008A0B05 /* CustomTableViewCell.swift */,
-				DC0C91BB2073400B008A0B05 /* test.swift */,
-				DC0C91BC2073400B008A0B05 /* test.xib */,
-				DC0C91BF20734066008A0B05 /* SportfolioCell.swift */,
-				DC0C91C020734066008A0B05 /* SportfolioCell.xib */,
-				0451D449207448BB00AF6524 /* cookie.png */,
 				0451D44B20744A5D00AF6524 /* DataEntryViewController.swift */,
+				DCFD0EF72072C1BE0048B7E0 /* Model */,
 				0451D44F20744CC700AF6524 /* Soccer */,
 			);
 			path = "Statlete Mobile App";
+			sourceTree = "<group>";
+		};
+		DC6F8DE2207494AF00C38E4D /* InitalUserOptions */ = {
+			isa = PBXGroup;
+			children = (
+				DC0EE76D204F78D700D550F5 /* ViewController.swift */,
+				DCC5078F206A0E2A00F64717 /* CreateAccountViewController.swift */,
+				DCFD0EF82072C22E0048B7E0 /* LoginViewController.swift */,
+				DC5DFA02207479C900B7BD02 /* ViewExistingTeamViewController.swift */,
+			);
+			path = InitalUserOptions;
+			sourceTree = "<group>";
+		};
+		DC6F8DEE2074AA7F00C38E4D /* Sportfolio Setup */ = {
+			isa = PBXGroup;
+			children = (
+				DC6F8DDC2074896C00C38E4D /* AddTeamSportfolioViewController.swift */,
+				DC6F8DE82074988400C38E4D /* PlayerSportfolioSetupViewController.swift */,
+				DCFD0EFA2072C4630048B7E0 /* SportChooserPopup.xib */,
+				DC6F8DEA20749C2400C38E4D /* ChoosePlayersViewController.swift */,
+				DC6F8DE62074983600C38E4D /* TeamSportfolioSetupViewController.swift */,
+			);
+			path = "Sportfolio Setup";
+			sourceTree = "<group>";
+		};
+		DC6F8DEF2074AAA500C38E4D /* Sportfolio */ = {
+			isa = PBXGroup;
+			children = (
+				DCE472122072BD6400921A19 /* SportfolioPageViewController.swift */,
+				DCE4720E2072B3D000921A19 /* GameCellTableViewCell.swift */,
+				DC6F8DE42074959C00C38E4D /* PlayerInTeamViewController.swift */,
+				DCE4720F2072B3D000921A19 /* GameCellTableViewCell.xib */,
+				DC6F8DEC2074A0B800C38E4D /* NewGameViewController.swift */,
+			);
+			path = Sportfolio;
+			sourceTree = "<group>";
+		};
+		DC6F8DF02074AB2600C38E4D /* User Home */ = {
+			isa = PBXGroup;
+			children = (
+				DC4FDB6320705723005DAD60 /* UserHomeViewController.swift */,
+				DC0C91BF20734066008A0B05 /* SportfolioCell.swift */,
+				DC0C91C020734066008A0B05 /* SportfolioCell.xib */,
+			);
+			path = "User Home";
 			sourceTree = "<group>";
 		};
 		DCFD0EF72072C1BE0048B7E0 /* Model */ = {
@@ -199,14 +243,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC0C91BE2073400B008A0B05 /* test.xib in Resources */,
 				DC0EE779204F78D700D550F5 /* LaunchScreen.storyboard in Resources */,
 				DC0EE776204F78D700D550F5 /* Assets.xcassets in Resources */,
 				DC0C91C220734066008A0B05 /* SportfolioCell.xib in Resources */,
 				DCFD0EFB2072C4630048B7E0 /* SportChooserPopup.xib in Resources */,
 				0451D45120744CF700AF6524 /* ScoreboardView.xib in Resources */,
 				DCE472112072B3D000921A19 /* GameCellTableViewCell.xib in Resources */,
-				0451D44A207448BC00AF6524 /* cookie.png in Resources */,
 				DC0EE771204F78D700D550F5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -227,13 +269,19 @@
 				DCE472132072BD6400921A19 /* SportfolioPageViewController.swift in Sources */,
 				DC0EE774204F78D700D550F5 /* Statlete_Mobile_App.xcdatamodeld in Sources */,
 				DC0EE76C204F78D700D550F5 /* AppDelegate.swift in Sources */,
+				DC5DFA03207479C900B7BD02 /* ViewExistingTeamViewController.swift in Sources */,
+				DC6F8DE92074988400C38E4D /* PlayerSportfolioSetupViewController.swift in Sources */,
 				DCE472102072B3D000921A19 /* GameCellTableViewCell.swift in Sources */,
+				DC6F8DE52074959C00C38E4D /* PlayerInTeamViewController.swift in Sources */,
 				DC4FDB6520705723005DAD60 /* UserHomeViewController.swift in Sources */,
 				DC0EE783205111C700D550F5 /* Sportfolio.swift in Sources */,
 				DC0C91C120734066008A0B05 /* SportfolioCell.swift in Sources */,
-				DC0C91BA20733370008A0B05 /* CustomTableViewCell.swift in Sources */,
+				DC6F8DEB20749C2400C38E4D /* ChoosePlayersViewController.swift in Sources */,
+				DC6F8DED2074A0B800C38E4D /* NewGameViewController.swift in Sources */,
 				0451D45520744DB800AF6524 /* ScoreboardView.swift in Sources */,
-				DC0C91BD2073400B008A0B05 /* test.swift in Sources */,
+				DC6F8DE72074983600C38E4D /* TeamSportfolioSetupViewController.swift in Sources */,
+				DC6F8DE12074940A00C38E4D /* SportfolioViewController.swift in Sources */,
+				DC6F8DDD2074896C00C38E4D /* AddTeamSportfolioViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

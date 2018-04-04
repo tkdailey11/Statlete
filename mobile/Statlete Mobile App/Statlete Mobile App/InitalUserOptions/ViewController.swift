@@ -9,15 +9,20 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    @IBOutlet weak var ViewExistingTeamButton: UIButton!
+    @IBOutlet weak var LoginButton: UIButton!
+    @IBOutlet weak var CreateAccountButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        LoginButton.layer.borderWidth = 0.8
+        LoginButton.layer.borderColor = UIColor.red.cgColor
+        CreateAccountButton.layer.borderWidth = 0.8
+        CreateAccountButton.layer.borderColor = UIColor.red.cgColor
     }
 
-    @IBOutlet weak var ViewExistingTeamButton: UIButton!
-    @IBOutlet weak var LoginButton: UIButton!
-    @IBOutlet weak var CreateAccountButton: UIButton!
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
