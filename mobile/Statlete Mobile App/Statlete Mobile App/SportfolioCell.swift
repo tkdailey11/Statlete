@@ -23,6 +23,7 @@ class SportfolioCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
     func commonInit(imageName: String, name: String){
         sportImage.image = UIImage(named: imageName)
         nameLabel.text = name

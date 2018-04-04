@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DC0C91B82073325A008A0B05 /* cookie.png in Resources */ = {isa = PBXBuildFile; fileRef = DC0C91B72073325A008A0B05 /* cookie.png */; };
+		0451D44A207448BC00AF6524 /* cookie.png in Resources */ = {isa = PBXBuildFile; fileRef = 0451D449207448BB00AF6524 /* cookie.png */; };
+		0451D44C20744A5D00AF6524 /* DataEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0451D44B20744A5D00AF6524 /* DataEntryViewController.swift */; };
+		0451D45120744CF700AF6524 /* ScoreboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0451D45020744CF700AF6524 /* ScoreboardView.xib */; };
+		0451D45520744DB800AF6524 /* ScoreboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0451D45420744DB800AF6524 /* ScoreboardView.swift */; };
 		DC0C91BA20733370008A0B05 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0C91B920733370008A0B05 /* CustomTableViewCell.swift */; };
 		DC0C91BD2073400B008A0B05 /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0C91BB2073400B008A0B05 /* test.swift */; };
 		DC0C91BE2073400B008A0B05 /* test.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC0C91BC2073400B008A0B05 /* test.xib */; };
@@ -32,7 +35,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		DC0C91B72073325A008A0B05 /* cookie.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cookie.png; path = ../../cookie.png; sourceTree = "<group>"; };
+		0451D449207448BB00AF6524 /* cookie.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cookie.png; path = ../../../../../../Downloads/cookie.png; sourceTree = "<group>"; };
+		0451D44B20744A5D00AF6524 /* DataEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataEntryViewController.swift; sourceTree = "<group>"; };
+		0451D45020744CF700AF6524 /* ScoreboardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScoreboardView.xib; sourceTree = "<group>"; };
+		0451D45420744DB800AF6524 /* ScoreboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreboardView.swift; sourceTree = "<group>"; };
 		DC0C91B920733370008A0B05 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		DC0C91BB2073400B008A0B05 /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
 		DC0C91BC2073400B008A0B05 /* test.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = test.xib; sourceTree = "<group>"; };
@@ -69,10 +75,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0451D44F20744CC700AF6524 /* Soccer */ = {
+			isa = PBXGroup;
+			children = (
+				0451D45020744CF700AF6524 /* ScoreboardView.xib */,
+				0451D45420744DB800AF6524 /* ScoreboardView.swift */,
+			);
+			path = Soccer;
+			sourceTree = "<group>";
+		};
 		DC0EE75F204F78D700D550F5 = {
 			isa = PBXGroup;
 			children = (
-				DC0C91B72073325A008A0B05 /* cookie.png */,
 				DC0EE76A204F78D700D550F5 /* Statlete Mobile App */,
 				DC0EE769204F78D700D550F5 /* Products */,
 			);
@@ -109,6 +123,9 @@
 				DC0C91BC2073400B008A0B05 /* test.xib */,
 				DC0C91BF20734066008A0B05 /* SportfolioCell.swift */,
 				DC0C91C020734066008A0B05 /* SportfolioCell.xib */,
+				0451D449207448BB00AF6524 /* cookie.png */,
+				0451D44B20744A5D00AF6524 /* DataEntryViewController.swift */,
+				0451D44F20744CC700AF6524 /* Soccer */,
 			);
 			path = "Statlete Mobile App";
 			sourceTree = "<group>";
@@ -182,13 +199,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC0C91B82073325A008A0B05 /* cookie.png in Resources */,
 				DC0C91BE2073400B008A0B05 /* test.xib in Resources */,
 				DC0EE779204F78D700D550F5 /* LaunchScreen.storyboard in Resources */,
 				DC0EE776204F78D700D550F5 /* Assets.xcassets in Resources */,
 				DC0C91C220734066008A0B05 /* SportfolioCell.xib in Resources */,
 				DCFD0EFB2072C4630048B7E0 /* SportChooserPopup.xib in Resources */,
+				0451D45120744CF700AF6524 /* ScoreboardView.xib in Resources */,
 				DCE472112072B3D000921A19 /* GameCellTableViewCell.xib in Resources */,
+				0451D44A207448BC00AF6524 /* cookie.png in Resources */,
 				DC0EE771204F78D700D550F5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -201,6 +219,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCFD0EF92072C22E0048B7E0 /* LoginViewController.swift in Sources */,
+				0451D44C20744A5D00AF6524 /* DataEntryViewController.swift in Sources */,
 				DCC50790206A0E2A00F64717 /* CreateAccountViewController.swift in Sources */,
 				DC0EE7812050FC1E00D550F5 /* User.swift in Sources */,
 				DC0EE7852051128100D550F5 /* Game.swift in Sources */,
@@ -213,6 +232,7 @@
 				DC0EE783205111C700D550F5 /* Sportfolio.swift in Sources */,
 				DC0C91C120734066008A0B05 /* SportfolioCell.swift in Sources */,
 				DC0C91BA20733370008A0B05 /* CustomTableViewCell.swift in Sources */,
+				0451D45520744DB800AF6524 /* ScoreboardView.swift in Sources */,
 				DC0C91BD2073400B008A0B05 /* test.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
