@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="R17-B6-v3g">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bjj-np-0MR">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -380,33 +380,16 @@
             </objects>
             <point key="canvasLocation" x="3837.5999999999999" y="611.24437781109452"/>
         </scene>
-        <!--Data Entry View Controller-->
+        <!--Soccer Entry Mode Controller-->
         <scene sceneID="78E-eM-sRO">
             <objects>
-                <viewController id="bjj-np-0MR" customClass="DataEntryViewController" customModule="Statlete_Mobile_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="bjj-np-0MR" customClass="SoccerEntryModeController" customModule="Statlete_Mobile_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fAW-la-4IF">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KD7-dN-ubj" customClass="ScoreboardView" customModule="Statlete_Mobile_App" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="40" width="375" height="80"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="IhZ-Yj-gyH"/>
-                                </constraints>
-                            </view>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="j3U-ic-L6E" firstAttribute="trailing" secondItem="KD7-dN-ubj" secondAttribute="trailing" id="D6y-Yg-Zop"/>
-                            <constraint firstItem="KD7-dN-ubj" firstAttribute="top" secondItem="j3U-ic-L6E" secondAttribute="top" constant="20" id="H5N-GN-vGM"/>
-                            <constraint firstItem="KD7-dN-ubj" firstAttribute="leading" secondItem="j3U-ic-L6E" secondAttribute="leading" id="kta-C9-zOi"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="j3U-ic-L6E"/>
                     </view>
-                    <connections>
-                        <outlet property="scoreboardView" destination="KD7-dN-ubj" id="f33-Rf-O5l"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ijz-cD-P6K" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
