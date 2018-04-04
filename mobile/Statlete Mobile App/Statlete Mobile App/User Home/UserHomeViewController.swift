@@ -20,7 +20,7 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewDidLoad()
         self.navigationController?.hidesBarsOnTap = true
         tableView.delegate = self
-        tableView.delegate = self
+        tableView.dataSource = self
         // Do any additional setup after loading the view.
         let nib = UINib.init(nibName: "SportfolioCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "SportfolioCell")
