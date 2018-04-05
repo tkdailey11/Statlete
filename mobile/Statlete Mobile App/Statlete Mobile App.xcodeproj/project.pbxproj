@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		041298A520759FB800FE0EE5 /* SubCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041298A320759FB800FE0EE5 /* SubCell.swift */; };
+		041298A620759FB800FE0EE5 /* SubCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 041298A420759FB800FE0EE5 /* SubCell.xib */; };
 		043A437C2075586C005E481C /* SoccerGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A437220755869005E481C /* SoccerGame.swift */; };
 		043A437D2075586C005E481C /* PossessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A43732075586A005E481C /* PossessionView.swift */; };
 		043A437E2075586C005E481C /* SubstitutionBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A43742075586A005E481C /* SubstitutionBar.swift */; };
@@ -49,6 +51,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		041298A320759FB800FE0EE5 /* SubCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCell.swift; sourceTree = "<group>"; };
+		041298A420759FB800FE0EE5 /* SubCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubCell.xib; sourceTree = "<group>"; };
 		043A437220755869005E481C /* SoccerGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoccerGame.swift; sourceTree = "<group>"; };
 		043A43732075586A005E481C /* PossessionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PossessionView.swift; sourceTree = "<group>"; };
 		043A43742075586A005E481C /* SubstitutionBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubstitutionBar.swift; sourceTree = "<group>"; };
@@ -103,6 +107,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		041298A120758AFA00FE0EE5 /* Substitutions */ = {
+			isa = PBXGroup;
+			children = (
+				043A43742075586A005E481C /* SubstitutionBar.swift */,
+				041298A320759FB800FE0EE5 /* SubCell.swift */,
+				041298A420759FB800FE0EE5 /* SubCell.xib */,
+			);
+			path = Substitutions;
+			sourceTree = "<group>";
+		};
+		041298A220758B1D00FE0EE5 /* EntryView */ = {
+			isa = PBXGroup;
+			children = (
+				043A43792075586B005E481C /* SoccerTeamEntryView.swift */,
+				04E3ED6F20755DA5000F7839 /* StatCell.swift */,
+				04E3ED7020755DA5000F7839 /* StatCell.xib */,
+			);
+			path = EntryView;
+			sourceTree = "<group>";
+		};
 		0451D44F20744CC700AF6524 /* Soccer */ = {
 			isa = PBXGroup;
 			children = (
@@ -114,11 +138,9 @@
 				043A437B2075586C005E481C /* SoccerEntryLiveStatsView.swift */,
 				043A437A2075586C005E481C /* SoccerEntryModeController.swift */,
 				043A43752075586A005E481C /* SoccerShotChartEntryView.swift */,
-				043A43792075586B005E481C /* SoccerTeamEntryView.swift */,
-				043A43742075586A005E481C /* SubstitutionBar.swift */,
+				041298A220758B1D00FE0EE5 /* EntryView */,
+				041298A120758AFA00FE0EE5 /* Substitutions */,
 				043A43772075586B005E481C /* TopBar.swift */,
-				04E3ED6F20755DA5000F7839 /* StatCell.swift */,
-				04E3ED7020755DA5000F7839 /* StatCell.xib */,
 			);
 			path = Soccer;
 			sourceTree = "<group>";
@@ -275,6 +297,7 @@
 			files = (
 				DC0EE779204F78D700D550F5 /* LaunchScreen.storyboard in Resources */,
 				04E3ED7220755DA5000F7839 /* StatCell.xib in Resources */,
+				041298A620759FB800FE0EE5 /* SubCell.xib in Resources */,
 				DC0EE776204F78D700D550F5 /* Assets.xcassets in Resources */,
 				DC0C91C220734066008A0B05 /* SportfolioCell.xib in Resources */,
 				DCFD0EFB2072C4630048B7E0 /* SportChooserPopup.xib in Resources */,
@@ -309,6 +332,7 @@
 				DC5DFA03207479C900B7BD02 /* ViewExistingTeamViewController.swift in Sources */,
 				DC6F8DE92074988400C38E4D /* PlayerSportfolioSetupViewController.swift in Sources */,
 				DCE472102072B3D000921A19 /* GameCellTableViewCell.swift in Sources */,
+				041298A520759FB800FE0EE5 /* SubCell.swift in Sources */,
 				DC6F8DE52074959C00C38E4D /* PlayerInTeamViewController.swift in Sources */,
 				DC4FDB6520705723005DAD60 /* UserHomeViewController.swift in Sources */,
 				DC0EE783205111C700D550F5 /* Sportfolio.swift in Sources */,

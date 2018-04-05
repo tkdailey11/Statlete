@@ -21,12 +21,12 @@ class SoccerTeamEntryView: UIControl, UITableViewDelegate, UITableViewDataSource
         
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        commonInit()
     }
 
     func commonInit() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = UIColor.blue
 
         let nib = UINib.init(nibName: "StatCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "StatCell")
@@ -40,18 +40,11 @@ class SoccerTeamEntryView: UIControl, UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-     
-        
-        /////  This Line causes sigabort /////
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "StatCell", for: indexPath) as? StatCell{
-            //////////////////////////////////////
-        cell.commonInit(statName: statNames[indexPath.row])
-        return cell
-            
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "StatCell", for: indexPath) as? StatCell {
+            cell.commonInit(statName: statNames[indexPath.row])
+            return cell
         }
         return UITableViewCell()
-      
-
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

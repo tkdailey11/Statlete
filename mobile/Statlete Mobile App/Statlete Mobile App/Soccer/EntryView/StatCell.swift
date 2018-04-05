@@ -10,8 +10,6 @@ import UIKit
 
 class StatCell: UITableViewCell {
     
-    @IBOutlet weak var cell: UIView!
-    
     @IBOutlet weak var plusButton: UIButton!
     @IBOutlet weak var minusButton: UIButton!
     @IBOutlet weak var label: UILabel!
@@ -31,6 +29,21 @@ class StatCell: UITableViewCell {
     func commonInit(statName: String){
         label.text = statName
         label.textAlignment = .center
+        label.center.x = self.center.x
         addSubview(label)
+        self.autoresizingMask = [.flexibleWidth]
+        
+        
+        plusButton.addTarget(self, action: #selector(plusButtonPressed), for: .touchUpInside)
+        minusButton.addTarget(self, action: #selector(minusButtonPressed), for: .touchUpInside)
     }
+    
+    @objc func plusButtonPressed() {
+        print("Plus Button Pressed in \(label.text!)")
+    }
+    
+    @objc func minusButtonPressed() {
+        print("Minus Button Pressed in \(label.text!)")
+    }
+    
 }
