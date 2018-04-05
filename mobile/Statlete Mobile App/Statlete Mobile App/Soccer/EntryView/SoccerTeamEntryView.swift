@@ -12,7 +12,7 @@ class SoccerTeamEntryView: UIControl, UITableViewDelegate, UITableViewDataSource
     
     let tableView: UITableView = UITableView()
     
-    var statNames = ["Goal", "Assist", "Shot on Goal", "Shot", "Foul"]
+    var statNames = ["Goal", "Assist", "Shot on Goal", "Shot", "Foul", "Yellow Card", "Red Card", "Corner", "Save", "Pass"]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
