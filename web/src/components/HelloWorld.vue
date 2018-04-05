@@ -42,7 +42,6 @@
       </div>
 
       <div id="PlayerWizard" v-if="isCreatingPlayer" style="padding-top=100px;">
-        <div>
           <vue-good-wizard
             :steps="playerSteps"
             :onNext="nextClickedPlayer"
@@ -60,10 +59,9 @@
 
             <div slot="playerPage2">
               <h4>Add Players</h4>
-              <h1>Player Selection will go here</h1>
+              <player-selection-box></player-selection-box>
             </div>
           </vue-good-wizard>
-        </div>
       </div>
 
       <div id="TeamWizard" v-if="isCreatingTeam" style="padding-top=100px;">
@@ -84,7 +82,6 @@
 
           <div slot="teamPage2">
             <h4>Add Players</h4>
-            <h1></h1>
             <player-selection-box></player-selection-box>
           </div>
 
@@ -112,6 +109,11 @@
     name: 'HelloWorld',
     data () {
       return {
+        fruits: [
+          'apple',
+          'banana',
+          'orange'
+        ],
         msg: 'Welcome to Your Vue.js App',
         loggedInUser: '',
         teamName: '',
@@ -188,7 +190,7 @@
       },
       backClickedPlayer(currentPage) {
         console.log('back clicked', currentPage);
-        return true; //return false if you want to prevent moving to previous page
+        return false; //return false if you want to prevent moving to previous page
       },
       nextClickedTeam(currentPage) {
         console.log('next clicked', currentPage)
@@ -199,7 +201,7 @@
       },
       backClickedTeam(currentPage) {
         console.log('back clicked', currentPage);
-        return true; //return false if you want to prevent moving to previous page
+        return false; //return false if you want to prevent moving to previous page
       }
     }
   }

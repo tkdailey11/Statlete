@@ -1,9 +1,17 @@
 <template>
-  <div class="playerSelectionBox">
-    <table style="width:100%">
-      <tr v-for="i in 10">
+  <div class="playerSelectionBox" style="overflow:scroll; height:310px;">
+    <table style="width:100%;">
+      <tr v-for="i in numRows" :key="i">
         <td>Row: {{i}}</td>
         <td><player-entry-box></player-entry-box></td>
+      </tr>
+      <tr>
+        <td><p></p></td>
+        <td><p></p></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><button @click="buttonClicked">Add Player</button></td>
       </tr>
     </table>
   </div>
@@ -14,11 +22,16 @@
     name: 'playerSelectionBox',
     data () {
       return {
+        numRows: 10
       }
     },
     methods: {
       uniqueID: function () {
         return Math.random().toString(36).substr(2, 9);
+      },
+      buttonClicked: function() {
+        this.numRows++;
+        console.log("NUM ROWS: " + this.numRows);
       }
     }
   }

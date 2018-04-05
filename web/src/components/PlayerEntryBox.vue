@@ -1,7 +1,7 @@
 <template>
   <div class="PlayerEntryBox">
     <input class="numberBox" type="text" @blur="sendData" v-model="number" placeholder="#">
-    <input class="nameBox" type="text" @blur="sendData" v-model="playerName" placeholder="Player Name"><br>
+    <input class="nameBox" type="text" @blur="sendData" v-model="playerName" placeholder="Player Name">
   </div>
 </template>
 
