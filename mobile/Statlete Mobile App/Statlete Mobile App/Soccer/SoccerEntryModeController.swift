@@ -18,6 +18,10 @@ class SoccerEntryModeController: UIViewController {
     var entryView: SoccerTeamEntryView = SoccerTeamEntryView()
     var game: SoccerGame = SoccerGame()
     var shotChartEntryView: SoccerShotChartEntryView = SoccerShotChartEntryView()
+    var statView: StatView = StatView()
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +40,7 @@ class SoccerEntryModeController: UIViewController {
         (scoreboardViewFrame, rect) = rect.divided(atDistance: 80, from: CGRectEdge.minYEdge)
         (substitutionBarFrame, entryViewFrame) = rect.divided(atDistance: 50, from: CGRectEdge.minYEdge)
         shotChartFrame = entryViewFrame
+        let statViewFrame = CGRect(x: view.bounds.minX, y: view.bounds.minY + topBarFrame.height + scoreboardViewFrame.height, width: view.bounds.width, height: view.bounds.height - (topBarFrame.height + scoreboardViewFrame.height + bottomBarFrame.height))
         
         // TopBar
         topBar = TopBar(frame: topBarFrame)
@@ -69,16 +74,22 @@ class SoccerEntryModeController: UIViewController {
         view.sendSubview(toBack: shotChartEntryView)
         view.bringSubview(toFront: entryView)
         
+        statView = StatView(frame: statViewFrame)
+        view.addSubview(statView)
+        view.sendSubview(toBack: statView)
+        
     }
     
     @objc func tabChanged() {
         switch bottomBar.tabSelected {
         case 1:
+            view.sendSubview(toBack: statView)
             view.bringSubview(toFront: entryView)
         case 2:
+            view.sendSubview(toBack: statView)
             view.bringSubview(toFront: shotChartEntryView)
         case 3:
-            print("tab 3 selected")
+            view.bringSubview(toFront: statView)
         default:
             print("Nothing")
         }
