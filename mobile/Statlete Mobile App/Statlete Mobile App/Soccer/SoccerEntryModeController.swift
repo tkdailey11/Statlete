@@ -20,9 +20,6 @@ class SoccerEntryModeController: UIViewController {
     var shotChartEntryView: SoccerShotChartEntryView = SoccerShotChartEntryView()
     var statView: StatView = StatView()
     
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
