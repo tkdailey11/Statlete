@@ -16,9 +16,14 @@ class ChoosePlayersViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
+    @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var tableView: UITableView!
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    @IBAction func doneButtonClicked(_ sender: UIButton) {
+         _ = navigationController?.popViewController(animated: true)
     }
     
 

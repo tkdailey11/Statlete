@@ -10,9 +10,40 @@ import UIKit
 
 class CreateAccountViewController: UIViewController{
     
-
-    @IBOutlet weak var CreateButton: UIButton!
-    @IBOutlet weak var NameTextField: UITextField!
-    @IBOutlet weak var UsernameTextField: UITextField!
-    @IBOutlet weak var PasswordTextField: UITextField!
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var createAccountButton: UIButton!
+    @IBOutlet weak var usernameTextField: UITextField!
+    @IBOutlet weak var nameTextField: UITextField!
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let namePaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.nameTextField.frame.height))
+         let usernamePaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.usernameTextField.frame.height))
+         let passwordPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.passwordTextField.frame.height))
+        nameTextField.layer.borderColor = UIColor.red.cgColor
+        nameTextField.layer.borderWidth = 0.5
+        nameTextField.leftView = namePaddingView
+        nameTextField.leftViewMode = UITextFieldViewMode.always
+        usernameTextField.layer.borderColor = UIColor.red.cgColor
+        usernameTextField.layer.borderWidth = 0.5
+        usernameTextField.leftView = usernamePaddingView
+        usernameTextField.leftViewMode = UITextFieldViewMode.always
+        passwordTextField.layer.borderColor = UIColor.red.cgColor
+        passwordTextField.layer.borderWidth = 0.5
+        passwordTextField.leftView = passwordPaddingView
+        passwordTextField.leftViewMode = UITextFieldViewMode.always
+        createAccountButton.layer.borderWidth = 0.8
+        createAccountButton.layer.borderColor = UIColor.red.cgColor
+        
+    }
+    
+    @IBAction func backButtonClicked(_ sender: UIButton) {
+         _ = navigationController?.popViewController(animated: true)
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
 }

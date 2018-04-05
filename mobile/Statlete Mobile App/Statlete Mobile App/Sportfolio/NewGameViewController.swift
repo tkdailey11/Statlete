@@ -16,12 +16,19 @@ class NewGameViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
+    @IBOutlet weak var opponentNameTextField: UITextField!
+    @IBOutlet weak var nameTextField: UITextField!
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    @IBOutlet weak var backButton: UIButton!
     
-
+    @IBOutlet weak var createButton: UIButton!
+    
+    @IBAction func backButtonClicked(_ sender: UIButton) {
+           _ = navigationController?.popViewController(animated: true)
+    }
     /*
     // MARK: - Navigation
 

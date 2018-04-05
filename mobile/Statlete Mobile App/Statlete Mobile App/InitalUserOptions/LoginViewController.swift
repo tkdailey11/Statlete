@@ -10,12 +10,28 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
+    @IBOutlet weak var usernameTextField: UITextField!
+    
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var passwordTextField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        usernameTextField.layer.borderWidth = 0.8
+        usernameTextField.layer.borderColor = UIColor.red.cgColor
+        passwordTextField.layer.borderWidth = 0.8
+        passwordTextField.layer.borderColor = UIColor.red.cgColor
+        
+        loginButton.layer.borderWidth = 0.8
+        loginButton.layer.borderColor = UIColor.red.cgColor
+    
 
-        // Do any additional setup after loading the view.
     }
 
+    @IBAction func backButtonClicked(_ sender: UIButton) {
+         _ = navigationController?.popViewController(animated: true)
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

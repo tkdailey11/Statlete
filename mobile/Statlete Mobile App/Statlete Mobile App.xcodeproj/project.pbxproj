@@ -148,7 +148,6 @@
 		DC0EE75F204F78D700D550F5 = {
 			isa = PBXGroup;
 			children = (
-				DC6F8DE02074940A00C38E4D /* SportfolioViewController.swift */,
 				DC0EE76A204F78D700D550F5 /* Statlete Mobile App */,
 				DC0EE769204F78D700D550F5 /* Products */,
 			);
@@ -207,6 +206,7 @@
 		DC6F8DEF2074AAA500C38E4D /* Sportfolio */ = {
 			isa = PBXGroup;
 			children = (
+				DC6F8DE02074940A00C38E4D /* SportfolioViewController.swift */,
 				DCE472122072BD6400921A19 /* SportfolioPageViewController.swift */,
 				DCE4720E2072B3D000921A19 /* GameCellTableViewCell.swift */,
 				DC6F8DE42074959C00C38E4D /* PlayerInTeamViewController.swift */,

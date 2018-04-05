@@ -12,16 +12,22 @@ class AddTeamSportfolioViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.isNavigationBarHidden = true
         // Do any additional setup after loading the view.
     }
 
+    @IBOutlet weak var playerButton: UIButton!
+    @IBOutlet weak var teamButton: UIButton!
+    @IBOutlet weak var backButton: UIButton!
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    @IBAction func backButtonClicked(_ sender: UIButton) {
+           _ = navigationController?.popViewController(animated: true)
+    }
+    
     /*
     // MARK: - Navigation
 

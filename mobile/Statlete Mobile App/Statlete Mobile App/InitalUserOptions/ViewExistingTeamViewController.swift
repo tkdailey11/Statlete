@@ -10,6 +10,8 @@ import UIKit
 
 class ViewExistingTeamViewController: UIViewController {
 
+  
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var TeamIDTextField: UITextField!
     @IBOutlet weak var ViewButton: UIButton!
     override func viewDidLoad() {
@@ -18,12 +20,17 @@ class ViewExistingTeamViewController: UIViewController {
         // Do any additional setup after loading the view.
         ViewButton.layer.borderWidth = 0.8
         ViewButton.layer.borderColor = UIColor.red.cgColor
+        //   _ = navigationController?.popViewController(animated: true)
     }
-
+   
    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func backButtonClicked(_ sender: UIButton) {
+         _ = navigationController?.popViewController(animated: true)
     }
     
 

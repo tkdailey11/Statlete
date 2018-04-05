@@ -14,11 +14,11 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBOutlet weak var SportfoliosTitleLabel: UILabel!
     @IBOutlet weak var AddButton: UIButton!
-    var dataset: [String] = ["name1", "name2", "name3"]
+    var dataset: [String] = ["Bulldogs", "Rebels", "REAL"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.hidesBarsOnTap = true
+        self.navigationController?.isNavigationBarHidden = true
         tableView.delegate = self
         tableView.dataSource = self
         // Do any additional setup after loading the view.
@@ -37,9 +37,9 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
        return dataset.count
     }
-     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SportfolioCell", for: indexPath) as! SportfolioCell
-        cell.commonInit(imageName: "cookie.png", name: "slim shady")
+        cell.commonInit(imageName: "soccer", name: dataset[indexPath.row])
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
