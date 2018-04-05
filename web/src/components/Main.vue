@@ -180,25 +180,21 @@
         alert('Yay. Done!');
       },
       nextClickedPlayer(currentPage) {
-        console.log('next clicked', currentPage)
         if(currentPage==1){
           this.hideCreating()
         }
         return true; //return false if you want to prevent moving to next page
       },
       backClickedPlayer(currentPage) {
-        console.log('back clicked', currentPage);
         return true; //return false if you want to prevent moving to previous page
       },
       nextClickedTeam(currentPage) {
-        console.log('next clicked', currentPage)
         if(currentPage==2){
           this.hideCreating()
         }
         return true; //return false if you want to prevent moving to next page
       },
       backClickedTeam(currentPage) {
-        console.log('back clicked', currentPage);
         return true; //return false if you want to prevent moving to previous page
       }
     }

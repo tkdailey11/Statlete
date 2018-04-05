@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>{{ tkdSport }}</h1>
+    <h1>{{ selectedSport }}</h1>
     <div id="mainPage" v-if="!(isCreatingTeam || isCreatingPlayer)">
       <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" @click="closeNav">&times;</a>
@@ -10,10 +10,7 @@
         <a href="#">Clients</a>
         <a href="#">Contact</a>
         <div style="scroll">
-          <div v-for="i in 50">
-            <div style="margin=10px; color=red;"><p>Test {{ i }}</p></div>
-          </div>
-
+            <button style="background-color: white; width: 150px;" v-for="i in sportfolios.length">Test {{ i }}</button>
         </div>
       </div>
 
@@ -32,15 +29,6 @@
       <button @click="showPlayer">New Player Account</button>
     </div>
     <div v-else>
-      <div id="createTeam" v-if="isCreatingTeam">
-        <h1>TEAM</h1>
-        <br>
-      </div>
-      <div id="createPlayer" v-if="isCreatingPlayer">
-        <h1>PLAYER</h1>
-
-      </div>
-
       <div id="PlayerWizard" v-if="isCreatingPlayer" style="padding-top=100px;">
           <vue-good-wizard
             :steps="playerSteps"
@@ -53,13 +41,18 @@
               <br>
               <label class="myLabel">Sport:</label>
               <br>
-              <select-sport :initialSport="tkdSport" style="display: inline-block;" @sportWasSelected="tkdSport=$event"></select-sport>
+              <select-sport :initialSport="selectedSport" style="display: inline-block;" @sportWasSelected="selectedSport=$event"></select-sport>
               <h1></h1>
             </div>
 
             <div slot="playerPage2">
-              <h4>Add Players</h4>
-              <player-selection-box></player-selection-box>
+              <h4>Step 2</h4>
+              <label class="myLabel">Team ID:</label>
+              <input type="text" v-model="teamID" placeholder="Team ID"><br>
+              <br>
+              <label class="myLabel">Team Token:</label>
+              <input type="text" v-model="teamToken" placeholder="Team Token"><br>
+              <br>
             </div>
           </vue-good-wizard>
       </div>
@@ -76,13 +69,13 @@
             <br>
             <label class="myLabel">Sport:</label>
             <br>
-            <select-sport :initialSport="tkdSport" style="display: inline-block;" @sportWasSelected="tkdSport=$event"></select-sport>
+            <select-sport :initialSport="selectedSport" style="display: inline-block;" @sportWasSelected="selectedSport=$event"></select-sport>
             <h1></h1>
           </div>
 
           <div slot="teamPage2">
             <h4>Add Players</h4>
-            <player-selection-box></player-selection-box>
+            <player-selection-box @playerInfo="setPlayerInfo"></player-selection-box>
           </div>
 
           <div slot="teamPage3">
@@ -97,8 +90,6 @@
         </vue-good-wizard>
       </div>
     </div>
-
-
   </div>
 </template>
 
@@ -120,7 +111,7 @@
         teamToken: '',
         teamID: '',
         playerName: '',
-        tkdSport: 'basketball',
+        selectedSport: 'basketball',
         isCreatingPlayer: false,
         isCreatingTeam: false,
         playerSteps: [
@@ -146,7 +137,8 @@
             label: 'Setup Linking (OPTIONAL)',
             slot: 'teamPage3',
           }
-        ]
+        ],
+        sportfolios: []
       }
     },
     mounted () {
@@ -182,26 +174,56 @@
         alert('Yay. Done!');
       },
       nextClickedPlayer(currentPage) {
-        console.log('next clicked', currentPage)
         if(currentPage==1){
           this.hideCreating()
+
+          //build up json for database
+          console.log('**************************************');
+          console.log('TeamID: ' + this.teamID);
+          console.log('TeamToken: ' + this.teamToken);
+          console.log('Sport: ' + this.selectedSport);
+          console.log('TeamName: ' + this.teamName);
+          console.log('**************************************');
+
+          this.teamID = '';
+          this.teamToken = '';
+          this.selectedSport = 'basketball';
+          this.teamName = '';
         }
         return true; //return false if you want to prevent moving to next page
       },
       backClickedPlayer(currentPage) {
-        console.log('back clicked', currentPage);
         return false; //return false if you want to prevent moving to previous page
       },
       nextClickedTeam(currentPage) {
-        console.log('next clicked', currentPage)
         if(currentPage==2){
           this.hideCreating()
+          //build up json for database
+          console.log('**************************************');
+          console.log('TeamID: ' + this.teamID);
+          console.log('TeamToken: ' + this.teamToken);
+          console.log('Players: ');
+          var s = this.sportfolios.splice(-1)[0];
+          console.log(s);
+          // for (var player in this.sportfolios[0]) {
+          //   console.log(player.num);
+          // }
+          console.log('Sport: ' + this.selectedSport);
+          console.log('TeamName: ' + this.teamName);
+          console.log('**************************************');
+
+          this.teamID = '';
+          this.teamToken = '';
+          this.selectedSport = 'basketball';
+          this.teamName = '';
         }
         return true; //return false if you want to prevent moving to next page
       },
       backClickedTeam(currentPage) {
-        console.log('back clicked', currentPage);
         return false; //return false if you want to prevent moving to previous page
+      },
+      setPlayerInfo(event) {
+        this.sportfolios.push(event);
       }
     }
   }
@@ -312,5 +334,4 @@
     animation: fadeInRight 0.3s;
   }
 }
-
 </style>

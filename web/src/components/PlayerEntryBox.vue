@@ -1,7 +1,7 @@
 <template>
   <div class="PlayerEntryBox">
-    <input class="numberBox" type="text" @blur="sendData" v-model="number" placeholder="#">
-    <input class="nameBox" type="text" @blur="sendData" v-model="playerName" placeholder="Player Name">
+    <input class="numberBox" type="text" @blur="sendData" v-model="pnum" placeholder="#">
+    <input class="nameBox" type="text" @blur="sendData" v-model="pname" placeholder="Player Name">
   </div>
 </template>
 
@@ -10,16 +10,30 @@
     name: 'player-entry-box',
     data: function() {
       return {
-        playerName: '',
-        number: ''
+        pname: this.playerName,
+        pnum: this.playerNumber
+      }
+    },
+    props: {
+      index: {
+        default: 0
+      },
+      playerName: {
+        default: '',
+        type: String
+      },
+      playerNumber: {
+        default: '',
+        type: String
       }
     },
     methods: {
       sendData: function() {
-        console.log('Name: ' + this.playerName + '  Number: ' + this.number);
-      },
-      uniqueID: function () {
-        return Math.random().toString(36).substr(2, 9);
+        this.$emit('updatedPlayerInfo', {
+          name: this.pname,
+          num: this.pnum,
+          idx: this.index
+        });
       }
     }
   }

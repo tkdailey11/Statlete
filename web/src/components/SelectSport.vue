@@ -15,9 +15,6 @@
         type: String
       }
     },
-    mounted: function() {
-      console.log('MOUNTED: ' + this.initialSport);
-    },
     data: function() {
       return {
         basketballSelected: this.initialSport==='basketball',
@@ -32,21 +29,18 @@
           this.footballSelected = false;
           this.soccerSelected = false;
           this.$emit('sportWasSelected', 'basketball');
-          console.log('basketball');
         }
         else if (sport === 'football') {
           this.basketballSelected = false;
           this.footballSelected = true;
           this.soccerSelected = false;
           this.$emit('sportWasSelected', 'football');
-          console.log('football');
         }
         else {
           this.basketballSelected = false;
           this.footballSelected = false;
           this.soccerSelected = true;
           this.$emit('sportWasSelected', 'soccer');
-          console.log('soccer');
         }
       }
     }
