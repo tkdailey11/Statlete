@@ -23,6 +23,8 @@
 		04D50BC62076A61100368924 /* StatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D50BC52076A61100368924 /* StatView.swift */; };
 		04E3ED7120755DA5000F7839 /* StatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E3ED6F20755DA5000F7839 /* StatCell.swift */; };
 		04E3ED7220755DA5000F7839 /* StatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04E3ED7020755DA5000F7839 /* StatCell.xib */; };
+		04F32DA02076F37B00E9C0CA /* PlayerStatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F32D9E2076F37B00E9C0CA /* PlayerStatCell.swift */; };
+		04F32DA12076F37B00E9C0CA /* PlayerStatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04F32D9F2076F37B00E9C0CA /* PlayerStatCell.xib */; };
 		DC0C91C120734066008A0B05 /* SportfolioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0C91BF20734066008A0B05 /* SportfolioCell.swift */; };
 		DC0C91C220734066008A0B05 /* SportfolioCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC0C91C020734066008A0B05 /* SportfolioCell.xib */; };
 		DC0EE76C204F78D700D550F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EE76B204F78D700D550F5 /* AppDelegate.swift */; };
@@ -68,6 +70,8 @@
 		04D50BC52076A61100368924 /* StatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatView.swift; sourceTree = "<group>"; };
 		04E3ED6F20755DA5000F7839 /* StatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatCell.swift; sourceTree = "<group>"; };
 		04E3ED7020755DA5000F7839 /* StatCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatCell.xib; sourceTree = "<group>"; };
+		04F32D9E2076F37B00E9C0CA /* PlayerStatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerStatCell.swift; sourceTree = "<group>"; };
+		04F32D9F2076F37B00E9C0CA /* PlayerStatCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayerStatCell.xib; sourceTree = "<group>"; };
 		DC0C91BF20734066008A0B05 /* SportfolioCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportfolioCell.swift; sourceTree = "<group>"; };
 		DC0C91C020734066008A0B05 /* SportfolioCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SportfolioCell.xib; sourceTree = "<group>"; };
 		DC0EE768204F78D700D550F5 /* Statlete Mobile App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Statlete Mobile App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -152,6 +156,8 @@
 			isa = PBXGroup;
 			children = (
 				04D50BC52076A61100368924 /* StatView.swift */,
+				04F32D9E2076F37B00E9C0CA /* PlayerStatCell.swift */,
+				04F32D9F2076F37B00E9C0CA /* PlayerStatCell.xib */,
 			);
 			path = StatView;
 			sourceTree = "<group>";
@@ -312,6 +318,7 @@
 				DC0EE776204F78D700D550F5 /* Assets.xcassets in Resources */,
 				DC0C91C220734066008A0B05 /* SportfolioCell.xib in Resources */,
 				DCFD0EFB2072C4630048B7E0 /* SportChooserPopup.xib in Resources */,
+				04F32DA12076F37B00E9C0CA /* PlayerStatCell.xib in Resources */,
 				0451D45120744CF700AF6524 /* ScoreboardView.xib in Resources */,
 				DCE472112072B3D000921A19 /* GameCellTableViewCell.xib in Resources */,
 				DC0EE771204F78D700D550F5 /* Main.storyboard in Resources */,
@@ -327,6 +334,7 @@
 			files = (
 				04D50BC62076A61100368924 /* StatView.swift in Sources */,
 				043A43842075586C005E481C /* SoccerEntryModeController.swift in Sources */,
+				04F32DA02076F37B00E9C0CA /* PlayerStatCell.swift in Sources */,
 				043A437D2075586C005E481C /* PossessionView.swift in Sources */,
 				043A43802075586C005E481C /* ScoreboardView.swift in Sources */,
 				DCFD0EF92072C22E0048B7E0 /* LoginViewController.swift in Sources */,
