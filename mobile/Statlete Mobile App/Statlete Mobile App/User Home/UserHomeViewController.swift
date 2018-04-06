@@ -10,6 +10,7 @@ import UIKit
 
 class UserHomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+  
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var SportfoliosTitleLabel: UILabel!
@@ -22,6 +23,8 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.delegate = self
         tableView.dataSource = self
         // Do any additional setup after loading the view.
+       
+        
         let nib = UINib.init(nibName: "SportfolioCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "SportfolioCell")
     
@@ -57,7 +60,7 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
         // Pass the selected object to the new view controller.
     }
     */
-    
-    
 
 }
+
+

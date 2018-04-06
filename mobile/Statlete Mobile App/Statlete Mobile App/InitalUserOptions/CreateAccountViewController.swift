@@ -20,10 +20,17 @@ class CreateAccountViewController: UIViewController{
         let namePaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.nameTextField.frame.height))
          let usernamePaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.usernameTextField.frame.height))
          let passwordPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.passwordTextField.frame.height))
-        nameTextField.layer.borderColor = UIColor.red.cgColor
-        nameTextField.layer.borderWidth = 0.5
+        // nameTextField.layer.borderColor = UIColor.red.cgColor
+        // nameTextField.layer.borderWidth = 0.5
         nameTextField.leftView = namePaddingView
         nameTextField.leftViewMode = UITextFieldViewMode.always
+        
+        let border = CALayer()
+        let width = CGFloat(1.0)
+        border.borderColor = UIColor.white.cgColor
+        border.frame = CGRect(x: 0, y: nameTextField.frame.size.height - width, width: nameTextField.frame.width, height: 1)
+        nameTextField.layer.addSublayer(border)
+        nameTextField.layer.masksToBounds = true
         usernameTextField.layer.borderColor = UIColor.red.cgColor
         usernameTextField.layer.borderWidth = 0.5
         usernameTextField.leftView = usernamePaddingView
@@ -36,7 +43,7 @@ class CreateAccountViewController: UIViewController{
         createAccountButton.layer.borderColor = UIColor.red.cgColor
         
     }
-    
+  
     @IBAction func backButtonClicked(_ sender: UIButton) {
          _ = navigationController?.popViewController(animated: true)
     }
@@ -47,3 +54,4 @@ class CreateAccountViewController: UIViewController{
     }
     
 }
+

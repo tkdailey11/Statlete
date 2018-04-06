@@ -33,6 +33,7 @@
 		DC0EE7812050FC1E00D550F5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EE7802050FC1E00D550F5 /* User.swift */; };
 		DC0EE783205111C700D550F5 /* Sportfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EE782205111C700D550F5 /* Sportfolio.swift */; };
 		DC0EE7852051128100D550F5 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EE7842051128100D550F5 /* Game.swift */; };
+		DC1672432076E4E1001D46AD /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1672422076E4E1001D46AD /* Colors.swift */; };
 		DC4FDB6520705723005DAD60 /* UserHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4FDB6320705723005DAD60 /* UserHomeViewController.swift */; };
 		DC5DFA03207479C900B7BD02 /* ViewExistingTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5DFA02207479C900B7BD02 /* ViewExistingTeamViewController.swift */; };
 		DC6F8DDD2074896C00C38E4D /* AddTeamSportfolioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6F8DDC2074896C00C38E4D /* AddTeamSportfolioViewController.swift */; };
@@ -79,6 +80,7 @@
 		DC0EE7802050FC1E00D550F5 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DC0EE782205111C700D550F5 /* Sportfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sportfolio.swift; sourceTree = "<group>"; };
 		DC0EE7842051128100D550F5 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		DC1672422076E4E1001D46AD /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		DC4FDB6320705723005DAD60 /* UserHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHomeViewController.swift; sourceTree = "<group>"; };
 		DC5DFA02207479C900B7BD02 /* ViewExistingTeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExistingTeamViewController.swift; sourceTree = "<group>"; };
 		DC6F8DDC2074896C00C38E4D /* AddTeamSportfolioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTeamSportfolioViewController.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				DC0EE772204F78D700D550F5 /* Statlete_Mobile_App.xcdatamodeld */,
 				DCFD0EF72072C1BE0048B7E0 /* Model */,
 				0451D44F20744CC700AF6524 /* Soccer */,
+				DC1672422076E4E1001D46AD /* Colors.swift */,
 			);
 			path = "Statlete Mobile App";
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				043A43842075586C005E481C /* SoccerEntryModeController.swift in Sources */,
+				DC1672432076E4E1001D46AD /* Colors.swift in Sources */,
 				043A437D2075586C005E481C /* PossessionView.swift in Sources */,
 				043A43802075586C005E481C /* ScoreboardView.swift in Sources */,
 				DCFD0EF92072C22E0048B7E0 /* LoginViewController.swift in Sources */,
