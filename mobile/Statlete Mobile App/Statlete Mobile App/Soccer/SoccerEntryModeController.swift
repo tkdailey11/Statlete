@@ -25,9 +25,9 @@ class SoccerEntryModeController: UIViewController {
         
         view.backgroundColor = UIColor.white
         
-        let possessionBarFrame: CGRect = CGRect(x: view.bounds.minX, y: view.bounds.maxY - 120, width: view.bounds.width, height: 80)
+        let possessionBarFrame: CGRect = CGRect(x: view.bounds.minX, y: view.bounds.maxY - 160, width: view.bounds.width, height: 120)
         let bottomBarFrame: CGRect = CGRect(x: view.bounds.minX, y: view.bounds.maxY - 40, width: view.bounds.width, height: 40)
-        var rect: CGRect = CGRect(x: view.bounds.minX, y: view.bounds.minY, width: view.bounds.width, height: view.bounds.height - 120)
+        var rect: CGRect = CGRect(x: view.bounds.minX, y: view.bounds.minY, width: view.bounds.width, height: view.bounds.height - 160)
         var topBarFrame: CGRect = CGRect()
         var scoreboardViewFrame: CGRect = CGRect()
         var substitutionBarFrame: CGRect = CGRect()

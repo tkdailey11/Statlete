@@ -29,7 +29,7 @@ class SubstitutionBar: UIControl, UICollectionViewDelegate, UICollectionViewData
     }
     
     func commonInit() {
-        backgroundColor = UIColor.black
+        backgroundColor = Colors.color2
         layout.scrollDirection = UICollectionViewScrollDirection.horizontal
         collectionView.setCollectionViewLayout(layout, animated: true)
         collectionView.delegate = self
@@ -39,7 +39,7 @@ class SubstitutionBar: UIControl, UICollectionViewDelegate, UICollectionViewData
         collectionView.register(nib, forCellWithReuseIdentifier: "SubCell")
         addSubview(collectionView)
         collectionView.frame = CGRect(x: bounds.minX + opposingTeamButtonFrameWidth, y: bounds.minY, width: bounds.width - opposingTeamButtonFrameWidth, height: bounds.height)
-        collectionView.backgroundColor = UIColor.black
+        collectionView.backgroundColor = Colors.color2
         
         opposingTeamButton.setTitle("Opp. Team", for: .normal)
         opposingTeamButton.frame = CGRect(x: bounds.minX, y: bounds.minY, width: opposingTeamButtonFrameWidth, height: bounds.height).insetBy(dx: 10, dy: 5)
@@ -48,7 +48,7 @@ class SubstitutionBar: UIControl, UICollectionViewDelegate, UICollectionViewData
         opposingTeamButton.titleLabel?.textAlignment = .center
         opposingTeamButton.titleLabel?.lineBreakMode = .byWordWrapping
         opposingTeamButton.titleLabel?.numberOfLines = 0
-        
+        opposingTeamButton.layer.cornerRadius = 10
         addSubview(opposingTeamButton)
         
         opposingTeamButton.addTarget(self, action: #selector(opposingTeamButtonPressed), for: .touchUpInside)

@@ -34,22 +34,25 @@ class BottomBar: UIControl {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = Colors.color1
+        backgroundColor = Colors.color2
         
         //////////
         tab1Label.frame = tab1Frame
         tab1Label.text = "Entry"
         tab1Label.textAlignment = .center
+        tab1Label.textColor = Colors.color2
         addSubview(tab1Label)
         
         tab2Label.frame = tab2Frame
         tab2Label.text = "Shot Chart"
         tab2Label.textAlignment = .center
+        tab2Label.textColor = Colors.color2
         addSubview(tab2Label)
         
         tab3Label.frame = tab3Frame
         tab3Label.text = "Stats"
         tab3Label.textAlignment = .center
+        tab3Label.textColor = Colors.color2
         addSubview(tab3Label)
         //////////
         

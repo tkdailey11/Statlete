@@ -16,6 +16,8 @@ class PossessionView: UIControl {
         case out
     }
     
+    let textFont = UIFont(name: "Helvetica", size: 24)
+    
     var currentlySelected: Selected = .myTeam
     
     let possessionLabel: UILabel = UILabel()
@@ -54,6 +56,7 @@ class PossessionView: UIControl {
         myTeamPossessionLabel.lineBreakMode = .byWordWrapping
         myTeamPossessionLabel.numberOfLines = 0
         myTeamPossessionLabel.text = "My Team"
+        myTeamPossessionLabel.font = textFont
         addSubview(myTeamPossessionLabel)
         
         opposingTeamPossessionLabel.frame = opposingTeamPossessionBoxFrame
@@ -61,6 +64,7 @@ class PossessionView: UIControl {
         opposingTeamPossessionLabel.lineBreakMode = .byWordWrapping
         opposingTeamPossessionLabel.numberOfLines = 0
         opposingTeamPossessionLabel.text = "Opp. Team"
+        opposingTeamPossessionLabel.font = textFont
         addSubview(opposingTeamPossessionLabel)
         
         outOfPlayPossessionLabel.frame = outOfPlayPossessionBoxFrame
@@ -68,6 +72,7 @@ class PossessionView: UIControl {
         outOfPlayPossessionLabel.lineBreakMode = .byWordWrapping
         outOfPlayPossessionLabel.numberOfLines = 0
         outOfPlayPossessionLabel.text = "Out"
+        outOfPlayPossessionLabel.font = textFont
         addSubview(outOfPlayPossessionLabel)
     }
     
@@ -81,7 +86,7 @@ class PossessionView: UIControl {
         }
         
         // Draw myTeam
-        context.setFillColor(Colors.color4.cgColor)
+        context.setFillColor(Colors.color2.cgColor)
         context.setLineWidth(3)
         
         if currentlySelected == .myTeam {
@@ -89,10 +94,10 @@ class PossessionView: UIControl {
             myTeamPossessionLabel.textColor = UIColor.white
         }
         else {
-            context.setStrokeColor(Colors.color4.cgColor)
+            context.setStrokeColor(Colors.color2.cgColor)
             myTeamPossessionLabel.textColor = UIColor.black
         }
-        context.addPath(CGPath(roundedRect: myTeamPossessionBoxFrame, cornerWidth: 15, cornerHeight: 15, transform: nil))
+        context.addPath(CGPath(roundedRect: myTeamPossessionBoxFrame, cornerWidth: 20, cornerHeight: 20, transform: nil))
         context.drawPath(using: .eoFillStroke)
         
         // Draw oppTeam
@@ -101,10 +106,10 @@ class PossessionView: UIControl {
             opposingTeamPossessionLabel.textColor = UIColor.white
         }
         else {
-            context.setStrokeColor(Colors.color4.cgColor)
+            context.setStrokeColor(Colors.color2.cgColor)
             opposingTeamPossessionLabel.textColor = UIColor.black
         }
-        context.addPath(CGPath(roundedRect: opposingTeamPossessionBoxFrame, cornerWidth: 15, cornerHeight: 15, transform: nil))
+        context.addPath(CGPath(roundedRect: opposingTeamPossessionBoxFrame, cornerWidth: 20, cornerHeight: 20, transform: nil))
         context.drawPath(using: .eoFillStroke)
         
         // Draw out of Play
@@ -114,10 +119,10 @@ class PossessionView: UIControl {
             outOfPlayPossessionLabel.textColor = UIColor.white
         }
         else {
-            context.setStrokeColor(Colors.color4.cgColor)
+            context.setStrokeColor(Colors.color2.cgColor)
             outOfPlayPossessionLabel.textColor = UIColor.black
         }
-        context.addPath(CGPath(roundedRect: outOfPlayPossessionBoxFrame, cornerWidth: 15, cornerHeight: 15, transform: nil))
+        context.addPath(CGPath(roundedRect: outOfPlayPossessionBoxFrame, cornerWidth: 20, cornerHeight: 20, transform: nil))
         context.drawPath(using: .eoFillStroke)
         
     }

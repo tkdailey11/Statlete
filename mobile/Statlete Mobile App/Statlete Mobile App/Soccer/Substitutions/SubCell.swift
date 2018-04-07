@@ -21,12 +21,14 @@ class SubCell: UICollectionViewCell {
 
     
     func commonInit(number: Int) {
+        self.backgroundColor = Colors.color2
         self.number = number
         button.setTitle("#\(number)", for: .normal)
         button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
     }
     
     func subButtonInit() {
+        self.backgroundColor = Colors.color2
         self.number = -1
         button.setTitle("Sub", for: .normal)
     }

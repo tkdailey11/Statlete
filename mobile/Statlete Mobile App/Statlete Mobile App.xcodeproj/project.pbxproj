@@ -24,6 +24,7 @@
 		04C374B920783C3F000F7063 /* TeamStatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C374B820783C3F000F7063 /* TeamStatView.swift */; };
 		04C374BC2078401E000F7063 /* TeamStatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C374BA2078401E000F7063 /* TeamStatCell.swift */; };
 		04C374BD2078401E000F7063 /* TeamStatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04C374BB2078401E000F7063 /* TeamStatCell.xib */; };
+		04C374C5207885AF000F7063 /* BottomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C374C4207885AF000F7063 /* BottomTabBar.swift */; };
 		04D50BC62076A61100368924 /* StatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D50BC52076A61100368924 /* StatView.swift */; };
 		04E3ED7120755DA5000F7839 /* StatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E3ED6F20755DA5000F7839 /* StatCell.swift */; };
 		04E3ED7220755DA5000F7839 /* StatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04E3ED7020755DA5000F7839 /* StatCell.xib */; };
@@ -75,6 +76,7 @@
 		04C374B820783C3F000F7063 /* TeamStatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamStatView.swift; sourceTree = "<group>"; };
 		04C374BA2078401E000F7063 /* TeamStatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamStatCell.swift; sourceTree = "<group>"; };
 		04C374BB2078401E000F7063 /* TeamStatCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeamStatCell.xib; sourceTree = "<group>"; };
+		04C374C4207885AF000F7063 /* BottomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomTabBar.swift; sourceTree = "<group>"; };
 		04D50BC52076A61100368924 /* StatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatView.swift; sourceTree = "<group>"; };
 		04E3ED6F20755DA5000F7839 /* StatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatCell.swift; sourceTree = "<group>"; };
 		04E3ED7020755DA5000F7839 /* StatCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatCell.xib; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 		DC0EE75F204F78D700D550F5 = {
 			isa = PBXGroup;
 			children = (
+				04C374C4207885AF000F7063 /* BottomTabBar.swift */,
 				DC0EE76A204F78D700D550F5 /* Statlete Mobile App */,
 				DC0EE769204F78D700D550F5 /* Products */,
 			);
@@ -349,6 +352,7 @@
 				043A43842075586C005E481C /* SoccerEntryModeController.swift in Sources */,
 				04F32DA02076F37B00E9C0CA /* PlayerStatCell.swift in Sources */,
 				043A437D2075586C005E481C /* PossessionView.swift in Sources */,
+				04C374C5207885AF000F7063 /* BottomTabBar.swift in Sources */,
 				043A43802075586C005E481C /* ScoreboardView.swift in Sources */,
 				DCFD0EF92072C22E0048B7E0 /* LoginViewController.swift in Sources */,
 				043A43852075586C005E481C /* SoccerEntryLiveStatsView.swift in Sources */,

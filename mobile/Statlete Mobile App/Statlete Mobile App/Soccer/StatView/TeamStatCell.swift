@@ -32,6 +32,7 @@ class TeamStatCell: UITableViewCell {
         
         opposingTeamLabel.text = String(opposingTeamVal)
         //opposingTeamLabel.textAlignment = .center
+        selectionStyle = .none
     }
     
     
@@ -41,6 +42,7 @@ class TeamStatCell: UITableViewCell {
         myTeamLabel.text = "My Team"
         
         opposingTeamLabel.text = "Opp. Team"
+        selectionStyle = .none
     }
     
 }

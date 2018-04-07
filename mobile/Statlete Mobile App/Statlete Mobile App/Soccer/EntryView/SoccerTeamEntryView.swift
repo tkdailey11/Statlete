@@ -42,6 +42,12 @@ class SoccerTeamEntryView: UIControl, UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "StatCell", for: indexPath) as? StatCell {
             cell.commonInit(statName: statNames[indexPath.row])
+            if indexPath.row % 2 == 0 {
+                cell.picture.image = #imageLiteral(resourceName: "soccer")
+            }
+            else {
+                cell.picture.image = #imageLiteral(resourceName: "hoop")
+            }
             return cell
         }
         return UITableViewCell()
