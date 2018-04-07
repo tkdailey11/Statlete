@@ -138,7 +138,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Statlete Mobile App/InitalUserOptions/ViewController.swift"
-            timestampString = "544683064.614766"
+            timestampString = "544759381.257997"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "40"
@@ -219,6 +219,115 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "42"
                   endingLineNumber = "42"
+                  offsetFromSymbolStart = "116">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Statlete Mobile App/InitalUserOptions/CreateAccountViewController.swift"
+            timestampString = "544779742.589985"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Statlete Mobile App/background.swift"
+            timestampString = "544758211.957177"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3"
+            endingLineNumber = "3"
+            landmarkName = "unknown"
+            landmarkType = "0">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Statlete_Mobile_App.background.__deallocating_deinit"
+                  moduleName = "Statlete Mobile App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/taylormdejonge/Desktop/StatleteCapstone/Statlete/mobile/Statlete%20Mobile%20App/Statlete%20Mobile%20App/background.swift"
+                  timestampString = "544774758.81198"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Statlete_Mobile_App.background.__allocating_init(frame: __C.CGRect) -&gt; Statlete_Mobile_App.background"
+                  moduleName = "Statlete Mobile App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/taylormdejonge/Desktop/StatleteCapstone/Statlete/mobile/Statlete%20Mobile%20App/Statlete%20Mobile%20App/background.swift"
+                  timestampString = "544774758.815366"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Statlete_Mobile_App.background.init(frame: __C.CGRect) -&gt; Statlete_Mobile_App.background"
+                  moduleName = "Statlete Mobile App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/taylormdejonge/Desktop/StatleteCapstone/Statlete/mobile/Statlete%20Mobile%20App/Statlete%20Mobile%20App/background.swift"
+                  timestampString = "544774758.818983"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "11"
+                  endingLineNumber = "11"
+                  offsetFromSymbolStart = "178">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Statlete_Mobile_App.background.__allocating_init(coder: __ObjC.NSCoder) -&gt; Swift.Optional&lt;Statlete_Mobile_App.background&gt;"
+                  moduleName = "Statlete Mobile App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/taylormdejonge/Desktop/StatleteCapstone/Statlete/mobile/Statlete%20Mobile%20App/Statlete%20Mobile%20App/background.swift"
+                  timestampString = "544774758.8227201"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Statlete_Mobile_App.background.init(coder: __ObjC.NSCoder) -&gt; Swift.Optional&lt;Statlete_Mobile_App.background&gt;"
+                  moduleName = "Statlete Mobile App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/taylormdejonge/Desktop/StatleteCapstone/Statlete/mobile/Statlete%20Mobile%20App/Statlete%20Mobile%20App/background.swift"
+                  timestampString = "544774758.825579"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "11"
+                  endingLineNumber = "11"
                   offsetFromSymbolStart = "116">
                </Location>
             </Locations>

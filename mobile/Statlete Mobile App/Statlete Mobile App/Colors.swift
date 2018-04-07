@@ -2,7 +2,7 @@
 //  Colors.swift
 //  Statlete Mobile App
 //
-//  Created by Taylor M de Jonge on 4/5/18.
+//  Created by Taylor M de Jonge on 4/6/18.
 //  Copyright © 2018 Taylor M de Jonge. All rights reserved.
 //
 
@@ -17,8 +17,8 @@ class Colors{
     static let tempcolor = UIColor(red: 246/255, green: 113/255, blue: 78/255, alpha: 0.9)
     static let color0 = UIColor(red: 250/255, green: 175/255, blue: 50/255, alpha: 0.9)
     static let color00 = UIColor(red: 250/255, green: 220/255, blue: 127/255, alpha: 0.9)
-
-
-
+    
+    
+    
 }
 

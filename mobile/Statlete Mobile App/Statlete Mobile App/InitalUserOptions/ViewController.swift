@@ -42,7 +42,7 @@ final class GradientView: UIView{
         var c: UIColor = UIColor(red: 247/255, green: 231/255, blue: 89/255, alpha: 1)
         let gradient: CAGradientLayer = CAGradientLayer()
         gradient.frame = CGRect(x: 0, y: 0, width: superview!.frame.size.width, height: superview!.frame.size.height)
-      gradient.colors = [Colors.color3.cgColor, Colors.color0.cgColor]
+      gradient.colors = [Colors.color2.cgColor, Colors.color0.cgColor]
       
         gradient.zPosition = -1
       

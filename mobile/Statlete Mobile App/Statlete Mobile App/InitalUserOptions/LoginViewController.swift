@@ -10,21 +10,36 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
-    @IBOutlet weak var usernameTextField: UITextField!
-    
+   
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var passwordTextField: UITextField!
     
+    @IBOutlet weak var emailTextField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-        usernameTextField.layer.borderWidth = 0.8
-        usernameTextField.layer.borderColor = UIColor.red.cgColor
-        passwordTextField.layer.borderWidth = 0.8
-        passwordTextField.layer.borderColor = UIColor.red.cgColor
         
-        loginButton.layer.borderWidth = 0.8
-        loginButton.layer.borderColor = UIColor.red.cgColor
+        
+        let emailPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.emailTextField.frame.height))
+        let passwordPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.passwordTextField.frame.height))
+        
+        let emailline = CALayer()
+        emailline.frame = CGRect(x: emailPaddingView.frame.width, y: emailTextField.frame.height - 1, width: emailTextField.frame.width + emailPaddingView.frame.width, height: 1)
+        let passwordline = CALayer()
+        passwordline.frame = CGRect(x: passwordPaddingView.frame.width, y: passwordTextField.frame.height - 1, width: passwordTextField.frame.width + passwordPaddingView.frame.width, height: 1)
+        passwordline.backgroundColor = UIColor.white.cgColor
+        emailline.backgroundColor = UIColor.white.cgColor
+        
+        emailTextField.leftView = emailPaddingView
+        emailTextField.leftViewMode = UITextFieldViewMode.always
+        emailPaddingView.layer.addSublayer(emailline)
+        
+        passwordTextField.leftView = passwordPaddingView
+        passwordTextField.leftViewMode = UITextFieldViewMode.always
+        passwordPaddingView.layer.addSublayer(passwordline)
+
+        
+        loginButton.layer.cornerRadius = 10
     
 
     }

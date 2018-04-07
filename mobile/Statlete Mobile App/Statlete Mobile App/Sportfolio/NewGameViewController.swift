@@ -10,12 +10,14 @@ import UIKit
 
 class NewGameViewController: UIViewController {
 
+    var pickerData: [Int] = [10, 12, 15]
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
 
+    @IBOutlet weak var durationPicker: UIPickerView!
     @IBOutlet weak var opponentNameTextField: UITextField!
     @IBOutlet weak var nameTextField: UITextField!
     override func didReceiveMemoryWarning() {

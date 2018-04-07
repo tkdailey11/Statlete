@@ -10,37 +10,45 @@ import UIKit
 
 class CreateAccountViewController: UIViewController{
     
+    @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var createAccountButton: UIButton!
-    @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var nameTextField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // text field padding
         let namePaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.nameTextField.frame.height))
-         let usernamePaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.usernameTextField.frame.height))
-         let passwordPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.passwordTextField.frame.height))
-        // nameTextField.layer.borderColor = UIColor.red.cgColor
-        // nameTextField.layer.borderWidth = 0.5
+        let emailPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.emailTextField.frame.height))
+        let passwordPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.passwordTextField.frame.height))
+       
+        // text field underline border
+        let nameline = CALayer()
+        nameline.frame = CGRect(x: namePaddingView.frame.width, y: nameTextField.frame.height - 1, width: nameTextField.frame.width + namePaddingView.frame.width, height: 1)
+        nameline.backgroundColor = UIColor.white.cgColor
+        let emailline = CALayer()
+        emailline.frame = CGRect(x: emailPaddingView.frame.width, y: nameTextField.frame.height - 1, width: nameTextField.frame.width + emailPaddingView.frame.width, height: 1)
+        emailline.backgroundColor = UIColor.white.cgColor
+        let passwordline = CALayer()
+        passwordline.frame = CGRect(x: passwordPaddingView.frame.width, y: passwordTextField.frame.height - 1, width: passwordTextField.frame.width + passwordPaddingView.frame.width, height: 1)
+        passwordline.backgroundColor = UIColor.white.cgColor
+   
+        // add attributes to text fields
         nameTextField.leftView = namePaddingView
         nameTextField.leftViewMode = UITextFieldViewMode.always
+        namePaddingView.layer.addSublayer(nameline)
         
-        let border = CALayer()
-        let width = CGFloat(1.0)
-        border.borderColor = UIColor.white.cgColor
-        border.frame = CGRect(x: 0, y: nameTextField.frame.size.height - width, width: nameTextField.frame.width, height: 1)
-        nameTextField.layer.addSublayer(border)
-        nameTextField.layer.masksToBounds = true
-        usernameTextField.layer.borderColor = UIColor.red.cgColor
-        usernameTextField.layer.borderWidth = 0.5
-        usernameTextField.leftView = usernamePaddingView
-        usernameTextField.leftViewMode = UITextFieldViewMode.always
-        passwordTextField.layer.borderColor = UIColor.red.cgColor
-        passwordTextField.layer.borderWidth = 0.5
+        emailTextField.leftView = emailPaddingView
+        emailTextField.leftViewMode = UITextFieldViewMode.always
+        emailPaddingView.layer.addSublayer(emailline)
+
         passwordTextField.leftView = passwordPaddingView
         passwordTextField.leftViewMode = UITextFieldViewMode.always
-        createAccountButton.layer.borderWidth = 0.8
-        createAccountButton.layer.borderColor = UIColor.red.cgColor
+        passwordPaddingView.layer.addSublayer(passwordline)
+
+        createAccountButton.layer.cornerRadius = 10
+        
         
     }
   

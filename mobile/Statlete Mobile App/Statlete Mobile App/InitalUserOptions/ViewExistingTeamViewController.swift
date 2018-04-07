@@ -10,16 +10,23 @@ import UIKit
 
 class ViewExistingTeamViewController: UIViewController {
 
-  
+    @IBOutlet weak var viewButton: UIButton!
+    @IBOutlet weak var teamIDTextField: UITextField!
     @IBOutlet weak var backButton: UIButton!
-    @IBOutlet weak var TeamIDTextField: UITextField!
-    @IBOutlet weak var ViewButton: UIButton!
+   
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-        ViewButton.layer.borderWidth = 0.8
-        ViewButton.layer.borderColor = UIColor.red.cgColor
+        let teamPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.teamIDTextField.frame.height))
+        let teamline = CALayer()
+        teamline.frame = CGRect(x: teamPaddingView.frame.width, y: teamIDTextField.frame.height - 1, width: teamIDTextField.frame.width + teamPaddingView.frame.width, height: 1)
+        
+        teamline.backgroundColor = UIColor.white.cgColor
+        teamIDTextField.leftView = teamPaddingView
+        teamIDTextField.leftViewMode = UITextFieldViewMode.always
+        teamPaddingView.layer.addSublayer(teamline)
+        viewButton.layer.cornerRadius = 10
+        
         //   _ = navigationController?.popViewController(animated: true)
     }
    
