@@ -10,9 +10,8 @@ import UIKit
 
 class StatView: UIControl, UITableViewDelegate, UITableViewDataSource {
     
-    let tableView = UITableView()
-    
-    
+    let playerTableView = UITableView()
+    var teamStatView: TeamStatView = TeamStatView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,14 +25,19 @@ class StatView: UIControl, UITableViewDelegate, UITableViewDataSource {
     
     func commonInit() {
         backgroundColor = UIColor.black
-        tableView.delegate = self
-        tableView.dataSource = self
+        playerTableView.delegate = self
+        playerTableView.dataSource = self
         
         let nib = UINib.init(nibName: "PlayerStatCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "PlayerStatCell")
+        playerTableView.register(nib, forCellReuseIdentifier: "PlayerStatCell")
         
-        addSubview(tableView)
-        tableView.frame = CGRect(x: bounds.minX, y: bounds.minY + 60, width: bounds.width, height: bounds.height - 60)
+        addSubview(playerTableView)
+        playerTableView.frame = CGRect(x: bounds.minX, y: bounds.minY + 60, width: bounds.width, height: bounds.height - 60)
+        
+        teamStatView = TeamStatView(frame: CGRect(x: bounds.minX, y: bounds.minY + 60, width: bounds.width, height: bounds.height - 60))
+        addSubview(teamStatView)
+        sendSubview(toBack: playerTableView)
+        
         
         let playerStatsButton = UIButton()
         let teamStatsButton = UIButton()
@@ -44,6 +48,7 @@ class StatView: UIControl, UITableViewDelegate, UITableViewDataSource {
         teamStatsButton.frame = CGRect(x: bounds.minX, y: bounds.minY + 10, width: bounds.width/2, height: 40)
         teamStatsButton.titleLabel?.textAlignment = .center
         teamStatsButton.titleLabel?.font = UIFont(name: "Helvetica", size: 20)
+        teamStatsButton.addTarget(self, action: #selector(teamButtonPressed), for: .touchUpInside)
         addSubview(teamStatsButton)
         
         playerStatsButton.backgroundColor = UIColor.clear
@@ -52,7 +57,18 @@ class StatView: UIControl, UITableViewDelegate, UITableViewDataSource {
         playerStatsButton.frame = CGRect(x: bounds.midX, y: bounds.minY + 10, width: bounds.width/2, height: 40)
         playerStatsButton.titleLabel?.textAlignment = .center
         playerStatsButton.titleLabel?.font = UIFont(name: "Helvetica", size: 20)
+        playerStatsButton.addTarget(self, action: #selector(playerButtonPressed), for: .touchUpInside)
         addSubview(playerStatsButton)
+    }
+    
+    @objc func teamButtonPressed() {
+        sendSubview(toBack: playerTableView)
+        bringSubview(toFront: teamStatView)
+    }
+    
+    @objc func playerButtonPressed() {
+        sendSubview(toBack: teamStatView)
+        bringSubview(toFront: playerTableView)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -61,12 +77,12 @@ class StatView: UIControl, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "PlayerStatCell", for: indexPath) as? PlayerStatCell {
+            if let cell = playerTableView.dequeueReusableCell(withIdentifier: "PlayerStatCell", for: indexPath) as? PlayerStatCell {
                 cell.headerInit()
                 return cell
             }
         }
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "PlayerStatCell", for: indexPath) as? PlayerStatCell {
+        if let cell = playerTableView.dequeueReusableCell(withIdentifier: "PlayerStatCell", for: indexPath) as? PlayerStatCell {
             cell.commonInit(number: 15, name: "Sehestedt, B.", minutes: 55, goals: 0, assists: 1, shots: 2, shotsOnGoal: 1)
             return cell
         }

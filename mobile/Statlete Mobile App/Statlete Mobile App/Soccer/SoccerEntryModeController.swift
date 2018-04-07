@@ -87,6 +87,8 @@ class SoccerEntryModeController: UIViewController {
             view.bringSubview(toFront: shotChartEntryView)
         case 3:
             view.bringSubview(toFront: statView)
+            statView.bringSubview(toFront: statView.teamStatView)
+            statView.sendSubview(toBack: statView.playerTableView)
         default:
             print("Nothing")
         }

@@ -21,7 +21,7 @@
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dKu-ct-jHg">
                         <rect key="frame" x="240" y="10" width="60" height="60"/>
-                        <color key="backgroundColor" red="0.42352941176470588" green="0.047058823529411764" blue="0.047058823529411764" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.91855984930000001" green="0.28103846310000002" blue="0.34218975899999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="60" id="hcg-eL-9VP"/>
                             <constraint firstAttribute="width" constant="60" id="xbi-4K-gzE"/>
@@ -38,7 +38,7 @@
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3I7-cl-NNF">
                         <rect key="frame" x="20" y="10" width="60" height="60"/>
-                        <color key="backgroundColor" red="0.42352941179999998" green="0.047058823530000002" blue="0.047058823530000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.91855984930000001" green="0.28103846310000002" blue="0.34218975899999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="60" id="jHb-RC-rLG"/>
                             <constraint firstAttribute="height" constant="60" id="t0C-wb-UlS"/>
@@ -57,7 +57,7 @@
                         <rect key="frame" x="95" y="54" width="131" height="21"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
+                        <color key="textColor" red="0.77445560690000004" green="0.2444855869" blue="0.40578752759999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="soccer" translatesAutoresizingMaskIntoConstraints="NO" id="e5K-c2-UhC">
@@ -68,6 +68,7 @@
                         </constraints>
                     </imageView>
                 </subviews>
+                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
                     <constraint firstItem="e5K-c2-UhC" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="5cI-vG-b7T"/>
                     <constraint firstItem="3I7-cl-NNF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="9e1-JB-t5E"/>

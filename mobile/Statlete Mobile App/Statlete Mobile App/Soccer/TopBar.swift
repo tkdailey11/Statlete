@@ -14,8 +14,8 @@ class TopBar: UIControl {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = UIColor.white
-        gameLabel.textColor = UIColor(red: 108.0/255.0, green: 12.0/255.0, blue: 12.0/255.0, alpha: 1.0)
+        backgroundColor = Colors.color1
+        gameLabel.textColor = UIColor.white
         gameLabel.frame = CGRect(x: bounds.minX + (bounds.width/8), y: bounds.midY - (bounds.height/4), width: 3*bounds.width/4, height: 3.0 / 4.0 * bounds.height)
         gameLabel.textAlignment = .center
         gameLabel.text = ""
