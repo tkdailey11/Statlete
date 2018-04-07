@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="TeamStatCell" customModule="Statlete_Mobile_App" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="39.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a60-XP-xF9">
+                        <rect key="frame" x="85" y="7.5" width="150" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="25" id="aT5-Oz-AZa"/>
+                            <constraint firstAttribute="width" constant="150" id="f10-nk-X3a"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZHy-ug-6wD">
+                        <rect key="frame" x="243" y="10" width="61" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YSg-OC-WY6">
+                        <rect key="frame" x="16" y="10" width="61" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstItem="YSg-OC-WY6" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="9Da-ij-ic2"/>
+                    <constraint firstItem="a60-XP-xF9" firstAttribute="leading" secondItem="YSg-OC-WY6" secondAttribute="trailing" constant="8" id="A4A-24-h1g"/>
+                    <constraint firstItem="ZHy-ug-6wD" firstAttribute="leading" secondItem="a60-XP-xF9" secondAttribute="trailing" constant="8" id="Eii-Ej-HNW"/>
+                    <constraint firstItem="ZHy-ug-6wD" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="NIM-Z6-YZc"/>
+                    <constraint firstAttribute="trailing" secondItem="ZHy-ug-6wD" secondAttribute="trailing" constant="16" id="g2M-UH-r5i"/>
+                    <constraint firstItem="a60-XP-xF9" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="iL8-Gp-Bvf"/>
+                    <constraint firstItem="YSg-OC-WY6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="jsB-cS-iwO"/>
+                    <constraint firstItem="a60-XP-xF9" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="tEY-eY-wbY"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="myTeamLabel" destination="YSg-OC-WY6" id="4ms-Ir-moH"/>
+                <outlet property="opposingTeamLabel" destination="ZHy-ug-6wD" id="OQj-79-9hX"/>
+                <outlet property="statLabel" destination="a60-XP-xF9" id="ELf-IX-pgl"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>

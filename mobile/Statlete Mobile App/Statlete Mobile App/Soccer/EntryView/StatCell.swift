@@ -10,6 +10,8 @@ import UIKit
 
 class StatCell: UITableViewCell {
     
+    @IBOutlet var picture: UIImageView!
+    
     @IBOutlet weak var plusButton: UIButton!
     @IBOutlet weak var minusButton: UIButton!
     @IBOutlet weak var label: UILabel!
@@ -34,9 +36,13 @@ class StatCell: UITableViewCell {
         addSubview(label)
         self.autoresizingMask = [.flexibleWidth]
         
+        minusButton.backgroundColor = Colors.color2
+        plusButton.backgroundColor = Colors.color2
         
         plusButton.addTarget(self, action: #selector(plusButtonPressed), for: .touchUpInside)
         minusButton.addTarget(self, action: #selector(minusButtonPressed), for: .touchUpInside)
+        
+        selectionStyle = .none
     }
     
     @objc func plusButtonPressed() {

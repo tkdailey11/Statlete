@@ -38,7 +38,7 @@
                     </button>
                 </subviews>
             </view>
-            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.77445560690000004" green="0.2444855869" blue="0.40578752759999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="zOs-wj-VfP" firstAttribute="centerY" secondItem="ZTg-uK-7eu" secondAttribute="centerY" id="5xK-Kv-Aqf"/>
                 <constraint firstItem="zOs-wj-VfP" firstAttribute="centerX" secondItem="ZTg-uK-7eu" secondAttribute="centerX" id="gvh-wZ-Sdl"/>

@@ -38,6 +38,7 @@ class PlayerStatCell: UITableViewCell {
         assistsLabel.text = String(assists)
         shotsLabel.text = String(shots)
         shotsOnGoalLabel.text = String(shotsOnGoal)
+        selectionStyle = .none
         
     }
     
@@ -50,6 +51,6 @@ class PlayerStatCell: UITableViewCell {
         assistsLabel.text = "A"
         shotsLabel.text = "Shots"
         shotsOnGoalLabel.text = "SOG"
-        
+        selectionStyle = .none
     }
 }

@@ -10,18 +10,19 @@ import UIKit
 
 class ScoreboardView: UIControl {
     
-    
-    
     let myTeamScoreLabel: UILabel = UILabel()
     let opposingTeamScoreLabel: UILabel = UILabel()
     let timeLabel: UILabel = UILabel()
     let firstHalfLabel: UILabel = UILabel()
     let secondHalfLabel: UILabel = UILabel()
+    
+    
     var firstHalfCircleBounds: CGRect = CGRect()
     var firstHalfLabelBounds: CGRect = CGRect()
     var secondHalfCircleBounds: CGRect = CGRect()
     var secondHalfLabelBounds: CGRect = CGRect()
     let fontName: String = "Helvetica Neue"
+    
     var game: SoccerGame
     
     var timeBox: CGRect {

@@ -10,17 +10,30 @@ import UIKit
 
 class TopBar: UIControl {
     
-    var gameLabel: UILabel = UILabel()
+    let backButton = UIButton()
+    let gameLabel: UILabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = UIColor.white
-        gameLabel.textColor = UIColor(red: 108.0/255.0, green: 12.0/255.0, blue: 12.0/255.0, alpha: 1.0)
-        gameLabel.frame = CGRect(x: bounds.minX + (bounds.width/8), y: bounds.midY - (bounds.height/4), width: 3*bounds.width/4, height: 3.0 / 4.0 * bounds.height)
+        gameLabel.textColor = Colors.color2
+        gameLabel.frame = CGRect(x: bounds.minX + (bounds.width/4), y: bounds.midY - (bounds.height/4), width: bounds.width/2, height: 3.0 / 4.0 * bounds.height)
         gameLabel.textAlignment = .center
         gameLabel.text = ""
         gameLabel.font = UIFont(name: "Helvetica Neue", size: 25)
         addSubview(gameLabel)
+        
+        backButton.backgroundColor = UIColor.white
+        backButton.setTitleColor(Colors.color2, for: .normal)
+        backButton.titleLabel?.textAlignment = .center
+        backButton.setTitle("Back", for: .normal)
+        backButton.frame = CGRect(x: bounds.minX, y: bounds.maxY-30, width: 55, height: 30)
+        backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
+        addSubview(backButton)
+    }
+    
+    @objc func backButtonPressed() {
+        print("Back")
     }
     
     func setGameLabel(to label: String) {
