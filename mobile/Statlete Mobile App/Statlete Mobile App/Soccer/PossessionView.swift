@@ -49,6 +49,7 @@ class PossessionView: UIControl {
         possessionLabel.frame = CGRect(x: bounds.minX, y: bounds.minY, width: bounds.width, height: bounds.height/4)
         possessionLabel.textAlignment = .center
         possessionLabel.text = "Possession"
+        possessionLabel.font = textFont
         addSubview(possessionLabel)
         
         myTeamPossessionLabel.frame = myTeamPossessionBoxFrame

@@ -46,7 +46,8 @@ class SoccerTeamEntryView: UIControl, UITableViewDelegate, UITableViewDataSource
                 cell.picture.image = #imageLiteral(resourceName: "soccer")
             }
             else {
-                cell.picture.image = #imageLiteral(resourceName: "hoop")
+                cell.picture.frame = CGRect(x: cell.picture.frame.minX - cell.picture.frame.width/4, y: cell.picture.frame.minY, width: cell.picture.frame.width * 3 / 2, height: cell.picture.frame.height)
+                cell.picture.image = #imageLiteral(resourceName: "goal")
             }
             return cell
         }

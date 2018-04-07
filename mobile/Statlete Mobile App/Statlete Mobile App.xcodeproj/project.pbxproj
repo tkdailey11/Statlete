@@ -20,11 +20,9 @@
 		043A43842075586C005E481C /* SoccerEntryModeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A437A2075586C005E481C /* SoccerEntryModeController.swift */; };
 		043A43852075586C005E481C /* SoccerEntryLiveStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A437B2075586C005E481C /* SoccerEntryLiveStatsView.swift */; };
 		0451D45120744CF700AF6524 /* ScoreboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0451D45020744CF700AF6524 /* ScoreboardView.xib */; };
-		04C374B720783B39000F7063 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C374B620783B39000F7063 /* Colors.swift */; };
 		04C374B920783C3F000F7063 /* TeamStatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C374B820783C3F000F7063 /* TeamStatView.swift */; };
 		04C374BC2078401E000F7063 /* TeamStatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C374BA2078401E000F7063 /* TeamStatCell.swift */; };
 		04C374BD2078401E000F7063 /* TeamStatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04C374BB2078401E000F7063 /* TeamStatCell.xib */; };
-		04C374C5207885AF000F7063 /* BottomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C374C4207885AF000F7063 /* BottomTabBar.swift */; };
 		04D50BC62076A61100368924 /* StatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D50BC52076A61100368924 /* StatView.swift */; };
 		04E3ED7120755DA5000F7839 /* StatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E3ED6F20755DA5000F7839 /* StatCell.swift */; };
 		04E3ED7220755DA5000F7839 /* StatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04E3ED7020755DA5000F7839 /* StatCell.xib */; };
@@ -41,12 +39,10 @@
 		DC0EE7812050FC1E00D550F5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EE7802050FC1E00D550F5 /* User.swift */; };
 		DC0EE783205111C700D550F5 /* Sportfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EE782205111C700D550F5 /* Sportfolio.swift */; };
 		DC0EE7852051128100D550F5 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EE7842051128100D550F5 /* Game.swift */; };
-
 		DC1914102078390800D37842 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC19140F2078390800D37842 /* Colors.swift */; };
 		DC19141220783A3700D37842 /* UnderlinedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC19141120783A3700D37842 /* UnderlinedTextField.swift */; };
 		DC19141A20784F0600D37842 /* background.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC19141920784F0600D37842 /* background.swift */; };
 		DC19141C20784F1200D37842 /* background.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC19141B20784F1200D37842 /* background.xib */; };
-
 		DC4FDB6520705723005DAD60 /* UserHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4FDB6320705723005DAD60 /* UserHomeViewController.swift */; };
 		DC5DFA03207479C900B7BD02 /* ViewExistingTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5DFA02207479C900B7BD02 /* ViewExistingTeamViewController.swift */; };
 		DC6F8DDD2074896C00C38E4D /* AddTeamSportfolioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6F8DDC2074896C00C38E4D /* AddTeamSportfolioViewController.swift */; };
@@ -78,11 +74,9 @@
 		043A437A2075586C005E481C /* SoccerEntryModeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoccerEntryModeController.swift; sourceTree = "<group>"; };
 		043A437B2075586C005E481C /* SoccerEntryLiveStatsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoccerEntryLiveStatsView.swift; sourceTree = "<group>"; };
 		0451D45020744CF700AF6524 /* ScoreboardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScoreboardView.xib; sourceTree = "<group>"; };
-		04C374B620783B39000F7063 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		04C374B820783C3F000F7063 /* TeamStatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamStatView.swift; sourceTree = "<group>"; };
 		04C374BA2078401E000F7063 /* TeamStatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamStatCell.swift; sourceTree = "<group>"; };
 		04C374BB2078401E000F7063 /* TeamStatCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeamStatCell.xib; sourceTree = "<group>"; };
-		04C374C4207885AF000F7063 /* BottomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomTabBar.swift; sourceTree = "<group>"; };
 		04D50BC52076A61100368924 /* StatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatView.swift; sourceTree = "<group>"; };
 		04E3ED6F20755DA5000F7839 /* StatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatCell.swift; sourceTree = "<group>"; };
 		04E3ED7020755DA5000F7839 /* StatCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatCell.xib; sourceTree = "<group>"; };
@@ -101,12 +95,10 @@
 		DC0EE7802050FC1E00D550F5 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DC0EE782205111C700D550F5 /* Sportfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sportfolio.swift; sourceTree = "<group>"; };
 		DC0EE7842051128100D550F5 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
-
 		DC19140F2078390800D37842 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		DC19141120783A3700D37842 /* UnderlinedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlinedTextField.swift; sourceTree = "<group>"; };
 		DC19141920784F0600D37842 /* background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = background.swift; sourceTree = "<group>"; };
 		DC19141B20784F1200D37842 /* background.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = background.xib; sourceTree = "<group>"; };
-
 		DC4FDB6320705723005DAD60 /* UserHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHomeViewController.swift; sourceTree = "<group>"; };
 		DC5DFA02207479C900B7BD02 /* ViewExistingTeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExistingTeamViewController.swift; sourceTree = "<group>"; };
 		DC6F8DDC2074896C00C38E4D /* AddTeamSportfolioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTeamSportfolioViewController.swift; sourceTree = "<group>"; };
@@ -190,7 +182,6 @@
 		DC0EE75F204F78D700D550F5 = {
 			isa = PBXGroup;
 			children = (
-				04C374C4207885AF000F7063 /* BottomTabBar.swift */,
 				DC0EE76A204F78D700D550F5 /* Statlete Mobile App */,
 				DC0EE769204F78D700D550F5 /* Products */,
 			);
@@ -219,13 +210,10 @@
 				DC0EE772204F78D700D550F5 /* Statlete_Mobile_App.xcdatamodeld */,
 				DCFD0EF72072C1BE0048B7E0 /* Model */,
 				0451D44F20744CC700AF6524 /* Soccer */,
-
 				DC19140F2078390800D37842 /* Colors.swift */,
 				DC19141120783A3700D37842 /* UnderlinedTextField.swift */,
 				DC19141920784F0600D37842 /* background.swift */,
 				DC19141B20784F1200D37842 /* background.xib */,
-
-				
 			);
 			path = "Statlete Mobile App";
 			sourceTree = "<group>";
@@ -371,7 +359,6 @@
 				043A43842075586C005E481C /* SoccerEntryModeController.swift in Sources */,
 				04F32DA02076F37B00E9C0CA /* PlayerStatCell.swift in Sources */,
 				043A437D2075586C005E481C /* PossessionView.swift in Sources */,
-				04C374C5207885AF000F7063 /* BottomTabBar.swift in Sources */,
 				043A43802075586C005E481C /* ScoreboardView.swift in Sources */,
 				DCFD0EF92072C22E0048B7E0 /* LoginViewController.swift in Sources */,
 				043A43852075586C005E481C /* SoccerEntryLiveStatsView.swift in Sources */,
@@ -402,10 +389,8 @@
 				043A437E2075586C005E481C /* SubstitutionBar.swift in Sources */,
 				043A437F2075586C005E481C /* SoccerShotChartEntryView.swift in Sources */,
 				DC6F8DE72074983600C38E4D /* TeamSportfolioSetupViewController.swift in Sources */,
-
 				DC19141220783A3700D37842 /* UnderlinedTextField.swift in Sources */,
 				DC1914102078390800D37842 /* Colors.swift in Sources */,
-
 				DC6F8DE12074940A00C38E4D /* SportfolioViewController.swift in Sources */,
 				DC6F8DDD2074896C00C38E4D /* AddTeamSportfolioViewController.swift in Sources */,
 				043A437C2075586C005E481C /* SoccerGame.swift in Sources */,

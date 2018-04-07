@@ -21,7 +21,7 @@
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dKu-ct-jHg">
                         <rect key="frame" x="220" y="10" width="60" height="60"/>
-                        <color key="backgroundColor" red="0.91855984930000001" green="0.28103846310000002" blue="0.34218975899999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="1" green="0.25882352939999997" blue="0.10980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="60" id="hcg-eL-9VP"/>
                             <constraint firstAttribute="width" constant="60" id="xbi-4K-gzE"/>
@@ -38,7 +38,7 @@
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3I7-cl-NNF">
                         <rect key="frame" x="40" y="10" width="60" height="60"/>
-                        <color key="backgroundColor" red="0.91855984930000001" green="0.28103846310000002" blue="0.34218975899999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="1" green="0.25882352939999997" blue="0.10980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="60" id="jHb-RC-rLG"/>
                             <constraint firstAttribute="height" constant="60" id="t0C-wb-UlS"/>
@@ -64,7 +64,7 @@
                         <rect key="frame" x="137" y="5" width="46" height="46"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="46" id="2u0-mO-DYX"/>
-                            <constraint firstAttribute="width" constant="46" id="Eka-fo-9c8"/>
+                            <constraint firstAttribute="width" constant="46" id="Jfb-Xh-rsh"/>
                         </constraints>
                     </imageView>
                 </subviews>
@@ -75,7 +75,6 @@
                     <constraint firstItem="dKu-ct-jHg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Iif-7B-GLt"/>
                     <constraint firstAttribute="bottom" secondItem="dKu-ct-jHg" secondAttribute="bottom" constant="10" id="PrG-9o-8NS"/>
                     <constraint firstAttribute="bottom" secondItem="3I7-cl-NNF" secondAttribute="bottom" constant="10" id="UhE-EJ-5pP"/>
-                    <constraint firstItem="e5K-c2-UhC" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="eY1-Bu-k7Q"/>
                     <constraint firstAttribute="trailing" secondItem="dKu-ct-jHg" secondAttribute="trailing" constant="40" id="j84-pC-jDN"/>
                     <constraint firstItem="e5K-c2-UhC" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="poV-XM-K6M"/>
                     <constraint firstItem="3I7-cl-NNF" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="tDF-Yg-5Ek"/>

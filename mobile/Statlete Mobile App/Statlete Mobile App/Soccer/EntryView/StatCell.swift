@@ -43,6 +43,7 @@ class StatCell: UITableViewCell {
         minusButton.addTarget(self, action: #selector(minusButtonPressed), for: .touchUpInside)
         
         selectionStyle = .none
+        picture.autoresizingMask = [.flexibleWidth]
     }
     
     @objc func plusButtonPressed() {
