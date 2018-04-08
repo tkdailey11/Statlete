@@ -59,8 +59,8 @@
 		DC936F0F207963E200F4E86C /* GamesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC936F0E207963E200F4E86C /* GamesViewController.swift */; };
 		DC936F11207963F100F4E86C /* PlayersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC936F10207963F100F4E86C /* PlayersViewController.swift */; };
 		DCC50790206A0E2A00F64717 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC5078F206A0E2A00F64717 /* CreateAccountViewController.swift */; };
+		DCD43E09207ADB3C007F0C05 /* ChooseSportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD43E08207ADB3C007F0C05 /* ChooseSportViewController.swift */; };
 		DCFD0EF92072C22E0048B7E0 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFD0EF82072C22E0048B7E0 /* LoginViewController.swift */; };
-		DCFD0EFB2072C4630048B7E0 /* SportChooserPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCFD0EFA2072C4630048B7E0 /* SportChooserPopup.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -118,8 +118,8 @@
 		DC936F0E207963E200F4E86C /* GamesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesViewController.swift; sourceTree = "<group>"; };
 		DC936F10207963F100F4E86C /* PlayersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersViewController.swift; sourceTree = "<group>"; };
 		DCC5078F206A0E2A00F64717 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
+		DCD43E08207ADB3C007F0C05 /* ChooseSportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseSportViewController.swift; sourceTree = "<group>"; };
 		DCFD0EF82072C22E0048B7E0 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		DCFD0EFA2072C4630048B7E0 /* SportChooserPopup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SportChooserPopup.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,6 +226,7 @@
 				DC47DC682079869800AB9684 /* PlayerCollectionCell.swift */,
 				DC83F24F207993AF005623AA /* GameCell.swift */,
 				DC83F250207993AF005623AA /* GameCell.xib */,
+				DCD43E08207ADB3C007F0C05 /* ChooseSportViewController.swift */,
 			);
 			path = "Statlete Mobile App";
 			sourceTree = "<group>";
@@ -246,7 +247,6 @@
 			children = (
 				DC6F8DDC2074896C00C38E4D /* AddTeamSportfolioViewController.swift */,
 				DC6F8DE82074988400C38E4D /* PlayerSportfolioSetupViewController.swift */,
-				DCFD0EFA2072C4630048B7E0 /* SportChooserPopup.xib */,
 				DC6F8DEA20749C2400C38E4D /* ChoosePlayersViewController.swift */,
 				DC6F8DE62074983600C38E4D /* TeamSportfolioSetupViewController.swift */,
 			);
@@ -350,7 +350,6 @@
 				DC0C91C220734066008A0B05 /* SportfolioCell.xib in Resources */,
 				04C374BD2078401E000F7063 /* TeamStatCell.xib in Resources */,
 				DC83F252207993AF005623AA /* GameCell.xib in Resources */,
-				DCFD0EFB2072C4630048B7E0 /* SportChooserPopup.xib in Resources */,
 				04F32DA12076F37B00E9C0CA /* PlayerStatCell.xib in Resources */,
 				0451D45120744CF700AF6524 /* ScoreboardView.xib in Resources */,
 				DC0EE771204F78D700D550F5 /* Main.storyboard in Resources */,
@@ -374,6 +373,7 @@
 				043A43802075586C005E481C /* ScoreboardView.swift in Sources */,
 				DCFD0EF92072C22E0048B7E0 /* LoginViewController.swift in Sources */,
 				043A43852075586C005E481C /* SoccerEntryLiveStatsView.swift in Sources */,
+				DCD43E09207ADB3C007F0C05 /* ChooseSportViewController.swift in Sources */,
 				DC19141A20784F0600D37842 /* background.swift in Sources */,
 				DCC50790206A0E2A00F64717 /* CreateAccountViewController.swift in Sources */,
 				04C374BC2078401E000F7063 /* TeamStatCell.swift in Sources */,
