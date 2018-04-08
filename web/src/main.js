@@ -17,6 +17,9 @@ Vue.component('player-selection-box', PlayerSelectionBox);
 import PlayerEntryBox from '@/components/PlayerEntryBox';
 Vue.component('player-entry-box', PlayerEntryBox);
 
+import GamesList from '@/components/GamesList';
+Vue.component('games-list', GamesList);
+
 import jQuery from 'jquery'
 global.jQuery = jQuery
 import popper from 'popper.js'
@@ -32,7 +35,7 @@ Vue.use(VueFormWizard)
 Vue.use(VueGoodWizard)
 
 let app;
-firebase.initializeApp(config)
+firebase.initializeApp(config);
 
 firebase.auth().onAuthStateChanged(function(user) {
   if(!app) {

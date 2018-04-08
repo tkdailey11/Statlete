@@ -18,9 +18,7 @@
       <button @click="logout">Logout</button>
       <button @click="openNav">Open Nav</button>
       <br>
-      <br>
-      <br>
-      <br>
+      <games-list></games-list>
       <br>
       <button @click="showTeam">New Team Account</button>
       <br>
@@ -94,7 +92,7 @@
 </template>
 
 <script>
-  import firebase from 'firebase';
+  import firebase from 'firebase'
 
   export default {
     name: 'HelloWorld',
@@ -147,6 +145,12 @@
       });
     },
     methods: {
+      sendStuffToDB: function() {
+        console.log("SUBMIT TO DB");
+        firebase.database().ref('Users/').child('tkdailey11@gmailcom').child('AdminTeams').update({
+          "team1" : "qeguqer"
+        });
+      },
       logout: function() {
         firebase.auth().signOut().then(() => {
           this.$router.replace('login')
@@ -205,9 +209,6 @@
           console.log('Players: ');
           var s = this.sportfolios.splice(-1)[0];
           console.log(s);
-          // for (var player in this.sportfolios[0]) {
-          //   console.log(player.num);
-          // }
           console.log('Sport: ' + this.selectedSport);
           console.log('TeamName: ' + this.teamName);
           console.log('**************************************');
