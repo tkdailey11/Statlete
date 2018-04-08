@@ -10,39 +10,34 @@ import UIKit
 
 class SportfolioViewController: UIViewController {
 
+    @IBOutlet weak var pageView: UIView!
+    
     @IBOutlet weak var sideView: UIView!
-    @IBOutlet weak var blurView: UIVisualEffectView!
     @IBOutlet weak var viewConstraint: NSLayoutConstraint!
-    @IBOutlet weak var pageViewContainer: UIView!
- 
-    @IBAction func menuButtonClicked(_ sender: Any)
-    {
-        print("menu clicked")
+    
+    @IBOutlet weak var blurView: UIVisualEffectView!
+    @IBAction func menuButton(_ sender: UIButton) {
         if(isSideMenuHidden){
-            self.viewConstraint.constant = 0
-        }
-        else{
-            self.viewConstraint.constant = -175
+         viewConstraint.constant = 0
+         pageView.isUserInteractionEnabled = false
+        } else{
+         viewConstraint.constant = -175
+         pageView.isUserInteractionEnabled = true
         }
         isSideMenuHidden = !isSideMenuHidden
+       
     }
     
-    @IBAction func tappedOutside(_ sender: UITapGestureRecognizer) {
-        // TO DO 
-        
-    }
-    
-    var isSideMenuHidden: Bool = true
+  var isSideMenuHidden: Bool = true
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         blurView.layer.cornerRadius = 15
-        sideView.layer.shadowColor = UIColor.black.cgColor
+        blurView.layer.shadowColor = UIColor.black.cgColor
         sideView.layer.shadowOpacity = 0.8
         sideView.layer.shadowOffset = CGSize(width: 5, height: 0)
         viewConstraint.constant = -175
         
+      
        /* blurView.layer.cornerRadius = 15
         SideView.layer.shadowColor = UIColor.blue.cgColor
         SideView.layer.shadowOpacity = 0.8
@@ -57,8 +52,54 @@ class SportfolioViewController: UIViewController {
     }
  //   @IBOutlet weak var SideView: UIView!
     
-  //  @IBOutlet weak var blurView: UIVisualEffectView!
+    @IBAction func tapGesture(_ sender: UITapGestureRecognizer) {
+        let locationx = sender.location(in: view).x
+        
+        
+        if(isSideMenuHidden){
+            
+        }else{
+            if(locationx < 175){
+                print("inside bounds of slide menu")
+            }else{
+                viewConstraint.constant = -175
+                isSideMenuHidden = !isSideMenuHidden
+            }
+        }
+    }
+    //  @IBOutlet weak var blurView: UIVisualEffectView!
   //  @IBOutlet weak var viewConstraint: NSLayoutConstraint!
+    /*
+    @IBAction func panPerformed(_ sender: UIPanGestureRecognizer) {
+        print("detected")
+        let location = sender.location(in: view).x
+        if (isSideMenuHidden ){
+            viewConstraint.constant = 0
+            } else{
+            viewConstraint.constant = -175
+            }
+            isSideMenuHidden = !isSideMenuHidden
+        }
+       */
+      
+        /*
+        if(sender.state == .began || sender.state == .changed){
+            let translation = sender.translation(in: self.view).x
+            if(translation > 0){ // swipe right
+                if viewConstraint.constant < 20{
+                self.viewConstraint.constant += translation
+                }
+            }else{ // swipe left
+                
+            }
+        }else if(sender.state == .ended){
+            
+        }
+ */
+        
+   
+    
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

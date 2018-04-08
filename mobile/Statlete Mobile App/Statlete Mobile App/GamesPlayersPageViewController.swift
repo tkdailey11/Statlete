@@ -19,8 +19,8 @@ class GamesPlayersPageViewController: UIPageViewController, UIPageViewController
         self.dataSource = self
         
         // pages
-        let page1: UIViewController! = storyboard?.instantiateViewController(withIdentifier: "page1")
-        let page2: UIViewController! = storyboard?.instantiateViewController(withIdentifier: "page2")
+        let page1: UIViewController! = storyboard?.instantiateViewController(withIdentifier: "page1") as? GamesViewController
+        let page2: UIViewController! = storyboard?.instantiateViewController(withIdentifier: "page2") as? PlayersViewController
         pages.append(page1)
         pages.append(page2)
         setViewControllers([page1], direction: UIPageViewControllerNavigationDirection.forward, animated: true, completion: nil)
