@@ -19,7 +19,7 @@ class ViewExistingTeamViewController: UIViewController {
 
         let teamPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.teamIDTextField.frame.height))
         let teamline = CALayer()
-        teamline.frame = CGRect(x: teamPaddingView.frame.width, y: teamIDTextField.frame.height - 1, width: teamIDTextField.frame.width + teamPaddingView.frame.width, height: 1)
+        teamline.frame = CGRect(x: teamPaddingView.frame.width, y: teamIDTextField.frame.height - 1, width: teamIDTextField.frame.width - teamPaddingView.frame.width, height: 1)
         
         teamline.backgroundColor = UIColor.white.cgColor
         teamIDTextField.leftView = teamPaddingView

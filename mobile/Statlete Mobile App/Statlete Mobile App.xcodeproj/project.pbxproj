@@ -40,9 +40,7 @@
 		DC0EE783205111C700D550F5 /* Sportfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EE782205111C700D550F5 /* Sportfolio.swift */; };
 		DC0EE7852051128100D550F5 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EE7842051128100D550F5 /* Game.swift */; };
 		DC1914102078390800D37842 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC19140F2078390800D37842 /* Colors.swift */; };
-		DC19141220783A3700D37842 /* UnderlinedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC19141120783A3700D37842 /* UnderlinedTextField.swift */; };
-		DC19141A20784F0600D37842 /* background.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC19141920784F0600D37842 /* background.swift */; };
-		DC19141C20784F1200D37842 /* background.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC19141B20784F1200D37842 /* background.xib */; };
+		DC22AE1D207B1DED002DC4C2 /* ExistingTeamSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC22AE1C207B1DED002DC4C2 /* ExistingTeamSetupViewController.swift */; };
 		DC47DC692079869800AB9684 /* PlayerCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC47DC682079869800AB9684 /* PlayerCollectionCell.swift */; };
 		DC4FDB6520705723005DAD60 /* UserHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4FDB6320705723005DAD60 /* UserHomeViewController.swift */; };
 		DC5DFA03207479C900B7BD02 /* ViewExistingTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5DFA02207479C900B7BD02 /* ViewExistingTeamViewController.swift */; };
@@ -99,9 +97,7 @@
 		DC0EE782205111C700D550F5 /* Sportfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sportfolio.swift; sourceTree = "<group>"; };
 		DC0EE7842051128100D550F5 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		DC19140F2078390800D37842 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
-		DC19141120783A3700D37842 /* UnderlinedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlinedTextField.swift; sourceTree = "<group>"; };
-		DC19141920784F0600D37842 /* background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = background.swift; sourceTree = "<group>"; };
-		DC19141B20784F1200D37842 /* background.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = background.xib; sourceTree = "<group>"; };
+		DC22AE1C207B1DED002DC4C2 /* ExistingTeamSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExistingTeamSetupViewController.swift; sourceTree = "<group>"; };
 		DC47DC682079869800AB9684 /* PlayerCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerCollectionCell.swift; sourceTree = "<group>"; };
 		DC4FDB6320705723005DAD60 /* UserHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHomeViewController.swift; sourceTree = "<group>"; };
 		DC5DFA02207479C900B7BD02 /* ViewExistingTeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExistingTeamViewController.swift; sourceTree = "<group>"; };
@@ -207,26 +203,16 @@
 				DC0EE76B204F78D700D550F5 /* AppDelegate.swift */,
 				DC0EE76F204F78D700D550F5 /* Main.storyboard */,
 				DC0EE777204F78D700D550F5 /* LaunchScreen.storyboard */,
+				DC6F8DE2207494AF00C38E4D /* InitalUserOptions */,
+				DC6F8DEE2074AA7F00C38E4D /* Sportfolio Setup */,
 				DC6F8DF02074AB2600C38E4D /* User Home */,
 				DC6F8DEF2074AAA500C38E4D /* Sportfolio */,
-				DC6F8DEE2074AA7F00C38E4D /* Sportfolio Setup */,
-				DC6F8DE2207494AF00C38E4D /* InitalUserOptions */,
 				DC0EE775204F78D700D550F5 /* Assets.xcassets */,
 				DC0EE77A204F78D700D550F5 /* Info.plist */,
 				DC0EE772204F78D700D550F5 /* Statlete_Mobile_App.xcdatamodeld */,
 				DCFD0EF72072C1BE0048B7E0 /* Model */,
 				0451D44F20744CC700AF6524 /* Soccer */,
 				DC19140F2078390800D37842 /* Colors.swift */,
-				DC19141120783A3700D37842 /* UnderlinedTextField.swift */,
-				DC19141920784F0600D37842 /* background.swift */,
-				DC19141B20784F1200D37842 /* background.xib */,
-				DC936F0C207961F700F4E86C /* GamesPlayersPageViewController.swift */,
-				DC936F0E207963E200F4E86C /* GamesViewController.swift */,
-				DC936F10207963F100F4E86C /* PlayersViewController.swift */,
-				DC47DC682079869800AB9684 /* PlayerCollectionCell.swift */,
-				DC83F24F207993AF005623AA /* GameCell.swift */,
-				DC83F250207993AF005623AA /* GameCell.xib */,
-				DCD43E08207ADB3C007F0C05 /* ChooseSportViewController.swift */,
 			);
 			path = "Statlete Mobile App";
 			sourceTree = "<group>";
@@ -248,6 +234,8 @@
 				DC6F8DDC2074896C00C38E4D /* AddTeamSportfolioViewController.swift */,
 				DC6F8DE82074988400C38E4D /* PlayerSportfolioSetupViewController.swift */,
 				DC6F8DEA20749C2400C38E4D /* ChoosePlayersViewController.swift */,
+				DC22AE1C207B1DED002DC4C2 /* ExistingTeamSetupViewController.swift */,
+				DCD43E08207ADB3C007F0C05 /* ChooseSportViewController.swift */,
 				DC6F8DE62074983600C38E4D /* TeamSportfolioSetupViewController.swift */,
 			);
 			path = "Sportfolio Setup";
@@ -257,8 +245,14 @@
 			isa = PBXGroup;
 			children = (
 				DC6F8DE02074940A00C38E4D /* SportfolioViewController.swift */,
+				DC936F0C207961F700F4E86C /* GamesPlayersPageViewController.swift */,
+				DC936F10207963F100F4E86C /* PlayersViewController.swift */,
+				DC936F0E207963E200F4E86C /* GamesViewController.swift */,
+				DC47DC682079869800AB9684 /* PlayerCollectionCell.swift */,
 				DC6F8DE42074959C00C38E4D /* PlayerInTeamViewController.swift */,
 				DC6F8DEC2074A0B800C38E4D /* NewGameViewController.swift */,
+				DC83F24F207993AF005623AA /* GameCell.swift */,
+				DC83F250207993AF005623AA /* GameCell.xib */,
 			);
 			path = Sportfolio;
 			sourceTree = "<group>";
@@ -342,7 +336,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC19141C20784F1200D37842 /* background.xib in Resources */,
 				DC0EE779204F78D700D550F5 /* LaunchScreen.storyboard in Resources */,
 				04E3ED7220755DA5000F7839 /* StatCell.xib in Resources */,
 				041298A620759FB800FE0EE5 /* SubCell.xib in Resources */,
@@ -374,7 +367,6 @@
 				DCFD0EF92072C22E0048B7E0 /* LoginViewController.swift in Sources */,
 				043A43852075586C005E481C /* SoccerEntryLiveStatsView.swift in Sources */,
 				DCD43E09207ADB3C007F0C05 /* ChooseSportViewController.swift in Sources */,
-				DC19141A20784F0600D37842 /* background.swift in Sources */,
 				DCC50790206A0E2A00F64717 /* CreateAccountViewController.swift in Sources */,
 				04C374BC2078401E000F7063 /* TeamStatCell.swift in Sources */,
 				DC0EE7812050FC1E00D550F5 /* User.swift in Sources */,
@@ -397,10 +389,10 @@
 				DC6F8DEB20749C2400C38E4D /* ChoosePlayersViewController.swift in Sources */,
 				DC6F8DED2074A0B800C38E4D /* NewGameViewController.swift in Sources */,
 				04E3ED7120755DA5000F7839 /* StatCell.swift in Sources */,
+				DC22AE1D207B1DED002DC4C2 /* ExistingTeamSetupViewController.swift in Sources */,
 				043A437E2075586C005E481C /* SubstitutionBar.swift in Sources */,
 				043A437F2075586C005E481C /* SoccerShotChartEntryView.swift in Sources */,
 				DC6F8DE72074983600C38E4D /* TeamSportfolioSetupViewController.swift in Sources */,
-				DC19141220783A3700D37842 /* UnderlinedTextField.swift in Sources */,
 				DC1914102078390800D37842 /* Colors.swift in Sources */,
 				DC6F8DE12074940A00C38E4D /* SportfolioViewController.swift in Sources */,
 				DC6F8DDD2074896C00C38E4D /* AddTeamSportfolioViewController.swift in Sources */,
