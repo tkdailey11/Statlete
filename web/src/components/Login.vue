@@ -59,7 +59,7 @@
     border: 0;
     outline: 0;
     background: transparent;
-    border-bottom: 2px solid rgb(109,8,8);
+    border-bottom: 3px solid rgb(109,8,8);
   }
   button {
     margin-top: 20px;
