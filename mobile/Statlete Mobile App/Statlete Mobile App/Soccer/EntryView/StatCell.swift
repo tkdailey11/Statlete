@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol StatCellDelegate: class {
+    func plusButtonPressed(index: Int)
+    func minusButtonPressed(index: Int)
+}
+
 class StatCell: UITableViewCell {
     
     @IBOutlet var picture: UIImageView!
@@ -16,6 +21,8 @@ class StatCell: UITableViewCell {
     @IBOutlet weak var minusButton: UIButton!
     @IBOutlet weak var label: UILabel!
     
+    weak var delegate: StatCellDelegate? = nil
+    var index: Int?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,7 +36,8 @@ class StatCell: UITableViewCell {
     }
  
     
-    func commonInit(statName: String){
+    func commonInit(statName: String, index: Int){
+        self.index = index
         label.text = statName
         label.textAlignment = .center
         label.center.x = self.center.x
@@ -47,11 +55,11 @@ class StatCell: UITableViewCell {
     }
     
     @objc func plusButtonPressed() {
-        print("Plus Button Pressed in \(label.text!)")
+        delegate?.plusButtonPressed(index: index!)
     }
     
     @objc func minusButtonPressed() {
-        print("Minus Button Pressed in \(label.text!)")
+        delegate?.minusButtonPressed(index: index!)
     }
     
 }
