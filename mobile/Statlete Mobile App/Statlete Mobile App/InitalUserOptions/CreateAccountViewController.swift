@@ -25,13 +25,13 @@ class CreateAccountViewController: UIViewController{
        
         // text field underline border
         let nameline = CALayer()
-        nameline.frame = CGRect(x: namePaddingView.frame.width, y: nameTextField.frame.height - 1, width: nameTextField.frame.width + namePaddingView.frame.width, height: 1)
+        nameline.frame = CGRect(x: namePaddingView.frame.width, y: nameTextField.frame.height - 1, width: nameTextField.frame.width - namePaddingView.frame.width, height: 1)
         nameline.backgroundColor = UIColor.white.cgColor
         let emailline = CALayer()
-        emailline.frame = CGRect(x: emailPaddingView.frame.width, y: nameTextField.frame.height - 1, width: nameTextField.frame.width + emailPaddingView.frame.width, height: 1)
+        emailline.frame = CGRect(x: emailPaddingView.frame.width, y: nameTextField.frame.height - 1, width: nameTextField.frame.width - emailPaddingView.frame.width, height: 1)
         emailline.backgroundColor = UIColor.white.cgColor
         let passwordline = CALayer()
-        passwordline.frame = CGRect(x: passwordPaddingView.frame.width, y: passwordTextField.frame.height - 1, width: passwordTextField.frame.width + passwordPaddingView.frame.width, height: 1)
+        passwordline.frame = CGRect(x: passwordPaddingView.frame.width, y: passwordTextField.frame.height - 1, width: passwordTextField.frame.width - passwordPaddingView.frame.width, height: 1)
         passwordline.backgroundColor = UIColor.white.cgColor
    
         // add attributes to text fields

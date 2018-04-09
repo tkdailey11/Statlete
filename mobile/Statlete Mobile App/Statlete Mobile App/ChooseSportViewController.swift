@@ -15,6 +15,7 @@ class ChooseSportViewController: UIViewController {
         super.viewDidLoad()
         popupView.layer.cornerRadius = 15
         popupView.layer.masksToBounds = true
+     
 
     }
 
