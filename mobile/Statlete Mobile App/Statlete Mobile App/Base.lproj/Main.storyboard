@@ -283,7 +283,7 @@
                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="kUz-kU-ojt" kind="show" id="CPo-zL-c4W"/>
+                                    <segue destination="o9J-2T-WJ0" kind="show" id="QLY-Q0-Xeb"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GnH-aU-LZ2">
@@ -791,7 +791,9 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="0.60779644691780821" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                                    <state key="normal" title="ok"/>
+                                                    <state key="normal" title="ok">
+                                                        <color key="titleColor" red="0.12984204290000001" green="0.12984612579999999" blue="0.12984395030000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </state>
                                                     <connections>
                                                         <action selector="closePopup:" destination="S1D-Mv-iVS" eventType="touchUpInside" id="Zw2-Pv-uB7"/>
                                                     </connections>
@@ -818,7 +820,7 @@
                                                         <fragment content="choose sport">
                                                             <attributes>
                                                                 <color key="NSColor" red="0.12984204290000001" green="0.12984612579999999" blue="0.12984395030000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <font key="NSFont" size="27" name="AvenirNext-UltraLight"/>
+                                                                <font key="NSFont" size="27" name="AvenirNext-Regular"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
@@ -1071,10 +1073,10 @@
             </objects>
             <point key="canvasLocation" x="8536.7999999999993" y="2515.5922038980511"/>
         </scene>
-        <!--View Controller-->
+        <!--Game Stats View Controller-->
         <scene sceneID="Lw0-de-IeT">
             <objects>
-                <viewController id="kUz-kU-ojt" sceneMemberID="viewController">
+                <viewController id="kUz-kU-ojt" customClass="VEGameStatsViewController" customModule="Statlete_Mobile_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pU6-9N-IRC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1145,12 +1147,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U6G-fY-tuq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1756" y="1700"/>
+            <point key="canvasLocation" x="1966" y="1770"/>
         </scene>
-        <!--View Controller-->
+        <!--Games View Controller-->
         <scene sceneID="Khf-ot-kdc">
             <objects>
-                <viewController id="o9J-2T-WJ0" sceneMemberID="viewController">
+                <viewController id="o9J-2T-WJ0" customClass="VEGamesViewController" customModule="Statlete_Mobile_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="m7d-qa-3TV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1167,17 +1169,22 @@
                                 <color key="textColor" red="0.77810329861111116" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UWP-AE-aeZ">
+                                <rect key="frame" x="311" y="20" width="48" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="log out"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="O3F-Vs-2uy"/>
                     </view>
                     <connections>
-                        <outlet property="tableView" destination="Kok-aF-wZz" id="BWS-dD-fb2"/>
+                        <outlet property="tableView" destination="Kok-aF-wZz" id="N65-Vx-TKc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GAJ-c2-k06" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2572" y="1700"/>
+            <point key="canvasLocation" x="1044" y="1770"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="fdz-Zx-kYa">
