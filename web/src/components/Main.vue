@@ -118,6 +118,7 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App',
       loggedInUser: '',
+      currentUserEmail: '',
       teamName: '',
       teamToken: '',
       teamID: '',
@@ -126,10 +127,10 @@ export default {
 
       /*
         View Modes:
+          - mainViewMode (default)
           - isCreatingTeam
           - isCreatingPlayer
           - isInGameView
-          - mainViewMode
       */
       viewMode: 'mainViewMode',
       playerSteps: [
@@ -163,6 +164,7 @@ export default {
   mounted () {
     this.$nextTick(() => {
         this.loggedInUser = firebase.auth().currentUser;
+        this.currentUserEmail = this.loggedInUser.email;
     });
   },
   methods: {
@@ -220,6 +222,42 @@ export default {
     nextClickedTeam(currentPage) {
       if(currentPage==2){
         this.hideCreating()
+
+        var email = this.currentUserEmail.replace('.', '');
+        var nam = this.teamName;
+        var tok = this.teamToken;
+        var teamData = {
+            "Admins" : {
+              [email] : 'admin1'
+            },
+            "Creator" : email,
+            "TeamName" : nam,
+            "Token" : tok
+        }
+
+        var s = this.sportfolios.splice(-1)[0];
+        console.log(s);
+        var playerObj = {};
+        s.forEach( function (player)
+        {
+          var key = 'p' + player.num;
+          if(player.name==='') {
+            playerObj[key] = ' ';
+          }
+          else {
+            playerObj[key] = player.name;
+          }
+        });
+        console.log(playerObj);
+        teamData.Players = playerObj;
+
+        var id = this.teamID;
+        firebase.database().ref('TeamSportfolios/').update({
+          [id] : teamData
+        });
+
+
+        /*
         //build up json for database
         console.log('**************************************');
         console.log('TeamID: ' + this.teamID);
@@ -230,6 +268,7 @@ export default {
         console.log('Sport: ' + this.selectedSport);
         console.log('TeamName: ' + this.teamName);
         console.log('**************************************');
+        */
 
         this.teamID = '';
         this.teamToken = '';
