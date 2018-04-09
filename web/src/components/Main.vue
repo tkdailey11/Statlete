@@ -1,7 +1,10 @@
 <template>
   <div class="main">
-    <h1>{{ tkdSport }}</h1>
-    <div id="mainPage" v-if="!(isCreatingTeam || isCreatingPlayer)">
+    <statlete-navbar v-if="!(viewMode==='isCreatingTeam' || viewMode==='isCreatingPlayer')"
+                     @shouldOpenNav="openNav"
+                     @shouldLogout="logout"></statlete-navbar>
+    <h1>{{ selectedSport }}</h1>
+    <div id="mainPage" v-if="viewMode==='mainViewMode'">
       <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" @click="closeNav">&times;</a>
         <img src="../assets/images/testUser.png" width="100px" height="100px">
@@ -9,40 +12,28 @@
         <a href="#">Services</a>
         <a href="#">Clients</a>
         <a href="#">Contact</a>
+        <button @click="showPlayer" class="sportButton">New Player Account</button><br>
+        <button @click="showTeam" class="sportButton">New Team Account</button><br>
         <div style="scroll">
-          <div v-for="i in 50">
-            <div style="margin=10px; color=red;"><p>Test {{ i }}</p></div>
-          </div>
-
+            <button style="background-color: white; width: 150px;" v-for="i in sportfolios.length">Test {{ i }}</button>
         </div>
       </div>
 
       <h1>{{ loggedInUser.email }}</h1>
-      <button @click="logout">Logout</button>
-      <button @click="openNav">Open Nav</button>
       <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <button @click="showTeam">New Team Account</button>
-      <br>
-      <br>
-      <br>
-      <button @click="showPlayer">New Player Account</button>
+      <games-list :games="gamesList"
+                  style="float: left; margin: 0px 50px 50px 150px;"
+                  @gameSelected="viewMode='isInGameView'"></games-list>
+      <players-list style="float: left; margin: 0px 50px 50px 50px;"
+                    @playerSelected="viewPlayerInfo"></players-list>
+
+      <div style="float: left;">
+        <button @click="editTeamSettings" class="sportButton">Edit Team Settings</button><br>
+        <button @click="viewTeamStats" class="sportButton">View Team Stats</button><br>
+      </div>
     </div>
     <div v-else>
-      <div id="createTeam" v-if="isCreatingTeam">
-        <h1>TEAM</h1>
-        <br>
-      </div>
-      <div id="createPlayer" v-if="isCreatingPlayer">
-        <h1>PLAYER</h1>
-
-      </div>
-
-      <div id="PlayerWizard" v-if="isCreatingPlayer" style="padding-top=100px;">
-        <div>
+      <div id="PlayerWizard" v-if="viewMode==='isCreatingPlayer'" style="padding-top=100px;">
           <vue-good-wizard
             :steps="playerSteps"
             :onNext="nextClickedPlayer"
@@ -54,19 +45,23 @@
               <br>
               <label class="myLabel">Sport:</label>
               <br>
-              <select-sport :initialSport="tkdSport" style="display: inline-block;" @sportWasSelected="tkdSport=$event"></select-sport>
+              <select-sport :initialSport="selectedSport" style="display: inline-block;" @sportWasSelected="selectedSport=$event"></select-sport>
               <h1></h1>
             </div>
 
             <div slot="playerPage2">
-              <h4>Add Players</h4>
-              <h1>Player Selection will go here</h1>
+              <h4>Step 2</h4>
+              <label class="myLabel">Team ID:</label>
+              <input type="text" v-model="teamID" placeholder="Team ID"><br>
+              <br>
+              <label class="myLabel">Team Token:</label>
+              <input type="text" v-model="teamToken" placeholder="Team Token"><br>
+              <br>
             </div>
           </vue-good-wizard>
-        </div>
       </div>
 
-      <div id="TeamWizard" v-if="isCreatingTeam" style="padding-top=100px;">
+      <div id="TeamWizard" v-if="viewMode==='isCreatingTeam'" style="padding-top=100px;">
         <vue-good-wizard
           :steps="teamSteps"
           :onNext="nextClickedTeam"
@@ -78,14 +73,13 @@
             <br>
             <label class="myLabel">Sport:</label>
             <br>
-            <select-sport :initialSport="tkdSport" style="display: inline-block;" @sportWasSelected="tkdSport=$event"></select-sport>
+            <select-sport :initialSport="selectedSport" style="display: inline-block;" @sportWasSelected="selectedSport=$event"></select-sport>
             <h1></h1>
           </div>
 
           <div slot="teamPage2">
             <h4>Add Players</h4>
-            <h1></h1>
-            <player-selection-box></player-selection-box>
+            <player-selection-box @playerInfo="setPlayerInfo"></player-selection-box>
           </div>
 
           <div slot="teamPage3">
@@ -100,111 +94,177 @@
         </vue-good-wizard>
       </div>
     </div>
-
-
+    <game-view v-if="viewMode==='isInGameView'"
+               @GameViewClose="viewMode='mainViewMode'">
+    </game-view>
+    <team-settings v-if="viewMode==='teamSettingsView'"
+                   @TeamSettingsClose="viewMode='mainViewMode'">
+    </team-settings>
+    <team-stats v-if="viewMode==='teamStatsView'"
+                   @TeamStatsClose="viewMode='mainViewMode'">
+    </team-stats>
+    <player-detail-view v-if="viewMode==='playerDetailView'"
+                   @PlayerDetailViewClose="viewMode='mainViewMode'">
+    </player-detail-view>
   </div>
 </template>
 
 <script>
-  import firebase from 'firebase';
+import firebase from 'firebase'
 
-  export default {
-    name: 'Main',
-    data () {
-      return {
-        msg: 'Welcome to Your Vue.js App',
-        loggedInUser: '',
-        teamName: '',
-        teamToken: '',
-        teamID: '',
-        playerName: '',
-        tkdSport: 'basketball',
-        isCreatingPlayer: false,
-        isCreatingTeam: false,
-        playerSteps: [
-          {
-            label: 'Name and Sport',
-            slot: 'playerPage1',
-          },
-          {
-            label: 'Link (OPTIONAL)',
-            slot: 'playerPage2',
-          }
-        ],
-        teamSteps: [
-          {
-            label: 'Name and Sport',
-            slot: 'teamPage1',
-          },
-          {
-            label: 'Add Players',
-            slot: 'teamPage2',
-          },
-          {
-            label: 'Setup Linking (OPTIONAL)',
-            slot: 'teamPage3',
-          }
-        ]
-      }
-    },
-    mounted () {
-      this.$nextTick(() => {
-          this.loggedInUser = firebase.auth().currentUser;
+export default {
+  name: 'Main',
+  data () {
+    return {
+      msg: 'Welcome to Your Vue.js App',
+      loggedInUser: '',
+      teamName: '',
+      teamToken: '',
+      teamID: '',
+      playerName: '',
+      selectedSport: 'basketball',
+
+      /*
+        View Modes:
+          - isCreatingTeam
+          - isCreatingPlayer
+          - isInGameView
+          - mainViewMode
+      */
+      viewMode: 'mainViewMode',
+      playerSteps: [
+        {
+          label: 'Name and Sport',
+          slot: 'playerPage1',
+        },
+        {
+          label: 'Link (OPTIONAL)',
+          slot: 'playerPage2',
+        }
+      ],
+      teamSteps: [
+        {
+          label: 'Name and Sport',
+          slot: 'teamPage1',
+        },
+        {
+          label: 'Add Players',
+          slot: 'teamPage2',
+        },
+        {
+          label: 'Setup Linking (OPTIONAL)',
+          slot: 'teamPage3',
+        }
+      ],
+      sportfolios: [],
+      gamesList: [{gameID: 'game-a'}, {gameID: 'game-b'}]
+    }
+  },
+  mounted () {
+    this.$nextTick(() => {
+        this.loggedInUser = firebase.auth().currentUser;
+    });
+  },
+  methods: {
+    sendStuffToDB: function() {
+      console.log("SUBMIT TO DB");
+      firebase.database().ref('Users/').child('tkdailey11@gmailcom').child('AdminTeams').update({
+        "team1" : "qeguqer"
       });
     },
-    methods: {
-      logout: function() {
-        firebase.auth().signOut().then(() => {
-          this.$router.replace('login')
-        })
-      },
-      openNav: function() {
-        document.getElementById("mySidenav").style.width = "250px";
-      },
-      closeNav: function() {
-        document.getElementById("mySidenav").style.width = "0";
-      },
-      showTeam: function() {
-        this.isCreatingTeam = true
-        this.isCreatingPlayer = false
-      },
-      hideCreating: function() {
-        this.isCreatingTeam = false
-        this.isCreatingPlayer = false
-      },
-      showPlayer: function() {
-        this.isCreatingPlayer = true
-        this.isCreatingTeam = false
-      },
-      onComplete: function() {
-        alert('Yay. Done!');
-      },
-      nextClickedPlayer(currentPage) {
-        if(currentPage==1){
-          this.hideCreating()
-        }
-        return true; //return false if you want to prevent moving to next page
-      },
-      backClickedPlayer(currentPage) {
-        return true; //return false if you want to prevent moving to previous page
-      },
-      nextClickedTeam(currentPage) {
-        if(currentPage==2){
-          this.hideCreating()
-        }
-        return true; //return false if you want to prevent moving to next page
-      },
-      backClickedTeam(currentPage) {
-        return true; //return false if you want to prevent moving to previous page
+    logout: function() {
+      firebase.auth().signOut().then(() => {
+        this.$router.replace('login')
+      })
+    },
+    openNav: function() {
+      document.getElementById("mySidenav").style.width = "250px";
+    },
+    closeNav: function() {
+      document.getElementById("mySidenav").style.width = "0";
+    },
+    showTeam: function() {
+      this.viewMode = 'isCreatingTeam'
+    },
+    hideCreating: function() {
+      this.viewMode = 'mainViewMode'
+    },
+    showPlayer: function() {
+      this.viewMode = 'isCreatingPlayer'
+    },
+    onComplete: function() {
+      alert('Yay. Done!');
+    },
+    nextClickedPlayer(currentPage) {
+      if(currentPage==1){
+        this.hideCreating()
+
+        //build up json for database
+        console.log('**************************************');
+        console.log('TeamID: ' + this.teamID);
+        console.log('TeamToken: ' + this.teamToken);
+        console.log('Sport: ' + this.selectedSport);
+        console.log('TeamName: ' + this.teamName);
+        console.log('**************************************');
+
+        this.teamID = '';
+        this.teamToken = '';
+        this.selectedSport = 'basketball';
+        this.teamName = '';
       }
+      return true; //return false if you want to prevent moving to next page
+    },
+    backClickedPlayer(currentPage) {
+      return false; //return false if you want to prevent moving to previous page
+    },
+    nextClickedTeam(currentPage) {
+      if(currentPage==2){
+        this.hideCreating()
+        //build up json for database
+        console.log('**************************************');
+        console.log('TeamID: ' + this.teamID);
+        console.log('TeamToken: ' + this.teamToken);
+        console.log('Players: ');
+        var s = this.sportfolios.splice(-1)[0];
+        console.log(s);
+        console.log('Sport: ' + this.selectedSport);
+        console.log('TeamName: ' + this.teamName);
+        console.log('**************************************');
+
+        this.teamID = '';
+        this.teamToken = '';
+        this.selectedSport = 'basketball';
+        this.teamName = '';
+      }
+      return true; //return false if you want to prevent moving to next page
+    },
+    backClickedTeam(currentPage) {
+      return false; //return false if you want to prevent moving to previous page
+    },
+    setPlayerInfo(event) {
+      this.sportfolios.push(event);
+    },
+    editTeamSettings() {
+      this.viewMode = 'teamSettingsView';
+      console.log("EDIT TEAM SETTINGS");
+    },
+    viewTeamStats() {
+      this.viewMode = 'teamStatsView';
+      console.log("VIEW TEAM STATS");
+    },
+    viewPlayerInfo() {
+      this.viewMode = 'playerDetailView';
+      console.log("View PLAYER INFO");
     }
   }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  h1, h2 {
-    font-weight: normal;
+  #header h1{
+      margin:0px;
+      font-weight: normal;
   }
   ul {
     list-style-type: none;
@@ -257,9 +317,9 @@
   }
 
   /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
-  #main {
+  .main {
       transition: margin-left .5s;
-      padding: 20px;
+      margin:0px;
   }
 
   /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
@@ -291,7 +351,9 @@
   .sportButton {
     background-color: red;
     color: white;
-    width: 200px;
+    width: 150px;
+    margin: 30px 30px 30px 0px;
+    border-radius: 50px;
   }
   .selectedButton {
     background-color: rgb(0, 0, 255);
@@ -300,11 +362,10 @@
   }
 
   .wizard-tab-content {
-  display: flex; // to avoid horizontal scroll when animating
-  .wizard-tab-container {
-    display: block;
-    animation: fadeInRight 0.3s;
+    display: flex; // to avoid horizontal scroll when animating
+    .wizard-tab-container {
+      display: block;
+      animation: fadeInRight 0.3s;
+    }
   }
-}
-
 </style>

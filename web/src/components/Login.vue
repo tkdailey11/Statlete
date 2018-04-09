@@ -24,7 +24,7 @@
       signIn: function() {
         firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
           (user) => {
-            this.$router.replace('hello')
+            this.$router.replace('main')
           },
           function(err) {
             alert('Oops. ' + err.message)
@@ -37,7 +37,7 @@
           (user) => {
             var usr = user.user;
             console.log("USER: " + usr.email);
-            this.$router.replace('hello');
+            this.$router.replace('main');
           },
           function(err) {
             alert('Oops. ' + err.message)

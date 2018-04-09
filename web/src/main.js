@@ -20,6 +20,24 @@ Vue.component('player-entry-box', PlayerEntryBox);
 import GamesList from '@/components/GamesList';
 Vue.component('games-list', GamesList);
 
+import PlayersList from '@/components/PlayersList';
+Vue.component('players-list', PlayersList);
+
+import Navbar from '@/components/Navbar';
+Vue.component('statlete-navbar', Navbar);
+
+import GameView from '@/components/GameView';
+Vue.component('game-view', GameView);
+
+import TeamSettings from '@/components/TeamSettings';
+Vue.component('team-settings', TeamSettings);
+
+import TeamStats from '@/components/TeamStats';
+Vue.component('team-stats', TeamStats);
+
+import PlayerDetailView from '@/components/PlayerDetailView';
+Vue.component('player-detail-view', PlayerDetailView);
+
 import jQuery from 'jquery'
 global.jQuery = jQuery
 import popper from 'popper.js'

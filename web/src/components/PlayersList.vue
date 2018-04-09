@@ -1,46 +1,46 @@
 <template>
-  <div id="GamesList">
-    <div id="title">
-      <h1 align="center">Games</h1>
+  <div id="PlayersList">
+    <div id="plTitle">
+      <h1 align="center">Players</h1>
     </div>
-    <div id="gamesTable">
+    <div id="playersTable">
       <table cellpadding="10" width="100%">
-        <tr v-for="idx in Object.keys(games).length" @click="trClicked(idx)">
-          <td>{{ games[idx-1].gameID }}</td>
+        <tr v-for="idx in Object.keys(players).length" @click="trClicked(idx)">
+          <td>{{ players[idx-1].playerID }}</td>
         </tr>
       </table>
     </div>
-    <div id="glFooter" @click="addGameClicked">
-      Add New Game
+    <div id="plFooter" @click="addPlayerClicked">
+      Add New Player
     </div>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'GamesList',
+    name: 'PlayersList',
     props: {
-      games: {
+      players: {
         default(){
-          return [{gameID: 'game1'}, {gameID: 'game2'}]
+          return [{playerID: 'player1'}, {playerID: 'player2'}]
         }
       }
     },
     methods: {
-      addGameClicked: function() {
-        console.log("Add Game");
-        this.games.push({gameID: 'game'+(Object.keys(this.games).length + 1)})
+      addPlayerClicked: function() {
+        console.log("Add Player");
+        this.players.push({playerID: 'player'+(Object.keys(this.players).length + 1)})
       },
       trClicked: function(idx) {
-        this.$emit('gameSelected', idx);
         console.log(idx + " clicked");
+        this.$emit('playerSelected');
       }
     }
   }
 </script>
 
 <style scoped>
-  #GamesList {
+  #PlayersList {
     width: 310px;
     height: 500px;
     background: black;
@@ -52,7 +52,7 @@
     position: relative;
   }
 
-  #title {
+  #plTitle {
     width: 300px;
     height: 75px;
     background: white;
@@ -63,7 +63,7 @@
 
   }
 
-  #glFooter {
+  #plFooter {
     width: 300px;
     height: 75px;
     position: absolute;
@@ -79,7 +79,7 @@
     font-size: 25px;
   }
 
-  #gamesTable {
+  #playersTable {
     width: 300px;
     max-height: 350px;
     height: 350px;

@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import HelloWorld from '@/components/HelloWorld'
 import Login from '@/components/Login'
 import SignUp from '@/components/SignUp'
 import firebase from 'firebase'
+import Main from '@/components/Main'
 
 Vue.use(Router)
 
@@ -29,9 +29,9 @@ let router = new Router({
       component: SignUp
     },
     {
-      path: '/hello',
-      name: 'HelloWorld',
-      component: HelloWorld,
+      path: '/main',
+      name: 'Main',
+      component: Main,
       meta: {
         requiresAuth: true
       }
@@ -47,7 +47,7 @@ router.beforeEach((to, from, next) => {
     next('login')
   }
   else if (!requiresAuth && currentUser){
-    next('hello')
+    next('main')
   }
   else {
     next()
