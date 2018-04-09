@@ -1,7 +1,7 @@
 <template>
   <div id="PlayersList">
     <div id="plTitle">
-      <h1 align="center">Players</h1>
+      <h1 align="center">{{ title }}</h1>
     </div>
     <div id="playersTable">
       <table cellpadding="10" width="100%">
@@ -10,8 +10,10 @@
         </tr>
       </table>
     </div>
-    <div id="plFooter" @click="addPlayerClicked">
+    <div id="plFooter" @click="addPlayerClicked" v-if="addPlayerEnabled">
       Add New Player
+    </div>
+    <div id="plFooter" v-else>
     </div>
   </div>
 </template>
@@ -24,6 +26,12 @@
         default(){
           return [{playerID: 'player1'}, {playerID: 'player2'}]
         }
+      },
+      addPlayerEnabled: {
+        default: true
+      },
+      title: {
+        default: 'Players'
       }
     },
     methods: {
