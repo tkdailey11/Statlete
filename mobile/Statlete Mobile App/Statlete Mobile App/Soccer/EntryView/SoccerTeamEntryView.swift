@@ -8,18 +8,29 @@
 
 import UIKit
 
-class SoccerTeamEntryView: UIControl, UITableViewDelegate, UITableViewDataSource {
+protocol EntryViewDelegate: class {
+    func plusButtonPressed(index: Int)
+    func minusButtonPressed(index: Int)
+}
+
+class SoccerTeamEntryView: UIControl, UITableViewDelegate, UITableViewDataSource, StatCellDelegate {
+    
+    weak var delegate: EntryViewDelegate?
     
     let tableView: UITableView = UITableView()
     
-    var statNames = ["Goal", "Assist", "Shot on Goal", "Shot", "Foul", "Yellow Card", "Red Card", "Corner", "Save", "Pass"]
+    var game: SoccerGame?
     
-    override init(frame: CGRect) {
+    var statNames: [String]
+    
+    init(frame: CGRect, statNames: [String]) {
+        self.statNames = statNames
         super.init(frame: frame)
         commonInit()
     }
         
     required init?(coder aDecoder: NSCoder) {
+        self.statNames = [String]()
         super.init(coder: aDecoder)
         commonInit()
     }
@@ -41,7 +52,8 @@ class SoccerTeamEntryView: UIControl, UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "StatCell", for: indexPath) as? StatCell {
-            cell.commonInit(statName: statNames[indexPath.row])
+            cell.commonInit(statName: statNames[indexPath.row], index: indexPath.row)
+            cell.delegate = self
             if indexPath.row % 2 == 0 {
                 cell.picture.image = #imageLiteral(resourceName: "soccer")
             }
@@ -56,5 +68,13 @@ class SoccerTeamEntryView: UIControl, UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
+    }
+    
+    func plusButtonPressed(index: Int) {
+        delegate?.plusButtonPressed(index: index)
+    }
+    
+    func minusButtonPressed(index: Int) {
+        delegate?.minusButtonPressed(index: index)
     }
 }

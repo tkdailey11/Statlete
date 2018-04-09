@@ -155,7 +155,6 @@
 				04D50BC22076A1DD00368924 /* StatView */,
 				0451D45020744CF700AF6524 /* ScoreboardView.xib */,
 				043A43782075586B005E481C /* BottomBar.swift */,
-				043A437220755869005E481C /* SoccerGame.swift */,
 				043A43732075586A005E481C /* PossessionView.swift */,
 				043A43762075586B005E481C /* ScoreboardView.swift */,
 				043A437B2075586C005E481C /* SoccerEntryLiveStatsView.swift */,
@@ -273,6 +272,7 @@
 				DC0EE7802050FC1E00D550F5 /* User.swift */,
 				DC0EE782205111C700D550F5 /* Sportfolio.swift */,
 				DC0EE7842051128100D550F5 /* Game.swift */,
+				043A437220755869005E481C /* SoccerGame.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
