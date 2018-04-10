@@ -8,46 +8,15 @@
 
 import UIKit
 
-class SoccerEntryModeController: UIViewController, EntryViewDelegate {
+class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDelegate, SubstitutionBarDelegate {
     
-    func plusButtonPressed(index: Int) {
-        if (game.half == 1) {
-            game.my1stHalfTotals[statNames[index]]! += 1
-            scoreboardView!.setNeedsDisplay()
-        }
-        else {
-            game.my2ndHalfTotals[statNames[index]]! += 1
-        }
-        if index == 0 {
-            scoreboardView?.myTeamScoreLabel.text = String(game.my1stHalfTotals[statNames[index]]! + game.my2ndHalfTotals[statNames[index]]!)
-            scoreboardView?.opposingTeamScoreLabel.text = String(game.opp1stHalfTotals[statNames[index]]! + game.opp2ndHalfTotals[statNames[index]]!)
-            scoreboardView?.setNeedsDisplay()
-        }
-    }
-    
-    func minusButtonPressed(index: Int) {
-        if (game.half == 1) {
-            if game.my1stHalfTotals[statNames[index]]! > 0 {
-                game.my1stHalfTotals[statNames[index]]! -= 1
-            }
-        }
-        else {
-            if game.my2ndHalfTotals[statNames[index]]! > 0 {
-                game.my2ndHalfTotals[statNames[index]]! -= 1
-            }
-        }
-        if index == 0 {
-            scoreboardView?.myTeamScoreLabel.text = String(game.my1stHalfTotals[statNames[index]]! + game.my2ndHalfTotals[statNames[index]]!)
-            scoreboardView?.opposingTeamScoreLabel.text = String(game.opp1stHalfTotals[statNames[index]]! + game.opp2ndHalfTotals[statNames[index]]!)
-            scoreboardView?.setNeedsDisplay()
-        }
-    }
-    
-    var statNames = ["Goals", "Assists", "Shots on Goal", "Shots", "Fouls", "Yellow Cards", "Red Cards", "Corners", "Saves", "Crosses", "Offsides"]
+    var statNames: [String] = ["Goals", "Assists", "Shots on Goal", "Shots", "Fouls", "Yellow Cards", "Red Cards", "Corners", "Saves", "Crosses", "Offsides"]
     
     // For Scoreboard
     var timerStarted: Bool = false
     var timer = Timer()
+    
+    var oppTeamSelected: Bool = false
     
     var topBar: TopBar = TopBar()
     var bottomBar: BottomBar = BottomBar()
@@ -95,6 +64,7 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate {
         
         // SubstitutionBar
         substitutionBar = SubstitutionBar(frame: substitutionBarFrame)
+        substitutionBar.delegate = self
         view.addSubview(substitutionBar)
         
         // EntryView
@@ -111,18 +81,22 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate {
         view.addSubview(bottomBar)
         bottomBar.addTarget(self, action: #selector(tabChanged), for: .valueChanged)
         
+        // ShotChartEntryView
         shotChartEntryView = SoccerShotChartEntryView(frame: shotChartFrame)
         view.addSubview(shotChartEntryView)
         
         view.sendSubview(toBack: shotChartEntryView)
         view.bringSubview(toFront: entryView!)
         
+        // StatView
         statView = StatView(frame: statViewFrame)
+        statView.delegate = self
         view.addSubview(statView)
         view.sendSubview(toBack: statView)
         
     }
     
+    // Called when a tab is selected in the bottomBar
     @objc func tabChanged() {
         switch bottomBar.tabSelected {
         case 1:
@@ -140,9 +114,10 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate {
         }
     }
     
+    // Called when the scoreboard timer is pressed
     @objc func scoreboardTimePressed() {
         if !timerStarted {
-            game.startTimer()
+            game.startTime = Date()
             timerStarted = true
             timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
         }
@@ -155,6 +130,7 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate {
         scoreboardView!.timeLabel.text = getTimeStringFrom(minutes: minutes, seconds: seconds)
     }
     
+    // Convert minutes and seconds into a string represenatation to be used for scoreboard view
     func getTimeStringFrom(minutes: Int, seconds: Int) -> String {
         var returnString: String = ""
         if (minutes < 10) {
@@ -173,6 +149,98 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate {
         return returnString
     }
     
+    
+    
+    ////////////////////////////////////////
+    /////// EntryView Callbacks  ///////////
+    ////////////////////////////////////////
+    func plusButtonPressed(index: Int) {
+        if (game.half == 1) {
+            if (oppTeamSelected) {
+                game.opp1stHalfTotals[statNames[index]]! += 1
+                oppTeamSelected = false
+                substitutionBar.setOpposingTeamButtonToNotSelected()
+            }
+            else {
+                game.my1stHalfTotals[statNames[index]]! += 1
+            }
+        }
+        else {
+            if (oppTeamSelected) {
+                game.opp2ndHalfTotals[statNames[index]]! += 1
+                oppTeamSelected = false
+                substitutionBar.setOpposingTeamButtonToNotSelected()
+            }
+            else {
+                game.my2ndHalfTotals[statNames[index]]! += 1
+            }
+        }
+        if index == 0 {
+            scoreboardView?.myTeamScoreLabel.text = String(game.my1stHalfTotals[statNames[index]]! + game.my2ndHalfTotals[statNames[index]]!)
+            scoreboardView?.opposingTeamScoreLabel.text = String(game.opp1stHalfTotals[statNames[index]]! + game.opp2ndHalfTotals[statNames[index]]!)
+        }
+        scoreboardView!.setNeedsDisplay()
+        statView.teamStatView.tableView.reloadData()
+    }
+    
+    func minusButtonPressed(index: Int) {
+        if (game.half == 1) {
+            if (oppTeamSelected) {
+                if game.opp1stHalfTotals[statNames[index]]! > 0 {
+                    game.opp1stHalfTotals[statNames[index]]! -= 1
+                }
+                oppTeamSelected = false
+                substitutionBar.setOpposingTeamButtonToNotSelected()
+            }
+            else {
+                if game.my1stHalfTotals[statNames[index]]! > 0 {
+                    game.my1stHalfTotals[statNames[index]]! -= 1
+                }
+            }
+        }
+        else {
+            if (oppTeamSelected) {
+                if game.opp2ndHalfTotals[statNames[index]]! > 0 {
+                    game.opp2ndHalfTotals[statNames[index]]! -= 1
+                }
+                oppTeamSelected = false
+                substitutionBar.setOpposingTeamButtonToNotSelected()
+            }
+            else {
+                if game.my2ndHalfTotals[statNames[index]]! > 0 {
+                    game.my2ndHalfTotals[statNames[index]]! -= 1
+                }
+            }
+        }
+        if index == 0 {
+            scoreboardView?.myTeamScoreLabel.text = String(game.my1stHalfTotals[statNames[index]]! + game.my2ndHalfTotals[statNames[index]]!)
+            scoreboardView?.opposingTeamScoreLabel.text = String(game.opp1stHalfTotals[statNames[index]]! + game.opp2ndHalfTotals[statNames[index]]!)
+        }
+        scoreboardView!.setNeedsDisplay()
+        statView.teamStatView.tableView.reloadData()
+    }
+    
+    ////////////////////////////////////////
+    /////// StatView Callbacks  ////////////
+    ////////////////////////////////////////
+    func getStatNameAndTeamValues(index: Int) -> (stat: String, myTeamVal: Int, oppTeamVal: Int) {
+        let statName = statNames[index]
+        return (statName, game.getMyTeamValueFor(stat: statName), game.getOppTeamValueFor(stat: statName))
+    }
+    
+    
+    func getNumberOfStats() -> Int {
+        return statNames.count
+    }
+    
+    ////////////////////////////////////////
+    ///// SubstitutionBar Callbacks  ///////
+    ////////////////////////////////////////
+    func oppTeamButtonPressed() {
+        oppTeamSelected = true
+    }
+    
+    // Required initializer
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

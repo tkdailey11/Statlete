@@ -8,10 +8,27 @@
 
 import UIKit
 
-class StatView: UIControl, UITableViewDelegate, UITableViewDataSource {
+protocol StatViewDelegate: class {
+    func getStatNameAndTeamValues(index: Int) -> (stat: String, myTeamVal: Int, oppTeamVal: Int)
+    func getNumberOfStats() -> Int
+}
+
+class StatView: UIControl, UITableViewDelegate, UITableViewDataSource, TeamStatViewDelegate {
+    
+    func getStatNameAndTeamValues(index: Int) -> (stat: String, myTeamVal: Int, oppTeamVal: Int) {
+        return delegate!.getStatNameAndTeamValues(index: index)
+    }
+    
+    
+    func getNumberOfStats() -> Int {
+        return delegate!.getNumberOfStats()
+    }
+    
     
     let playerTableView = UITableView()
     var teamStatView: TeamStatView = TeamStatView()
+    
+    weak var delegate: StatViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -35,6 +52,7 @@ class StatView: UIControl, UITableViewDelegate, UITableViewDataSource {
         playerTableView.frame = CGRect(x: bounds.minX, y: bounds.minY + 60, width: bounds.width, height: bounds.height - 60)
         
         teamStatView = TeamStatView(frame: CGRect(x: bounds.minX, y: bounds.minY + 60, width: bounds.width, height: bounds.height - 60))
+        teamStatView.delegate = self
         addSubview(teamStatView)
         sendSubview(toBack: playerTableView)
         

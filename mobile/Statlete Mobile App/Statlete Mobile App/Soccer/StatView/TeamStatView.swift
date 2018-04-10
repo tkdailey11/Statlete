@@ -8,9 +8,16 @@
 
 import UIKit
 
+protocol TeamStatViewDelegate: class {
+    func getStatNameAndTeamValues(index: Int) -> (stat: String, myTeamVal: Int, oppTeamVal: Int)
+    func getNumberOfStats() -> Int
+}
+
 class TeamStatView: UIControl, UITableViewDelegate, UITableViewDataSource {
     
     let tableView: UITableView = UITableView()
+    
+    weak var delegate: TeamStatViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -35,7 +42,7 @@ class TeamStatView: UIControl, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return delegate!.getNumberOfStats() + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -46,7 +53,11 @@ class TeamStatView: UIControl, UITableViewDelegate, UITableViewDataSource {
             }
         }
         if let cell = tableView.dequeueReusableCell(withIdentifier: "TeamStatCell", for: indexPath) as? TeamStatCell {
-            cell.commonInit(stat: "Shots on Goal", myTeamVal: 5, opposingTeamVal: 6)
+            var statName: String = ""
+            var myTeamVal: Int = 0
+            var oppTeamVal: Int = 0
+            (statName, myTeamVal, oppTeamVal) = delegate!.getStatNameAndTeamValues(index: indexPath.row-1)
+            cell.commonInit(stat: statName, myTeamVal: myTeamVal, opposingTeamVal: oppTeamVal)
             return cell
         }
         return UITableViewCell()

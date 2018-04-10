@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol SubstitutionBarDelegate: class {
+    func oppTeamButtonPressed()
+}
+
 class SubstitutionBar: UIControl, UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    weak var delegate: SubstitutionBarDelegate?
     
     let collectionView: UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout.init())
     let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
@@ -54,8 +60,17 @@ class SubstitutionBar: UIControl, UICollectionViewDelegate, UICollectionViewData
         opposingTeamButton.addTarget(self, action: #selector(opposingTeamButtonPressed), for: .touchUpInside)
     }
     
+    func setOpposingTeamButtonToSelected() {
+        opposingTeamButton.backgroundColor = UIColor.red
+    }
+    
+    func setOpposingTeamButtonToNotSelected() {
+        opposingTeamButton.backgroundColor = UIColor.white
+    }
+    
     @objc func opposingTeamButtonPressed() {
-        print("Opposing Team Button Pressed")
+       delegate!.oppTeamButtonPressed()
+        setOpposingTeamButtonToSelected()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -64,58 +64,26 @@ class SoccerGame {
         opp2ndHalfPossession = 0
     }
     
-    func startTimer() {
-        startTime = Date()
-    }
-    
     func getTime() -> (minute: Int, second: Int) {
-        let timeElapsed = startTime!.timeIntervalSinceNow
+        let timeElapsed = startTime!.timeIntervalSinceNow * -1
         return timeIntervalToMinutesAndSeconds(interval: timeElapsed)
     }
     
     func timeIntervalToMinutesAndSeconds(interval: TimeInterval) -> (minute: Int, second: Int) {
         var minutes = 0
         var seconds = 0
-        var time: Int = Int(interval) * -1
+        let time: Int = Int(interval)
         minutes = time / 60
         seconds = time - (60 * minutes)
-        /*
-        while (time > 60) {
-            minutes = minutes + 1
-            time = time - 60
-        }
-        seconds = time
-         */
         return(minutes, seconds)
     }
     
-    func setHalf(to half: Int) {
-        self.half = half
+    func getMyTeamValueFor(stat: String) -> Int {
+        return my1stHalfTotals[stat]! + my2ndHalfTotals[stat]!
     }
     
-    func getHalf() -> Int {
-        return half
+    func getOppTeamValueFor(stat: String) -> Int {
+        return opp1stHalfTotals[stat]! + opp2ndHalfTotals[stat]!
     }
-    
-    func incrementMyTeamScore() {
-        myTeamScore = myTeamScore + 1
-    }
-    
-    func decrementMyTeamScore() {
-        if myTeamScore > 0 {
-            myTeamScore = myTeamScore - 1
-        }
-    }
-    
-    func incrementOpposingTeamScore() {
-        opposingTeamScore = opposingTeamScore + 1
-    }
-    
-    func decrementOpposingTeamScore() {
-        if opposingTeamScore > 0 {
-            opposingTeamScore = opposingTeamScore - 1
-        }
-    }
-    
     
 }
