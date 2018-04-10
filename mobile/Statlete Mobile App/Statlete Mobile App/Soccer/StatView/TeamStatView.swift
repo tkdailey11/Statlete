@@ -41,23 +41,26 @@ class TeamStatView: UIControl, UITableViewDelegate, UITableViewDataSource {
         let nib = UINib.init(nibName: "TeamStatCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "TeamStatCell")
         
-        myTeamPossessionLabel.text = "My Team:"
-        myTeamPossessionLabel.frame = CGRect(x: bounds.minX, y: bounds.minY, width: bounds.width/2, height: 140)
-        myTeamPossessionLabel.textAlignment = .center
-        myTeamPossessionLabel.lineBreakMode = .byWordWrapping
-        myTeamPossessionLabel.numberOfLines = 0
+        let possessionLabel = UILabel()
+        possessionLabel.text = "Possession"
+        possessionLabel.textAlignment = .center
+        possessionLabel.frame = CGRect(x: bounds.midX - 50, y: bounds.minY, width: 100, height: 40)
+        possessionLabel.textColor = UIColor.white
+        addSubview(possessionLabel)
+        
+        myTeamPossessionLabel.text = ""
+        myTeamPossessionLabel.frame = CGRect(x: bounds.minX, y: bounds.minY, width: bounds.width/2 - 50, height: 40)
+        myTeamPossessionLabel.textAlignment = .right
         myTeamPossessionLabel.textColor = UIColor.white
         addSubview(myTeamPossessionLabel)
         
-        oppTeamPossessionLabel.text = "My Team:"
-        oppTeamPossessionLabel.frame = CGRect(x: bounds.midX, y: bounds.minY, width: bounds.width/2, height: 140)
-        oppTeamPossessionLabel.textAlignment = .center
-        oppTeamPossessionLabel.lineBreakMode = .byWordWrapping
-        oppTeamPossessionLabel.numberOfLines = 0
+        oppTeamPossessionLabel.text = ""
+        oppTeamPossessionLabel.frame = CGRect(x: bounds.midX + 50, y: bounds.minY, width: bounds.width/2 - 50, height: 40)
+        oppTeamPossessionLabel.textAlignment = .left
         oppTeamPossessionLabel.textColor = UIColor.white
         addSubview(oppTeamPossessionLabel)
         
-        tableView.frame = CGRect(x: bounds.minX, y: bounds.minY + 140, width: bounds.width, height: bounds.height - 140)
+        tableView.frame = CGRect(x: bounds.minX, y: bounds.minY + 120, width: bounds.width, height: bounds.height - 120)
         addSubview(tableView)
     }
     
@@ -87,12 +90,22 @@ class TeamStatView: UIControl, UITableViewDelegate, UITableViewDataSource {
         var myTeamPossession: TimeInterval = 0
         var oppTeamPossession: TimeInterval = 0
         (myTeamPossession, oppTeamPossession) = delegate!.getPossessionValues()
-        var minute: Int = 0
-        var second: Int = 0
-        (minute, second) = timeIntervalToMinutesAndSeconds(interval: myTeamPossession)
-        myTeamPossessionLabel.text = "My Team: \(getTimeStringFrom(minutes: minute, seconds: second))"
-        (minute, second) = timeIntervalToMinutesAndSeconds(interval: oppTeamPossession)
-        oppTeamPossessionLabel.text = "Opp Team: \(getTimeStringFrom(minutes: minute, seconds: second))"
+        var myMinute: Int = 0
+        var mySecond: Int = 0
+        var oppMinute: Int = 0
+        var oppSecond: Int = 0
+        (myMinute, mySecond) = timeIntervalToMinutesAndSeconds(interval: myTeamPossession)
+        (oppMinute, oppSecond) = timeIntervalToMinutesAndSeconds(interval: oppTeamPossession)
+        let myTeamSeconds: Int = 60 * myMinute + mySecond
+        let oppTeamSeconds: Int = 60 * oppMinute + oppSecond
+        var myTeamPercent: Int = 0
+        var oppTeamPercent: Int = 0
+        if !(myTeamSeconds == 0 && oppTeamSeconds == 0) {
+            myTeamPercent = Int(100 * (CGFloat(myTeamSeconds)/CGFloat((myTeamSeconds + oppTeamSeconds))))
+            oppTeamPercent = 100 - myTeamPercent
+        }
+        myTeamPossessionLabel.text = "(\(getTimeStringFrom(minutes: myMinute, seconds: mySecond))) \(myTeamPercent)%"
+        oppTeamPossessionLabel.text = "\(oppTeamPercent)% (\(getTimeStringFrom(minutes: oppMinute, seconds: oppSecond)))"
     }
     
     func getTimeStringFrom(minutes: Int, seconds: Int) -> String {
@@ -116,7 +129,7 @@ class TeamStatView: UIControl, UITableViewDelegate, UITableViewDataSource {
     func timeIntervalToMinutesAndSeconds(interval: TimeInterval) -> (minute: Int, second: Int) {
         var minutes = 0
         var seconds = 0
-        let time: Int = Int(interval)
+        let time = Int(interval)
         minutes = time / 60
         seconds = time - (60 * minutes)
         return(minutes, seconds)
