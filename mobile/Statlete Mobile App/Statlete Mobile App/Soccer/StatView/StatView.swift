@@ -11,6 +11,7 @@ import UIKit
 protocol StatViewDelegate: class {
     func getStatNameAndTeamValues(index: Int) -> (stat: String, myTeamVal: Int, oppTeamVal: Int)
     func getNumberOfStats() -> Int
+    func getPossessionValues() -> (myTeamPossession: TimeInterval, oppTeamPossession: TimeInterval)
 }
 
 class StatView: UIControl, UITableViewDelegate, UITableViewDataSource, TeamStatViewDelegate {
@@ -22,6 +23,11 @@ class StatView: UIControl, UITableViewDelegate, UITableViewDataSource, TeamStatV
     
     func getNumberOfStats() -> Int {
         return delegate!.getNumberOfStats()
+    }
+    
+    
+    func getPossessionValues() -> (myTeamPossession: TimeInterval, oppTeamPossession: TimeInterval) {
+        return delegate!.getPossessionValues()
     }
     
     

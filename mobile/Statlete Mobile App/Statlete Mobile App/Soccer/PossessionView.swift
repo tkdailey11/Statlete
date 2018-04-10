@@ -8,6 +8,12 @@
 
 import UIKit
 
+protocol PossessionViewDelegate: class {
+    func myTeamPossessionSelected()
+    func oppTeamPossessionSelected()
+    func outOfPlaySelected()
+}
+
 class PossessionView: UIControl {
     
     enum Selected {
@@ -16,9 +22,11 @@ class PossessionView: UIControl {
         case out
     }
     
+    weak var delegate: PossessionViewDelegate?
+    
     let textFont = UIFont(name: "Helvetica", size: 24)
     
-    var currentlySelected: Selected = .myTeam
+    var currentlySelected: Selected = .out
     
     let possessionLabel: UILabel = UILabel()
     
@@ -131,13 +139,22 @@ class PossessionView: UIControl {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         let loc = touches.first!.location(in: self)
         if myTeamPossessionBoxFrame.contains(loc) {
-            currentlySelected = .myTeam
+            if currentlySelected != .myTeam {
+                currentlySelected = .myTeam
+                delegate!.myTeamPossessionSelected()
+            }
         }
-        if opposingTeamPossessionBoxFrame.contains(loc) {
-            currentlySelected = .oppTeam
+        else if opposingTeamPossessionBoxFrame.contains(loc) {
+            if currentlySelected != .oppTeam {
+                currentlySelected = .oppTeam
+                delegate!.oppTeamPossessionSelected()
+            }
         }
-        if outOfPlayPossessionBoxFrame.contains(loc) {
-            currentlySelected  = .out
+        else if outOfPlayPossessionBoxFrame.contains(loc) {
+            if currentlySelected != .out {
+                currentlySelected = .out
+                delegate!.outOfPlaySelected()
+            }
         }
         setNeedsDisplay()
     }

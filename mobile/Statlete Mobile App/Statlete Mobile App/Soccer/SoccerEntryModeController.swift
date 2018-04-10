@@ -8,7 +8,8 @@
 
 import UIKit
 
-class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDelegate, SubstitutionBarDelegate {
+class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDelegate, SubstitutionBarDelegate, PossessionViewDelegate {
+    
     
     var statNames: [String] = ["Goals", "Assists", "Shots on Goal", "Shots", "Fouls", "Yellow Cards", "Red Cards", "Corners", "Saves", "Crosses", "Offsides"]
     
@@ -74,6 +75,7 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         
         // PossessionView
         possessionBar = PossessionView(frame: possessionBarFrame)
+        possessionBar.delegate = self
         view.addSubview(possessionBar)
         
         // BottomBar
@@ -233,11 +235,77 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         return statNames.count
     }
     
+    
+    func getPossessionValues() -> (myTeamPossession: TimeInterval, oppTeamPossession: TimeInterval) {
+        return (game.my1stHalfPossession + game.my2ndHalfPossession, game.opp1stHalfPossession + game.opp2ndHalfPossession)
+    }
+    
     ////////////////////////////////////////
     ///// SubstitutionBar Callbacks  ///////
     ////////////////////////////////////////
     func oppTeamButtonPressed() {
         oppTeamSelected = true
+    }
+    
+    ////////////////////////////////////////
+    ///// PossessionView Callbacks  ////////
+    ////////////////////////////////////////
+    
+    var timePossessionSwitched: Date = Date()
+    var currentlySelectedPossession: PossessionView.Selected = .out
+    
+    func myTeamPossessionSelected() {
+        if currentlySelectedPossession == .oppTeam {
+            let timeToAdd = timePossessionSwitched.timeIntervalSinceNow * -1
+            if game.half == 1 {
+                game.opp1stHalfPossession += timeToAdd
+            }
+            else {
+                game.opp2ndHalfPossession += timeToAdd
+            }
+        }
+        timePossessionSwitched = Date()
+        currentlySelectedPossession = .myTeam
+        statView.teamStatView.updateLabels()
+    }
+    
+    func oppTeamPossessionSelected() {
+        if currentlySelectedPossession == .myTeam {
+            let timeToAdd = timePossessionSwitched.timeIntervalSinceNow * -1
+            if game.half == 1 {
+                game.my1stHalfPossession += timeToAdd
+            }
+            else {
+                game.my2ndHalfPossession += timeToAdd
+            }
+        }
+        timePossessionSwitched = Date()
+        currentlySelectedPossession = .oppTeam
+        statView.teamStatView.updateLabels()
+    }
+    
+    func outOfPlaySelected() {
+        if currentlySelectedPossession == .oppTeam {
+            let timeToAdd = timePossessionSwitched.timeIntervalSinceNow * -1
+            if game.half == 1 {
+                game.opp1stHalfPossession += timeToAdd
+            }
+            else {
+                game.opp2ndHalfPossession += timeToAdd
+            }
+        }
+        else if currentlySelectedPossession == .myTeam {
+            let timeToAdd = timePossessionSwitched.timeIntervalSinceNow * -1
+            if game.half == 1 {
+                game.my1stHalfPossession += timeToAdd
+            }
+            else {
+                game.my2ndHalfPossession += timeToAdd
+            }
+        }
+        currentlySelectedPossession = .out
+        timePossessionSwitched = Date()
+        statView.teamStatView.updateLabels()
     }
     
     // Required initializer
