@@ -137,105 +137,12 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Statlete Mobile App/InitalUserOptions/ViewController.swift"
-            timestampString = "544759381.257997"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "40"
-            endingLineNumber = "40"
-            landmarkName = "GradientView"
-            landmarkType = "3">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Statlete_Mobile_App.GradientView.__deallocating_deinit"
-                  moduleName = "Statlete Mobile App"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/taylormdejonge/Desktop/StatleteCapstone/Statlete/mobile/Statlete%20Mobile%20App/Statlete%20Mobile%20App/InitalUserOptions/ViewController.swift"
-                  timestampString = "544668053.656394"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0"
-                  offsetFromSymbolStart = "4">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Statlete_Mobile_App.GradientView.__allocating_init(frame: __C.CGRect) -&gt; Statlete_Mobile_App.GradientView"
-                  moduleName = "Statlete Mobile App"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/taylormdejonge/Desktop/StatleteCapstone/Statlete/mobile/Statlete%20Mobile%20App/Statlete%20Mobile%20App/InitalUserOptions/ViewController.swift"
-                  timestampString = "544668053.660272"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0"
-                  offsetFromSymbolStart = "4">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Statlete_Mobile_App.GradientView.init(frame: __C.CGRect) -&gt; Statlete_Mobile_App.GradientView"
-                  moduleName = "Statlete Mobile App"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/taylormdejonge/Desktop/StatleteCapstone/Statlete/mobile/Statlete%20Mobile%20App/Statlete%20Mobile%20App/InitalUserOptions/ViewController.swift"
-                  timestampString = "544668053.662276"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "42"
-                  endingLineNumber = "42"
-                  offsetFromSymbolStart = "178">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Statlete_Mobile_App.GradientView.__allocating_init(coder: __ObjC.NSCoder) -&gt; Swift.Optional&lt;Statlete_Mobile_App.GradientView&gt;"
-                  moduleName = "Statlete Mobile App"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/taylormdejonge/Desktop/StatleteCapstone/Statlete/mobile/Statlete%20Mobile%20App/Statlete%20Mobile%20App/InitalUserOptions/ViewController.swift"
-                  timestampString = "544668053.664053"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0"
-                  offsetFromSymbolStart = "4">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Statlete_Mobile_App.GradientView.init(coder: __ObjC.NSCoder) -&gt; Swift.Optional&lt;Statlete_Mobile_App.GradientView&gt;"
-                  moduleName = "Statlete Mobile App"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/taylormdejonge/Desktop/StatleteCapstone/Statlete/mobile/Statlete%20Mobile%20App/Statlete%20Mobile%20App/InitalUserOptions/ViewController.swift"
-                  timestampString = "544668053.665849"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "42"
-                  endingLineNumber = "42"
-                  offsetFromSymbolStart = "116">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Statlete Mobile App/InitalUserOptions/CreateAccountViewController.swift"
-            timestampString = "544941311.296713"
+            timestampString = "545119818.952517"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "22"
-            endingLineNumber = "22"
+            startingLineNumber = "23"
+            endingLineNumber = "23"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -481,7 +388,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Statlete Mobile App/Sportfolio/SportfolioViewController.swift"
-            timestampString = "544925676.986212"
+            timestampString = "545119568.628535"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "11"
@@ -606,7 +513,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Statlete Mobile App/InitalUserOptions/ViewExistingTeamViewController.swift"
-            timestampString = "544941311.296934"
+            timestampString = "545119601.4065239"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "24"

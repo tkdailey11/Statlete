@@ -14,6 +14,8 @@ class ChooseSportViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         popupView.layer.cornerRadius = 15
+        popupView.layer.borderWidth = 3
+        popupView.layer.borderColor = Colors.color1.cgColor
         popupView.layer.masksToBounds = true
      
 

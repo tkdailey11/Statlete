@@ -10,6 +10,7 @@ import UIKit
 
 class CreateAccountViewController: UIViewController{
     
+   
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -46,7 +47,6 @@ class CreateAccountViewController: UIViewController{
         passwordTextField.leftView = passwordPaddingView
         passwordTextField.leftViewMode = UITextFieldViewMode.always
         passwordPaddingView.layer.addSublayer(passwordline)
-
         createAccountButton.layer.cornerRadius = 10
         
         
@@ -54,6 +54,13 @@ class CreateAccountViewController: UIViewController{
   
     @IBAction func backButtonClicked(_ sender: UIButton) {
          _ = navigationController?.popViewController(animated: true)
+    }
+    
+    
+    @IBAction func createAccountClicked(_ sender: UIButton) {
+        // create new user with text field info
+        // add to database
+        
     }
     
     override func didReceiveMemoryWarning() {

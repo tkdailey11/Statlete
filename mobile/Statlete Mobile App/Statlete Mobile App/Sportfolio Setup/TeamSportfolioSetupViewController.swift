@@ -10,10 +10,10 @@ import UIKit
 
 class TeamSportfolioSetupViewController: UIViewController {
 
-    @IBOutlet weak var createButton: UIButton!
+   @IBOutlet weak var createButton: UIButton!
     
     @IBOutlet weak var addPlayersButton: UIButton!
-    @IBOutlet weak var chooseSportButton: UIButton!
+  //  @IBOutlet weak var chooseSportButton: UIButton!
     @IBOutlet weak var teamNameTextField: UITextField!
     
     @IBOutlet weak var backButton: UIButton!
@@ -30,9 +30,9 @@ class TeamSportfolioSetupViewController: UIViewController {
         addPlayersButton.layer.borderWidth = 0.8
         addPlayersButton.layer.borderColor = UIColor.red.cgColor
         addPlayersButton.layer.cornerRadius = 5
-        chooseSportButton.layer.borderWidth = 0.8
+        /*chooseSportButton.layer.borderWidth = 0.8
         chooseSportButton.layer.borderColor = UIColor.red.cgColor
-        chooseSportButton.layer.cornerRadius = 5
+        chooseSportButton.layer.cornerRadius = 5*/
         createButton.layer.borderWidth = 1
         createButton.layer.borderColor = UIColor.red.cgColor
         createButton.layer.cornerRadius = 5

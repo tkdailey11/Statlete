@@ -17,7 +17,9 @@ class Sportfolio{
     public var linkable: Bool = Bool()
     public var viewable: Bool = Bool()
 
-    
+    init(name: String, user: String){
+        
+    }
 
     
     

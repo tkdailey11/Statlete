@@ -19,7 +19,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
       
-            LoginButton.layer.borderWidth = 0.8
+        LoginButton.layer.borderWidth = 0.8
         LoginButton.layer.borderColor = Colors.tempcolor.cgColor
         LoginButton.layer.cornerRadius = 25
         CreateAccountButton.layer.cornerRadius = 25
@@ -37,9 +37,10 @@ class ViewController: UIViewController {
 }
 
 
+
+
 final class GradientView: UIView{
     override func draw(_ rect: CGRect) {
-        var c: UIColor = UIColor(red: 247/255, green: 231/255, blue: 89/255, alpha: 1)
         let gradient: CAGradientLayer = CAGradientLayer()
         gradient.frame = CGRect(x: 0, y: 0, width: superview!.frame.size.width, height: superview!.frame.size.height)
       gradient.colors = [Colors.color2.cgColor, Colors.color0.cgColor]
