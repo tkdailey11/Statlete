@@ -4,8 +4,7 @@
     <statlete-navbar v-if="!(viewMode==='isCreatingTeam' || viewMode==='isCreatingPlayer')"
                      @shouldOpenNav="openNav"
                      @shouldLogout="logout"></statlete-navbar>
-    <br>
-    <br>
+
     <div id="mainPage" v-if="viewMode==='mainViewMode'">
 
       <side-nav id="mySidenav"
@@ -13,19 +12,24 @@
                 @showTeam="showTeam"
                 :sportfolios="sportfolios">
       </side-nav>
-      <!-- end side nav -->
-      <games-list :games="gamesList"
-                  style="float: left; margin: 0px 50px 50px 150px;"
-                  @gameSelected="viewMode='isInGameView'"></games-list>
-      <players-list style="float: left; margin: 0px 50px 50px 50px;"
-                    @playerSelected="viewPlayerInfo"
-                    @addPlayerClicked="showModal"
-                    :players="players"></players-list>
 
-      <div style="float: left;">
-        <button @click="editTeamSettings" class="sportButton">Edit Team Settings</button><br>
-        <button @click="viewTeamStats" class="sportButton">View Team Stats</button><br>
+      <div class="mainHeader">
+        <h1>Team Name</h1>
+        <div class="button-wrapper">
+          <button @click="editTeamSettings" class="sportButton">Edit Team Settings</button>
+          <button @click="viewTeamStats" class="sportButton">View Team Stats</button>
+        </div>
       </div>
+      <div class="mainBody">
+        <games-list :games="gamesList"
+                    style="margin-top: 20px;"
+                    @gameSelected="viewMode='isInGameView'"></games-list>
+        <players-list style="margin-top: 20px;"
+                      @playerSelected="viewPlayerInfo"
+                      @addPlayerClicked="showModal"
+                      :players="players"></players-list>
+      </div>
+
     </div>
     <!-- WIZARDS -->
     <div v-else>
@@ -442,8 +446,6 @@ export default {
   .sportButton {
     background-color: red;
     color: white;
-    width: 150px;
-    margin: 30px 30px 30px 0px;
     border-radius: 50px;
   }
   .selectedButton {
@@ -459,4 +461,61 @@ export default {
       animation: fadeInRight 0.3s;
     }
   }
+
+  .mainHeader {
+    width: 100%;
+    height: 10%;
+    min-height: 100px;
+    max-height: 100px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .mainHeader .sportButton {
+    width: 40%;
+    min-width: 50px;
+    max-width: 200px;
+    min-height: 50px;
+    max-height: 50px;
+    float: right;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-right: 5px;
+    margin-left: 5px;
+    text-overflow: ellipsis;
+  }
+
+  .button-wrapper {
+    width: inherit;
+    white-space: nowrap;
+    margin-top: 18px;
+    margin-right: 20px;
+  }
+
+  .mainHeader h1 {
+    width: 100%;
+    font-size: 70px;
+    max-height: 100px;
+    white-space: nowrap;
+    text-align: left;
+    margin-left: 15px;
+  }
+
+  .mainBody {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
+  }
+
+  #leftList {
+
+  }
+  #rightList {
+
+  }
+
 </style>
