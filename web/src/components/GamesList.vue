@@ -6,7 +6,7 @@
     <div id="gamesTable">
       <table cellpadding="10" width="100%">
         <tr v-for="idx in Object.keys(games).length" @click="trClicked(idx)">
-          <td>{{ games[idx-1].gameID }}</td>
+          <td>{{ games[idx-1] }}</td>
         </tr>
       </table>
     </div>
@@ -34,6 +34,7 @@
       trClicked: function(idx) {
         this.$emit('gameSelected', idx);
         console.log(idx + " clicked");
+        console.log(this.games);
       }
     }
   }

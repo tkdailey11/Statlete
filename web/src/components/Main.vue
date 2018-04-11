@@ -160,7 +160,7 @@ export default {
         }
       ],
       sportfolios: [],
-      gamesList: [{}]
+      gamesList: []
     }
   },
   mounted () {
@@ -285,27 +285,23 @@ export default {
       console.log("View PLAYER INFO");
     },
     getGames() {
-      this.teamID = 'idn1';
+      this.teamID = 'idn12';
       var id = this.teamID;
-      var gList = this.gamesList;
-      var soccerGamesRef = firebase.database().ref('SoccerGames');
-      soccerGamesRef.on('value', function(snapshot) {
+      var keysList = [];
+      var self = this;
+
+      var gamesListRef = firebase.database().ref('/TeamSportfolios/' + id + '/Games/');
+      gamesListRef.on('value', function(snapshot) {
         var obj = snapshot.val();
-        console.log(obj);
-        for (const key of Object.keys(obj)) {
-          if(key.includes(id)) {
-            if(Object.keys(gList).includes(key)){
-              console.log("CONTAINS");
-            }
-            console.log(key, obj[key]);
-          }
-          else {
-            console.log("***** NOT FOUND *****");
-          }
-
-        }
+        keysList = Object.keys(obj);
+        var gamesRef = firebase.database().ref('/SoccerGames');
+        self.gamesList = [];
+        keysList.forEach(function(key) {
+          gamesRef.child(key).once('value', function(snap) {
+            self.gamesList.push(snap.val());
+          })
+        });
       });
-
     }
   }
 }
