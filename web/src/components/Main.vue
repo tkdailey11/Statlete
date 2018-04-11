@@ -3,8 +3,11 @@
     <statlete-navbar v-if="!(viewMode==='isCreatingTeam' || viewMode==='isCreatingPlayer')"
                      @shouldOpenNav="openNav"
                      @shouldLogout="logout"></statlete-navbar>
-    <h1>{{ selectedSport }}</h1>
+    <br>
+    <br>
     <div id="mainPage" v-if="viewMode==='mainViewMode'">
+
+      <!-- Side Nav w/out coponent -->
       <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" @click="closeNav">&times;</a>
         <img src="../assets/images/testUser.png" width="100px" height="100px">
@@ -18,9 +21,7 @@
             <button style="background-color: white; width: 150px;" v-for="i in sportfolios.length">Test {{ i }}</button>
         </div>
       </div>
-
-      <h1>{{ loggedInUser.email }}</h1>
-      <br>
+      <!-- end side nav -->
       <games-list :games="gamesList"
                   style="float: left; margin: 0px 50px 50px 150px;"
                   @gameSelected="viewMode='isInGameView'"></games-list>
@@ -32,6 +33,7 @@
         <button @click="viewTeamStats" class="sportButton">View Team Stats</button><br>
       </div>
     </div>
+    <!-- WIZARDS -->
     <div v-else>
       <div id="PlayerWizard" v-if="viewMode==='isCreatingPlayer'" style="padding-top=100px;">
           <vue-good-wizard
@@ -94,6 +96,7 @@
         </vue-good-wizard>
       </div>
     </div>
+    <!-- END WIZARDS -->
     <game-view v-if="viewMode==='isInGameView'"
                @GameViewClose="viewMode='mainViewMode'">
     </game-view>
@@ -124,7 +127,6 @@ export default {
       teamID: '',
       playerName: '',
       selectedSport: 'basketball',
-
       /*
         View Modes:
           - mainViewMode (default)
@@ -158,13 +160,14 @@ export default {
         }
       ],
       sportfolios: [],
-      gamesList: [{gameID: 'game-a'}, {gameID: 'game-b'}]
+      gamesList: [{}]
     }
   },
   mounted () {
     this.$nextTick(() => {
         this.loggedInUser = firebase.auth().currentUser;
         this.currentUserEmail = this.loggedInUser.email;
+        this.getGames();
     });
   },
   methods: {
@@ -256,20 +259,6 @@ export default {
           [id] : teamData
         });
 
-
-        /*
-        //build up json for database
-        console.log('**************************************');
-        console.log('TeamID: ' + this.teamID);
-        console.log('TeamToken: ' + this.teamToken);
-        console.log('Players: ');
-        var s = this.sportfolios.splice(-1)[0];
-        console.log(s);
-        console.log('Sport: ' + this.selectedSport);
-        console.log('TeamName: ' + this.teamName);
-        console.log('**************************************');
-        */
-
         this.teamID = '';
         this.teamToken = '';
         this.selectedSport = 'basketball';
@@ -294,6 +283,29 @@ export default {
     viewPlayerInfo() {
       this.viewMode = 'playerDetailView';
       console.log("View PLAYER INFO");
+    },
+    getGames() {
+      this.teamID = 'idn1';
+      var id = this.teamID;
+      var gList = this.gamesList;
+      var soccerGamesRef = firebase.database().ref('SoccerGames');
+      soccerGamesRef.on('value', function(snapshot) {
+        var obj = snapshot.val();
+        console.log(obj);
+        for (const key of Object.keys(obj)) {
+          if(key.includes(id)) {
+            if(Object.keys(gList).includes(key)){
+              console.log("CONTAINS");
+            }
+            console.log(key, obj[key]);
+          }
+          else {
+            console.log("***** NOT FOUND *****");
+          }
+
+        }
+      });
+
     }
   }
 }

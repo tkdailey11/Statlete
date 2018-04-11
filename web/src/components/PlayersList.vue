@@ -24,7 +24,7 @@
     props: {
       players: {
         default(){
-          return [{playerID: 'player1'}, {playerID: 'player2'}]
+          return []
         }
       },
       addPlayerEnabled: {

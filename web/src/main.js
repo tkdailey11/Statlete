@@ -38,6 +38,9 @@ Vue.component('team-stats', TeamStats);
 import PlayerDetailView from '@/components/PlayerDetailView';
 Vue.component('player-detail-view', PlayerDetailView);
 
+import SideNav from '@/components/SideNav';
+Vue.component('side-nav', SideNav);
+
 import jQuery from 'jquery'
 global.jQuery = jQuery
 import popper from 'popper.js'
