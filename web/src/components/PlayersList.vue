@@ -5,12 +5,13 @@
     </div>
     <div id="playersTable">
       <table cellpadding="10" width="100%">
-        <tr v-for="idx in Object.keys(players).length" @click="trClicked(idx)">
-          <td>{{ players[idx-1].playerID }}</td>
+        <tr v-for="key in Object.keys(players)" @click="trClicked(key)">
+          <td>{{ key.replace('p', '#') }}</td>
+          <td style="text-align:left;">{{players[key].trim()}}</td>
         </tr>
       </table>
     </div>
-    <div id="plFooter" @click="addPlayerClicked" v-if="addPlayerEnabled">
+    <div id="plFooter" @click="$emit('addPlayerClicked')" v-if="addPlayerEnabled">
       Add New Player
     </div>
     <div id="plFooter" v-else>
@@ -35,10 +36,6 @@
       }
     },
     methods: {
-      addPlayerClicked: function() {
-        console.log("Add Player");
-        this.players.push({playerID: 'player'+(Object.keys(this.players).length + 1)})
-      },
       trClicked: function(idx) {
         console.log(idx + " clicked");
         this.$emit('playerSelected');
@@ -95,8 +92,12 @@
     overflow: scroll;
   }
 
-  table, th, td {
+  table, th {
     border: 1px solid black;
+  }
+
+  td {
+    border-bottom: 1px solid black;
   }
 
   h1 {

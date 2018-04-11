@@ -6,17 +6,31 @@
       <a href="#">Services</a>
       <a href="#">Clients</a>
       <a href="#">Contact</a>
-      <button @click="showPlayer" class="sportButton">New Player Account</button><br>
-      <button @click="showTeam" class="sportButton">New Team Account</button><br>
+
+      <button @click="$emit('showPlayer')" class="sportButton">New Player Account</button><br>
+      <button @click="$emit('showTeam')" class="sportButton">New Team Account</button><br>
+
       <div style="scroll">
-          <button style="background-color: white; width: 150px;" v-for="i in sportfolios.length">Test {{ i }}</button>
+          <button style="background-color: white; width: 150px;" v-for="obj in sportfolios">{{ obj.TeamName }}</button>
       </div>
     </div>
 </template>
 
 <script>
   export default {
-    name: 'SideNav'
+    name: 'SideNav',
+    props: {
+      sportfolios: {
+        default(){
+          return []
+        }
+      }
+    },
+    methods: {
+      closeNav: function() {
+        document.getElementById("mySidenav").style.width = "0";
+      }
+    }
   }
 </script>
 
@@ -57,5 +71,13 @@
       right: 25px;
       font-size: 36px;
       margin-left: 50px;
+  }
+
+  .sportButton {
+    background-color: red;
+    color: white;
+    width: 150px;
+    margin: 30px 30px 30px 0px;
+    border-radius: 50px;
   }
 </style>

@@ -1,5 +1,6 @@
 <template>
   <div class="main">
+    <new-player @newPlayerAdded="hideModal" />
     <statlete-navbar v-if="!(viewMode==='isCreatingTeam' || viewMode==='isCreatingPlayer')"
                      @shouldOpenNav="openNav"
                      @shouldLogout="logout"></statlete-navbar>
@@ -7,26 +8,19 @@
     <br>
     <div id="mainPage" v-if="viewMode==='mainViewMode'">
 
-      <!-- Side Nav w/out coponent -->
-      <div id="mySidenav" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" @click="closeNav">&times;</a>
-        <img src="../assets/images/testUser.png" width="100px" height="100px">
-        <a href="#">About</a>
-        <a href="#">Services</a>
-        <a href="#">Clients</a>
-        <a href="#">Contact</a>
-        <button @click="showPlayer" class="sportButton">New Player Account</button><br>
-        <button @click="showTeam" class="sportButton">New Team Account</button><br>
-        <div style="scroll">
-            <button style="background-color: white; width: 150px;" v-for="i in sportfolios.length">Test {{ i }}</button>
-        </div>
-      </div>
+      <side-nav id="mySidenav"
+                @showPlayer="showPlayer"
+                @showTeam="showTeam"
+                :sportfolios="sportfolios">
+      </side-nav>
       <!-- end side nav -->
       <games-list :games="gamesList"
                   style="float: left; margin: 0px 50px 50px 150px;"
                   @gameSelected="viewMode='isInGameView'"></games-list>
       <players-list style="float: left; margin: 0px 50px 50px 50px;"
-                    @playerSelected="viewPlayerInfo"></players-list>
+                    @playerSelected="viewPlayerInfo"
+                    @addPlayerClicked="showModal"
+                    :players="players"></players-list>
 
       <div style="float: left;">
         <button @click="editTeamSettings" class="sportButton">Edit Team Settings</button><br>
@@ -160,7 +154,8 @@ export default {
         }
       ],
       sportfolios: [],
-      gamesList: []
+      gamesList: [],
+      players: []
     }
   },
   mounted () {
@@ -168,6 +163,8 @@ export default {
         this.loggedInUser = firebase.auth().currentUser;
         this.currentUserEmail = this.loggedInUser.email;
         this.getGames();
+        this.getPlayers();
+        this.getSportfolios();
     });
   },
   methods: {
@@ -184,9 +181,6 @@ export default {
     },
     openNav: function() {
       document.getElementById("mySidenav").style.width = "250px";
-    },
-    closeNav: function() {
-      document.getElementById("mySidenav").style.width = "0";
     },
     showTeam: function() {
       this.viewMode = 'isCreatingTeam'
@@ -299,6 +293,56 @@ export default {
         keysList.forEach(function(key) {
           gamesRef.child(key).once('value', function(snap) {
             self.gamesList.push(snap.val());
+          })
+        });
+      });
+    },
+    getPlayers() {
+      this.teamID = 'idn12';
+      var id = this.teamID;
+      var self = this;
+      var playersRef = firebase.database().ref('/TeamSportfolios/' + id + '/Players/');
+      playersRef.on('value', function(snapshot) {
+        var obj = snapshot.val();
+        console.log(obj);
+        self.players = obj;
+      });
+    },
+    showModal () {
+      this.$modal.show('new-player');
+    },
+    hideModal (event) {
+      console.log('Hide Modal');
+      console.log(event);
+      this.teamID = 'idn12';
+      var id = this.teamID;
+      var playersRef = firebase.database().ref('/TeamSportfolios/' + id + '/Players/');
+      var num = 'p' + event.num;
+      var name = event.name;
+      if(!name){
+        name = ' ';
+      }
+      playersRef.update({
+        [num] : name
+      });
+      this.$modal.hide('new-player');
+    },
+    getSportfolios() {
+      this.teamID = 'idn12';
+      var id = this.teamID;
+      var keysList = [];
+      var self = this;
+
+      var email = this.currentUserEmail.replace('.', '');
+      var sportfoliosListRef = firebase.database().ref('/Users/' + email + '/AdminTeams/');
+      sportfoliosListRef.on('value', function(snapshot) {
+        var obj = snapshot.val();
+        keysList = Object.keys(obj);
+        var sportfoliosRef = firebase.database().ref('/TeamSportfolios');
+        self.sportfolios = [];
+        keysList.forEach(function(key) {
+          sportfoliosRef.child(key).once('value', function(snap) {
+            self.sportfolios.push(snap.val());
           })
         });
       });

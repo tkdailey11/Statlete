@@ -41,6 +41,14 @@ Vue.component('player-detail-view', PlayerDetailView);
 import SideNav from '@/components/SideNav';
 Vue.component('side-nav', SideNav);
 
+import NewPlayer from '@/components/NewPlayer';
+Vue.component('new-player', NewPlayer);
+
+import VModal from 'vue-js-modal'
+Vue.use(VModal)
+import Vue2TouchEvents from 'vue2-touch-events'
+Vue.use(Vue2TouchEvents)
+
 import jQuery from 'jquery'
 global.jQuery = jQuery
 import popper from 'popper.js'
