@@ -18,8 +18,6 @@
 		043A43822075586C005E481C /* BottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A43782075586B005E481C /* BottomBar.swift */; };
 		043A43832075586C005E481C /* SoccerTeamEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A43792075586B005E481C /* SoccerTeamEntryView.swift */; };
 		043A43842075586C005E481C /* SoccerEntryModeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A437A2075586C005E481C /* SoccerEntryModeController.swift */; };
-		043A43852075586C005E481C /* SoccerEntryLiveStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A437B2075586C005E481C /* SoccerEntryLiveStatsView.swift */; };
-		0451D45120744CF700AF6524 /* ScoreboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0451D45020744CF700AF6524 /* ScoreboardView.xib */; };
 		04C374B920783C3F000F7063 /* TeamStatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C374B820783C3F000F7063 /* TeamStatView.swift */; };
 		04C374BC2078401E000F7063 /* TeamStatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C374BA2078401E000F7063 /* TeamStatCell.swift */; };
 		04C374BD2078401E000F7063 /* TeamStatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04C374BB2078401E000F7063 /* TeamStatCell.xib */; };
@@ -76,8 +74,6 @@
 		043A43782075586B005E481C /* BottomBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomBar.swift; sourceTree = "<group>"; };
 		043A43792075586B005E481C /* SoccerTeamEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoccerTeamEntryView.swift; sourceTree = "<group>"; };
 		043A437A2075586C005E481C /* SoccerEntryModeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoccerEntryModeController.swift; sourceTree = "<group>"; };
-		043A437B2075586C005E481C /* SoccerEntryLiveStatsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoccerEntryLiveStatsView.swift; sourceTree = "<group>"; };
-		0451D45020744CF700AF6524 /* ScoreboardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScoreboardView.xib; sourceTree = "<group>"; };
 		04C374B820783C3F000F7063 /* TeamStatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamStatView.swift; sourceTree = "<group>"; };
 		04C374BA2078401E000F7063 /* TeamStatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamStatCell.swift; sourceTree = "<group>"; };
 		04C374BB2078401E000F7063 /* TeamStatCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeamStatCell.xib; sourceTree = "<group>"; };
@@ -158,13 +154,11 @@
 		0451D44F20744CC700AF6524 /* Soccer */ = {
 			isa = PBXGroup;
 			children = (
+				043A437A2075586C005E481C /* SoccerEntryModeController.swift */,
 				04D50BC22076A1DD00368924 /* StatView */,
-				0451D45020744CF700AF6524 /* ScoreboardView.xib */,
 				043A43782075586B005E481C /* BottomBar.swift */,
 				043A43732075586A005E481C /* PossessionView.swift */,
 				043A43762075586B005E481C /* ScoreboardView.swift */,
-				043A437B2075586C005E481C /* SoccerEntryLiveStatsView.swift */,
-				043A437A2075586C005E481C /* SoccerEntryModeController.swift */,
 				043A43752075586A005E481C /* SoccerShotChartEntryView.swift */,
 				041298A220758B1D00FE0EE5 /* EntryView */,
 				041298A120758AFA00FE0EE5 /* Substitutions */,
@@ -361,7 +355,6 @@
 				04C374BD2078401E000F7063 /* TeamStatCell.xib in Resources */,
 				DC83F252207993AF005623AA /* GameCell.xib in Resources */,
 				04F32DA12076F37B00E9C0CA /* PlayerStatCell.xib in Resources */,
-				0451D45120744CF700AF6524 /* ScoreboardView.xib in Resources */,
 				DC0EE771204F78D700D550F5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -382,7 +375,6 @@
 				043A437D2075586C005E481C /* PossessionView.swift in Sources */,
 				043A43802075586C005E481C /* ScoreboardView.swift in Sources */,
 				DCFD0EF92072C22E0048B7E0 /* LoginViewController.swift in Sources */,
-				043A43852075586C005E481C /* SoccerEntryLiveStatsView.swift in Sources */,
 				DCD43E09207ADB3C007F0C05 /* ChooseSportViewController.swift in Sources */,
 				DCC50790206A0E2A00F64717 /* CreateAccountViewController.swift in Sources */,
 				04C374BC2078401E000F7063 /* TeamStatCell.swift in Sources */,
