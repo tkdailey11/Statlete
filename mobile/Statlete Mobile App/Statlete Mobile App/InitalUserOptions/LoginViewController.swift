@@ -52,47 +52,32 @@ class LoginViewController: UIViewController {
             else {
                 let email = self.emailTextField.text!
                 let id = email.replacingOccurrences(of: ".", with: "")
-                print(id)
-                var adminTeams: [String] = []
-                var playerTeams: [String] = []
-                var phone: String = String()
                 
-                let ref = DB.database.child("Users/\(id)")
-                print(ref)
-           
-                ref.observeSingleEvent(of: .value, with: { snapshot in
-                    
-                    if !snapshot.exists() { return }
-                    
-                    print(snapshot)
-                    
-                    print(snapshot.value!)
-                    var name: String = String()
-
-                    name = snapshot.childSnapshot(forPath: "Name").value as! String
-                    phone = snapshot.childSnapshot(forPath: "Phone").value as! String
-                    print("name: \(name)")
-                    var teams = snapshot.childSnapshot(forPath: "AdminTeams")
-                    
-                    for team in teams.children {
-                        let teamSnapshot = team as! DataSnapshot
-                        adminTeams.append(teamSnapshot.key as! String)
-                    }
-                    
-                    teams = snapshot.childSnapshot(forPath: "PlayerTeams")
-                    
-                    for team in teams.children {
-                        let teamSnapshot = team as! DataSnapshot
-                        playerTeams.append(teamSnapshot.key as! String)
-                    }
+                DB.database.child("Users").child(id).observeSingleEvent(of: .value, with: { (snapshot) in
+                    let value = snapshot.value as? NSDictionary
+                    let name = value?["Name"] as? String ?? ""
+                    let phone = value?["Phone"] as? String ?? ""
                     DB.currentUser = User(name: name, email: email)
-
-                    print(DB.currentUser.name)
+                    
+                    var adminTeams: [String] = []
+                    let adminTeamsSet = value?["AdminTeams"] as? [String: String] ?? [:]
+                    let adminTeamIDs = adminTeamsSet.keys
+                    for adminTeamID in adminTeamIDs {
+                        adminTeams.append(adminTeamID)
+                    }
+                    DB.currentUser.AdminTeams = adminTeams
+                    
+                    var playerTeams: [String] = []
+                    let playerTeamsSet = value?["PlayerTeams"] as? [String: String] ?? [:]
+                    let playerTeamsIDs = playerTeamsSet.keys
+                    for playerTeamsID in playerTeamsIDs {
+                        playerTeams.append(playerTeamsID)
+                    }
+                    DB.currentUser.PlayerTeams = playerTeams
+                    
+                    DB.currentUser.phoneNumber = phone
                 })
-              
-             
                 
-                print(DB.currentUser.name)
                 self.performSegue(withIdentifier: "toHome", sender: self)
                 
             }

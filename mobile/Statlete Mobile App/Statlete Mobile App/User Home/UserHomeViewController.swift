@@ -27,6 +27,8 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
         
         let nib = UINib.init(nibName: "SportfolioCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "SportfolioCell")
+        
+        print("Current User: \(DB.currentUser.name)")
     
        
   //  tableView.register(SportfolioCellTableViewCell.nib, forCellReuseIdentifier: "SportfolioCellTableViewCell")
@@ -49,7 +51,9 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
         return 98
     }
 
-   
+    override func viewDidAppear(_ animated: Bool) {
+        print("Current User: \(DB.currentUser.name)")
+    }
 
     /*
     // MARK: - Navigation

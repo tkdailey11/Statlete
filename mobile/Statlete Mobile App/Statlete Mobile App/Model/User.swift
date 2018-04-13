@@ -10,13 +10,13 @@ import Foundation
 
 class User {
     
-    public var name: String = String()
-    private var email: String = String()
-    private var AdminTeams: [String] = [String]() // list of sportfolio ids
-    private var PlayerTeams: [String] = [String]()
-    private var phoneNumber: String = String()
+    var name: String = String()
+    var email: String = String()
+    var AdminTeams: [String] = [String]() // list of sportfolio ids
+    var PlayerTeams: [String] = [String]()
+    var phoneNumber: String = String()
     
-    private let mySportfolios: [Sportfolio] = [Sportfolio]()
+    var mySportfolios: [Sportfolio] = [Sportfolio]()
     
     init(name: String, email: String) {
         self.name = name
