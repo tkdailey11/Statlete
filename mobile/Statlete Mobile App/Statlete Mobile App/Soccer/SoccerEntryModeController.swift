@@ -29,10 +29,34 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     var shotChartEntryView: SoccerShotChartEntryView = SoccerShotChartEntryView()
     var statView: StatView = StatView()
     
+    func addGameToDatabase() {
+        let calendar = Calendar.current
+        let dateString = "\(calendar.component(.month, from: game.date))-\(calendar.component(.day, from: game.date))-\(calendar.component(.year, from: game.date))"
+        
+        DB.database.child("SoccerGames").child(game.id).updateChildValues(["Date": dateString, "HalfLength": game.halfLength, "Name": game.name, "Period": game.half])
+        DB.database.child("SoccerGames").child(game.id).updateChildValues(["MyTotals": " "])
+        DB.database.child("SoccerGames").child(game.id).child("MyTotals").updateChildValues(["Period1": " ", "Period2": " "])
+        DB.database.child("SoccerGames").child(game.id).updateChildValues(["OpponentsTotals": " "])
+        DB.database.child("SoccerGames").child(game.id).child("OpponentsTotals").updateChildValues(["Period1": " ", "Period2": " "])
+        for stat in statNames {
+            DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").updateChildValues([stat: ["Total": 0]])
+            DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period2").updateChildValues([stat: ["Total": 0]])
+            DB.database.child("SoccerGames").child(game.id).child("OpponentsTotals").child("Period1").updateChildValues([stat: ["Total": 0]])
+            DB.database.child("SoccerGames").child(game.id).child("OpponentsTotals").child("Period2").updateChildValues([stat: ["Total": 0]])
+        }
+        DB.database.child("SoccerGames").child(game.id).child("MyTotals").updateChildValues(["Possession": 0])
+        DB.database.child("SoccerGames").child(game.id).child("OpponentsTotals").updateChildValues(["Possession": 0])
+        DB.database.child("SoccerGames").child(game.id).updateChildValues(["InProgress": false])
+        DB.database.child("SoccerGames").child(game.id).updateChildValues(["StartTime": 0])
+        game.listenToDatabase()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        game = SoccerGame(id: "1", name: "Game 1", halfLength: 45, stats: statNames)
+        game = SoccerGame(id: "team2-1", name: "vs. Sparta 06", halfLength: 45)
+        
+        addGameToDatabase()
         
         view.backgroundColor = UIColor.white
         
@@ -118,9 +142,9 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     
     // Called when the scoreboard timer is pressed
     @objc func scoreboardTimePressed() {
-        if !timerStarted {
-            game.startTime = Date()
-            timerStarted = true
+        if !game.inProgress {
+            DB.database.child("SoccerGames").child(game.id).updateChildValues(["PeriodStartTime": Int(Date().timeIntervalSince1970)])
+            DB.database.child("SoccerGames").child(game.id).updateChildValues(["InProgress": true])
             timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
         }
     }
@@ -157,6 +181,12 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     /////// EntryView Callbacks  ///////////
     ////////////////////////////////////////
     func plusButtonPressed(index: Int) {
+        if !game.inProgress {
+            return
+        }
+        var minute = 0
+        var second = 0
+        (minute, second) = game.getTime()
         if (game.half == 1) {
             if (oppTeamSelected) {
                 game.opp1stHalfTotals[statNames[index]]! += 1
@@ -164,7 +194,7 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
                 substitutionBar.setOpposingTeamButtonToNotSelected()
             }
             else {
-                game.my1stHalfTotals[statNames[index]]! += 1
+                DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["\(minute):\(second)":" "])
             }
         }
         else {
@@ -237,7 +267,7 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     
     
     func getPossessionValues() -> (myTeamPossession: TimeInterval, oppTeamPossession: TimeInterval) {
-        return (game.my1stHalfPossession + game.my2ndHalfPossession, game.opp1stHalfPossession + game.opp2ndHalfPossession)
+        return (game.myPossession, game.oppPossession)
     }
     
     ////////////////////////////////////////
@@ -257,12 +287,7 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     func myTeamPossessionSelected() {
         if currentlySelectedPossession == .oppTeam {
             let timeToAdd = timePossessionSwitched.timeIntervalSinceNow * -1
-            if game.half == 1 {
-                game.opp1stHalfPossession += timeToAdd
-            }
-            else {
-                game.opp2ndHalfPossession += timeToAdd
-            }
+            game.oppPossession += timeToAdd
         }
         timePossessionSwitched = Date()
         currentlySelectedPossession = .myTeam
@@ -272,12 +297,7 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     func oppTeamPossessionSelected() {
         if currentlySelectedPossession == .myTeam {
             let timeToAdd = timePossessionSwitched.timeIntervalSinceNow * -1
-            if game.half == 1 {
-                game.my1stHalfPossession += timeToAdd
-            }
-            else {
-                game.my2ndHalfPossession += timeToAdd
-            }
+            game.myPossession += timeToAdd
         }
         timePossessionSwitched = Date()
         currentlySelectedPossession = .oppTeam
@@ -287,21 +307,11 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     func outOfPlaySelected() {
         if currentlySelectedPossession == .oppTeam {
             let timeToAdd = timePossessionSwitched.timeIntervalSinceNow * -1
-            if game.half == 1 {
-                game.opp1stHalfPossession += timeToAdd
-            }
-            else {
-                game.opp2ndHalfPossession += timeToAdd
-            }
+            game.oppPossession += timeToAdd
         }
         else if currentlySelectedPossession == .myTeam {
             let timeToAdd = timePossessionSwitched.timeIntervalSinceNow * -1
-            if game.half == 1 {
-                game.my1stHalfPossession += timeToAdd
-            }
-            else {
-                game.my2ndHalfPossession += timeToAdd
-            }
+            game.myPossession += timeToAdd
         }
         currentlySelectedPossession = .out
         timePossessionSwitched = Date()
