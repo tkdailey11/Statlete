@@ -10,15 +10,17 @@ import Foundation
 
 class User {
     
-    private let name: String = String()
-    private let email: String = String()
-    private let AdminTeams: [String] = [String]() // list of sportfolio ids
-    private let PlayerTeams: [String] = [String]()
-    private let phoneNumber: String = String()
+    public var name: String = String()
+    private var email: String = String()
+    private var AdminTeams: [String] = [String]() // list of sportfolio ids
+    private var PlayerTeams: [String] = [String]()
+    private var phoneNumber: String = String()
     
     private let mySportfolios: [Sportfolio] = [Sportfolio]()
     
     init(name: String, email: String) {
+        self.name = name
+        self.email = email
        
     }
     

@@ -52,14 +52,14 @@ class LoginViewController: UIViewController {
             else {
                 let email = self.emailTextField.text!
                 let id = email.replacingOccurrences(of: ".", with: "")
-                
+                print(id)
                 var adminTeams: [String] = []
                 var playerTeams: [String] = []
-                var name: String = String()
                 var phone: String = String()
                 
                 let ref = DB.database.child("Users/\(id)")
                 print(ref)
+           
                 ref.observeSingleEvent(of: .value, with: { snapshot in
                     
                     if !snapshot.exists() { return }
@@ -67,10 +67,11 @@ class LoginViewController: UIViewController {
                     print(snapshot)
                     
                     print(snapshot.value!)
-                    
+                    var name: String = String()
+
                     name = snapshot.childSnapshot(forPath: "Name").value as! String
                     phone = snapshot.childSnapshot(forPath: "Phone").value as! String
-                    
+                    print("name: \(name)")
                     var teams = snapshot.childSnapshot(forPath: "AdminTeams")
                     
                     for team in teams.children {
@@ -84,11 +85,14 @@ class LoginViewController: UIViewController {
                         let teamSnapshot = team as! DataSnapshot
                         playerTeams.append(teamSnapshot.key as! String)
                     }
-                    
+                    DB.currentUser = User(name: name, email: email)
+
+                    print(DB.currentUser.name)
                 })
+              
+             
                 
-                DB.currentUser = User(name: name, email: email)
-                
+                print(DB.currentUser.name)
                 self.performSegue(withIdentifier: "toHome", sender: self)
                 
             }

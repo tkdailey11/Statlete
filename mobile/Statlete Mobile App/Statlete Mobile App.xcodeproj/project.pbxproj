@@ -18,7 +18,6 @@
 		043A43822075586C005E481C /* BottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A43782075586B005E481C /* BottomBar.swift */; };
 		043A43832075586C005E481C /* SoccerTeamEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A43792075586B005E481C /* SoccerTeamEntryView.swift */; };
 		043A43842075586C005E481C /* SoccerEntryModeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A437A2075586C005E481C /* SoccerEntryModeController.swift */; };
-		0441CD3C20800F6500EE4052 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0441CD3B20800F6500EE4052 /* GoogleService-Info.plist */; };
 		0441CD3E20801D0B00EE4052 /* DB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0441CD3D20801D0B00EE4052 /* DB.swift */; };
 		04C374B920783C3F000F7063 /* TeamStatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C374B820783C3F000F7063 /* TeamStatView.swift */; };
 		04C374BC2078401E000F7063 /* TeamStatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C374BA2078401E000F7063 /* TeamStatCell.swift */; };
@@ -43,6 +42,7 @@
 		DC1914102078390800D37842 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC19140F2078390800D37842 /* Colors.swift */; };
 		DC22AE1D207B1DED002DC4C2 /* ExistingTeamSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC22AE1C207B1DED002DC4C2 /* ExistingTeamSetupViewController.swift */; };
 		DC47DC692079869800AB9684 /* PlayerCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC47DC682079869800AB9684 /* PlayerCollectionCell.swift */; };
+		DC4EAEAA208035F50013EA24 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DC4EAEA9208035F40013EA24 /* GoogleService-Info.plist */; };
 		DC4FDB6520705723005DAD60 /* UserHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4FDB6320705723005DAD60 /* UserHomeViewController.swift */; };
 		DC5DFA03207479C900B7BD02 /* ViewExistingTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5DFA02207479C900B7BD02 /* ViewExistingTeamViewController.swift */; };
 		DC6F8DDD2074896C00C38E4D /* AddTeamSportfolioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6F8DDC2074896C00C38E4D /* AddTeamSportfolioViewController.swift */; };
@@ -78,7 +78,6 @@
 		043A43782075586B005E481C /* BottomBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomBar.swift; sourceTree = "<group>"; };
 		043A43792075586B005E481C /* SoccerTeamEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoccerTeamEntryView.swift; sourceTree = "<group>"; };
 		043A437A2075586C005E481C /* SoccerEntryModeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoccerEntryModeController.swift; sourceTree = "<group>"; };
-		0441CD3B20800F6500EE4052 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0441CD3D20801D0B00EE4052 /* DB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DB.swift; sourceTree = "<group>"; };
 		04C374B820783C3F000F7063 /* TeamStatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamStatView.swift; sourceTree = "<group>"; };
 		04C374BA2078401E000F7063 /* TeamStatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamStatCell.swift; sourceTree = "<group>"; };
@@ -105,6 +104,7 @@
 		DC19140F2078390800D37842 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		DC22AE1C207B1DED002DC4C2 /* ExistingTeamSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExistingTeamSetupViewController.swift; sourceTree = "<group>"; };
 		DC47DC682079869800AB9684 /* PlayerCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerCollectionCell.swift; sourceTree = "<group>"; };
+		DC4EAEA9208035F40013EA24 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Library/Mobile Documents/com~apple~CloudDocs/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DC4FDB6320705723005DAD60 /* UserHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHomeViewController.swift; sourceTree = "<group>"; };
 		DC5DFA02207479C900B7BD02 /* ViewExistingTeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExistingTeamViewController.swift; sourceTree = "<group>"; };
 		DC6F8DDC2074896C00C38E4D /* AddTeamSportfolioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTeamSportfolioViewController.swift; sourceTree = "<group>"; };
@@ -228,7 +228,7 @@
 				DC6F8DEF2074AAA500C38E4D /* Sportfolio */,
 				DC0EE775204F78D700D550F5 /* Assets.xcassets */,
 				DC0EE77A204F78D700D550F5 /* Info.plist */,
-				0441CD3B20800F6500EE4052 /* GoogleService-Info.plist */,
+				DC4EAEA9208035F40013EA24 /* GoogleService-Info.plist */,
 				DC0EE772204F78D700D550F5 /* Statlete_Mobile_App.xcdatamodeld */,
 				DCFD0EF72072C1BE0048B7E0 /* Model */,
 				0451D44F20744CC700AF6524 /* Soccer */,
@@ -387,7 +387,7 @@
 				DC0C91C220734066008A0B05 /* SportfolioCell.xib in Resources */,
 				04C374BD2078401E000F7063 /* TeamStatCell.xib in Resources */,
 				DC83F252207993AF005623AA /* GameCell.xib in Resources */,
-				0441CD3C20800F6500EE4052 /* GoogleService-Info.plist in Resources */,
+				DC4EAEAA208035F50013EA24 /* GoogleService-Info.plist in Resources */,
 				04F32DA12076F37B00E9C0CA /* PlayerStatCell.xib in Resources */,
 				DC0EE771204F78D700D550F5 /* Main.storyboard in Resources */,
 			);
