@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class CreateAccountViewController: UIViewController{
     
@@ -60,6 +61,24 @@ class CreateAccountViewController: UIViewController{
     @IBAction func createAccountClicked(_ sender: UIButton) {
         // create new user with text field info
         // add to database
+        
+        
+        Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!) { (user, error) in
+            if error != nil {
+                print("EEEEERRRRRROOOOOOORRRRRR")
+            } else {
+                // Add new user to database
+                let email = self.emailTextField.text!
+                let id = email.replacingOccurrences(of: ".", with: "")
+                let phoneNumber = ""
+                let name = self.nameTextField.text!
+                
+                DB.database.child("Users").child(id).updateChildValues(["Name": name, "Phone": phoneNumber, "AdminTeams": " ", "PlayerTeams": " "])
+                
+                // Create a new user object
+                self.performSegue(withIdentifier: "toHome", sender: self)
+            }
+        }
         
     }
     

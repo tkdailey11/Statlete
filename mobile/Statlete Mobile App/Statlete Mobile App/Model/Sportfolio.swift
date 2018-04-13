@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 class Sportfolio{
     
     public let id : String = String()

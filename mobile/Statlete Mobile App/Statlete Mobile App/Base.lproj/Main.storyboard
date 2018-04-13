@@ -146,7 +146,6 @@
                                 </state>
                                 <connections>
                                     <action selector="createAccountClicked:" destination="c76-rD-FsG" eventType="touchUpInside" id="Wbu-VI-nb5"/>
-                                    <segue destination="G4c-N7-Scb" kind="show" id="OeT-vD-mPH"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ejM-uZ-rgO">
@@ -196,7 +195,7 @@
                                         </attributes>
                                     </fragment>
                                 </attributedString>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="done" secureTextEntry="YES" textContentType="password"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="done" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" usesAttributedText="YES" placeholder="username" clearsOnBeginEditing="YES" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="bUP-oS-ey2">
                                 <rect key="frame" x="43" y="265" width="288" height="50"/>
@@ -249,6 +248,7 @@
                         <outlet property="emailTextField" destination="bUP-oS-ey2" id="Quv-Af-tT3"/>
                         <outlet property="nameTextField" destination="kIU-O7-Ja4" id="uEo-4D-nvX"/>
                         <outlet property="passwordTextField" destination="HKn-be-dpe" id="wdF-Xs-jfN"/>
+                        <segue destination="KgK-bt-g49" kind="show" identifier="toHome" id="oJq-go-Xs9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="me1-TS-VeU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1946,7 +1946,7 @@
                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="KgK-bt-g49" kind="show" id="hlD-KA-Xen"/>
+                                    <action selector="loginButtonClicked:" destination="HFh-91-thq" eventType="touchUpInside" id="HSS-Xt-2w3"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XGR-qc-KwW">
@@ -2019,6 +2019,7 @@
                         <outlet property="emailTextField" destination="Ad1-0B-tnY" id="bEK-5k-2fs"/>
                         <outlet property="loginButton" destination="QsS-to-49N" id="hkq-o6-cOy"/>
                         <outlet property="passwordTextField" destination="vag-eV-oYD" id="j5O-b0-fNg"/>
+                        <segue destination="KgK-bt-g49" kind="show" identifier="toHome" id="4ds-gg-4Ty"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yzm-Sa-csD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2099,6 +2100,7 @@
         <image name="settings" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="OeT-vD-mPH"/>
+        <segue reference="4ds-gg-4Ty"/>
+        <segue reference="CeW-UO-v7c"/>
     </inferredMetricsTieBreakers>
 </document>

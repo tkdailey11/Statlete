@@ -18,6 +18,8 @@
 		043A43822075586C005E481C /* BottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A43782075586B005E481C /* BottomBar.swift */; };
 		043A43832075586C005E481C /* SoccerTeamEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A43792075586B005E481C /* SoccerTeamEntryView.swift */; };
 		043A43842075586C005E481C /* SoccerEntryModeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A437A2075586C005E481C /* SoccerEntryModeController.swift */; };
+		0441CD3C20800F6500EE4052 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0441CD3B20800F6500EE4052 /* GoogleService-Info.plist */; };
+		0441CD3E20801D0B00EE4052 /* DB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0441CD3D20801D0B00EE4052 /* DB.swift */; };
 		04C374B920783C3F000F7063 /* TeamStatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C374B820783C3F000F7063 /* TeamStatView.swift */; };
 		04C374BC2078401E000F7063 /* TeamStatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C374BA2078401E000F7063 /* TeamStatCell.swift */; };
 		04C374BD2078401E000F7063 /* TeamStatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04C374BB2078401E000F7063 /* TeamStatCell.xib */; };
@@ -26,6 +28,7 @@
 		04E3ED7220755DA5000F7839 /* StatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04E3ED7020755DA5000F7839 /* StatCell.xib */; };
 		04F32DA02076F37B00E9C0CA /* PlayerStatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F32D9E2076F37B00E9C0CA /* PlayerStatCell.swift */; };
 		04F32DA12076F37B00E9C0CA /* PlayerStatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04F32D9F2076F37B00E9C0CA /* PlayerStatCell.xib */; };
+		30821409A7AA52AD23E2B641 /* Pods_Statlete_Mobile_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA64F39153D2DA56923756D2 /* Pods_Statlete_Mobile_App.framework */; };
 		DC0C91C120734066008A0B05 /* SportfolioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0C91BF20734066008A0B05 /* SportfolioCell.swift */; };
 		DC0C91C220734066008A0B05 /* SportfolioCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC0C91C020734066008A0B05 /* SportfolioCell.xib */; };
 		DC0EE76C204F78D700D550F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EE76B204F78D700D550F5 /* AppDelegate.swift */; };
@@ -63,6 +66,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0182CD73C3B1C0C070AEF022 /* Pods-Statlete Mobile App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Statlete Mobile App.release.xcconfig"; path = "Pods/Target Support Files/Pods-Statlete Mobile App/Pods-Statlete Mobile App.release.xcconfig"; sourceTree = "<group>"; };
 		041298A320759FB800FE0EE5 /* SubCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCell.swift; sourceTree = "<group>"; };
 		041298A420759FB800FE0EE5 /* SubCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubCell.xib; sourceTree = "<group>"; };
 		043A437220755869005E481C /* SoccerGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoccerGame.swift; sourceTree = "<group>"; };
@@ -74,6 +78,8 @@
 		043A43782075586B005E481C /* BottomBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomBar.swift; sourceTree = "<group>"; };
 		043A43792075586B005E481C /* SoccerTeamEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoccerTeamEntryView.swift; sourceTree = "<group>"; };
 		043A437A2075586C005E481C /* SoccerEntryModeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoccerEntryModeController.swift; sourceTree = "<group>"; };
+		0441CD3B20800F6500EE4052 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0441CD3D20801D0B00EE4052 /* DB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DB.swift; sourceTree = "<group>"; };
 		04C374B820783C3F000F7063 /* TeamStatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamStatView.swift; sourceTree = "<group>"; };
 		04C374BA2078401E000F7063 /* TeamStatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamStatCell.swift; sourceTree = "<group>"; };
 		04C374BB2078401E000F7063 /* TeamStatCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeamStatCell.xib; sourceTree = "<group>"; };
@@ -82,6 +88,7 @@
 		04E3ED7020755DA5000F7839 /* StatCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatCell.xib; sourceTree = "<group>"; };
 		04F32D9E2076F37B00E9C0CA /* PlayerStatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerStatCell.swift; sourceTree = "<group>"; };
 		04F32D9F2076F37B00E9C0CA /* PlayerStatCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayerStatCell.xib; sourceTree = "<group>"; };
+		05A4DD669FC88F892B669FF5 /* Pods-Statlete Mobile App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Statlete Mobile App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Statlete Mobile App/Pods-Statlete Mobile App.debug.xcconfig"; sourceTree = "<group>"; };
 		DC0C91BF20734066008A0B05 /* SportfolioCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportfolioCell.swift; sourceTree = "<group>"; };
 		DC0C91C020734066008A0B05 /* SportfolioCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SportfolioCell.xib; sourceTree = "<group>"; };
 		DC0EE768204F78D700D550F5 /* Statlete Mobile App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Statlete Mobile App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -118,6 +125,7 @@
 		DCFD0419207C268200BFAC80 /* VEGameStatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VEGameStatsViewController.swift; sourceTree = "<group>"; };
 		DCFD0420207DDE8000BFAC80 /* NewOrExistingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewOrExistingViewController.swift; sourceTree = "<group>"; };
 		DCFD0EF82072C22E0048B7E0 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		EA64F39153D2DA56923756D2 /* Pods_Statlete_Mobile_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Statlete_Mobile_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +133,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30821409A7AA52AD23E2B641 /* Pods_Statlete_Mobile_App.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,11 +189,21 @@
 			path = StatView;
 			sourceTree = "<group>";
 		};
+		5BA9DB5D6D999CD19577AC07 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EA64F39153D2DA56923756D2 /* Pods_Statlete_Mobile_App.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		DC0EE75F204F78D700D550F5 = {
 			isa = PBXGroup;
 			children = (
 				DC0EE76A204F78D700D550F5 /* Statlete Mobile App */,
 				DC0EE769204F78D700D550F5 /* Products */,
+				F07C19352FF33A5CD3AB02DE /* Pods */,
+				5BA9DB5D6D999CD19577AC07 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -209,11 +228,13 @@
 				DC6F8DEF2074AAA500C38E4D /* Sportfolio */,
 				DC0EE775204F78D700D550F5 /* Assets.xcassets */,
 				DC0EE77A204F78D700D550F5 /* Info.plist */,
+				0441CD3B20800F6500EE4052 /* GoogleService-Info.plist */,
 				DC0EE772204F78D700D550F5 /* Statlete_Mobile_App.xcdatamodeld */,
 				DCFD0EF72072C1BE0048B7E0 /* Model */,
 				0451D44F20744CC700AF6524 /* Soccer */,
 				DC19140F2078390800D37842 /* Colors.swift */,
 				DCFD0420207DDE8000BFAC80 /* NewOrExistingViewController.swift */,
+				0441CD3D20801D0B00EE4052 /* DB.swift */,
 			);
 			path = "Statlete Mobile App";
 			sourceTree = "<group>";
@@ -288,6 +309,15 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		F07C19352FF33A5CD3AB02DE /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				05A4DD669FC88F892B669FF5 /* Pods-Statlete Mobile App.debug.xcconfig */,
+				0182CD73C3B1C0C070AEF022 /* Pods-Statlete Mobile App.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -295,9 +325,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DC0EE77D204F78D700D550F5 /* Build configuration list for PBXNativeTarget "Statlete Mobile App" */;
 			buildPhases = (
+				3034227ADB0D09F07818353D /* [CP] Check Pods Manifest.lock */,
 				DC0EE764204F78D700D550F5 /* Sources */,
 				DC0EE765204F78D700D550F5 /* Frameworks */,
 				DC0EE766204F78D700D550F5 /* Resources */,
+				6175AF3E0AE20D49791847D1 /* [CP] Embed Pods Frameworks */,
+				DC547E1F9D3655639DC8EC0A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -354,12 +387,73 @@
 				DC0C91C220734066008A0B05 /* SportfolioCell.xib in Resources */,
 				04C374BD2078401E000F7063 /* TeamStatCell.xib in Resources */,
 				DC83F252207993AF005623AA /* GameCell.xib in Resources */,
+				0441CD3C20800F6500EE4052 /* GoogleService-Info.plist in Resources */,
 				04F32DA12076F37B00E9C0CA /* PlayerStatCell.xib in Resources */,
 				DC0EE771204F78D700D550F5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3034227ADB0D09F07818353D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Statlete Mobile App-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6175AF3E0AE20D49791847D1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Statlete Mobile App/Pods-Statlete Mobile App-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Statlete Mobile App/Pods-Statlete Mobile App-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DC547E1F9D3655639DC8EC0A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Statlete Mobile App/Pods-Statlete Mobile App-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DC0EE764204F78D700D550F5 /* Sources */ = {
@@ -404,6 +498,7 @@
 				DC22AE1D207B1DED002DC4C2 /* ExistingTeamSetupViewController.swift in Sources */,
 				043A437E2075586C005E481C /* SubstitutionBar.swift in Sources */,
 				043A437F2075586C005E481C /* SoccerShotChartEntryView.swift in Sources */,
+				0441CD3E20801D0B00EE4052 /* DB.swift in Sources */,
 				DC6F8DE72074983600C38E4D /* TeamSportfolioSetupViewController.swift in Sources */,
 				DC1914102078390800D37842 /* Colors.swift in Sources */,
 				DC6F8DE12074940A00C38E4D /* SportfolioViewController.swift in Sources */,
@@ -544,13 +639,14 @@
 		};
 		DC0EE77E204F78D700D550F5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 05A4DD669FC88F892B669FF5 /* Pods-Statlete Mobile App.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MKW5RX37LJ;
+				DEVELOPMENT_TEAM = N24XFKN23J;
 				INFOPLIST_FILE = "Statlete Mobile App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "eng.utah.Statlete-Mobile-App";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Statlete18;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -559,13 +655,14 @@
 		};
 		DC0EE77F204F78D700D550F5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0182CD73C3B1C0C070AEF022 /* Pods-Statlete Mobile App.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MKW5RX37LJ;
+				DEVELOPMENT_TEAM = N24XFKN23J;
 				INFOPLIST_FILE = "Statlete Mobile App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "eng.utah.Statlete-Mobile-App";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Statlete18;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

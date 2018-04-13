@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Statlete Mobile App/InitalUserOptions/LoginViewController.swift"
+            timestampString = "545272608.83084"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
+            landmarkName = "loginButtonClicked(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;__ObjC.User&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Statlete_Mobile_App.LoginViewController.loginButtonClicked(__ObjC.UIButton) -&gt; ()"
+                  moduleName = "Statlete Mobile App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nategreat13/Desktop/Statlete/mobile/Statlete%20Mobile%20App/Statlete%20Mobile%20App/InitalUserOptions/LoginViewController.swift"
+                  timestampString = "545272608.887576"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "63"
+                  endingLineNumber = "63"
+                  offsetFromSymbolStart = "2900">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__ObjC.DataSnapshot) -&gt; () in closure #1 (Swift.Optional&lt;__ObjC.User&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Statlete_Mobile_App.LoginViewController.loginButtonClicked(__ObjC.UIButton) -&gt; ()"
+                  moduleName = "Statlete Mobile App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nategreat13/Desktop/Statlete/mobile/Statlete%20Mobile%20App/Statlete%20Mobile%20App/InitalUserOptions/LoginViewController.swift"
+                  timestampString = "545272608.8922909"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "58"
+                  endingLineNumber = "58"
+                  offsetFromSymbolStart = "24">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

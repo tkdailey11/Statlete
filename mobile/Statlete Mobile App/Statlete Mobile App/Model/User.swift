@@ -8,17 +8,18 @@
 
 import Foundation
 
-class User{
+class User {
     
     private let name: String = String()
     private let email: String = String()
-    private let password: String = String()
     private let AdminTeams: [String] = [String]() // list of sportfolio ids
     private let PlayerTeams: [String] = [String]()
+    private let phoneNumber: String = String()
     
     private let mySportfolios: [Sportfolio] = [Sportfolio]()
     
-    init(name: String, email: String, password: String){
+    init(name: String, email: String) {
        
     }
+    
 }

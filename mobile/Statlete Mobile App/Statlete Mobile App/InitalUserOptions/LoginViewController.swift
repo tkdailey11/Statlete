@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class LoginViewController: UIViewController {
 
@@ -40,13 +41,64 @@ class LoginViewController: UIViewController {
 
         
         loginButton.layer.cornerRadius = 10
-    
 
     }
-
+    
+    @IBAction func loginButtonClicked(_ sender: UIButton) {
+        Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) { (user, error) in
+            if (error != nil) {
+                print(error!)
+            }
+            else {
+                let email = self.emailTextField.text!
+                let id = email.replacingOccurrences(of: ".", with: "")
+                
+                var adminTeams: [String] = []
+                var playerTeams: [String] = []
+                var name: String = String()
+                var phone: String = String()
+                
+                let ref = DB.database.child("Users/\(id)")
+                print(ref)
+                ref.observeSingleEvent(of: .value, with: { snapshot in
+                    
+                    if !snapshot.exists() { return }
+                    
+                    print(snapshot)
+                    
+                    print(snapshot.value!)
+                    
+                    name = snapshot.childSnapshot(forPath: "Name").value as! String
+                    phone = snapshot.childSnapshot(forPath: "Phone").value as! String
+                    
+                    var teams = snapshot.childSnapshot(forPath: "AdminTeams")
+                    
+                    for team in teams.children {
+                        let teamSnapshot = team as! DataSnapshot
+                        adminTeams.append(teamSnapshot.key as! String)
+                    }
+                    
+                    teams = snapshot.childSnapshot(forPath: "PlayerTeams")
+                    
+                    for team in teams.children {
+                        let teamSnapshot = team as! DataSnapshot
+                        playerTeams.append(teamSnapshot.key as! String)
+                    }
+                    
+                })
+                
+                DB.currentUser = User(name: name, email: email)
+                
+                self.performSegue(withIdentifier: "toHome", sender: self)
+                
+            }
+        }
+    }
+    
     @IBAction func backButtonClicked(_ sender: UIButton) {
          _ = navigationController?.popViewController(animated: true)
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
