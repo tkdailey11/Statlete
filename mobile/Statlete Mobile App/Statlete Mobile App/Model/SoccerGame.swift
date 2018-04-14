@@ -84,7 +84,26 @@ class SoccerGame {
         DB.database.child("SoccerGames").child(self.id).child("InProgress").observe(.value, with: { (snapshot) in
             self.inProgress = snapshot.value as? Bool ?? false
         })
+        DB.database.child("SoccerGames").child(self.id).child("Period").observe(.value, with: { (snapshot) in
+            self.half = snapshot.value as? Int ?? 0
+        })
         for stat in statNames {
+            DB.database.child("SoccerGames").child(self.id).child("MyTotals").child("Period1").child(stat).observe(.value, with: { (snapshot) in
+                let value = snapshot.value as? NSDictionary
+                self.my1stHalfTotals[stat] = value?["Total"] as? Int ?? 0
+            })
+            DB.database.child("SoccerGames").child(self.id).child("MyTotals").child("Period2").child(stat).observe(.value, with: { (snapshot) in
+                let value = snapshot.value as? NSDictionary
+                self.my2ndHalfTotals[stat] = value?["Total"] as? Int ?? 0
+            })
+            DB.database.child("SoccerGames").child(self.id).child("OpponentsTotals").child("Period1").child(stat).observe(.value, with: { (snapshot) in
+                let value = snapshot.value as? NSDictionary
+                self.opp1stHalfTotals[stat] = value?["Total"] as? Int ?? 0
+            })
+            DB.database.child("SoccerGames").child(self.id).child("OpponentsTotals").child("Period2").child(stat).observe(.value, with: { (snapshot) in
+                let value = snapshot.value as? NSDictionary
+                self.opp2ndHalfTotals[stat] = value?["Total"] as? Int ?? 0
+            })
         }
     }
     

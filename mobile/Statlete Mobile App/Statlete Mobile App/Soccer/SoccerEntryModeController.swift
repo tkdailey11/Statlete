@@ -154,6 +154,7 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         var seconds: Int = 0
         (minutes, seconds) = game.getTime()
         scoreboardView!.timeLabel.text = getTimeStringFrom(minutes: minutes, seconds: seconds)
+        statView.teamStatView.tableView.reloadData()
     }
     
     // Convert minutes and seconds into a string represenatation to be used for scoreboard view
@@ -189,22 +190,26 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         (minute, second) = game.getTime()
         if (game.half == 1) {
             if (oppTeamSelected) {
-                game.opp1stHalfTotals[statNames[index]]! += 1
+                DB.database.child("SoccerGames").child(game.id).child("OpponentsTotals").child("Period1").child(game.statNames[index]).updateChildValues(["\(minute):\(second)":" "])
+                DB.database.child("SoccerGames").child(game.id).child("OpponentsTotals").child("Period1").child(game.statNames[index]).updateChildValues(["Total": self.game.opp1stHalfTotals[statNames[index]]!+1])
                 oppTeamSelected = false
                 substitutionBar.setOpposingTeamButtonToNotSelected()
             }
             else {
                 DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["\(minute):\(second)":" "])
+                DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["Total": self.game.my1stHalfTotals[statNames[index]]!+1])
             }
         }
         else {
             if (oppTeamSelected) {
-                game.opp2ndHalfTotals[statNames[index]]! += 1
+                DB.database.child("SoccerGames").child(game.id).child("OpponentsTotals").child("Period2").child(game.statNames[index]).updateChildValues(["\(minute):\(second)":" "])
+                DB.database.child("SoccerGames").child(game.id).child("OpponentsTotals").child("Period2").child(game.statNames[index]).updateChildValues(["Total": self.game.opp2ndHalfTotals[statNames[index]]!+1])
                 oppTeamSelected = false
                 substitutionBar.setOpposingTeamButtonToNotSelected()
             }
             else {
-                game.my2ndHalfTotals[statNames[index]]! += 1
+                DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period2").child(game.statNames[index]).updateChildValues(["\(minute):\(second)":" "])
+                DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period2").child(game.statNames[index]).updateChildValues(["Total": self.game.my2ndHalfTotals[statNames[index]]!+1])
             }
         }
         if index == 0 {
