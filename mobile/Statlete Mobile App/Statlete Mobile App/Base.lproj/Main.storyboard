@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bjj-np-0MR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="R17-B6-v3g">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -13,17 +13,6 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="Avenir.ttc">
-            <string>Avenir-Book</string>
-            <string>Avenir-Light</string>
-        </array>
-        <array key="AvenirNext.ttc">
-            <string>AvenirNext-Medium</string>
-            <string>AvenirNext-Regular</string>
-            <string>AvenirNext-UltraLight</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -173,7 +162,7 @@
                                 <attributedString key="attributedText">
                                     <fragment content="name">
                                         <attributes>
-                                            <color key="NSColor" red="0.99999600649999998" green="1" blue="1" alpha="0.29379815924657532" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="NSColor" red="0.12984204290000001" green="0.12984612579999999" blue="0.12984395030000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <font key="NSFont" size="20" name="ShreeDev0714"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
@@ -189,7 +178,7 @@
                                 <attributedString key="attributedText">
                                     <fragment content="passwordrd">
                                         <attributes>
-                                            <color key="NSColor" red="0.99999600649999998" green="1" blue="1" alpha="0.32000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="NSColor" red="0.12984204290000001" green="0.12984612579999999" blue="0.12984395030000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <font key="NSFont" size="21" name="ShreeDev0714"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
@@ -205,7 +194,7 @@
                                 <attributedString key="attributedText">
                                     <fragment content="username">
                                         <attributes>
-                                            <color key="NSColor" red="0.99999600649999998" green="1" blue="1" alpha="0.31752996575342468" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="NSColor" red="0.12984204290000001" green="0.12984612579999999" blue="0.12984395030000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <font key="NSFont" size="22" name="ShreeDev0714"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
@@ -214,7 +203,7 @@
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="done" enablesReturnKeyAutomatically="YES" textContentType="username"/>
                             </textField>
                         </subviews>
-                        <color key="backgroundColor" red="0.98061109889999998" green="0.80282328560000005" blue="0.49970326189999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" red="0.99861449003219604" green="0.48100079105554744" blue="0.30329952669521099" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="ejM-uZ-rgO" firstAttribute="leading" secondItem="Qwa-fl-zjz" secondAttribute="leading" id="5YY-c2-QUD"/>
                             <constraint firstItem="HKn-be-dpe" firstAttribute="top" secondItem="bUP-oS-ey2" secondAttribute="bottom" constant="50" id="6Z0-LX-GVQ"/>
@@ -303,12 +292,12 @@
                                     <constraint firstAttribute="width" constant="285" id="4eb-Fp-niF"/>
                                     <constraint firstAttribute="height" constant="50" id="5RO-2w-faU"/>
                                 </constraints>
-                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.12984204290000001" green="0.12984612579999999" blue="0.12984395030000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="21"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="done" enablesReturnKeyAutomatically="YES" textContentType="username"/>
                             </textField>
                         </subviews>
-                        <color key="backgroundColor" red="0.98061109889999998" green="0.80282328560000005" blue="0.49970326189999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" red="0.99861449003219604" green="0.48100079105554744" blue="0.30329952669521099" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="GnH-aU-LZ2" firstAttribute="leading" secondItem="n8E-RK-AJu" secondAttribute="leading" id="7mH-b7-dQ1"/>
                             <constraint firstItem="p1a-nC-8wY" firstAttribute="centerX" secondItem="O4m-XJ-6pr" secondAttribute="centerX" id="9pP-GD-Mlf"/>
@@ -557,6 +546,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Ha5-lx-D2x" firstAttribute="bottom" secondItem="CVT-lo-aFX" secondAttribute="bottom" constant="166" id="1OA-NH-473"/>
+                            <constraint firstItem="pdH-bS-Spj" firstAttribute="leading" secondItem="4bs-cH-ufK" secondAttribute="leading" constant="10" id="9vz-Nx-aRD"/>
                             <constraint firstItem="cd8-ke-rjL" firstAttribute="height" secondItem="4bs-cH-ufK" secondAttribute="height" multiplier="0.09" id="DYW-My-2yy"/>
                             <constraint firstItem="CVT-lo-aFX" firstAttribute="height" secondItem="4bs-cH-ufK" secondAttribute="height" multiplier="0.09" id="DiA-PR-sgW"/>
                             <constraint firstItem="pdH-bS-Spj" firstAttribute="top" secondItem="Ha5-lx-D2x" secondAttribute="top" id="ErS-Bd-IEL"/>
@@ -656,7 +646,7 @@
                                 </attributedString>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="done" textContentType="name"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="TOKEN" borderStyle="roundedRect" placeholder="PLAYER NAME" textAlignment="center" clearsOnBeginEditing="YES" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gjt-Va-DDI">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="TOKEN" borderStyle="roundedRect" placeholder="TOKEN" textAlignment="center" clearsOnBeginEditing="YES" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gjt-Va-DDI">
                                 <rect key="frame" x="116" y="482" width="151" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="7nY-aE-hSi"/>
@@ -674,7 +664,7 @@
                                 <color key="textColor" red="0.74075983502538079" green="0.0" blue="0.0069348124914147486" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="TEAM ID" borderStyle="roundedRect" placeholder="PLAYER NAME" textAlignment="center" clearsOnBeginEditing="YES" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SQP-Wq-g6T">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="TEAM ID" borderStyle="roundedRect" placeholder="TEAM ID" textAlignment="center" clearsOnBeginEditing="YES" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SQP-Wq-g6T">
                                 <rect key="frame" x="116" y="421" width="151" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="ThP-iM-Ld4"/>
@@ -700,8 +690,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="chooseSportButtonClicked:" destination="7Lq-cy-Uql" eventType="touchUpInside" id="wCv-7W-x4w"/>
-                                    <segue destination="S1D-Mv-iVS" kind="presentation" id="Je5-fw-34p"/>
+                                    <segue destination="S1D-Mv-iVS" kind="presentation" identifier="chooseSport" id="Je5-fw-34p"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="COv-0v-Krs">
@@ -715,7 +704,7 @@
                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="backButtonClicked:" destination="7Lq-cy-Uql" eventType="primaryActionTriggered" id="UO1-Kq-4K8"/>
+                                    <action selector="backButton:" destination="7Lq-cy-Uql" eventType="primaryActionTriggered" id="HWa-bL-cyQ"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xhc-OW-EFz">
@@ -737,7 +726,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="Vcd-qo-bwI" kind="show" id="SUj-y9-jdO"/>
+                                    <action selector="createButtonClicked:" destination="7Lq-cy-Uql" eventType="touchUpInside" id="Lff-gH-sHc"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -774,6 +763,7 @@
                         <outlet property="playerNameTextField" destination="T1b-kn-WCX" id="tpD-na-agz"/>
                         <outlet property="teamIDTextField" destination="SQP-Wq-g6T" id="FM2-Y1-mzu"/>
                         <outlet property="tokenTextField" destination="gjt-Va-DDI" id="D9C-b2-hr9"/>
+                        <segue destination="Vcd-qo-bwI" kind="show" identifier="toSportfolio" id="Jg6-i1-it2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Ew-Fz-nFe" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -809,15 +799,21 @@
                                                         <action selector="closePopup:" destination="S1D-Mv-iVS" eventType="touchUpInside" id="Zw2-Pv-uB7"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X4S-4M-29s">
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X4S-4M-29s">
                                                     <rect key="frame" x="137" y="91" width="80" height="80"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <state key="normal" image="choosesoccer"/>
+                                                    <connections>
+                                                        <action selector="soccerSelected:" destination="S1D-Mv-iVS" eventType="touchUpInside" id="UxB-6d-qk2"/>
+                                                    </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iH7-1u-TfD">
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iH7-1u-TfD">
                                                     <rect key="frame" x="259" y="101" width="64" height="64"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <state key="normal" image="choosefootball"/>
+                                                    <connections>
+                                                        <action selector="footballSelected:" destination="S1D-Mv-iVS" eventType="touchUpInside" id="5Sw-0r-pxC"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1N5-8a-oLG">
                                                     <rect key="frame" x="73" y="8" width="209" height="47"/>
@@ -833,10 +829,13 @@
                                                     </attributedString>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nuf-cb-Aqg">
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nuf-cb-Aqg">
                                                     <rect key="frame" x="8" y="97" width="73" height="72"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <state key="normal" image="choosebball"/>
+                                                    <connections>
+                                                        <action selector="basketballSelected:" destination="S1D-Mv-iVS" eventType="touchUpInside" id="kqT-bc-sCx"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <color key="backgroundColor" red="0.98061109889999998" green="0.80282328560000005" blue="0.49970326189999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -1405,6 +1404,7 @@
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="chooseSportButtonClicked:" destination="7Lq-cy-Uql" eventType="touchUpInside" id="WY0-s8-h3L"/>
+                                    <segue destination="S1D-Mv-iVS" kind="presentation" id="XUr-1V-426"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="Team Name" placeholder="Team Name" textAlignment="center" clearsOnBeginEditing="YES" adjustsFontForContentSizeCategory="YES" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="ENW-bH-hs6">
@@ -1613,12 +1613,12 @@
         <scene sceneID="mTN-2i-TWc">
             <objects>
                 <viewController id="Vcd-qo-bwI" customClass="SportfolioViewController" customModule="Statlete_Mobile_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="oj3-zk-LPP">
+                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="oj3-zk-LPP">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YqW-5N-R2j">
-                                <rect key="frame" x="0.0" y="66" width="375" height="535"/>
+                            <containerView opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YqW-5N-R2j">
+                                <rect key="frame" x="0.0" y="73.5" width="375" height="593.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="535" id="U6A-2M-bgJ"/>
                                 </constraints>
@@ -1626,23 +1626,23 @@
                                     <segue destination="bb4-Em-hCJ" kind="embed" id="yp0-QR-Ejl"/>
                                 </connections>
                             </containerView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bN8-d4-2XM" userLabel="Menu Button">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bN8-d4-2XM" userLabel="Menu Button">
                                 <rect key="frame" x="10" y="30" width="32" height="32"/>
                                 <state key="normal" image="menu"/>
                                 <connections>
                                     <action selector="menuButton:" destination="Vcd-qo-bwI" eventType="touchUpInside" id="cPx-Wz-K8c"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hWG-3D-nmi">
-                                <rect key="frame" x="0.0" y="62" width="175" height="539"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hWG-3D-nmi">
+                                <rect key="frame" x="0.0" y="62" width="175" height="605"/>
                                 <subviews>
-                                    <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rfg-28-Jvc">
-                                        <rect key="frame" x="0.0" y="0.0" width="175" height="539"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bh0-PX-tFC">
-                                            <rect key="frame" x="0.0" y="0.0" width="175" height="539"/>
+                                    <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rfg-28-Jvc">
+                                        <rect key="frame" x="0.0" y="0.0" width="175" height="605"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="bh0-PX-tFC">
+                                            <rect key="frame" x="0.0" y="0.0" width="175" height="605"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mbx-bH-Zbb">
+                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mbx-bH-Zbb">
                                                     <rect key="frame" x="10" y="10" width="155" height="65"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
@@ -1712,7 +1712,7 @@
                                     <constraint firstItem="Rfg-28-Jvc" firstAttribute="centerX" secondItem="hWG-3D-nmi" secondAttribute="centerX" id="uaS-ak-D9b"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uww-3u-hBv">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uww-3u-hBv">
                                 <rect key="frame" x="103" y="40" width="169" height="32.5"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Sportfolio Name">
@@ -1968,7 +1968,7 @@
                                 <attributedString key="attributedText">
                                     <fragment content="password">
                                         <attributes>
-                                            <color key="NSColor" red="0.99999600649999998" green="1" blue="1" alpha="0.32000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="NSColor" red="0.12984204290000001" green="0.12984612579999999" blue="0.12984395030000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <font key="NSFont" size="21" name="ShreeDev0714"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
@@ -1984,7 +1984,7 @@
                                 <attributedString key="attributedText">
                                     <fragment content="name">
                                         <attributes>
-                                            <color key="NSColor" red="0.99999600649999998" green="1" blue="1" alpha="0.32000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="NSColor" red="0.12984204290000001" green="0.12984612579999999" blue="0.12984395030000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <font key="NSFont" size="21" name="ShreeDev0714"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
@@ -1993,7 +1993,7 @@
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="done" enablesReturnKeyAutomatically="YES" textContentType="username"/>
                             </textField>
                         </subviews>
-                        <color key="backgroundColor" red="0.98061109889999998" green="0.80282328560000005" blue="0.49970326189999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" red="0.99861449003219604" green="0.48100079105554744" blue="0.30329952669521099" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="vag-eV-oYD" firstAttribute="centerX" secondItem="Gwp-SK-6fR" secondAttribute="centerX" id="2Me-Ue-3CP"/>
                             <constraint firstItem="XGR-qc-KwW" firstAttribute="top" secondItem="Gwp-SK-6fR" secondAttribute="top" id="3hE-KA-XCm"/>
@@ -2100,7 +2100,9 @@
         <image name="settings" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="4ds-gg-4Ty"/>
-        <segue reference="CeW-UO-v7c"/>
+        <segue reference="Jg6-i1-it2"/>
+        <segue reference="oJq-go-Xs9"/>
+        <segue reference="Je5-fw-34p"/>
+        <segue reference="TG2-Vb-6XM"/>
     </inferredMetricsTieBreakers>
 </document>

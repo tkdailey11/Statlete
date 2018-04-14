@@ -76,6 +76,8 @@ class CreateAccountViewController: UIViewController{
                 DB.database.child("Users").child(id).updateChildValues(["Name": name, "Phone": phoneNumber, "AdminTeams": " ", "PlayerTeams": " "])
                 
                 // Create a new user object
+                 DB.currentUser = User(name: name, email: email)
+                
                 self.performSegue(withIdentifier: "toHome", sender: self)
             }
         }

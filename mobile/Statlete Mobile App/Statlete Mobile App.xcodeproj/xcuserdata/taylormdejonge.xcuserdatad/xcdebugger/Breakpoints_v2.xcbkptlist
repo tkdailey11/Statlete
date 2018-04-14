@@ -105,54 +105,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Statlete Mobile App/User Home/UserHomeViewController.swift"
-            timestampString = "545195855.67542"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
-            landmarkName = "tableView(_:cellForRowAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Statlete Mobile App/User Home/UserHomeViewController.swift"
-            timestampString = "545195855.675779"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "19"
-            endingLineNumber = "19"
-            landmarkName = "UserHomeViewController"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Statlete Mobile App/InitalUserOptions/CreateAccountViewController.swift"
-            timestampString = "545119818.952517"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Statlete Mobile App/background.swift"
             timestampString = "544758211.957177"
             startingColumnNumber = "9223372036854775807"
@@ -278,115 +230,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Statlete Mobile App/User Home/UserHomeViewController.swift"
-            timestampString = "545195855.676113"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Statlete Mobile App/User Home/UserHomeViewController.swift"
-            timestampString = "545195855.676342"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "11"
-            endingLineNumber = "11"
-            landmarkName = "UserHomeViewController"
-            landmarkType = "3">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Statlete_Mobile_App.UserHomeViewController.__deallocating_deinit"
-                  moduleName = "Statlete Mobile App"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/taylormdejonge/Desktop/StatleteCapstone/Statlete/mobile/Statlete%20Mobile%20App/Statlete%20Mobile%20App/User%20Home/UserHomeViewController.swift"
-                  timestampString = "544845634.9941109"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0"
-                  offsetFromSymbolStart = "4">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Statlete_Mobile_App.UserHomeViewController.__allocating_init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__ObjC.Bundle&gt;) -&gt; Statlete_Mobile_App.UserHomeViewController"
-                  moduleName = "Statlete Mobile App"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/taylormdejonge/Desktop/StatleteCapstone/Statlete/mobile/Statlete%20Mobile%20App/Statlete%20Mobile%20App/User%20Home/UserHomeViewController.swift"
-                  timestampString = "544845634.998148"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0"
-                  offsetFromSymbolStart = "12">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Statlete_Mobile_App.UserHomeViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__ObjC.Bundle&gt;) -&gt; Statlete_Mobile_App.UserHomeViewController"
-                  moduleName = "Statlete Mobile App"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/taylormdejonge/Desktop/StatleteCapstone/Statlete/mobile/Statlete%20Mobile%20App/Statlete%20Mobile%20App/User%20Home/UserHomeViewController.swift"
-                  timestampString = "544845635.002378"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "14"
-                  endingLineNumber = "14"
-                  offsetFromSymbolStart = "77">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Statlete_Mobile_App.UserHomeViewController.__allocating_init(coder: __ObjC.NSCoder) -&gt; Swift.Optional&lt;Statlete_Mobile_App.UserHomeViewController&gt;"
-                  moduleName = "Statlete Mobile App"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/taylormdejonge/Desktop/StatleteCapstone/Statlete/mobile/Statlete%20Mobile%20App/Statlete%20Mobile%20App/User%20Home/UserHomeViewController.swift"
-                  timestampString = "544845635.006341"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0"
-                  offsetFromSymbolStart = "4">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Statlete_Mobile_App.UserHomeViewController.init(coder: __ObjC.NSCoder) -&gt; Swift.Optional&lt;Statlete_Mobile_App.UserHomeViewController&gt;"
-                  moduleName = "Statlete Mobile App"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/taylormdejonge/Desktop/StatleteCapstone/Statlete/mobile/Statlete%20Mobile%20App/Statlete%20Mobile%20App/User%20Home/UserHomeViewController.swift"
-                  timestampString = "544845635.009562"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "14"
-                  endingLineNumber = "14"
-                  offsetFromSymbolStart = "47">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Statlete Mobile App/Sportfolio/SportfolioViewController.swift"
             timestampString = "545119568.628535"
             startingColumnNumber = "9223372036854775807"
@@ -480,22 +323,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Statlete Mobile App/User Home/UserHomeViewController.swift"
-            timestampString = "545195855.6765929"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "22"
-            endingLineNumber = "22"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Statlete Mobile App/Sportfolio Setup/ExistingTeamSetupViewController.swift"
             timestampString = "544941311.296875"
             startingColumnNumber = "9223372036854775807"
@@ -513,7 +340,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Statlete Mobile App/InitalUserOptions/ViewExistingTeamViewController.swift"
-            timestampString = "545119601.4065239"
+            timestampString = "545353826.420372"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "24"

@@ -8,62 +8,71 @@
 
 import UIKit
 
-class PlayerSportfolioSetupViewController: UIViewController {
+class PlayerSportfolioSetupViewController: UIViewController{
 
-    @IBAction func chooseSportButtonClicked(_ sender: UIButton) {
-    }
-  
+    // text fields
     @IBOutlet weak var playerNameTextField: UITextField!
-   
-  
-    
-    @IBOutlet weak var createButton: UIButton!
     @IBOutlet weak var teamIDTextField: UITextField!
-    
     @IBOutlet weak var tokenTextField: UITextField!
     
+    // outlet for button to customize display
+    @IBOutlet weak var createButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     
-   
-    
-   
+    // button actions
+    @IBAction func backButton(_ sender: UIButton) {
+        _ = navigationController?.popViewController(animated: true)
+        
+    }
+    // default chosen sport to soccer
+    var chosenSport: Int = 1
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         let playerPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.playerNameTextField.frame.height))
         let playerline = CALayer()
         playerline.frame = CGRect(x: 0, y: playerNameTextField.frame.height - 1, width: playerNameTextField.frame.width , height: 1)
         playerline.backgroundColor = Colors.color5.cgColor
-        
         playerNameTextField.leftView = playerPaddingView
         playerNameTextField.leftViewMode = UITextFieldViewMode.always
         playerPaddingView.layer.addSublayer(playerline)
-        /*
-        chooseSportButton.layer.borderColor = Colors.color4.cgColor
-        chooseSportButton.layer.borderWidth = 0.8
-
-        chooseSportButton.layer.shadowColor = UIColor.black.cgColor
-        chooseSportButton.layer.shadowOpacity = 0.8
-        chooseSportButton.layer.shadowOffset = CGSize(width: 5, height: 0)
-        */
-      
-      
-        
     }
-    @IBAction func backButtonClicked(_ sender: UIButton) {
-    }
+   
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "chooseSport"{
+            let vc = segue.destination as! ChooseSportViewController
+            vc.delegate = self
+        }
     }
-    */
+    @IBAction func createButtonClicked(_ sender: UIButton) {
+        var sportfolioId = "id7"
+        var teamIdText: String
+        if(teamIDTextField.text == teamIDTextField.placeholder){
+            teamIdText = "NA"
+        }else{
+            teamIdText = teamIDTextField.text!
+        }
+        let id = DB.currentUser.email.replacingOccurrences(of: ".", with: "")
+        // create new player sportfolio object
+        var psf: PlayerSportfolio = PlayerSportfolio(id: sportfolioId, sport: "soccer", teamId: teamIdText, name: playerNameTextField.text!, user: id)
+        
+        // Add data to Users
+        let thisUser = DB.database.child("Users").child(id)
+        thisUser.child("PlayerTeams")
+       // DB.database.child("Users").child(id).child("PlayerTeams").updateChildValues(["Name": name]) // changing PlayerTeams to PlayerSportfolios
+        
+        // Add data in PlayerSportfolio
+    }
+    
+}
 
+extension PlayerSportfolioSetupViewController: PopupDelegate{
+    func sportSelected(value: Int) {
+        chosenSport = value
+    }
 }

@@ -25,14 +25,9 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
         self.navigationController?.isNavigationBarHidden = true
         tableView.delegate = self
         tableView.dataSource = self
-        // Do any additional setup after loading the view.
-       
-        
+     
         let nib = UINib.init(nibName: "SportfolioCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "SportfolioCell")
-    
-       
-  //  tableView.register(SportfolioCellTableViewCell.nib, forCellReuseIdentifier: "SportfolioCellTableViewCell")
 
     }
 
@@ -75,13 +70,13 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
                 self.tableView.reloadData()
             })
         }
-        
-        
+    
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return teamSportfolios.count + playerSportfolios.count
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SportfolioCell", for: indexPath) as! SportfolioCell
         if indexPath.row < teamSportfolios.count {
@@ -92,6 +87,7 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
         }
         return cell
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 98
     }

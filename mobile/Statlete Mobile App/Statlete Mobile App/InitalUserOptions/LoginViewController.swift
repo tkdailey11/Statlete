@@ -73,7 +73,7 @@ class LoginViewController: UIViewController {
                     for playerTeamsID in playerTeamsIDs {
                         playerTeams.append(playerTeamsID)
                     }
-                    DB.currentUser.PlayerTeams = playerTeams
+                    DB.currentUser.PlayerTeams = playerTeams // change this when db changes from PlayerTeams to PlayerSportfolios
                     
                     DB.currentUser.phoneNumber = phone
                 })
@@ -85,7 +85,7 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func backButtonClicked(_ sender: UIButton) {
-         _ = navigationController?.popViewController(animated: true)
+          _ = navigationController?.popViewController(animated: true)
     }
     
     override func didReceiveMemoryWarning() {

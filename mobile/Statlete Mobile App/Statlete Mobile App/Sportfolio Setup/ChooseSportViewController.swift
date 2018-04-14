@@ -7,9 +7,14 @@
 //
 
 import UIKit
-
+protocol ChooseSportDelegate: AnyObject{
+    func sportSelected(value: Int)
+}
 class ChooseSportViewController: UIViewController {
 
+    var delegate: PopupDelegate?
+    
+    var sport: Int = 1
     @IBOutlet weak var popupView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,12 +22,23 @@ class ChooseSportViewController: UIViewController {
         popupView.layer.borderWidth = 3
         popupView.layer.borderColor = Colors.color1.cgColor
         popupView.layer.masksToBounds = true
-     
 
     }
 
-
+    @IBAction func footballSelected(_ sender: UIButton) {
+        sport = 3
+    }
+    @IBAction func soccerSelected(_ sender: UIButton) {
+        sport = 1
+    }
+    
+    @IBAction func basketballSelected(_ sender: UIButton) {
+        sport = 0
+    }
     @IBAction func closePopup(_ sender: UIButton) {
+        if let delegate = delegate{
+            delegate.sportSelected(value: sport)
+        }
         dismiss(animated: true, completion: nil)
     }
     
