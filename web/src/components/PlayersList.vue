@@ -48,10 +48,10 @@
   #PlayersList {
     width: 310px;
     height: 500px;
-    background: black;
+    background: rgb(180, 41, 102);
     margin-left: 50px;
     border-width: 5px;
-    border-color: black;
+    border-color: rgb(180, 41, 102);
     border-style: solid;
     border-radius: 35px;
     position: relative;
@@ -60,12 +60,11 @@
   #plTitle {
     width: 300px;
     height: 75px;
-    background: white;
     border-radius: 35px 35px 0px 0px;
-    border-bottom-color: black;
+    border-bottom-color: rgb(180, 41, 102);
     border-bottom-width: medium;
     border-bottom-style: solid;
-
+    background-color: #fadc7f;
   }
 
   #plFooter {
@@ -73,35 +72,39 @@
     height: 75px;
     position: absolute;
     bottom: 0;
-    background: white;
+    background-color: #fadc7f;
     border-radius: 0px 0px 35px 35px;
-    border-top-color: black;
+    border-top-color: rgb(180, 41, 102);
     border-top-width: medium;
     border-top-style: solid;
     text-align: center;
     vertical-align: middle;
     line-height: 75px;
     font-size: 25px;
+    color: rgb(180, 41, 102);
   }
 
   #playersTable {
     width: 300px;
     max-height: 350px;
     height: 350px;
-    background: white;
+    background-color: #fadc7f;
     overflow: scroll;
   }
 
   table, th {
-    border: 1px solid black;
+    border: 1px solid rgb(180, 41, 102);
   }
 
   td {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid rgb(180, 41, 102);
+    color: rgb(180, 41, 102);
+    background-color: #fadc7f;
   }
 
   h1 {
     line-height: 75px;
     height: 75px;
+    color: rgb(180, 41, 102);
   }
 </style>

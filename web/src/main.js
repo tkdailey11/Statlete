@@ -44,6 +44,15 @@ Vue.component('side-nav', SideNav);
 import NewPlayer from '@/components/NewPlayer';
 Vue.component('new-player', NewPlayer);
 
+import SBdataEntry from '@/components/SBdataEntry';
+Vue.component('sb-data-entry', SBdataEntry);
+
+import SBfield from '@/components/SBfield';
+Vue.component('sb-field', SBfield);
+
+import SBshotType from '@/components/SBshotType';
+Vue.component('sb-shot-type', SBshotType);
+
 import VModal from 'vue-js-modal'
 Vue.use(VModal)
 import Vue2TouchEvents from 'vue2-touch-events'
@@ -58,6 +67,7 @@ let Bootstrap = require('bootstrap')
 import 'bootstrap/dist/css/bootstrap.css'
 import './assets/stylesheets/bootstrap-social.css'
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
+//import './assets/stylesheets/custom-css-bootstrap-magic-2018-04-12.css'
 
 Vue.config.productionTip = false
 Vue.use(VueFormWizard)

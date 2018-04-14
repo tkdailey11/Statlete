@@ -2,17 +2,19 @@
     <div id="SideNav" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" @click="closeNav">&times;</a>
       <img src="../assets/images/testUser.png" width="100px" height="100px">
-      <a href="#">About</a>
-      <a href="#">Services</a>
-      <a href="#">Clients</a>
-      <a href="#">Contact</a>
+      <button @click="$emit('showPlayer')" class="btn btn-outline-primary">New Player Account</button><br>
+      <button @click="$emit('showTeam')" class="btn btn-outline-primary">New Team Account</button><br>
 
-      <button @click="$emit('showPlayer')" class="sportButton">New Player Account</button><br>
-      <button @click="$emit('showTeam')" class="sportButton">New Team Account</button><br>
-
-      <div style="scroll">
-          <button style="background-color: white; width: 150px;" v-for="obj in sportfolios">{{ obj.TeamName }}</button>
-      </div>
+      <table style="background-color: white; margin: 10%; width: 80%;">
+        <thead>
+          <th></th>
+          <th>Team Sportfolios</th>
+        </thead>
+        <tr v-for="i in 100">
+          <td>S</td>
+          <td>{{ i }}</td>
+        </tr>
+      </table>
     </div>
 </template>
 
@@ -43,7 +45,7 @@
       z-index: 1; /* Stay on top */
       top: 0; /* Stay at the top */
       left: 0;
-      background-color: #111; /* Black*/
+      background-color: #e64f52;
       overflow-x: hidden; /* Disable horizontal scroll */
       padding-top: 60px; /* Place content 60px from the top */
       transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
@@ -61,7 +63,11 @@
 
   /* When you mouse over the navigation links, change their color */
   .sidenav a:hover {
-      color: #f1f1f1;
+      color: rgb(240, 138, 59);
+  }
+
+  .sidenav a {
+    color: rgba(250, 220, 127, 0.9);
   }
 
   /* Position and style the close button (top right corner) */
@@ -71,13 +77,14 @@
       right: 25px;
       font-size: 36px;
       margin-left: 50px;
+      color: rgba(250, 220, 127, 0.9);
   }
 
   .sportButton {
     background-color: red;
     color: white;
     width: 150px;
-    margin: 30px 30px 30px 0px;
+    margin: 30px 0px 30px 0px;
     border-radius: 50px;
   }
 </style>

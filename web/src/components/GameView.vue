@@ -1,6 +1,11 @@
 <template>
   <div id="GameView">
     <button @click="goBack">Go Back</button>
+    <sb-data-entry style="float: left;"></sb-data-entry>
+    <div style="float: left;">
+      <sb-field></sb-field>
+      <sb-shot-type></sb-shot-type>
+    </div>
   </div>
 </template>
 
@@ -17,7 +22,7 @@
 
 <style scoped>
   #GameView {
-    width: 100%;
-    background-color: grey;
+    width: 100vw;
+    min-height: 100vh;
   }
 </style>

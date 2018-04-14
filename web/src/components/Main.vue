@@ -14,10 +14,10 @@
       </side-nav>
 
       <div class="mainHeader">
-        <h1>Team Name</h1>
+        <h1 style="color: rgb(180, 41, 102);">Team Name</h1>
         <div class="button-wrapper">
-          <button @click="editTeamSettings" class="sportButton">Edit Team Settings</button>
-          <button @click="viewTeamStats" class="sportButton">View Team Stats</button>
+          <button @click="editTeamSettings" class="btn btn-outline-primary">Edit Team Settings</button>
+          <button @click="viewTeamStats" class="btn btn-outline-primary">View Team Stats</button>
         </div>
       </div>
       <div class="mainBody">
@@ -61,7 +61,7 @@
           </vue-good-wizard>
       </div>
 
-      <div id="TeamWizard" v-if="viewMode==='isCreatingTeam'" style="padding-top=100px;">
+      <div id="TeamWizard" v-if="viewMode==='isCreatingTeam'" class="teamWiz">
         <vue-good-wizard
           :steps="teamSteps"
           :onNext="nextClickedTeam"
@@ -415,6 +415,7 @@ export default {
   .main {
       transition: margin-left .5s;
       margin:0px;
+      min-height: 100%;
   }
 
   /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
@@ -443,17 +444,19 @@ export default {
     height: 97px;
     display: inline-block;
   }
-  .sportButton {
-    background-color: red;
+  button {
+    margin-top: 20px;
+    cursor: pointer;
     color: white;
-    border-radius: 50px;
+    background-color: rgb(180, 41, 102);
+    border-color: rgb(180, 41, 102);
+    color: rgba(250, 220, 127, 0.9);
   }
-  .selectedButton {
-    background-color: rgb(0, 0, 255);
-    width: 200px;
-    color: rgb(255,255,255);
+  button:hover {
+    background-color: rgba(250, 220, 127, 0.9);
+    border-color: rgba(250, 220, 127, 0.9);
+    color: rgb(180, 41, 102);
   }
-
   .wizard-tab-content {
     display: flex; // to avoid horizontal scroll when animating
     .wizard-tab-container {
@@ -509,6 +512,17 @@ export default {
     display: flex;
     flex-wrap: wrap;
 
+  }
+
+  .teamWiz {
+    background-color: grey;
+  }
+
+
+  #mainPage {
+    height: 100vh;
+background: radial-gradient(circle, rgba(240,138,59,0.7) 0%, rgba(246,113,78,0.7) 53%, rgba(237,108,73,0.7) 77%);
+background-color: white;
   }
 
   #leftList {
