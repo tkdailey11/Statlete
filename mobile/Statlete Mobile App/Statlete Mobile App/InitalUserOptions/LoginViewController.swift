@@ -69,7 +69,7 @@ class LoginViewController: UIViewController {
                     
                     var playerTeams: [String] = []
                     let playerTeamsSet = value?["PlayerTeams"] as? [String: String] ?? [:]
-                    let playerTeamsIDs = playerTeamsSet.values
+                    let playerTeamsIDs = playerTeamsSet.keys
                     for playerTeamsID in playerTeamsIDs {
                         playerTeams.append(playerTeamsID)
                     }

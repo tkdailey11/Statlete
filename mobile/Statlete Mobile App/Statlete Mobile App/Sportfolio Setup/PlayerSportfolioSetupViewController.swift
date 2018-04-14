@@ -60,13 +60,16 @@ class PlayerSportfolioSetupViewController: UIViewController{
         let id = DB.currentUser.email.replacingOccurrences(of: ".", with: "")
         // create new player sportfolio object
         var psf: PlayerSportfolio = PlayerSportfolio(id: sportfolioId, sport: "soccer", teamId: teamIdText, name: playerNameTextField.text!, user: id)
+        DB.currentUser.PlayerTeams.append(sportfolioId)
         
         // Add data to Users
-        let thisUser = DB.database.child("Users").child(id)
-        thisUser.child("PlayerTeams")
-       // DB.database.child("Users").child(id).child("PlayerTeams").updateChildValues(["Name": name]) // changing PlayerTeams to PlayerSportfolios
+        DB.database.child("Users").child(id).child("PlayerTeams").updateChildValues([sportfolioId: " "]) // changing PlayerTeams to PlayerSportfolios
         
         // Add data in PlayerSportfolio
+        var pname: String = DB.currentUser.name
+        DB.database.child("PlayerSportfolios").child(sportfolioId).updateChildValues(["Games": " ", "Name": pname, "Number": " ", "TeamID": "NA", "TotalStats": " ", "User": id])
+        
+         self.performSegue(withIdentifier: "toSportfolio", sender: self)
     }
     
 }

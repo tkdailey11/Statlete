@@ -11,6 +11,7 @@ import UIKit
 class UserHomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
   
+    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var SportfoliosTitleLabel: UILabel!
@@ -28,6 +29,7 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
      
         let nib = UINib.init(nibName: "SportfolioCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "SportfolioCell")
+        nameLabel.text = DB.currentUser.name
 
     }
 
@@ -36,20 +38,6 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
         // Dispose of any resources that can be recreated.
     }
     
-    /*
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       return dataset.count
-    }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SportfolioCell", for: indexPath) as! SportfolioCell
-        cell.commonInit(imageName: "soccer", name: dataset[indexPath.row])
-        return cell
-    }
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 98
-    }
-    */
-
     override func viewDidAppear(_ animated: Bool) {
         print("Current User: \(DB.currentUser.name)")
         loadSportfolios()
@@ -66,10 +54,19 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
         }
         for team in DB.currentUser.PlayerTeams {
             DB.database.child("PlayerSportfolios").child(team).child("Name").observeSingleEvent(of: .value, with: { (snapshot) in
+                print("SNAPSHOT!!!!!!!!!!!        !!!!: \(snapshot)")
                 self.playerSportfolios.append(snapshot.value as? String ?? "")
                 self.tableView.reloadData()
             })
         }
+        /*
+        for team in DB.currentUser.PlayerTeams {
+            DB.database.child("PlayerSportfolios").child(team).child("Name").observeSingleEvent(of: .value, with: { (snapshot) in
+                self.playerSportfolios.append(snapshot.value as? String ?? "")
+                self.tableView.reloadData()
+            })
+        }
+ */
     
     }
     
@@ -92,15 +89,6 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
         return 98
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
