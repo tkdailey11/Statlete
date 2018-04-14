@@ -47,7 +47,7 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         DB.database.child("SoccerGames").child(game.id).child("MyTotals").updateChildValues(["Possession": 0])
         DB.database.child("SoccerGames").child(game.id).child("OpponentsTotals").updateChildValues(["Possession": 0])
         DB.database.child("SoccerGames").child(game.id).updateChildValues(["InProgress": false])
-        DB.database.child("SoccerGames").child(game.id).updateChildValues(["StartTime": 0])
+        DB.database.child("SoccerGames").child(game.id).updateChildValues(["PeriodStartTime": 0])
         game.listenToDatabase()
     }
     
@@ -290,9 +290,12 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     var currentlySelectedPossession: PossessionView.Selected = .out
     
     func myTeamPossessionSelected() {
+        if !game.inProgress {
+            return
+        }
         if currentlySelectedPossession == .oppTeam {
             let timeToAdd = timePossessionSwitched.timeIntervalSinceNow * -1
-            game.oppPossession += timeToAdd
+            DB.database.child("SoccerGames").child(game.id).child("OpponentsTotals").updateChildValues(["Possession": Int(game.oppPossession + timeToAdd)])
         }
         timePossessionSwitched = Date()
         currentlySelectedPossession = .myTeam
@@ -300,9 +303,12 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     }
     
     func oppTeamPossessionSelected() {
+        if !game.inProgress {
+            return
+        }
         if currentlySelectedPossession == .myTeam {
             let timeToAdd = timePossessionSwitched.timeIntervalSinceNow * -1
-            game.myPossession += timeToAdd
+            DB.database.child("SoccerGames").child(game.id).child("MyTotals").updateChildValues(["Possession": Int(game.myPossession + timeToAdd)])
         }
         timePossessionSwitched = Date()
         currentlySelectedPossession = .oppTeam
@@ -310,13 +316,16 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     }
     
     func outOfPlaySelected() {
+        if !game.inProgress {
+            return
+        }
         if currentlySelectedPossession == .oppTeam {
             let timeToAdd = timePossessionSwitched.timeIntervalSinceNow * -1
-            game.oppPossession += timeToAdd
+            DB.database.child("SoccerGames").child(game.id).child("OpponentsTotals").updateChildValues(["Possession": Int(game.oppPossession + timeToAdd)])
         }
         else if currentlySelectedPossession == .myTeam {
             let timeToAdd = timePossessionSwitched.timeIntervalSinceNow * -1
-            game.myPossession += timeToAdd
+            DB.database.child("SoccerGames").child(game.id).child("MyTotals").updateChildValues(["Possession": Int(game.myPossession + timeToAdd)])
         }
         currentlySelectedPossession = .out
         timePossessionSwitched = Date()
