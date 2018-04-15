@@ -53,6 +53,9 @@ Vue.component('sb-field', SBfield);
 import SBshotType from '@/components/SBshotType';
 Vue.component('sb-shot-type', SBshotType);
 
+import FLP from '@/components/FirstLandingPage';
+Vue.component('landing-page', FLP);
+
 import VModal from 'vue-js-modal'
 Vue.use(VModal)
 import Vue2TouchEvents from 'vue2-touch-events'

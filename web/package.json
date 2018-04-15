@@ -24,6 +24,7 @@
     "popper.js": "^1.14.1",
     "sass-loader": "^6.0.7",
     "vue": "^2.5.2",
+    "vue-async-methods": "^0.9.1",
     "vue-focus": "^2.1.0",
     "vue-form-wizard": "^0.8.4",
     "vue-good-wizard": "^1.2.2",
