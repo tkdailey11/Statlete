@@ -11,6 +11,7 @@ import UIKit
 class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDelegate, SubstitutionBarDelegate, PossessionViewDelegate {
     
     
+    
     var statNames: [String] = ["Goals", "Assists", "Shots on Goal", "Shots", "Fouls", "Yellow Cards", "Red Cards", "Corners", "Saves", "Crosses", "Offsides"]
     
     // For Scoreboard
@@ -18,6 +19,7 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     var timer = Timer()
     
     var oppTeamSelected: Bool = false
+    var CurrentlySelectedNumber: Int = -1
     
     var topBar: TopBar = TopBar()
     var bottomBar: BottomBar = BottomBar()
@@ -55,6 +57,7 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         super.viewDidLoad()
         
         game = SoccerGame(id: "team2-1", name: "vs. Sparta 06", halfLength: 45)
+        game.loadPlayers(team: "team2")
         
         addGameToDatabase()
         
@@ -142,19 +145,66 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     
     // Called when the scoreboard timer is pressed
     @objc func scoreboardTimePressed() {
-        if !game.inProgress {
-            DB.database.child("SoccerGames").child(game.id).updateChildValues(["PeriodStartTime": Int(Date().timeIntervalSince1970)])
-            DB.database.child("SoccerGames").child(game.id).updateChildValues(["InProgress": true])
-            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+        if !game.inProgress && game.half == 1 {
+            let alert = UIAlertController(title: "Start Game?", message: "", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                DB.database.child("SoccerGames").child(self.game.id).updateChildValues(["PeriodStartTime": Int(Date().timeIntervalSince1970)])
+                DB.database.child("SoccerGames").child(self.game.id).updateChildValues(["InProgress": true])
+                self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTime), userInfo: nil, repeats: true)
+            }))
+            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+            self.present(alert, animated: true)
+            substitutionBar.collectionView.reloadData()
+        }
+        else if game.inProgress && game.half == 1 {
+            let alert = UIAlertController(title: "End 1st Half?", message: "", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                DB.database.child("SoccerGames").child(self.game.id).updateChildValues(["InProgress": false])
+                DB.database.child("SoccerGames").child(self.game.id).updateChildValues(["Period": 2])
+                self.outOfPlaySelected()
+                self.scoreboardView!.half = 2
+                self.scoreboardView!.setNeedsDisplay()
+            }))
+            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+            self.present(alert, animated: true)
+        }
+        else if !game.inProgress && game.half == 2 {
+            let alert = UIAlertController(title: "Start 2nd Half?", message: "", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                DB.database.child("SoccerGames").child(self.game.id).updateChildValues(["PeriodStartTime": Int(Date().timeIntervalSince1970)])
+                DB.database.child("SoccerGames").child(self.game.id).updateChildValues(["InProgress": true])
+                self.outOfPlaySelected()
+            }))
+            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+            self.present(alert, animated: true)
+        }
+        else if game.inProgress && game.half == 2 {
+            let alert = UIAlertController(title: "End Game?", message: "", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                DB.database.child("SoccerGames").child(self.game.id).updateChildValues(["InProgress": false])
+                DB.database.child("SoccerGames").child(self.game.id).updateChildValues(["Period": -1])
+                self.outOfPlaySelected()
+                self.scoreboardView!.setNeedsDisplay()
+            }))
+            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+            self.present(alert, animated: true)
         }
     }
     
     @objc func updateTime() {
+        if !game.inProgress {
+            scoreboardView!.timeLabel.text = getTimeStringFrom(minutes: 0, seconds: 0)
+            statView.teamStatView.tableView.reloadData()
+            return
+        }
         var minutes: Int = 0
         var seconds: Int = 0
         (minutes, seconds) = game.getTime()
         scoreboardView!.timeLabel.text = getTimeStringFrom(minutes: minutes, seconds: seconds)
         statView.teamStatView.tableView.reloadData()
+        scoreboardView?.myTeamScoreLabel.text = String(game.my1stHalfTotals["Goals"]! + game.my2ndHalfTotals["Goals"]!)
+        scoreboardView?.opposingTeamScoreLabel.text = String(game.opp1stHalfTotals["Goals"]! + game.opp2ndHalfTotals["Goals"]!)
+        statView.teamStatView.updateLabels()
     }
     
     // Convert minutes and seconds into a string represenatation to be used for scoreboard view
@@ -196,8 +246,15 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
                 substitutionBar.setOpposingTeamButtonToNotSelected()
             }
             else {
-                DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["\(minute):\(second)":" "])
-                DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["Total": self.game.my1stHalfTotals[statNames[index]]!+1])
+                if CurrentlySelectedNumber == -1 {
+                    DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["\(minute):\(second)":" "])
+                    DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["Total": self.game.my1stHalfTotals[statNames[index]]!+1])
+                }
+                else {
+                    DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["\(minute):\(second)":"p\(CurrentlySelectedNumber)"])
+                    DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["Total": self.game.my1stHalfTotals[statNames[index]]!+1])
+                    //DB.database.child("SoccerGames").child(game.id).child("Players").child("p\(CurrentlySelectedNumber)").updateChildValues([statNames[index]: self.game.players["p\(CurrentlySelectedNumber)"]![statNames[index]]])
+                }
             }
         }
         else {
@@ -221,6 +278,9 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     }
     
     func minusButtonPressed(index: Int) {
+        ////// Not implementing this yet /////
+        return
+        //////////////////////////////////////
         if (game.half == 1) {
             if (oppTeamSelected) {
                 if game.opp1stHalfTotals[statNames[index]]! > 0 {
@@ -282,6 +342,18 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         oppTeamSelected = true
     }
     
+    func getNumberOfPlayers() -> Int {
+        return game.players.count
+    }
+    
+    func getPlayerNumber() -> [String] {
+        return Array(game.players.keys)
+    }
+    
+    func playerSelected(number: Int) {
+        CurrentlySelectedNumber = number
+    }
+    
     ////////////////////////////////////////
     ///// PossessionView Callbacks  ////////
     ////////////////////////////////////////
@@ -299,6 +371,8 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         }
         timePossessionSwitched = Date()
         currentlySelectedPossession = .myTeam
+        possessionBar.currentlySelected = .myTeam
+        possessionBar.setNeedsDisplay()
         statView.teamStatView.updateLabels()
     }
     
@@ -312,6 +386,8 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         }
         timePossessionSwitched = Date()
         currentlySelectedPossession = .oppTeam
+        possessionBar.currentlySelected = .oppTeam
+        possessionBar.setNeedsDisplay()
         statView.teamStatView.updateLabels()
     }
     
@@ -328,6 +404,8 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
             DB.database.child("SoccerGames").child(game.id).child("MyTotals").updateChildValues(["Possession": Int(game.myPossession + timeToAdd)])
         }
         currentlySelectedPossession = .out
+        possessionBar.currentlySelected = .out
+        possessionBar.setNeedsDisplay()
         timePossessionSwitched = Date()
         statView.teamStatView.updateLabels()
     }

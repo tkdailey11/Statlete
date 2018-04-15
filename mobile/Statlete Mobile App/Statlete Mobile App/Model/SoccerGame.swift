@@ -30,6 +30,8 @@ class SoccerGame {
     var oppPossession: TimeInterval = 0
     var inProgress: Bool = false
     
+    var players: [String: [(String, Int)]] = [:]
+    
     var statNames: [String] = ["Goals", "Assists", "Shots on Goal", "Shots", "Fouls", "Yellow Cards", "Red Cards", "Corners", "Saves", "Crosses", "Offsides"]
     
     init() {
@@ -52,6 +54,18 @@ class SoccerGame {
         }
         myPossession = 0
         oppPossession = 0
+    }
+    
+    func loadPlayers(team: String) {
+        DB.database.child("TeamSportfolios/\(team)/Players").observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? [String: String] ?? ["": ""]
+            for key in value.keys {
+                self.players[key] = []
+                for stat in self.statNames {
+                    self.players[key]!.append((stat, 0))
+                }
+            }
+        })
     }
     
     
@@ -80,6 +94,9 @@ class SoccerGame {
     func listenToDatabase() {
         DB.database.child("SoccerGames").child(self.id).child("PeriodStartTime").observe(.value, with: { (snapshot) in
             self.startTime = Date(timeIntervalSince1970: TimeInterval(snapshot.value as? Int ?? 0))
+        })
+        DB.database.child("SoccerGames").child(self.id).child("Period").observe(.value, with: { (snapshot) in
+            self.half = snapshot.value as? Int ?? 1
         })
         DB.database.child("SoccerGames").child(self.id).child("InProgress").observe(.value, with: { (snapshot) in
             self.inProgress = snapshot.value as? Bool ?? false
@@ -110,7 +127,12 @@ class SoccerGame {
                 let value = snapshot.value as? NSDictionary
                 self.opp2ndHalfTotals[stat] = value?["Total"] as? Int ?? 0
             })
-            
+        }
+        for player in players {
+            let playerString = player.key
+            for stat in player.value {
+                DB.database.child("SoccerGames/\(id)/Players/\(playerString)").updateChildValues([stat.0: stat.1])
+            }
         }
     }
     

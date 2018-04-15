@@ -8,11 +8,17 @@
 
 import UIKit
 
+protocol SubCellDelegate: class {
+    func buttonPressed(number: Int)
+}
+
 class SubCell: UICollectionViewCell {
 
     @IBOutlet weak var button: UIButton!
     
     var number: Int = 0
+    
+    weak var delegate: SubCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -34,6 +40,6 @@ class SubCell: UICollectionViewCell {
     }
     
     @objc func buttonPressed() {
-        print("#\(number) Pressed")
+        delegate?.buttonPressed(number: number)
     }
 }

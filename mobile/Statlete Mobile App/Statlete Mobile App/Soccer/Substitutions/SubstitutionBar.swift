@@ -10,16 +10,22 @@ import UIKit
 
 protocol SubstitutionBarDelegate: class {
     func oppTeamButtonPressed()
+    func getPlayerNumber() -> [String]
+    func getNumberOfPlayers() -> Int
+    func playerSelected(number: Int)
 }
 
-class SubstitutionBar: UIControl, UICollectionViewDelegate, UICollectionViewDataSource {
+class SubstitutionBar: UIControl, UICollectionViewDelegate, UICollectionViewDataSource, SubCellDelegate {
+    
+    func buttonPressed(number: Int) {
+        delegate?.playerSelected(number: number)
+    }
+    
     
     weak var delegate: SubstitutionBarDelegate?
     
     let collectionView: UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout.init())
     let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
-    
-    let numbers: [Int] = [3, 5, 7, 13, 15, 17, 23, 25, 28, 29, 31]
     
     let opposingTeamButtonFrameWidth: CGFloat = 80.0
     let opposingTeamButton = UIButton()
@@ -74,18 +80,24 @@ class SubstitutionBar: UIControl, UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return numbers.count + 1
+        //return delegate!.getNumberOfPlayers() + 1
+        return delegate!.getNumberOfPlayers()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.row == numbers.count {
+        /*
+        if indexPath.row == delegate!.getNumberOfPlayers() {
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SubCell", for: indexPath) as? SubCell {
                 cell.subButtonInit()
                 return cell
             }
         }
+         */
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SubCell", for: indexPath) as? SubCell {
-            cell.commonInit(number: numbers[indexPath.row])
+            var numString = delegate!.getPlayerNumber()[indexPath.row]
+            numString.removeFirst()
+            cell.commonInit(number: Int(numString)!)
+            cell.delegate = self
             return cell
         }
         return UICollectionViewCell()

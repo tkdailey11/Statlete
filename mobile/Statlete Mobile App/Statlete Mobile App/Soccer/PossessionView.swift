@@ -140,19 +140,16 @@ class PossessionView: UIControl {
         let loc = touches.first!.location(in: self)
         if myTeamPossessionBoxFrame.contains(loc) {
             if currentlySelected != .myTeam {
-                currentlySelected = .myTeam
                 delegate!.myTeamPossessionSelected()
             }
         }
         else if opposingTeamPossessionBoxFrame.contains(loc) {
             if currentlySelected != .oppTeam {
-                currentlySelected = .oppTeam
                 delegate!.oppTeamPossessionSelected()
             }
         }
         else if outOfPlayPossessionBoxFrame.contains(loc) {
             if currentlySelected != .out {
-                currentlySelected = .out
                 delegate!.outOfPlaySelected()
             }
         }
