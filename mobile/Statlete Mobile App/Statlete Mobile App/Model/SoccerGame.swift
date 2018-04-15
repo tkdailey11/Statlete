@@ -65,6 +65,12 @@ class SoccerGame {
                     self.players[key]!.append((stat, 0))
                 }
             }
+            DB.database.child("SoccerGames/\(self.id)").updateChildValues(["Players": " "])
+            for player in self.players {
+                let playerString = player.key
+                DB.database.child("SoccerGames/\(self.id)/Players/").updateChildValues([playerString: " "])
+                DB.database.child("SoccerGames/\(self.id)/Players/\(playerString)").updateChildValues([self.players[playerString]![0].0: self.players[playerString]![0].1, self.players[playerString]![1].0: self.players[playerString]![1].1, self.players[playerString]![2].0: self.players[playerString]![2].1, self.players[playerString]![3].0: self.players[playerString]![3].1, self.players[playerString]![4].0: self.players[playerString]![4].1, self.players[playerString]![5].0: self.players[playerString]![5].1, self.players[playerString]![6].0: self.players[playerString]![6].1, self.players[playerString]![7].0: self.players[playerString]![7].1, self.players[playerString]![8].0: self.players[playerString]![8].1, self.players[playerString]![9].0: self.players[playerString]![9].1, self.players[playerString]![10].0: self.players[playerString]![10].1])
+            }
         })
     }
     
@@ -128,12 +134,12 @@ class SoccerGame {
                 self.opp2ndHalfTotals[stat] = value?["Total"] as? Int ?? 0
             })
         }
-        for player in players {
-            let playerString = player.key
-            for stat in player.value {
-                DB.database.child("SoccerGames/\(id)/Players/\(playerString)").updateChildValues([stat.0: stat.1])
-            }
+        for player in Array(players.keys) {
+            DB.database.child("SoccerGames/\(id)/Players/\(player)").observe(.value, with: { (snapshot) in
+               // Observe players
+                })
         }
+        
     }
     
 }
