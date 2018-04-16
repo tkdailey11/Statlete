@@ -20,18 +20,18 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#13" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zn4-QN-iBy">
-                        <rect key="frame" x="5" y="0.0" width="28.5" height="40"/>
+                        <rect key="frame" x="5" y="0.0" width="43.5" height="40"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="28.5" id="Fmg-1D-f11"/>
+                            <constraint firstAttribute="width" constant="43.5" id="Fmg-1D-f11"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" white="1" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sehesdtedt, B." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0c1-Gf-6iR">
-                        <rect key="frame" x="39" y="0.0" width="140" height="40"/>
+                        <rect key="frame" x="54" y="0.0" width="125" height="40"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="140" id="7vA-ho-1RT"/>
+                            <constraint firstAttribute="width" constant="125" id="7vA-ho-1RT"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" white="1" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

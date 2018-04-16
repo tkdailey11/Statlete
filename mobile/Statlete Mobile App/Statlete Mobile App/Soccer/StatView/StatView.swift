@@ -98,7 +98,7 @@ class StatView: UIControl, UITableViewDelegate, UITableViewDataSource, TeamStatV
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return delegate!.getNumberOfPlayers()
+        return delegate!.getNumberOfPlayers() + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

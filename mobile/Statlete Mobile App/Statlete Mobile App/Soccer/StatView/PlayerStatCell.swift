@@ -30,7 +30,7 @@ class PlayerStatCell: UITableViewCell {
     }
     
     func commonInit(number: String, name: String, goals: Int, assists: Int, shots: Int, shotsOnGoal: Int) {
-        numberLabel.text = "#\(number)"
+        numberLabel.text = "#\(number.replacingOccurrences(of: "p", with: ""))"
         nameLabel.text = name
         goalsLabel.text = String(goals)
         assistsLabel.text = String(assists)

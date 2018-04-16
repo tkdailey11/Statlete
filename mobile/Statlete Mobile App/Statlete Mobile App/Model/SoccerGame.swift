@@ -32,6 +32,8 @@ class SoccerGame {
     var team: String = String()
     
     var players: [String: [String: Int]] = [:]
+    var playerIDs: [String: String] = [:]
+    var playerNames: [String: String] = [:]
     
     var statNames: [String] = ["Goals", "Assists", "Shots on Goal", "Shots", "Fouls", "Yellow Cards", "Red Cards", "Corners", "Saves", "Crosses", "Offsides"]
     
@@ -60,13 +62,6 @@ class SoccerGame {
     
     func loadPlayers() {
         
-        /*
-        let value = DB.database.value(forKeyPath: "TeamSportfolios/\(team)/Players")
-        print("Done")
-        
-        //let value = DB.database.child("TeamSportfolios/\(self.team)").value(forKey: "Players") as?
-        */
-        
         DB.database.child("TeamSportfolios/\(self.team)/Players").observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? [String: String] ?? ["": ""]
             for key in value.keys {
@@ -74,6 +69,11 @@ class SoccerGame {
                 for stat in self.statNames {
                     self.players[key]![stat] = 0
                 }
+                let playerSportfolioID = value[key] ?? ""
+                self.playerIDs[key] = playerSportfolioID
+                DB.database.child("PlayerSportfolios/\(playerSportfolioID)/Name").observeSingleEvent(of: .value, with: { (snapshot) in
+                    self.playerNames[key] = snapshot.value as? String ?? ""
+                })
             }
             DB.database.child("SoccerGames/\(self.id)").updateChildValues(["Players": " "])
             for player in self.players {

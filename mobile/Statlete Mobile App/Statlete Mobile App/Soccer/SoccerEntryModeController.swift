@@ -18,6 +18,8 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     var timerStarted: Bool = false
     var timer = Timer()
     
+    var timerForLoadedPlayers = Timer()
+    
     var oppTeamSelected: Bool = false
     var CurrentlySelectedNumber: Int = -1
     
@@ -57,6 +59,8 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         super.viewDidLoad()
         
         game = SoccerGame(team: "team2", gameID: "team2-1", name: "vs. Sparta 06", halfLength: 45)
+        
+        timerForLoadedPlayers = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(reloadSubBar), userInfo: nil, repeats: false)
         
         addGameToDatabase()
         
@@ -124,6 +128,10 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         
     }
     
+    @objc func reloadSubBar() {
+        substitutionBar.collectionView.reloadData()
+    }
+    
     // Called when a tab is selected in the bottomBar
     @objc func tabChanged() {
         switch bottomBar.tabSelected {
@@ -155,7 +163,6 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
             }))
             alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
             self.present(alert, animated: true)
-            substitutionBar.collectionView.reloadData()
             game.listenForPlayers()
         }
         else if game.inProgress && game.half == 1 {
@@ -281,34 +288,34 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     }
     
     func minusButtonPressed(index: Int) {
-        ////// Not implementing this yet /////
-        return
-        //////////////////////////////////////
+        if !game.inProgress {
+            return
+        }
         if (game.half == 1) {
             if (oppTeamSelected) {
                 if game.opp1stHalfTotals[statNames[index]]! > 0 {
-                    game.opp1stHalfTotals[statNames[index]]! -= 1
+                    DB.database.child("SoccerGames").child(game.id).child("OpponentsTotals").child("Period1").child(game.statNames[index]).updateChildValues(["Total": self.game.opp1stHalfTotals[statNames[index]]!-1])
                 }
                 oppTeamSelected = false
                 substitutionBar.setOpposingTeamButtonToNotSelected()
             }
             else {
                 if game.my1stHalfTotals[statNames[index]]! > 0 {
-                    game.my1stHalfTotals[statNames[index]]! -= 1
+                    DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["Total": self.game.my1stHalfTotals[statNames[index]]!-1])
                 }
             }
         }
         else {
             if (oppTeamSelected) {
                 if game.opp2ndHalfTotals[statNames[index]]! > 0 {
-                    game.opp2ndHalfTotals[statNames[index]]! -= 1
+                    DB.database.child("SoccerGames").child(game.id).child("OpponentsTotals").child("Period2").child(game.statNames[index]).updateChildValues(["Total": self.game.opp2ndHalfTotals[statNames[index]]!-1])
                 }
                 oppTeamSelected = false
                 substitutionBar.setOpposingTeamButtonToNotSelected()
             }
             else {
                 if game.my2ndHalfTotals[statNames[index]]! > 0 {
-                    game.my2ndHalfTotals[statNames[index]]! -= 1
+                    DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["Total": self.game.my2ndHalfTotals[statNames[index]]!-1])
                 }
             }
         }
@@ -340,13 +347,10 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     
     func getPlayerInfo(index: Int) -> (number: String, name: String, goals: Int, assists: Int, shots: Int, shotsOnGoal: Int) {
         let number = Array(game.players.keys)[index]
-        let playerSportfolioID = DB.database.child("TeamSportfolios/\(game.team)/Players").value(forKey: number) as? String ?? " "
-        var name = ""
-        if playerSportfolioID != " " {
-            name = DB.database.child("PlayerSportfolios/\(playerSportfolioID)").value(forKey: "Name") as? String ?? ""
-        }
-        return (number, name, game.players[number]!["Goals"]!, game.players[number]!["Assists"]!, game.players[number]!["Shots"]!, game.players[number]!["ShotsOnGoal"]!)
-        
+        let playerSportfolioID = game.playerIDs[number]
+        var name = game.playerNames[number]
+        return (number, name!, (game.players[number]?["Goals"])!, (game.players[number]?["Assists"])!, (game.players[number]?["Shots"])!, (game.players[number]?["Shots on Goal"])!)
+        //return (number, "", 0, 0, 0, 0)
     }
     
     ////////////////////////////////////////
