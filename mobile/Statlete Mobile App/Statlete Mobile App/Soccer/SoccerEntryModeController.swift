@@ -33,36 +33,16 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     var shotChartEntryView: SoccerShotChartEntryView = SoccerShotChartEntryView()
     var statView: StatView = StatView()
     
-    func addGameToDatabase() {
-        let calendar = Calendar.current
-        let dateString = "\(calendar.component(.month, from: game.date))-\(calendar.component(.day, from: game.date))-\(calendar.component(.year, from: game.date))"
-        
-        DB.database.child("SoccerGames").child(game.id).updateChildValues(["Date": dateString, "HalfLength": game.halfLength, "Name": game.name, "Period": game.half])
-        DB.database.child("SoccerGames").child(game.id).updateChildValues(["MyTotals": " "])
-        DB.database.child("SoccerGames").child(game.id).child("MyTotals").updateChildValues(["Period1": " ", "Period2": " "])
-        DB.database.child("SoccerGames").child(game.id).updateChildValues(["OpponentsTotals": " "])
-        DB.database.child("SoccerGames").child(game.id).child("OpponentsTotals").updateChildValues(["Period1": " ", "Period2": " "])
-        for stat in statNames {
-            DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").updateChildValues([stat: ["Total": 0]])
-            DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period2").updateChildValues([stat: ["Total": 0]])
-            DB.database.child("SoccerGames").child(game.id).child("OpponentsTotals").child("Period1").updateChildValues([stat: ["Total": 0]])
-            DB.database.child("SoccerGames").child(game.id).child("OpponentsTotals").child("Period2").updateChildValues([stat: ["Total": 0]])
-        }
-        DB.database.child("SoccerGames").child(game.id).child("MyTotals").updateChildValues(["Possession": 0])
-        DB.database.child("SoccerGames").child(game.id).child("OpponentsTotals").updateChildValues(["Possession": 0])
-        DB.database.child("SoccerGames").child(game.id).updateChildValues(["InProgress": false])
-        DB.database.child("SoccerGames").child(game.id).updateChildValues(["PeriodStartTime": 0])
-        game.listenToDatabase()
-    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        game = SoccerGame(team: "team2", gameID: "team2-1", name: "vs. Sparta 06", halfLength: 45)
+        while !game.isLoaded {
+        }
+        substitutionBar.collectionView.reloadData()
         
-        timerForLoadedPlayers = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(reloadSubBar), userInfo: nil, repeats: false)
-        
-        addGameToDatabase()
+        //timerForLoadedPlayers = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(reloadSubBar), userInfo: nil, repeats: false)
         
         view.backgroundColor = UIColor.white
         
@@ -129,7 +109,6 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     }
     
     @objc func reloadSubBar() {
-        substitutionBar.collectionView.reloadData()
     }
     
     // Called when a tab is selected in the bottomBar
@@ -348,9 +327,8 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     func getPlayerInfo(index: Int) -> (number: String, name: String, goals: Int, assists: Int, shots: Int, shotsOnGoal: Int) {
         let number = Array(game.players.keys)[index]
         let playerSportfolioID = game.playerIDs[number]
-        var name = game.playerNames[number]
-        return (number, name!, (game.players[number]?["Goals"])!, (game.players[number]?["Assists"])!, (game.players[number]?["Shots"])!, (game.players[number]?["Shots on Goal"])!)
-        //return (number, "", 0, 0, 0, 0)
+        var name = game.playerNames[number] ?? ""
+        return (number, name, (game.players[number]?["Goals"])!, (game.players[number]?["Assists"])!, (game.players[number]?["Shots"])!, (game.players[number]?["Shots on Goal"])!)
     }
     
     ////////////////////////////////////////

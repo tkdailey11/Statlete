@@ -2,4 +2,54 @@
 <Bucket
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Statlete Mobile App/Soccer/SoccerEntryModeController.swift"
+            timestampString = "545615729.5305769"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "331"
+            endingLineNumber = "331"
+            landmarkName = "getPlayerInfo(index:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Statlete_Mobile_App.SoccerEntryModeController.getPlayerInfo(index: Swift.Int) -&gt; (number: Swift.String, name: Swift.String, goals: Swift.Int, assists: Swift.Int, shots: Swift.Int, shotsOnGoal: Swift.Int)"
+                  moduleName = "Statlete Mobile App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nategreat13/Desktop/Statlete/mobile/Statlete%20Mobile%20App/Statlete%20Mobile%20App/Soccer/SoccerEntryModeController.swift"
+                  timestampString = "545610526.22754"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "351"
+                  endingLineNumber = "351"
+                  offsetFromSymbolStart = "839">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Statlete_Mobile_App.SoccerEntryModeController.getPlayerInfo(index: Swift.Int) -&gt; (number: Swift.String, name: Swift.String, goals: Swift.Int, assists: Swift.Int, shots: Swift.Int, shotsOnGoal: Swift.Int)"
+                  moduleName = "Statlete Mobile App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nategreat13/Desktop/Statlete/mobile/Statlete%20Mobile%20App/Statlete%20Mobile%20App/Soccer/SoccerEntryModeController.swift"
+                  timestampString = "545610526.231655"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "351"
+                  endingLineNumber = "351"
+                  offsetFromSymbolStart = "3341">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

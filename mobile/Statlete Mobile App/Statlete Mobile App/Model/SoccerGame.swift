@@ -35,6 +35,8 @@ class SoccerGame {
     var playerIDs: [String: String] = [:]
     var playerNames: [String: String] = [:]
     
+    var isLoaded: Bool = false
+    
     var statNames: [String] = ["Goals", "Assists", "Shots on Goal", "Shots", "Fouls", "Yellow Cards", "Red Cards", "Corners", "Saves", "Crosses", "Offsides"]
     
     init() {
@@ -58,6 +60,17 @@ class SoccerGame {
         myPossession = 0
         oppPossession = 0
         loadPlayers()
+        addGameToDatabase()
+        isLoaded = true
+    }
+    
+    init(gameID: String) {
+        self.id = gameID
+        loadGameFromDatabase()
+    }
+    
+    func loadGameFromDatabase() {
+        
     }
     
     func loadPlayers() {
@@ -145,6 +158,28 @@ class SoccerGame {
                 self.opp2ndHalfTotals[stat] = value?["Total"] as? Int ?? 0
             })
         }
+    }
+    
+    func addGameToDatabase() {
+        let calendar = Calendar.current
+        let dateString = "\(calendar.component(.month, from: date))-\(calendar.component(.day, from: date))-\(calendar.component(.year, from: date))"
+        
+        DB.database.child("SoccerGames").child(id).updateChildValues(["Date": dateString, "HalfLength": halfLength, "Name": name, "Period": half])
+        DB.database.child("SoccerGames").child(id).updateChildValues(["MyTotals": " "])
+        DB.database.child("SoccerGames").child(id).child("MyTotals").updateChildValues(["Period1": " ", "Period2": " "])
+        DB.database.child("SoccerGames").child(id).updateChildValues(["OpponentsTotals": " "])
+        DB.database.child("SoccerGames").child(id).child("OpponentsTotals").updateChildValues(["Period1": " ", "Period2": " "])
+        for stat in statNames {
+            DB.database.child("SoccerGames").child(id).child("MyTotals").child("Period1").updateChildValues([stat: ["Total": 0]])
+            DB.database.child("SoccerGames").child(id).child("MyTotals").child("Period2").updateChildValues([stat: ["Total": 0]])
+            DB.database.child("SoccerGames").child(id).child("OpponentsTotals").child("Period1").updateChildValues([stat: ["Total": 0]])
+            DB.database.child("SoccerGames").child(id).child("OpponentsTotals").child("Period2").updateChildValues([stat: ["Total": 0]])
+        }
+        DB.database.child("SoccerGames").child(id).child("MyTotals").updateChildValues(["Possession": 0])
+        DB.database.child("SoccerGames").child(id).child("OpponentsTotals").updateChildValues(["Possession": 0])
+        DB.database.child("SoccerGames").child(id).updateChildValues(["InProgress": false])
+        DB.database.child("SoccerGames").child(id).updateChildValues(["PeriodStartTime": 0])
+        listenToDatabase()
     }
     
     func listenForPlayers() {

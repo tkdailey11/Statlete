@@ -31,6 +31,16 @@ class NewGameViewController: UIViewController {
     @IBAction func backButtonClicked(_ sender: UIButton) {
            _ = navigationController?.popViewController(animated: true)
     }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toNewGameEntryMode" {
+            if let controller = segue.destination as? SoccerEntryModeController {
+                controller.game = SoccerGame(team: "team2", gameID: "team2-1", name: "vs. Sparta 06", halfLength: 45)
+            }
+        }
+    }
+    
     /*
     // MARK: - Navigation
 
