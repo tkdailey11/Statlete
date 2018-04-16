@@ -12,6 +12,8 @@ protocol StatViewDelegate: class {
     func getStatNameAndTeamValues(index: Int) -> (stat: String, myTeamVal: Int, oppTeamVal: Int)
     func getNumberOfStats() -> Int
     func getPossessionValues() -> (myTeamPossession: TimeInterval, oppTeamPossession: TimeInterval)
+    func getNumberOfPlayers() -> Int
+    func getPlayerInfo(index: Int) -> (number: String, name: String, goals: Int, assists: Int, shots: Int, shotsOnGoal: Int)
 }
 
 class StatView: UIControl, UITableViewDelegate, UITableViewDataSource, TeamStatViewDelegate {
@@ -96,7 +98,7 @@ class StatView: UIControl, UITableViewDelegate, UITableViewDataSource, TeamStatV
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 15
+        return delegate!.getNumberOfPlayers()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -107,7 +109,8 @@ class StatView: UIControl, UITableViewDelegate, UITableViewDataSource, TeamStatV
             }
         }
         if let cell = playerTableView.dequeueReusableCell(withIdentifier: "PlayerStatCell", for: indexPath) as? PlayerStatCell {
-            cell.commonInit(number: 15, name: "Sehestedt, B.", minutes: 55, goals: 0, assists: 1, shots: 2, shotsOnGoal: 1)
+            let info = delegate!.getPlayerInfo(index: indexPath.row - 1)
+            cell.commonInit(number: info.number, name: info.name, goals: info.goals, assists: info.assists, shots: info.shots, shotsOnGoal: info.shotsOnGoal)
             return cell
         }
         return UITableViewCell()

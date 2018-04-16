@@ -56,8 +56,7 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        game = SoccerGame(id: "team2-1", name: "vs. Sparta 06", halfLength: 45)
-        game.loadPlayers(team: "team2")
+        game = SoccerGame(team: "team2", gameID: "team2-1", name: "vs. Sparta 06", halfLength: 45)
         
         addGameToDatabase()
         
@@ -137,6 +136,8 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         case 3:
             view.bringSubview(toFront: statView)
             statView.bringSubview(toFront: statView.teamStatView)
+            statView.playerTableView.reloadData()
+            statView.teamStatView.tableView.reloadData()
             statView.sendSubview(toBack: statView.playerTableView)
         default:
             print("Nothing")
@@ -155,6 +156,7 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
             alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
             self.present(alert, animated: true)
             substitutionBar.collectionView.reloadData()
+            game.listenForPlayers()
         }
         else if game.inProgress && game.half == 1 {
             let alert = UIAlertController(title: "End 1st Half?", message: "", preferredStyle: .alert)
@@ -253,7 +255,8 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
                 else {
                     DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["\(minute):\(second)":"p\(CurrentlySelectedNumber)"])
                     DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["Total": self.game.my1stHalfTotals[statNames[index]]!+1])
-                    //DB.database.child("SoccerGames").child(game.id).child("Players").child("p\(CurrentlySelectedNumber)").updateChildValues([statNames[index]: self.game.players["p\(CurrentlySelectedNumber)"]![statNames[index]]])
+                    DB.database.child("SoccerGames").child(game.id).child("Players").child("p\(CurrentlySelectedNumber)").updateChildValues([statNames[index]: self.game.players["p\(CurrentlySelectedNumber)"]![statNames[index]]!+1])
+                    CurrentlySelectedNumber = -1
                 }
             }
         }
@@ -333,6 +336,17 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     
     func getPossessionValues() -> (myTeamPossession: TimeInterval, oppTeamPossession: TimeInterval) {
         return (game.myPossession, game.oppPossession)
+    }
+    
+    func getPlayerInfo(index: Int) -> (number: String, name: String, goals: Int, assists: Int, shots: Int, shotsOnGoal: Int) {
+        let number = Array(game.players.keys)[index]
+        let playerSportfolioID = DB.database.child("TeamSportfolios/\(game.team)/Players").value(forKey: number) as? String ?? " "
+        var name = ""
+        if playerSportfolioID != " " {
+            name = DB.database.child("PlayerSportfolios/\(playerSportfolioID)").value(forKey: "Name") as? String ?? ""
+        }
+        return (number, name, game.players[number]!["Goals"]!, game.players[number]!["Assists"]!, game.players[number]!["Shots"]!, game.players[number]!["ShotsOnGoal"]!)
+        
     }
     
     ////////////////////////////////////////

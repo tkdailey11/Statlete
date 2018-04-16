@@ -29,17 +29,18 @@ class SoccerGame {
     var myPossession: TimeInterval = 0
     var oppPossession: TimeInterval = 0
     var inProgress: Bool = false
+    var team: String = String()
     
-    var players: [String: [(String, Int)]] = [:]
+    var players: [String: [String: Int]] = [:]
     
     var statNames: [String] = ["Goals", "Assists", "Shots on Goal", "Shots", "Fouls", "Yellow Cards", "Red Cards", "Corners", "Saves", "Crosses", "Offsides"]
     
     init() {
     }
     
-    init(id: String, name: String, halfLength: Int) {
-        
-        self.id = id
+    init(team: String, gameID: String, name: String, halfLength: Int) {
+        self.team = team
+        self.id = gameID
         self.halfLength = 45
         self.name = "vs. Sparta 06"
         date = Date()
@@ -54,22 +55,32 @@ class SoccerGame {
         }
         myPossession = 0
         oppPossession = 0
+        loadPlayers()
     }
     
-    func loadPlayers(team: String) {
-        DB.database.child("TeamSportfolios/\(team)/Players").observeSingleEvent(of: .value, with: { (snapshot) in
+    func loadPlayers() {
+        
+        /*
+        let value = DB.database.value(forKeyPath: "TeamSportfolios/\(team)/Players")
+        print("Done")
+        
+        //let value = DB.database.child("TeamSportfolios/\(self.team)").value(forKey: "Players") as?
+        */
+        
+        DB.database.child("TeamSportfolios/\(self.team)/Players").observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? [String: String] ?? ["": ""]
             for key in value.keys {
-                self.players[key] = []
+                self.players[key] = [:]
                 for stat in self.statNames {
-                    self.players[key]!.append((stat, 0))
+                    self.players[key]![stat] = 0
                 }
             }
             DB.database.child("SoccerGames/\(self.id)").updateChildValues(["Players": " "])
             for player in self.players {
                 let playerString = player.key
                 DB.database.child("SoccerGames/\(self.id)/Players/").updateChildValues([playerString: " "])
-                DB.database.child("SoccerGames/\(self.id)/Players/\(playerString)").updateChildValues([self.players[playerString]![0].0: self.players[playerString]![0].1, self.players[playerString]![1].0: self.players[playerString]![1].1, self.players[playerString]![2].0: self.players[playerString]![2].1, self.players[playerString]![3].0: self.players[playerString]![3].1, self.players[playerString]![4].0: self.players[playerString]![4].1, self.players[playerString]![5].0: self.players[playerString]![5].1, self.players[playerString]![6].0: self.players[playerString]![6].1, self.players[playerString]![7].0: self.players[playerString]![7].1, self.players[playerString]![8].0: self.players[playerString]![8].1, self.players[playerString]![9].0: self.players[playerString]![9].1, self.players[playerString]![10].0: self.players[playerString]![10].1])
+                
+                DB.database.child("SoccerGames/\(self.id)/Players/\(playerString)").updateChildValues([self.statNames[0]: self.players[playerString]![self.statNames[0]]!, self.statNames[1]: self.players[playerString]![self.statNames[1]]!, self.statNames[2]: self.players[playerString]![self.statNames[2]]!, self.statNames[3]: self.players[playerString]![self.statNames[3]]!, self.statNames[4]: self.players[playerString]![self.statNames[4]]!, self.statNames[5]: self.players[playerString]![self.statNames[5]]!, self.statNames[6]: self.players[playerString]![self.statNames[6]]!, self.statNames[7]: self.players[playerString]![self.statNames[7]]!, self.statNames[8]: self.players[playerString]![self.statNames[8]]!, self.statNames[9]: self.players[playerString]![self.statNames[9]]!, self.statNames[10]: self.players[playerString]![self.statNames[10]]!])
             }
         })
     }
@@ -134,12 +145,17 @@ class SoccerGame {
                 self.opp2ndHalfTotals[stat] = value?["Total"] as? Int ?? 0
             })
         }
+    }
+    
+    func listenForPlayers() {
         for player in Array(players.keys) {
             DB.database.child("SoccerGames/\(id)/Players/\(player)").observe(.value, with: { (snapshot) in
-               // Observe players
-                })
+                let value = snapshot.value as? [String: Int]
+                for stat in value! {
+                    self.players[player]![stat.key] = stat.value
+                }
+            })
         }
-        
     }
     
 }

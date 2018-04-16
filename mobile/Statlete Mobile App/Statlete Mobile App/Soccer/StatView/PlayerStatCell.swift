@@ -13,7 +13,6 @@ class PlayerStatCell: UITableViewCell {
     @IBOutlet weak var numberLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     
-    @IBOutlet weak var minutesLabel: UILabel!
     @IBOutlet weak var goalsLabel: UILabel!
     @IBOutlet weak var assistsLabel: UILabel!
     @IBOutlet weak var shotsLabel: UILabel!
@@ -30,10 +29,9 @@ class PlayerStatCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func commonInit(number: Int, name: String, minutes: Int, goals: Int, assists: Int, shots: Int, shotsOnGoal: Int) {
-        numberLabel.text = String(number)
+    func commonInit(number: String, name: String, goals: Int, assists: Int, shots: Int, shotsOnGoal: Int) {
+        numberLabel.text = "#\(number)"
         nameLabel.text = name
-        minutesLabel.text = String(minutes)
         goalsLabel.text = String(goals)
         assistsLabel.text = String(assists)
         shotsLabel.text = String(shots)
@@ -46,9 +44,8 @@ class PlayerStatCell: UITableViewCell {
     func headerInit() {
         numberLabel.text = ""
         nameLabel.text = ""
-        minutesLabel.text = "Min"
         goalsLabel.text = "Goals"
-        assistsLabel.text = "A"
+        assistsLabel.text = "Assists"
         shotsLabel.text = "Shots"
         shotsOnGoalLabel.text = "SOG"
         selectionStyle = .none
