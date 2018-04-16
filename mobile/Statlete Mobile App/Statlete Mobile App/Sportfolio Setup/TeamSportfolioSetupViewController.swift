@@ -17,6 +17,10 @@ class TeamSportfolioSetupViewController: UIViewController {
     @IBOutlet weak var teamNameTextField: UITextField!
     
     @IBOutlet weak var backButton: UIButton!
+    
+    // default chosen sport to soccer
+    var chosenSport: Int = 1
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -49,8 +53,19 @@ class TeamSportfolioSetupViewController: UIViewController {
         // Dispose of any resources that can be recreated.
        
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "chooseSport"{
+            let vc = segue.destination as! ChooseSportViewController
+            vc.delegate = self
+        }
+    }
     
-
+    @IBAction func createButtonClicked(_ sender: UIButton) {
+        // create new team sportfolio
+        // add to users database, admin team
+        // current use
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -61,4 +76,10 @@ class TeamSportfolioSetupViewController: UIViewController {
     }
     */
 
+}
+
+extension TeamSportfolioSetupViewController: PopupDelegate{
+    func sportSelected(value: Int) {
+        chosenSport = value
+    }
 }
