@@ -16,11 +16,12 @@ class TeamSportfolio {
     var players: [String: String] = [:]
     var sport: String = String()
     var teamName: String = String()
-    var admins: [String] = []
+  
     
     // Not initialized upon creation
     var games: [String: String] = [:]
     var token: String = String()
+    var admins: [String] = [] // dont want this to be created upon init
     
     init(id: String, creator: String, sport: String, players: [String: String], teamName: String) {
         self.id = id

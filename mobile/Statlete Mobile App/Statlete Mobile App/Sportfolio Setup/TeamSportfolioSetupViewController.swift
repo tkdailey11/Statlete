@@ -62,8 +62,33 @@ class TeamSportfolioSetupViewController: UIViewController {
     
     @IBAction func createButtonClicked(_ sender: UIButton) {
         // create new team sportfolio
-        // add to users database, admin team
-        // current use
+        var sportfolioId = "id89" // need to generate this?
+        var teamName: String = teamNameTextField.text!
+        var players : [String : String] = [:] // need to get these from the AddPLayers page
+        var sport: String = "soccer"
+     
+        let id = DB.currentUser.email.replacingOccurrences(of: ".", with: "")
+        if(chosenSport == 1){
+            sport = "soccer"
+        }else if(chosenSport == 0){
+             sport = "basketball"
+        }else{
+            sport = "football"
+        }
+        var tsf : TeamSportfolio = TeamSportfolio(id: id, creator: id, sport: sport, players: players, teamName: teamName)
+        
+        // update current user
+        DB.currentUser.AdminTeams.append(sportfolioId)
+        
+        // add to database - Users
+        DB.database.child("Users").child(id).child("AdminTeams").updateChildValues([sportfolioId : " "])
+        
+        // add to database - Team Sportfolio
+        DB.database.child("TeamSportfolios").child(sportfolioId).updateChildValues(["Admins" : " ", "Creator" : id, "Games": " ", "Players" : " ", "Sport" : "soccer", "TeamName": teamName, "Token": " "])
+        
+        self.performSegue(withIdentifier: "toSportfolio", sender: self)
+
+        
     }
     
     /*

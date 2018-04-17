@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Jv0-3l-5u2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="R17-B6-v3g">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -13,17 +13,6 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="Avenir.ttc">
-            <string>Avenir-Book</string>
-            <string>Avenir-Light</string>
-        </array>
-        <array key="AvenirNext.ttc">
-            <string>AvenirNext-Medium</string>
-            <string>AvenirNext-Regular</string>
-            <string>AvenirNext-UltraLight</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -345,7 +334,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="Bbf-qF-omN">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="638"/>
+                                <rect key="frame" x="0.0" y="29" width="375" height="638"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oVF-JT-K79">
                                 <rect key="frame" x="206" y="84" width="0.0" height="67"/>
@@ -354,7 +343,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="OZV-2m-XvL">
-                                <rect key="frame" x="0.0" y="348" width="375" height="319"/>
+                                <rect key="frame" x="0.0" y="377" width="375" height="319"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="319" id="F0x-MQ-1SR"/>
@@ -366,7 +355,7 @@
                                 </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yTi-br-rTe">
-                                <rect key="frame" x="0.0" y="252" width="182" height="64"/>
+                                <rect key="frame" x="0.0" y="252" width="182" height="93"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="182" id="4Ky-W1-o4O"/>
                                     <constraint firstAttribute="height" constant="64" id="nGk-C4-WOT"/>
@@ -1441,6 +1430,7 @@
                         <outlet property="backButton" destination="ocq-tn-yTz" id="nJ5-sc-eSa"/>
                         <outlet property="createButton" destination="ZZs-67-K8f" id="e1f-Gg-KGM"/>
                         <outlet property="teamNameTextField" destination="ENW-bH-hs6" id="SZv-yB-aCa"/>
+                        <segue destination="Vcd-qo-bwI" kind="show" identifier="toSportfolio" id="vN7-5A-32v"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mWK-9A-eoQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1613,12 +1603,12 @@
         <scene sceneID="mTN-2i-TWc">
             <objects>
                 <viewController id="Vcd-qo-bwI" customClass="SportfolioViewController" customModule="Statlete_Mobile_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="oj3-zk-LPP">
+                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="oj3-zk-LPP">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YqW-5N-R2j">
-                                <rect key="frame" x="0.0" y="66" width="375" height="535"/>
+                            <containerView opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YqW-5N-R2j">
+                                <rect key="frame" x="0.0" y="73.5" width="375" height="593.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="535" id="U6A-2M-bgJ"/>
                                 </constraints>
@@ -1626,23 +1616,23 @@
                                     <segue destination="bb4-Em-hCJ" kind="embed" id="yp0-QR-Ejl"/>
                                 </connections>
                             </containerView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bN8-d4-2XM" userLabel="Menu Button">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bN8-d4-2XM" userLabel="Menu Button">
                                 <rect key="frame" x="10" y="30" width="32" height="32"/>
                                 <state key="normal" image="menu"/>
                                 <connections>
                                     <action selector="menuButton:" destination="Vcd-qo-bwI" eventType="touchUpInside" id="cPx-Wz-K8c"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hWG-3D-nmi">
-                                <rect key="frame" x="0.0" y="62" width="175" height="539"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hWG-3D-nmi">
+                                <rect key="frame" x="0.0" y="62" width="175" height="605"/>
                                 <subviews>
-                                    <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rfg-28-Jvc">
-                                        <rect key="frame" x="0.0" y="0.0" width="175" height="539"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bh0-PX-tFC">
-                                            <rect key="frame" x="0.0" y="0.0" width="175" height="539"/>
+                                    <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rfg-28-Jvc">
+                                        <rect key="frame" x="0.0" y="0.0" width="175" height="605"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="bh0-PX-tFC">
+                                            <rect key="frame" x="0.0" y="0.0" width="175" height="605"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mbx-bH-Zbb">
+                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mbx-bH-Zbb">
                                                     <rect key="frame" x="10" y="10" width="155" height="65"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
@@ -1712,7 +1702,7 @@
                                     <constraint firstItem="Rfg-28-Jvc" firstAttribute="centerX" secondItem="hWG-3D-nmi" secondAttribute="centerX" id="uaS-ak-D9b"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uww-3u-hBv">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uww-3u-hBv">
                                 <rect key="frame" x="103" y="40" width="169" height="32.5"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Sportfolio Name">
@@ -2119,6 +2109,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="oJq-go-Xs9"/>
+        <segue reference="vN7-5A-32v"/>
         <segue reference="XUr-1V-426"/>
         <segue reference="TG2-Vb-6XM"/>
     </inferredMetricsTieBreakers>
