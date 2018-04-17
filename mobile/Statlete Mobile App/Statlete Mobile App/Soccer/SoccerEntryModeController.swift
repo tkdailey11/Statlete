@@ -10,10 +10,6 @@ import UIKit
 
 class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDelegate, SubstitutionBarDelegate, PossessionViewDelegate {
     
-    
-    
-    var statNames: [String] = ["Goals", "Assists", "Shots on Goal", "Shots", "Fouls", "Yellow Cards", "Red Cards", "Corners", "Saves", "Crosses", "Offsides"]
-    
     // For Scoreboard
     var timerStarted: Bool = false
     var timer = Timer()
@@ -63,7 +59,7 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         // TopBar
         topBar = TopBar(frame: topBarFrame)
         view.addSubview(topBar)
-        topBar.setGameLabel(to: "vs. Sparta 06 DM")
+        topBar.setGameLabel(to: game.name)
         
         // ScoreboardView
         scoreboardView = ScoreboardView(frame: scoreboardViewFrame)
@@ -79,7 +75,7 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         view.addSubview(substitutionBar)
         
         // EntryView
-        entryView = SoccerTeamEntryView(frame: entryViewFrame, statNames: statNames)
+        entryView = SoccerTeamEntryView(frame: entryViewFrame, statNames: game.statNames)
         view.addSubview(entryView!)
         entryView!.delegate = self
         
@@ -229,19 +225,19 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         if (game.half == 1) {
             if (oppTeamSelected) {
                 DB.database.child("SoccerGames").child(game.id).child("OpponentsTotals").child("Period1").child(game.statNames[index]).updateChildValues(["\(minute):\(second)":" "])
-                DB.database.child("SoccerGames").child(game.id).child("OpponentsTotals").child("Period1").child(game.statNames[index]).updateChildValues(["Total": self.game.opp1stHalfTotals[statNames[index]]!+1])
+                DB.database.child("SoccerGames").child(game.id).child("OpponentsTotals").child("Period1").child(game.statNames[index]).updateChildValues(["Total": self.game.opp1stHalfTotals[game.statNames[index]]!+1])
                 oppTeamSelected = false
                 substitutionBar.setOpposingTeamButtonToNotSelected()
             }
             else {
                 if CurrentlySelectedNumber == -1 {
                     DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["\(minute):\(second)":" "])
-                    DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["Total": self.game.my1stHalfTotals[statNames[index]]!+1])
+                    DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["Total": self.game.my1stHalfTotals[game.statNames[index]]!+1])
                 }
                 else {
                     DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["\(minute):\(second)":"p\(CurrentlySelectedNumber)"])
-                    DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["Total": self.game.my1stHalfTotals[statNames[index]]!+1])
-                    DB.database.child("SoccerGames").child(game.id).child("Players").child("p\(CurrentlySelectedNumber)").updateChildValues([statNames[index]: self.game.players["p\(CurrentlySelectedNumber)"]![statNames[index]]!+1])
+                    DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["Total": self.game.my1stHalfTotals[game.statNames[index]]!+1])
+                    DB.database.child("SoccerGames").child(game.id).child("Players").child("p\(CurrentlySelectedNumber)").updateChildValues([game.statNames[index]: self.game.players["p\(CurrentlySelectedNumber)"]![game.statNames[index]]!+1])
                     CurrentlySelectedNumber = -1
                 }
             }
@@ -249,18 +245,18 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         else {
             if (oppTeamSelected) {
                 DB.database.child("SoccerGames").child(game.id).child("OpponentsTotals").child("Period2").child(game.statNames[index]).updateChildValues(["\(minute):\(second)":" "])
-                DB.database.child("SoccerGames").child(game.id).child("OpponentsTotals").child("Period2").child(game.statNames[index]).updateChildValues(["Total": self.game.opp2ndHalfTotals[statNames[index]]!+1])
+                DB.database.child("SoccerGames").child(game.id).child("OpponentsTotals").child("Period2").child(game.statNames[index]).updateChildValues(["Total": self.game.opp2ndHalfTotals[game.statNames[index]]!+1])
                 oppTeamSelected = false
                 substitutionBar.setOpposingTeamButtonToNotSelected()
             }
             else {
                 DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period2").child(game.statNames[index]).updateChildValues(["\(minute):\(second)":" "])
-                DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period2").child(game.statNames[index]).updateChildValues(["Total": self.game.my2ndHalfTotals[statNames[index]]!+1])
+                DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period2").child(game.statNames[index]).updateChildValues(["Total": self.game.my2ndHalfTotals[game.statNames[index]]!+1])
             }
         }
         if index == 0 {
-            scoreboardView?.myTeamScoreLabel.text = String(game.my1stHalfTotals[statNames[index]]! + game.my2ndHalfTotals[statNames[index]]!)
-            scoreboardView?.opposingTeamScoreLabel.text = String(game.opp1stHalfTotals[statNames[index]]! + game.opp2ndHalfTotals[statNames[index]]!)
+            scoreboardView?.myTeamScoreLabel.text = String(game.my1stHalfTotals[game.statNames[index]]! + game.my2ndHalfTotals[game.statNames[index]]!)
+            scoreboardView?.opposingTeamScoreLabel.text = String(game.opp1stHalfTotals[game.statNames[index]]! + game.opp2ndHalfTotals[game.statNames[index]]!)
         }
         scoreboardView!.setNeedsDisplay()
         statView.teamStatView.tableView.reloadData()
@@ -272,35 +268,35 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         }
         if (game.half == 1) {
             if (oppTeamSelected) {
-                if game.opp1stHalfTotals[statNames[index]]! > 0 {
-                    DB.database.child("SoccerGames").child(game.id).child("OpponentsTotals").child("Period1").child(game.statNames[index]).updateChildValues(["Total": self.game.opp1stHalfTotals[statNames[index]]!-1])
+                if game.opp1stHalfTotals[game.statNames[index]]! > 0 {
+                    DB.database.child("SoccerGames").child(game.id).child("OpponentsTotals").child("Period1").child(game.statNames[index]).updateChildValues(["Total": self.game.opp1stHalfTotals[game.statNames[index]]!-1])
                 }
                 oppTeamSelected = false
                 substitutionBar.setOpposingTeamButtonToNotSelected()
             }
             else {
-                if game.my1stHalfTotals[statNames[index]]! > 0 {
-                    DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["Total": self.game.my1stHalfTotals[statNames[index]]!-1])
+                if game.my1stHalfTotals[game.statNames[index]]! > 0 {
+                    DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["Total": self.game.my1stHalfTotals[game.statNames[index]]!-1])
                 }
             }
         }
         else {
             if (oppTeamSelected) {
-                if game.opp2ndHalfTotals[statNames[index]]! > 0 {
-                    DB.database.child("SoccerGames").child(game.id).child("OpponentsTotals").child("Period2").child(game.statNames[index]).updateChildValues(["Total": self.game.opp2ndHalfTotals[statNames[index]]!-1])
+                if game.opp2ndHalfTotals[game.statNames[index]]! > 0 {
+                    DB.database.child("SoccerGames").child(game.id).child("OpponentsTotals").child("Period2").child(game.statNames[index]).updateChildValues(["Total": self.game.opp2ndHalfTotals[game.statNames[index]]!-1])
                 }
                 oppTeamSelected = false
                 substitutionBar.setOpposingTeamButtonToNotSelected()
             }
             else {
-                if game.my2ndHalfTotals[statNames[index]]! > 0 {
-                    DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["Total": self.game.my2ndHalfTotals[statNames[index]]!-1])
+                if game.my2ndHalfTotals[game.statNames[index]]! > 0 {
+                    DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["Total": self.game.my2ndHalfTotals[game.statNames[index]]!-1])
                 }
             }
         }
         if index == 0 {
-            scoreboardView?.myTeamScoreLabel.text = String(game.my1stHalfTotals[statNames[index]]! + game.my2ndHalfTotals[statNames[index]]!)
-            scoreboardView?.opposingTeamScoreLabel.text = String(game.opp1stHalfTotals[statNames[index]]! + game.opp2ndHalfTotals[statNames[index]]!)
+            scoreboardView?.myTeamScoreLabel.text = String(game.my1stHalfTotals[game.statNames[index]]! + game.my2ndHalfTotals[game.statNames[index]]!)
+            scoreboardView?.opposingTeamScoreLabel.text = String(game.opp1stHalfTotals[game.statNames[index]]! + game.opp2ndHalfTotals[game.statNames[index]]!)
         }
         scoreboardView!.setNeedsDisplay()
         statView.teamStatView.tableView.reloadData()
@@ -310,13 +306,13 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     /////// StatView Callbacks  ////////////
     ////////////////////////////////////////
     func getStatNameAndTeamValues(index: Int) -> (stat: String, myTeamVal: Int, oppTeamVal: Int) {
-        let statName = statNames[index]
+        let statName = game.statNames[index]
         return (statName, game.getMyTeamValueFor(stat: statName), game.getOppTeamValueFor(stat: statName))
     }
     
     
     func getNumberOfStats() -> Int {
-        return statNames.count
+        return game.statNames.count
     }
     
     

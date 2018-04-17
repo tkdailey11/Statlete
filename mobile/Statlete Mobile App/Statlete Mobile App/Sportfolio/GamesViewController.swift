@@ -47,7 +47,13 @@ class GamesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         print(indexPath.row)
     }
     
-  
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toVEGamesStatsViewController" {
+            if let controller = segue.destination as? VEGameStatsViewController {
+                controller.game = SoccerGame(team: "team2", gameID: "team2-1", name: "vs. Sparta 06", halfLength: 45)
+            }
+        }
+    }
 
     /*
     // MARK: - Navigation
