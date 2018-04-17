@@ -34,8 +34,10 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        while !game.isLoaded {
-        }
+        sleep(5)
+        
+        //while !game.isLoaded {
+        //}
         substitutionBar.collectionView.reloadData()
         
         //timerForLoadedPlayers = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(reloadSubBar), userInfo: nil, repeats: false)

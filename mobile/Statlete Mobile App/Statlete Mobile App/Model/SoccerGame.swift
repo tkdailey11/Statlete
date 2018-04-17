@@ -46,7 +46,7 @@ class SoccerGame {
         self.team = team
         self.id = gameID
         self.halfLength = 45
-        self.name = "vs. Sparta 06"
+        self.name = name
         date = Date()
         half = 1
         myTeamScore = 0
@@ -66,11 +66,31 @@ class SoccerGame {
     
     init(gameID: String) {
         self.id = gameID
-        loadGameFromDatabase()
     }
     
-    func loadGameFromDatabase() {
+    /*
+    init(gameID: String, completion: @escaping (Bool) -> Void) {
+        self.id = gameID
         
+        DB.database.child("SoccerGames/\(self.id)").observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value
+            print("Made it")
+            self.isLoaded = true
+            completion(true)
+        }) { (error) in
+            completion(false)
+            print("EEEEERRRROOOORRRR")
+        }
+        loadGameFromDatabase()
+    }
+     */
+    
+    func loadGameFromDatabase() {
+        print("Here")
+        DB.database.child("SoccerGames/\(id)").observeSingleEvent(of: .value, with: { (snapshot) in
+            print("Made It")
+        })
+        print("There")
     }
     
     func loadPlayers() {
