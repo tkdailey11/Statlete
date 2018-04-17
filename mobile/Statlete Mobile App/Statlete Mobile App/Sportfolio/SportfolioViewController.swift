@@ -80,6 +80,7 @@ class SportfolioViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "SideMenuCell", for: indexPath) as UITableViewCell
+        
         cell.textLabel?.text = sportfolios[indexPath.row]
         
         return cell
