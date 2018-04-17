@@ -23,14 +23,19 @@
     },
     methods: {
       signUp: function() {
-        firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
-          (user) => {
-            this.$router.replace('main')
-          },
-          function (err) {
-            alert('Oops. ' + err.message)
-          }
-        );
+        if(this.password===this.passwordConfirm){
+          firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
+            (user) => {
+              this.$router.replace('flp')
+            },
+            function (err) {
+              alert('Oops. ' + err.message)
+            }
+          );
+        }
+        else {
+          alert('Passwords don\'t match');
+        }
       }
     }
   }

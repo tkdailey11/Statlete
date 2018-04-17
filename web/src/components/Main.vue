@@ -1,37 +1,37 @@
 <template>
   <div class="main">
+    <new-player @newPlayerAdded="hideModal" />
     <statlete-navbar v-if="!(viewMode==='isCreatingTeam' || viewMode==='isCreatingPlayer')"
                      @shouldOpenNav="openNav"
                      @shouldLogout="logout"></statlete-navbar>
-    <h1>{{ selectedSport }}</h1>
+
+    <side-nav id="mySidenav"
+              @showPlayer="showPlayer"
+              @showTeam="showTeam"
+              :sportfolios="sportfolios">
+    </side-nav>
+
     <div id="mainPage" v-if="viewMode==='mainViewMode'">
-      <div id="mySidenav" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" @click="closeNav">&times;</a>
-        <img src="../assets/images/testUser.png" width="100px" height="100px">
-        <a href="#">About</a>
-        <a href="#">Services</a>
-        <a href="#">Clients</a>
-        <a href="#">Contact</a>
-        <button @click="showPlayer" class="sportButton">New Player Account</button><br>
-        <button @click="showTeam" class="sportButton">New Team Account</button><br>
-        <div style="scroll">
-            <button style="background-color: white; width: 150px;" v-for="i in sportfolios.length">Test {{ i }}</button>
+
+      <div class="mainHeader">
+        <h1 style="color: rgb(180, 41, 102);">Team Name</h1>
+        <div class="button-wrapper">
+          <button @click="editTeamSettings" class="btn btn-outline-primary">Edit Team Settings</button>
+          <button @click="viewTeamStats" class="btn btn-outline-primary">View Team Stats</button>
         </div>
       </div>
-
-      <h1>{{ loggedInUser.email }}</h1>
-      <br>
-      <games-list :games="gamesList"
-                  style="float: left; margin: 0px 50px 50px 150px;"
-                  @gameSelected="viewMode='isInGameView'"></games-list>
-      <players-list style="float: left; margin: 0px 50px 50px 50px;"
-                    @playerSelected="viewPlayerInfo"></players-list>
-
-      <div style="float: left;">
-        <button @click="editTeamSettings" class="sportButton">Edit Team Settings</button><br>
-        <button @click="viewTeamStats" class="sportButton">View Team Stats</button><br>
+      <div class="mainBody">
+        <games-list :games="gamesList"
+                    style="margin-top: 20px;"
+                    @gameSelected="viewMode='isInGameView'"></games-list>
+        <players-list style="margin-top: 20px;"
+                      @playerSelected="viewPlayerInfo"
+                      @addPlayerClicked="showModal"
+                      :players="players"></players-list>
       </div>
+
     </div>
+    <!-- WIZARDS -->
     <div v-else>
       <div id="PlayerWizard" v-if="viewMode==='isCreatingPlayer'" style="padding-top=100px;">
           <vue-good-wizard
@@ -61,7 +61,7 @@
           </vue-good-wizard>
       </div>
 
-      <div id="TeamWizard" v-if="viewMode==='isCreatingTeam'" style="padding-top=100px;">
+      <div id="TeamWizard" v-if="viewMode==='isCreatingTeam'" class="teamWiz">
         <vue-good-wizard
           :steps="teamSteps"
           :onNext="nextClickedTeam"
@@ -94,6 +94,7 @@
         </vue-good-wizard>
       </div>
     </div>
+    <!-- END WIZARDS -->
     <game-view v-if="viewMode==='isInGameView'"
                @GameViewClose="viewMode='mainViewMode'">
     </game-view>
@@ -124,7 +125,6 @@ export default {
       teamID: '',
       playerName: '',
       selectedSport: 'basketball',
-
       /*
         View Modes:
           - mainViewMode (default)
@@ -158,13 +158,17 @@ export default {
         }
       ],
       sportfolios: [],
-      gamesList: [{gameID: 'game-a'}, {gameID: 'game-b'}]
+      gamesList: [],
+      players: []
     }
   },
   mounted () {
     this.$nextTick(() => {
         this.loggedInUser = firebase.auth().currentUser;
         this.currentUserEmail = this.loggedInUser.email;
+        this.getGames();
+        this.getPlayers();
+        this.getSportfolios();
     });
   },
   methods: {
@@ -181,9 +185,6 @@ export default {
     },
     openNav: function() {
       document.getElementById("mySidenav").style.width = "250px";
-    },
-    closeNav: function() {
-      document.getElementById("mySidenav").style.width = "0";
     },
     showTeam: function() {
       this.viewMode = 'isCreatingTeam'
@@ -256,20 +257,6 @@ export default {
           [id] : teamData
         });
 
-
-        /*
-        //build up json for database
-        console.log('**************************************');
-        console.log('TeamID: ' + this.teamID);
-        console.log('TeamToken: ' + this.teamToken);
-        console.log('Players: ');
-        var s = this.sportfolios.splice(-1)[0];
-        console.log(s);
-        console.log('Sport: ' + this.selectedSport);
-        console.log('TeamName: ' + this.teamName);
-        console.log('**************************************');
-        */
-
         this.teamID = '';
         this.teamToken = '';
         this.selectedSport = 'basketball';
@@ -294,6 +281,75 @@ export default {
     viewPlayerInfo() {
       this.viewMode = 'playerDetailView';
       console.log("View PLAYER INFO");
+    },
+    getGames() {
+      this.teamID = 'idn12';
+      var id = this.teamID;
+      var keysList = [];
+      var self = this;
+
+      var gamesListRef = firebase.database().ref('/TeamSportfolios/' + id + '/Games/');
+      gamesListRef.on('value', function(snapshot) {
+        var obj = snapshot.val();
+        keysList = Object.keys(obj);
+        var gamesRef = firebase.database().ref('/SoccerGames');
+        self.gamesList = [];
+        keysList.forEach(function(key) {
+          gamesRef.child(key).once('value', function(snap) {
+            self.gamesList.push(snap.val());
+          })
+        });
+      });
+    },
+    getPlayers() {
+      this.teamID = 'idn12';
+      var id = this.teamID;
+      var self = this;
+      var playersRef = firebase.database().ref('/TeamSportfolios/' + id + '/Players/');
+      playersRef.on('value', function(snapshot) {
+        var obj = snapshot.val();
+        console.log(obj);
+        self.players = obj;
+      });
+    },
+    showModal () {
+      this.$modal.show('new-player');
+    },
+    hideModal (event) {
+      console.log('Hide Modal');
+      console.log(event);
+      this.teamID = 'idn12';
+      var id = this.teamID;
+      var playersRef = firebase.database().ref('/TeamSportfolios/' + id + '/Players/');
+      var num = 'p' + event.num;
+      var name = event.name;
+      if(!name){
+        name = ' ';
+      }
+      playersRef.update({
+        [num] : name
+      });
+      this.$modal.hide('new-player');
+    },
+    getSportfolios() {
+      this.teamID = 'idn12';
+      var id = this.teamID;
+      var keysList = [];
+      var self = this;
+
+      var email = this.currentUserEmail.replace('.', '');
+      var sportfoliosListRef = firebase.database().ref('/Users/' + email + '/AdminTeams/');
+      sportfoliosListRef.on('value', function(snapshot) {
+        var obj = snapshot.val();
+        keysList = Object.keys(obj);
+        var sportfoliosRef = firebase.database().ref('/TeamSportfolios');
+        self.sportfolios = [];
+        keysList.forEach(function(key) {
+          sportfoliosRef.child(key).once('value', function(snap) {
+            self.sportfolios.push(snap.val());
+          })
+        });
+      });
     }
   }
 }
@@ -359,6 +415,7 @@ export default {
   .main {
       transition: margin-left .5s;
       margin:0px;
+      min-height: 100%;
   }
 
   /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
@@ -387,19 +444,19 @@ export default {
     height: 97px;
     display: inline-block;
   }
-  .sportButton {
-    background-color: red;
+  button {
+    margin-top: 20px;
+    cursor: pointer;
     color: white;
-    width: 150px;
-    margin: 30px 30px 30px 0px;
-    border-radius: 50px;
+    background-color: rgb(180, 41, 102);
+    border-color: rgb(180, 41, 102);
+    color: rgba(250, 220, 127, 0.9);
   }
-  .selectedButton {
-    background-color: rgb(0, 0, 255);
-    width: 200px;
-    color: rgb(255,255,255);
+  button:hover {
+    background-color: rgba(250, 220, 127, 0.9);
+    border-color: rgba(250, 220, 127, 0.9);
+    color: rgb(180, 41, 102);
   }
-
   .wizard-tab-content {
     display: flex; // to avoid horizontal scroll when animating
     .wizard-tab-container {
@@ -407,4 +464,72 @@ export default {
       animation: fadeInRight 0.3s;
     }
   }
+
+  .mainHeader {
+    width: 100%;
+    height: 10%;
+    min-height: 100px;
+    max-height: 100px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .mainHeader .sportButton {
+    width: 40%;
+    min-width: 50px;
+    max-width: 200px;
+    min-height: 50px;
+    max-height: 50px;
+    float: right;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-right: 5px;
+    margin-left: 5px;
+    text-overflow: ellipsis;
+  }
+
+  .button-wrapper {
+    width: inherit;
+    white-space: nowrap;
+    margin-top: 18px;
+    margin-right: 20px;
+  }
+
+  .mainHeader h1 {
+    width: 100%;
+    font-size: 70px;
+    max-height: 100px;
+    white-space: nowrap;
+    text-align: left;
+    margin-left: 15px;
+  }
+
+  .mainBody {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
+  }
+
+  .teamWiz {
+    background-color: grey;
+  }
+
+
+  #mainPage {
+    height: 100vh;
+background: radial-gradient(circle, rgba(240,138,59,0.7) 0%, rgba(246,113,78,0.7) 53%, rgba(237,108,73,0.7) 77%);
+background-color: white;
+  }
+
+  #leftList {
+
+  }
+  #rightList {
+
+  }
+
 </style>

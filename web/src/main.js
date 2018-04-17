@@ -38,6 +38,29 @@ Vue.component('team-stats', TeamStats);
 import PlayerDetailView from '@/components/PlayerDetailView';
 Vue.component('player-detail-view', PlayerDetailView);
 
+import SideNav from '@/components/SideNav';
+Vue.component('side-nav', SideNav);
+
+import NewPlayer from '@/components/NewPlayer';
+Vue.component('new-player', NewPlayer);
+
+import SBdataEntry from '@/components/SBdataEntry';
+Vue.component('sb-data-entry', SBdataEntry);
+
+import SBfield from '@/components/SBfield';
+Vue.component('sb-field', SBfield);
+
+import SBshotType from '@/components/SBshotType';
+Vue.component('sb-shot-type', SBshotType);
+
+import FLP from '@/components/FirstLandingPage';
+Vue.component('landing-page', FLP);
+
+import VModal from 'vue-js-modal'
+Vue.use(VModal)
+import Vue2TouchEvents from 'vue2-touch-events'
+Vue.use(Vue2TouchEvents)
+
 import jQuery from 'jquery'
 global.jQuery = jQuery
 import popper from 'popper.js'
@@ -51,6 +74,11 @@ import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 Vue.config.productionTip = false
 Vue.use(VueFormWizard)
 Vue.use(VueGoodWizard)
+
+//import { TableComponent, TableColumn } from 'vue-table-component';
+
+//Vue.use(TableComponent);
+//Vue.use(TableColumn);
 
 let app;
 firebase.initializeApp(config);

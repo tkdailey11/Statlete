@@ -8,6 +8,11 @@
     <button @click="submitToken">Submit</button>
     <br>
     <br>
+    <players-list :addPlayerEnabled="false"
+                  :title="'Admins'"
+                  style="float: left;"></players-list>
+    <players-list :addPlayerEnabled="false"
+                  style="float: left;"></players-list>
     <button @click="goBack">Go Back</button>
   </div>
 </template>
@@ -47,6 +52,8 @@
 <style scoped>
   #TeamSettings {
     width: 100%;
+    height: 100%;
+    min-height: 720px;
     background-color: orange;
   }
   input {

@@ -1,6 +1,6 @@
 <template>
   <div id="navbar">
-    <nav class="navbar navbar-dark bg-dark navbar-fixed-top">
+    <nav class="navbar navbar-fixed-top myNav">
       <button type="button" class="btn btn-default navbar-btn" @click="openNav">Open Nav</button>
       <button type="button" class="btn btn-default navbar-btn" @click="logout" style="float: right;">Logout</button>
     </nav>
@@ -24,5 +24,8 @@
 <style scoped>
 #header h1{
     margin:0px;
+}
+.myNav {
+  background-color: rgb(214, 53, 90);
 }
 </style>

@@ -5,6 +5,7 @@ import Login from '@/components/Login'
 import SignUp from '@/components/SignUp'
 import firebase from 'firebase'
 import Main from '@/components/Main'
+import FLP from '@/components/FirstLandingPage'
 
 Vue.use(Router)
 
@@ -32,6 +33,14 @@ let router = new Router({
       path: '/main',
       name: 'Main',
       component: Main,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/flp',
+      name: 'FLP',
+      component: FLP,
       meta: {
         requiresAuth: true
       }

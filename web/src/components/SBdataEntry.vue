@@ -1,17 +1,22 @@
 <template>
-  <div id="GamesList">
+  <div id="SBdataEntry">
     <div id="title">
-      <h1 align="center">Games</h1>
+      <h2 align="center">Team/Player Stats</h2>
     </div>
-    <div id="gamesTable">
-      <table cellpadding="10" width="100%">
-        <tr v-for="idx in Object.keys(games).length" @click="trClicked(idx)">
-          <td>{{ games[idx-1] }}</td>
+    <div id="dataTable">
+      <table width="100%">
+        <tr v-for="obj in dataPoints">
+          <td class="minusButton" @click="minusClicked(obj)">
+            <img src="../assets/images/minusButton.png">
+          </td>
+          <td class="dataLabelCell" style="max-width: 120px; text-overflow:ellipsis;">
+            <p class="dataLabel">{{obj}}</p>
+          </td>
+          <td class="plusButton" @click="plusClicked(obj)">
+            <img src="../assets/images/plusButton.png">
+          </td>
         </tr>
       </table>
-    </div>
-    <div id="glFooter" @click="addGameClicked">
-      Add New Game
     </div>
   </div>
 </template>
@@ -20,28 +25,25 @@
   export default {
     name: 'GamesList',
     props: {
-      games: {
+      dataPoints: {
         default(){
-          return [{gameID: 'game1'}, {gameID: 'game2'}]
+          return ['Goals', 'Assists', 'Shots', 'Yellow Cards1234567890', 'Red Cards', 'Saves', 'Shots', 'S.O.G.']
         }
       }
     },
     methods: {
-      addGameClicked: function() {
-        console.log("Add Game");
-        this.games.push({gameID: 'game'+(Object.keys(this.games).length + 1)})
+      minusClicked(obj) {
+        alert('Minus: ' + obj);
       },
-      trClicked: function(idx) {
-        this.$emit('gameSelected', idx);
-        console.log(idx + " clicked");
-        console.log(this.games);
+      plusClicked(obj) {
+        alert('Plus: ' + obj);
       }
     }
   }
 </script>
 
 <style scoped>
-  #GamesList {
+  #SBdataEntry {
     width: 310px;
     height: 500px;
     background: rgb(180, 41, 102);
@@ -51,6 +53,7 @@
     border-style: solid;
     border-radius: 35px;
     position: relative;
+    margin: 50px 0px 50px 50px;
   }
 
   #title {
@@ -64,7 +67,7 @@
     background-color: #fadc7f;
   }
 
-  #glFooter {
+  #dataFooter {
     width: 300px;
     height: 75px;
     position: absolute;
@@ -81,27 +84,47 @@
     color: rgb(180, 41, 102);
   }
 
-  #gamesTable {
+  #dataTable {
     width: 300px;
-    max-height: 350px;
-    height: 350px;
+    max-height: 413px;
+    height: 413px;
     background-color: #fadc7f;
     overflow: scroll;
+    border-radius: 0px 0px 30px 30px;
   }
 
-  table, th, td {
+  table, th {
     border: 1px solid rgb(180, 41, 102);
   }
 
   td {
     border-bottom: 1px solid rgb(180, 41, 102);
     color: rgb(180, 41, 102);
-    background-color: #fadc7f;
   }
 
-  h1 {
+  h2 {
     line-height: 75px;
     height: 75px;
     color: rgb(180, 41, 102);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+  }
+  img {
+    zoom: 50%;
+  }
+  .dataLabelCell {
+    overflow: hidden;
+  }
+  .dataLabel {
+    margin-top: 15px;
+    font-size: 25px;
+    line-height: 50px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+vertical-align: middle;
+
   }
 </style>
