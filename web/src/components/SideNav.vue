@@ -5,16 +5,22 @@
       <button @click="$emit('showPlayer')" class="btn btn-outline-primary">New Player Account</button><br>
       <button @click="$emit('showTeam')" class="btn btn-outline-primary">New Team Account</button><br>
 
-      <table style="background-color: white; margin: 10%; width: 80%;">
-        <thead>
-          <th></th>
-          <th>Team Sportfolios</th>
-        </thead>
-        <tr v-for="i in 100">
-          <td>S</td>
-          <td>{{ i }}</td>
-        </tr>
-      </table>
+      <div class="TableContainer">
+        <table class="TeamTable" style="overflow: scroll;">
+          <tr v-for="i in 100">
+            <td>S</td>
+            <td>{{ i }}</td>
+          </tr>
+        </table>
+
+
+        <table class="PlayerTable">
+          <tr v-for="i in 100">
+            <td>S</td>
+            <td>{{ i }}</td>
+          </tr>
+        </table>
+      </div>
     </div>
 </template>
 
@@ -80,11 +86,29 @@
       color: rgba(250, 220, 127, 0.9);
   }
 
-  .sportButton {
-    background-color: red;
-    color: white;
-    width: 150px;
-    margin: 30px 0px 30px 0px;
-    border-radius: 50px;
+  .TeamTable {
+    width: 80%;
+    margin: 10%;
+    background-color: white;
+    height: 40%;
+    max-height: 100px;
+    overflow: scroll;
   }
+
+  .PlayerTable {
+    width: 80%;
+    margin: 10%;
+    background-color: blue;
+    height: 40%;
+    max-height: 100px;
+    overflow: scroll;
+  }
+
+  .TableContainer {
+    height: 450px;
+    max-height: 450px;
+    background-color: grey;
+
+  }
+
 </style>

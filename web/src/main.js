@@ -70,11 +70,15 @@ let Bootstrap = require('bootstrap')
 import 'bootstrap/dist/css/bootstrap.css'
 import './assets/stylesheets/bootstrap-social.css'
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
-//import './assets/stylesheets/custom-css-bootstrap-magic-2018-04-12.css'
 
 Vue.config.productionTip = false
 Vue.use(VueFormWizard)
 Vue.use(VueGoodWizard)
+
+//import { TableComponent, TableColumn } from 'vue-table-component';
+
+//Vue.use(TableComponent);
+//Vue.use(TableColumn);
 
 let app;
 firebase.initializeApp(config);

@@ -58,7 +58,7 @@
   }
 
   #plTitle {
-    width: 300px;
+    width: 100%;
     height: 75px;
     border-radius: 35px 35px 0px 0px;
     border-bottom-color: rgb(180, 41, 102);
@@ -90,6 +90,8 @@
     height: 350px;
     background-color: #fadc7f;
     overflow: scroll;
+    margin-bottom: 0px;
+    margin: 0px;
   }
 
   table, th {
@@ -100,6 +102,10 @@
     border-bottom: 1px solid rgb(180, 41, 102);
     color: rgb(180, 41, 102);
     background-color: #fadc7f;
+  }
+
+  tr {
+    width: 500px;
   }
 
   h1 {

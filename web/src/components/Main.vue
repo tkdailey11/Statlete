@@ -5,13 +5,13 @@
                      @shouldOpenNav="openNav"
                      @shouldLogout="logout"></statlete-navbar>
 
-    <div id="mainPage" v-if="viewMode==='mainViewMode'">
+    <side-nav id="mySidenav"
+              @showPlayer="showPlayer"
+              @showTeam="showTeam"
+              :sportfolios="sportfolios">
+    </side-nav>
 
-      <side-nav id="mySidenav"
-                @showPlayer="showPlayer"
-                @showTeam="showTeam"
-                :sportfolios="sportfolios">
-      </side-nav>
+    <div id="mainPage" v-if="viewMode==='mainViewMode'">
 
       <div class="mainHeader">
         <h1 style="color: rgb(180, 41, 102);">Team Name</h1>
