@@ -164,6 +164,7 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
+      console.log("NEXT TICK");
         this.loggedInUser = firebase.auth().currentUser;
         this.currentUserEmail = this.loggedInUser.email;
         this.getGames();
@@ -289,17 +290,32 @@ export default {
       var self = this;
 
       var gamesListRef = firebase.database().ref('/TeamSportfolios/' + id + '/Games/');
-      gamesListRef.on('value', function(snapshot) {
-        var obj = snapshot.val();
-        keysList = Object.keys(obj);
-        var gamesRef = firebase.database().ref('/SoccerGames');
-        self.gamesList = [];
-        keysList.forEach(function(key) {
-          gamesRef.child(key).once('value', function(snap) {
-            self.gamesList.push(snap.val());
-          })
+      if (typeof gamesListRef !== 'undefined') {
+        gamesListRef.on('value', function(snapshot) {
+          var obj = snapshot.val();
+          if (obj) {
+            keysList = Object.keys(obj);
+
+            if(typeof keysList !== 'undefined' && keysList.length > 0){
+              var gamesRef = firebase.database().ref('/SoccerGames');
+              self.gamesList = [];
+              keysList.forEach(function(key) {
+                gamesRef.child(key).once('value', function(snap) {
+                  self.gamesList.push(snap.val());
+                })
+              });
+            }
+            else{
+              console.log("UNDEFINED - 1");
+            }
+          } else {
+            console.log("NULL");
+          }
+
         });
-      });
+      } else {
+        console.log("UNDEFINED - 2");
+      }
     },
     getPlayers() {
       this.teamID = 'idn12';
