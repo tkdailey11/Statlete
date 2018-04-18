@@ -34,10 +34,8 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        sleep(5)
+        sleep(1)
         
-        //while !game.isLoaded {
-        //}
         substitutionBar.collectionView.reloadData()
         
         //timerForLoadedPlayers = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(reloadSubBar), userInfo: nil, repeats: false)
@@ -104,6 +102,7 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         view.addSubview(statView)
         view.sendSubview(toBack: statView)
         
+        self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTime), userInfo: nil, repeats: true)
     }
     
     @objc func reloadSubBar() {
@@ -136,7 +135,7 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
                 DB.database.child("SoccerGames").child(self.game.id).updateChildValues(["PeriodStartTime": Int(Date().timeIntervalSince1970)])
                 DB.database.child("SoccerGames").child(self.game.id).updateChildValues(["InProgress": true])
-                self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTime), userInfo: nil, repeats: true)
+                
             }))
             alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
             self.present(alert, animated: true)
@@ -188,9 +187,12 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         (minutes, seconds) = game.getTime()
         scoreboardView!.timeLabel.text = getTimeStringFrom(minutes: minutes, seconds: seconds)
         statView.teamStatView.tableView.reloadData()
+        scoreboardView?.half = game.half
+        scoreboardView?.setNeedsDisplay()
         scoreboardView?.myTeamScoreLabel.text = String(game.my1stHalfTotals["Goals"]! + game.my2ndHalfTotals["Goals"]!)
         scoreboardView?.opposingTeamScoreLabel.text = String(game.opp1stHalfTotals["Goals"]! + game.opp2ndHalfTotals["Goals"]!)
         statView.teamStatView.updateLabels()
+        statView.playerTableView.reloadData()
     }
     
     // Convert minutes and seconds into a string represenatation to be used for scoreboard view
@@ -252,13 +254,15 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
                 substitutionBar.setOpposingTeamButtonToNotSelected()
             }
             else {
-                DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period2").child(game.statNames[index]).updateChildValues(["\(minute):\(second)":" "])
+                DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period2").child(game.statNames[index]).updateChildValues(["\(minute):\(second)":"p\(CurrentlySelectedNumber)"])
                 DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period2").child(game.statNames[index]).updateChildValues(["Total": self.game.my2ndHalfTotals[game.statNames[index]]!+1])
+                DB.database.child("SoccerGames").child(game.id).child("Players").child("p\(CurrentlySelectedNumber)").updateChildValues([game.statNames[index]: self.game.players["p\(CurrentlySelectedNumber)"]![game.statNames[index]]!+1])
             }
         }
         if index == 0 {
             scoreboardView?.myTeamScoreLabel.text = String(game.my1stHalfTotals[game.statNames[index]]! + game.my2ndHalfTotals[game.statNames[index]]!)
             scoreboardView?.opposingTeamScoreLabel.text = String(game.opp1stHalfTotals[game.statNames[index]]! + game.opp2ndHalfTotals[game.statNames[index]]!)
+            CurrentlySelectedNumber = -1
         }
         scoreboardView!.setNeedsDisplay()
         statView.teamStatView.tableView.reloadData()

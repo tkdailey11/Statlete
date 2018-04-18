@@ -36,22 +36,18 @@ class NewGameViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toNewGameEntryMode" {
             if let controller = segue.destination as? SoccerEntryModeController {
-                //controller.game = SoccerGame(team: "team2", gameID: "team2-1", name: "vs. Sparta 06", halfLength: 45)
+                controller.game = SoccerGame(team: "team2", gameID: "team2-1", name: "vs. Sparta 06", halfLength: 45)
                 
-                controller.game = SoccerGame(gameID: "teams2-1")
-                controller.game.loadGameFromDatabase()
                 
                 /*
-                controller.game = SoccerGame(gameID: "team2-1", completion: { success in
+                controller.game = SoccerGame(team: "team2", gameID: "team2-1")
+                controller.game.loadGameFromDatabase(completion: { success in
                     if success {
-                        print("Success")
                     }
                     else {
-                        print("AAAAHHHHHH!!!!!")
                     }
                 })
  */
-                
             }
         }
     }

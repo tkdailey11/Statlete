@@ -17,7 +17,7 @@ class SoccerGame {
     var opposingTeamScore: Int = 0
     var half: Int = 0
     var halfLength: Int = 0
-    var startTime: Date = Date()
+    var periodStartTime: Date = Date()
     var my1stHalfTotals = [String: Int]()
     var my2ndHalfTotals = [String: Int]()
     var opp1stHalfTotals = [String: Int]()
@@ -28,7 +28,7 @@ class SoccerGame {
     var opp2ndHalfStats: StatSet = StatSet()
     var myPossession: TimeInterval = 0
     var oppPossession: TimeInterval = 0
-    var inProgress: Bool = false
+    var inProgress: Bool = false //
     var team: String = String()
     
     var players: [String: [String: Int]] = [:]
@@ -38,6 +38,7 @@ class SoccerGame {
     var isLoaded: Bool = false
     
     var statNames: [String] = ["Goals", "Assists", "Shots on Goal", "Shots", "Fouls", "Yellow Cards", "Red Cards", "Corners", "Saves", "Crosses", "Offsides"]
+    
     
     init() {
     }
@@ -64,8 +65,59 @@ class SoccerGame {
         isLoaded = true
     }
     
-    init(gameID: String) {
+    
+    init(team: String, gameID: String) {
         self.id = gameID
+        self.team = team
+        loadPlayers()
+        listenForPlayers()
+        listenToDatabase()
+    }
+    
+    
+    func loadGameFromDatabase(completion: @escaping (Bool) -> Void) {
+        DB.database.child("SoccerGames/\(self.id)").observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as! NSDictionary
+            self.half = value["Period"] as? Int ?? 5
+            self.halfLength = value["HalfLength"] as? Int ?? 5
+            self.inProgress = value["InProgress"] as? Bool ?? false
+            self.name = value["Name"] as? String ?? ""
+            //self.periodStartTime = Date(timeIntervalSince1970: TimeInterval(value?["PeriodStartTime"] as? Int ?? 0))
+            let myTotals = value["MyTotals"] as? NSDictionary
+            let myPeriod1Totals = myTotals?["Period1"] as? NSDictionary
+            let myPeriod2Totals = myTotals?["Period2"] as? NSDictionary
+            let oppTotals = value["OpponentsTotals"] as? NSDictionary
+            let oppPeriod1Totals = oppTotals?["Period1"] as? NSDictionary
+            let oppPeriod2Totals = oppTotals?["Period2"] as? NSDictionary
+            for stat in self.statNames {
+                let my1stHalf = myPeriod1Totals?[stat] as? NSDictionary
+                self.my1stHalfTotals[stat] = my1stHalf?["Total"] as? Int ?? 0
+                let my2ndHalf = myPeriod2Totals?[stat] as? NSDictionary
+                self.my2ndHalfTotals[stat] = my2ndHalf?["Total"] as? Int ?? 0
+                let opp1stHalf = oppPeriod1Totals?[stat] as? NSDictionary
+                self.opp1stHalfTotals[stat] = opp1stHalf?["Total"] as? Int ?? 0
+                let opp2ndHalf = oppPeriod2Totals?[stat] as? NSDictionary
+                self.opp2ndHalfTotals[stat] = opp2ndHalf?["Total"] as? Int ?? 0
+            }
+            self.myPossession = TimeInterval(myTotals?["Possession"] as? Int ?? 0)
+            self.oppPossession = TimeInterval(oppTotals?["Possession"] as? Int ?? 0)
+            if let playerData = value["Players"] as? NSDictionary {
+                for player in playerData.allKeys {
+                    let playerString = player as? String ?? ""
+                    self.players[playerString] = [:]
+                    if let playerArray = playerData[player] as? [String: Int] {
+                        for stat in self.statNames {
+                            self.players[playerString]![stat] = playerArray[stat]
+                        }
+                    }
+                }
+            }
+            self.isLoaded = true
+            completion(true)
+        }) { (error) in
+            completion(false)
+            print("EEEEERRRROOOORRRR")
+        }
     }
     
     /*
@@ -73,26 +125,42 @@ class SoccerGame {
         self.id = gameID
         
         DB.database.child("SoccerGames/\(self.id)").observeSingleEvent(of: .value, with: { (snapshot) in
-            let value = snapshot.value
-            print("Made it")
+            let value = snapshot.value as! NSDictionary ?? [:]
+            self.loadGameFromDatabase(with: value)
             self.isLoaded = true
             completion(true)
         }) { (error) in
             completion(false)
             print("EEEEERRRROOOORRRR")
         }
-        loadGameFromDatabase()
     }
-     */
+ */
     
+    /*
     func loadGameFromDatabase() {
-        print("Here")
-        DB.database.child("SoccerGames/\(id)").observeSingleEvent(of: .value, with: { (snapshot) in
+        DB.database.child("SoccerGames").child(self.id).observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
             print("Made It")
         })
+    }
+ */
+    
+    /*
+    func loadGameFromDatabase() {
+        print("Here")
+        let semaphore = DispatchSemaphore(value: 0)
+        DispatchQueue.main.async {
+            DB.database.child("SoccerGames").child(self.id).observeSingleEvent(of: .value, with: { (snapshot) in
+                let value = snapshot.value as? NSDictionary
+                print("Made It")
+                semaphore.signal()
+            })
+        }
+        semaphore.wait()
         print("There")
     }
-    
+    */
+ 
     func loadPlayers() {
         
         DB.database.child("TeamSportfolios/\(self.team)/Players").observeSingleEvent(of: .value, with: { (snapshot) in
@@ -120,7 +188,7 @@ class SoccerGame {
     
     
     func getTime() -> (minute: Int, second: Int) {
-        let timeElapsed = startTime.timeIntervalSinceNow * -1
+        let timeElapsed = periodStartTime.timeIntervalSinceNow * -1
         return timeIntervalToMinutesAndSeconds(interval: timeElapsed)
     }
     
@@ -134,16 +202,22 @@ class SoccerGame {
     }
     
     func getMyTeamValueFor(stat: String) -> Int {
-        return my1stHalfTotals[stat]! + my2ndHalfTotals[stat]!
+        if my1stHalfTotals.count != 0 && my2ndHalfTotals.count != 0 {
+            return my1stHalfTotals[stat]! + my2ndHalfTotals[stat]!
+        }
+        return 0
     }
     
     func getOppTeamValueFor(stat: String) -> Int {
-        return opp1stHalfTotals[stat]! + opp2ndHalfTotals[stat]!
+        if opp1stHalfTotals.count != 0 && opp2ndHalfTotals.count != 0 {
+            return opp1stHalfTotals[stat]! + opp2ndHalfTotals[stat]!
+        }
+        return 0
     }
     
     func listenToDatabase() {
         DB.database.child("SoccerGames").child(self.id).child("PeriodStartTime").observe(.value, with: { (snapshot) in
-            self.startTime = Date(timeIntervalSince1970: TimeInterval(snapshot.value as? Int ?? 0))
+            self.periodStartTime = Date(timeIntervalSince1970: TimeInterval(snapshot.value as? Int ?? 0))
         })
         DB.database.child("SoccerGames").child(self.id).child("Period").observe(.value, with: { (snapshot) in
             self.half = snapshot.value as? Int ?? 1

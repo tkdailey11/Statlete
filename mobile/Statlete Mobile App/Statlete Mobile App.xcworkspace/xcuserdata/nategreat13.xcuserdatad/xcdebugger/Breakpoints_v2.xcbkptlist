@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Statlete Mobile App/Soccer/SoccerEntryModeController.swift"
-            timestampString = "545699957.013088"
+            timestampString = "545718453.930655"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "329"
-            endingLineNumber = "329"
+            startingLineNumber = "333"
+            endingLineNumber = "333"
             landmarkName = "getPlayerInfo(index:)"
             landmarkType = "7">
             <Locations>
@@ -73,61 +73,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Statlete Mobile App/Model/SoccerGame.swift"
-            timestampString = "545699957.013418"
+            filePath = "Statlete Mobile App/Sportfolio/NewGameViewController.swift"
+            timestampString = "545718453.931381"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "207"
-            endingLineNumber = "207"
-            landmarkName = "listenForPlayers()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Statlete_Mobile_App.SoccerGame.listenForPlayers() -&gt; ()"
-                  moduleName = "Statlete Mobile App"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nategreat13/Desktop/Statlete/mobile/Statlete%20Mobile%20App/Statlete%20Mobile%20App/Model/SoccerGame.swift"
-                  timestampString = "545633600.694102"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "187"
-                  endingLineNumber = "187"
-                  offsetFromSymbolStart = "430">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__ObjC.DataSnapshot) -&gt; () in Statlete_Mobile_App.SoccerGame.listenForPlayers() -&gt; ()"
-                  moduleName = "Statlete Mobile App"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nategreat13/Desktop/Statlete/mobile/Statlete%20Mobile%20App/Statlete%20Mobile%20App/Model/SoccerGame.swift"
-                  timestampString = "545633600.699634"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "188"
-                  endingLineNumber = "188"
-                  offsetFromSymbolStart = "33">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Statlete Mobile App/Model/SoccerGame.swift"
-            timestampString = "545699957.014308"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "208"
-            endingLineNumber = "208"
-            landmarkName = "listenForPlayers()"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "prepare(for:sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -137,13 +89,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Statlete Mobile App/Model/SoccerGame.swift"
-            timestampString = "545699957.015208"
+            filePath = "Statlete Mobile App/Soccer/Substitutions/SubCell.swift"
+            timestampString = "545718453.931473"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "149"
-            endingLineNumber = "149"
-            landmarkName = "listenToDatabase()"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
+            landmarkName = "buttonPressed()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -153,45 +105,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Statlete Mobile App/Model/SoccerGame.swift"
-            timestampString = "545699957.015865"
+            filePath = "Statlete Mobile App/Soccer/SoccerEntryModeController.swift"
+            timestampString = "545718453.931564"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
-            landmarkName = "SoccerGame"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Statlete Mobile App/Model/SoccerGame.swift"
-            timestampString = "545699957.016614"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
-            landmarkName = "SoccerGame"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Statlete Mobile App/Model/SoccerGame.swift"
-            timestampString = "545699957.0173891"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
-            landmarkName = "loadGameFromDatabase()"
+            startingLineNumber = "257"
+            endingLineNumber = "257"
+            landmarkName = "plusButtonPressed(index:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
