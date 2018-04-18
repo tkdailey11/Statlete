@@ -20,6 +20,7 @@ class TeamSportfolioSetupViewController: UIViewController {
     
     // default chosen sport to soccer
     var chosenSport: Int = 1
+    var players: [Int: String] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +59,10 @@ class TeamSportfolioSetupViewController: UIViewController {
             let vc = segue.destination as! ChooseSportViewController
             vc.delegate = self
         }
+        if segue.identifier == "toAddPlayers"{
+            let vc = segue.destination as! ChoosePlayersViewController
+            vc.delegate = self
+        }
     }
     
     @IBAction func createButtonClicked(_ sender: UIButton) {
@@ -91,19 +96,15 @@ class TeamSportfolioSetupViewController: UIViewController {
         
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+ 
 
 }
 
-extension TeamSportfolioSetupViewController: PopupDelegate{
+extension TeamSportfolioSetupViewController: PopupDelegate, AddPlayersDelegate{
+    func playersAdded(value: [Int : String]) {
+        players = value
+    }
+    
     func sportSelected(value: Int) {
         chosenSport = value
     }

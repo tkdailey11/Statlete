@@ -62,6 +62,7 @@
 		DC936F11207963F100F4E86C /* PlayersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC936F10207963F100F4E86C /* PlayersViewController.swift */; };
 		DCC50790206A0E2A00F64717 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC5078F206A0E2A00F64717 /* CreateAccountViewController.swift */; };
 		DCD43E09207ADB3C007F0C05 /* ChooseSportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD43E08207ADB3C007F0C05 /* ChooseSportViewController.swift */; };
+		DCDF416A2087DAAF00215D6E /* PlayerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDF41692087DAAF00215D6E /* PlayerCell.swift */; };
 		DCF2DDD720815FDD006C8263 /* PlayerSportfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF2DDD620815FDD006C8263 /* PlayerSportfolio.swift */; };
 		DCFD0418207C25EF00BFAC80 /* VEGamesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFD0417207C25EF00BFAC80 /* VEGamesViewController.swift */; };
 		DCFD041A207C268200BFAC80 /* VEGameStatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFD0419207C268200BFAC80 /* VEGameStatsViewController.swift */; };
@@ -128,6 +129,7 @@
 		DC936F10207963F100F4E86C /* PlayersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersViewController.swift; sourceTree = "<group>"; };
 		DCC5078F206A0E2A00F64717 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		DCD43E08207ADB3C007F0C05 /* ChooseSportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseSportViewController.swift; sourceTree = "<group>"; };
+		DCDF41692087DAAF00215D6E /* PlayerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerCell.swift; sourceTree = "<group>"; };
 		DCF2DDD620815FDD006C8263 /* PlayerSportfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerSportfolio.swift; sourceTree = "<group>"; };
 		DCFD0417207C25EF00BFAC80 /* VEGamesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VEGamesViewController.swift; sourceTree = "<group>"; };
 		DCFD0419207C268200BFAC80 /* VEGameStatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VEGameStatsViewController.swift; sourceTree = "<group>"; };
@@ -265,6 +267,7 @@
 				DC6F8DE82074988400C38E4D /* PlayerSportfolioSetupViewController.swift */,
 				DC160B7B20817BD800F5A097 /* PopupDelegate.swift */,
 				DC6F8DEA20749C2400C38E4D /* ChoosePlayersViewController.swift */,
+				DCDF41692087DAAF00215D6E /* PlayerCell.swift */,
 				DC22AE1C207B1DED002DC4C2 /* ExistingTeamSetupViewController.swift */,
 				DCD43E08207ADB3C007F0C05 /* ChooseSportViewController.swift */,
 				DC6F8DE62074983600C38E4D /* TeamSportfolioSetupViewController.swift */,
@@ -476,6 +479,7 @@
 				04C0325620813D1B00057E50 /* StatSet.swift in Sources */,
 				04D50BC62076A61100368924 /* StatView.swift in Sources */,
 				043A43842075586C005E481C /* SoccerEntryModeController.swift in Sources */,
+				DCDF416A2087DAAF00215D6E /* PlayerCell.swift in Sources */,
 				DC83F251207993AF005623AA /* GameCell.swift in Sources */,
 				04F32DA02076F37B00E9C0CA /* PlayerStatCell.swift in Sources */,
 				DC47DC692079869800AB9684 /* PlayerCollectionCell.swift in Sources */,
