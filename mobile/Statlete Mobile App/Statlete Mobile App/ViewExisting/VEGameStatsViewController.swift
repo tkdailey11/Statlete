@@ -8,7 +8,12 @@
 
 import UIKit
 
- class VEGameStatsViewController: UIViewController, StatViewDelegate {
+class VEGameStatsViewController: UIViewController, StatViewDelegate, ScoreboardViewDelegate {
+    
+    func getHalf() -> Int {
+        return game.half
+    }
+    
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -29,8 +34,8 @@ import UIKit
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         
-        while !game.isLoaded {
-        }
+        sleep(1)
+        
         
         
         topBar = TopBar(frame: CGRect(x: view.bounds.minX, y: view.bounds.minY, width: view.bounds.width, height: 50))
@@ -42,6 +47,8 @@ import UIKit
         scoreboardView.myTeamScoreLabel.text = String(game.myTeamScore)
         scoreboardView.opposingTeamScoreLabel.text = String(game.opposingTeamScore)
         scoreboardView.half = game.half
+        scoreboardView.delegate = self
+        scoreboardView.setNeedsDisplay()
         
         statView = StatView(frame: CGRect(x: view.bounds.minX, y: view.bounds.minY + 130, width: view.bounds.width, height: view.bounds.height - 130))
         statView.delegate = self
@@ -51,8 +58,6 @@ import UIKit
     }
     
     @objc func update() {
-        print("Timer")
-        
         if !game.inProgress {
             scoreboardView.timeLabel.text = getTimeStringFrom(minutes: 0, seconds: 0)
             return

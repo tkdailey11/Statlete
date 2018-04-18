@@ -8,7 +8,12 @@
 
 import UIKit
 
-class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDelegate, SubstitutionBarDelegate, PossessionViewDelegate {
+class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDelegate, SubstitutionBarDelegate, PossessionViewDelegate, ScoreboardViewDelegate {
+    
+    func getHalf() -> Int {
+        return game.half
+    }
+    
     
     // For Scoreboard
     var timerStarted: Bool = false
@@ -68,6 +73,7 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         scoreboardView!.myTeamScoreLabel.text = String(game.myTeamScore)
         scoreboardView!.opposingTeamScoreLabel.text = String(game.opposingTeamScore)
         scoreboardView!.half = game.half
+        scoreboardView!.delegate = self
         
         // SubstitutionBar
         substitutionBar = SubstitutionBar(frame: substitutionBarFrame)

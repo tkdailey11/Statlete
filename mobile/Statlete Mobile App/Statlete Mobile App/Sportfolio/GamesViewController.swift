@@ -50,7 +50,13 @@ class GamesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toVEGamesStatsViewController" {
             if let controller = segue.destination as? VEGameStatsViewController {
-                controller.game = SoccerGame(team: "team2", gameID: "team2-1", name: "vs. Sparta 06", halfLength: 45)
+                controller.game = SoccerGame(team: "team2", gameID: "team2-1")
+                controller.game.loadGameFromDatabase(completion: { success in
+                    if success {
+                    }
+                    else {
+                    }
+                })
             }
         }
     }

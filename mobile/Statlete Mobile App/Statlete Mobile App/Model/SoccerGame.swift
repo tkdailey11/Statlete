@@ -69,7 +69,6 @@ class SoccerGame {
     init(team: String, gameID: String) {
         self.id = gameID
         self.team = team
-        loadPlayers()
         listenForPlayers()
         listenToDatabase()
     }
@@ -82,7 +81,7 @@ class SoccerGame {
             self.halfLength = value["HalfLength"] as? Int ?? 5
             self.inProgress = value["InProgress"] as? Bool ?? false
             self.name = value["Name"] as? String ?? ""
-            //self.periodStartTime = Date(timeIntervalSince1970: TimeInterval(value?["PeriodStartTime"] as? Int ?? 0))
+            self.periodStartTime = Date(timeIntervalSince1970: TimeInterval(value["PeriodStartTime"] as? Int ?? 0))
             let myTotals = value["MyTotals"] as? NSDictionary
             let myPeriod1Totals = myTotals?["Period1"] as? NSDictionary
             let myPeriod2Totals = myTotals?["Period2"] as? NSDictionary

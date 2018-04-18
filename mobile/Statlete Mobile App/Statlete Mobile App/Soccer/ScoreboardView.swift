@@ -8,9 +8,15 @@
 
 import UIKit
 
+protocol ScoreboardViewDelegate: class {
+    func getHalf() -> Int
+}
+
 class ScoreboardView: UIControl {
     
     var half: Int = 1
+    
+    weak var delegate: ScoreboardViewDelegate?
     
     // Labels
     let myTeamScoreLabel: UILabel = UILabel()
@@ -100,7 +106,7 @@ class ScoreboardView: UIControl {
             let circleWidth: CGFloat = firstHalfCircleBounds.width * 0.8
             let circleBounds: CGRect = CGRect(x: firstHalfCircleBounds.midX - circleWidth / 2, y: firstHalfCircleBounds.maxY - circleWidth, width: circleWidth, height: circleWidth)
             context.fillEllipse(in:circleBounds)
-            if half == 2 {
+            if delegate?.getHalf() == 2 {
                 context.setFillColor(UIColor.white.cgColor)
                 context.fillEllipse(in:circleBounds.insetBy(dx: 2, dy: 2))
             }
@@ -109,7 +115,7 @@ class ScoreboardView: UIControl {
             let circleWidth: CGFloat = firstHalfCircleBounds.height * 0.8
             let circleBounds: CGRect = CGRect(x: firstHalfCircleBounds.midX - circleWidth / 2, y: firstHalfCircleBounds.maxY - circleWidth, width: circleWidth, height: circleWidth)
             context.fillEllipse(in:circleBounds)
-            if half == 2 {
+            if delegate?.getHalf() == 2 {
                 context.setFillColor(UIColor.white.cgColor)
                 context.fillEllipse(in:circleBounds.insetBy(dx: 2, dy: 2))
             }
@@ -123,7 +129,7 @@ class ScoreboardView: UIControl {
             let circleWidth: CGFloat = secondHalfCircleBounds.width * 0.8
             let circleBounds: CGRect = CGRect(x: secondHalfCircleBounds.midX - circleWidth / 2, y: secondHalfCircleBounds.maxY - circleWidth, width: circleWidth, height: circleWidth)
             context.fillEllipse(in:circleBounds)
-            if half == 1 {
+            if delegate?.getHalf() == 1 {
                 context.setFillColor(UIColor.white.cgColor)
                 context.fillEllipse(in:circleBounds.insetBy(dx: 2, dy: 2))
             }
@@ -132,7 +138,7 @@ class ScoreboardView: UIControl {
             let circleWidth: CGFloat = secondHalfCircleBounds.height * 0.8
             let circleBounds: CGRect = CGRect(x: secondHalfCircleBounds.midX - circleWidth / 2, y: secondHalfCircleBounds.maxY - circleWidth, width: circleWidth, height: circleWidth)
             context.fillEllipse(in:circleBounds)
-            if half == 1 {
+            if delegate?.getHalf() == 1 {
                 context.setFillColor(UIColor.white.cgColor)
                 context.fillEllipse(in:circleBounds.insetBy(dx: 2, dy: 2))
             }
