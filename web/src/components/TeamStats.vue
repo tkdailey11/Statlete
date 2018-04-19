@@ -1,6 +1,6 @@
 <template>
-  <!--<div id="TeamStats">
-    <button @click="goBack">Go Back</button>-->
+  <div id="TeamStats">
+    <button @click="goBack">Go Back</button>
 <!--
 Code here
 -->
@@ -29,104 +29,25 @@ Code here
     </div>
 -->
 
-<table class="fixed_headers">
-  <thead>
-    <tr>
-      <th style="background-color: orange; min-height: 30px;"/>
-      <th v-for="statType in statTypes" style="background-color: blue;"><p v-if="statType==='ShotsOnGoal'" style="background-color: red;">{{ statType }}</p>
-                                        <p v-else style="background-color: green;">{{statType}}</p></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Apple</td>
-      <td>Red</td>
-      <td>These are red.</td>
-    </tr>
-    <tr>
-      <td>Pear</td>
-      <td>Green</td>
-      <td>These are green.</td>
-    </tr>
-    <tr>
-      <td>Grape</td>
-      <td>Purple / Green</td>
-      <td>These are purple and green.</td>
-    </tr>
-    <tr>
-      <td>Orange</td>
-      <td>Orange</td>
-      <td>These are orange.</td>
-    </tr>
-    <tr>
-      <td>Banana</td>
-      <td>Yellow</td>
-      <td>These are yellow.</td>
-    </tr>
-    <tr>
-      <td>Kiwi</td>
-      <td>Green</td>
-      <td>These are green.</td>
-    </tr>
-    <tr>
-      <td>Plum</td>
-      <td>Purple</td>
-      <td>These are Purple</td>
-    </tr>
-    <tr>
-      <td>Watermelon</td>
-      <td>Red</td>
-      <td>These are red.</td>
-    </tr>
-    <tr>
-      <td>Tomato</td>
-      <td>Red</td>
-      <td>These are red.</td>
-    </tr>
-    <tr>
-      <td>Cherry</td>
-      <td>Red</td>
-      <td>These are red.</td>
-    </tr>
-    <tr>
-      <td>Cantelope</td>
-      <td>Orange</td>
-      <td>These are orange inside.</td>
-    </tr>
-    <tr>
-      <td>Honeydew</td>
-      <td>Green</td>
-      <td>These are green inside.</td>
-    </tr>
-    <tr>
-      <td>Papaya</td>
-      <td>Green</td>
-      <td>These are green.</td>
-    </tr>
-    <tr>
-      <td>Raspberry</td>
-      <td>Red</td>
-      <td>These are red.</td>
-    </tr>
-    <tr>
-      <td>Blueberry</td>
-      <td>Blue</td>
-      <td>These are blue.</td>
-    </tr>
-    <tr>
-      <td>Mango</td>
-      <td>Orange</td>
-      <td>These are orange.</td>
-    </tr>
-    <tr>
-      <td>Passion Fruit</td>
-      <td>Green</td>
-      <td>These are green.</td>
-    </tr>
-  </tbody>
-</table>
+<div class="SBdataEntry">
+  <div class="title">
+    <h5 style="margin-right: 10px;" v-for="i in 10" />
+    <h5 align="center" v-for="statType in statTypes" style="margin-right: 10px;">{{ statType }}</h5>
+  </div>
+  <div class="dataTable">
+    <table>
+      <tr v-for="p in playerSportfolios">
+        <td>{{ i }}</td>
+      </tr>
+      <tr>
+        <td @click="$emit('showPlayer'); closeNav();">+ New Player Sportfolio</td>
+      </tr>
+    </table>
+  </div>
+</div>
 
-  <!--</div>-->
+
+  </div>
 </template>
 
 <script>
@@ -235,43 +156,68 @@ Code here
 
 
 
-.fixed_headers {
-  width: 1500px;
-  table-layout: fixed;
-  border-collapse: collapse;
-}
-.fixed_headers th {
-   margin-right: 5px;
-  text-align: left;
-  text-decoration: underline;
-  display: inline-block;
-  width:100px;
-  overflow-x: scroll;
-}
-.fixed_headers td {
-  padding: 5px;
-  text-align: left;
-}
-.fixed_headers thead {
-    background-color: #DDD;
-    color: #FDFDFD;
-      display:inline-block;
-      width: 100%;
-      overflow: scroll;
 
-  }
-.fixed_headers tbody {
-  display: inline-block;
-  overflow: auto;
-  width: 100%;
-  height: 300px;
-  background-color: white;
+.SBdataEntry {
+  height: 250px;
+  background: rgb(180, 41, 102);
+  border-width: 5px;
+  border-color: rgb(180, 41, 102);
+  border-style: solid;
+  border-radius: 15px;
+  margin: 10%;
+  margin-bottom: 50px;
+    overflow: auto;
 }
 
-.old_ie_wrapper {
-  height: 100px;
-  width: 1200px;
-  overflow-x: hidden;
-  overflow-y: auto;
+.title {
+  height: 20%;
+  background: white;
+  border-radius: 15px 15px 0px 0px;
+  border-bottom-color: rgb(180, 41, 102);
+  border-bottom-width: medium;
+  border-bottom-style: solid;
+  background-color: #fadc7f;
+  display: flex;
 }
+
+.dataTable {
+  max-height: 80%;
+  height: 189px;
+  background-color: #fadc7f;
+  overflow: scroll;
+  border-radius: 0px 0px 15px 15px;
+}
+
+table, th {
+  border: 1px solid rgb(180, 41, 102);
+}
+
+td {
+  border-bottom: 1px solid rgb(180, 41, 102);
+  color: rgb(180, 41, 102);
+}
+
+h5 {
+  line-height: 50px;
+  height: 50px;
+  color: rgb(180, 41, 102);
+
+}
+img {
+  zoom: 50%;
+}
+.dataLabelCell {
+  overflow: hidden;
+}
+.dataLabel {
+  margin-top: 5%;
+  font-size: 25px;
+  line-height: 50px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  vertical-align: middle;
+}
+
 </style>
