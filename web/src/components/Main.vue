@@ -164,9 +164,9 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      console.log("NEXT TICK");
         this.loggedInUser = firebase.auth().currentUser;
         this.currentUserEmail = this.loggedInUser.email;
+        this.teamID = "team2";
         this.getGames();
         this.getPlayers();
         this.getSportfolios();
@@ -238,7 +238,6 @@ export default {
         }
 
         var s = this.sportfolios.splice(-1)[0];
-        console.log(s);
         var playerObj = {};
         s.forEach( function (player)
         {
@@ -250,7 +249,6 @@ export default {
             playerObj[key] = player.name;
           }
         });
-        console.log(playerObj);
         teamData.Players = playerObj;
 
         var id = this.teamID;
@@ -291,58 +289,48 @@ export default {
     getGames() {
       var teamIDList = [];
       var email = this.currentUserEmail.replace('.', '');
+      var self = this;
       var userTeamIDList = firebase.database().ref('/Users/' + email + '/AdminTeams/')
       if(typeof userTeamIDList !== 'undefined') {
         userTeamIDList.on('value', function(snapshot) {
           var obj2 = snapshot.val();
           if(obj2) {
             teamIDList = Object.keys(obj2); // Has all the team IDs that email is admin for
+
+            var keysList = [];
+            self.gamesList = [];
+
+            teamIDList.forEach(function(id) {
+              var gamesListRef = firebase.database().ref('/TeamSportfolios/' + id + '/Games/');
+              if (typeof gamesListRef !== 'undefined') {
+                gamesListRef.on('value', function(snapshot) {
+                  var obj = snapshot.val();
+                  if (obj) {
+                    keysList = Object.keys(obj);
+                    if(typeof keysList !== 'undefined' && keysList.length > 0){
+                      var gamesRef = firebase.database().ref('/SoccerGames/');
+                      //self.gamesList = [];
+                      keysList.forEach(function(key) {
+                        self.gamesList.push(key);
+                      });
+                    }
+                  }
+                });
+              }
+            });
           }
         });
       }
-      //this.teamID = 'idn12';
-      //this.teamID = '';
-      //var id = this.teamID;
-      var keysList = [];
-      var self = this;
-      self.gamesList = [];
-
-      teamIDList.forEach(function(id) {
-        var gamesListRef = firebase.database().ref('/TeamSportfolios/' + id + '/Games/');
-        if (typeof gamesListRef !== 'undefined') {
-          gamesListRef.on('value', function(snapshot) {
-            var obj = snapshot.val();
-            if (obj) {
-              keysList = Object.keys(obj);
-              if(typeof keysList !== 'undefined' && keysList.length > 0){
-                var gamesRef = firebase.database().ref('/SoccerGames/');
-                //self.gamesList = [];
-                keysList.forEach(function(key) {
-                  self.gamesList.push(key);
-                });
-              }
-              else{
-                console.log("UNDEFINED - 1");
-              }
-            } else {
-              console.log("NULL");
-            }
-
-          });
-        } else {
-          console.log("UNDEFINED - 2");
-        }
-      });
     },
     getPlayers() {
-      this.teamID = 'idn12';
       var id = this.teamID;
       var self = this;
       var playersRef = firebase.database().ref('/TeamSportfolios/' + id + '/Players/');
       playersRef.on('value', function(snapshot) {
         var obj = snapshot.val();
-        console.log(obj);
-        self.players = obj;
+        if(obj){
+          self.players = obj;
+        }
       });
     },
     showModal () {
@@ -351,7 +339,6 @@ export default {
     hideModal (event) {
       console.log('Hide Modal');
       console.log(event);
-      this.teamID = 'idn12';
       var id = this.teamID;
       var playersRef = firebase.database().ref('/TeamSportfolios/' + id + '/Players/');
       var num = 'p' + event.num;
@@ -365,7 +352,6 @@ export default {
       this.$modal.hide('new-player');
     },
     getSportfolios() {
-      this.teamID = 'idn12';
       var id = this.teamID;
       var keysList = [];
       var self = this;
