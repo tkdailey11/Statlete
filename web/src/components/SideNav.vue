@@ -1,43 +1,88 @@
 <template>
     <div id="SideNav" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" @click="closeNav">&times;</a>
-      <img src="../assets/images/testUser.png" width="100px" height="100px">
-      <button @click="$emit('showPlayer')" class="btn btn-outline-primary">New Player Account</button><br>
-      <button @click="$emit('showTeam')" class="btn btn-outline-primary">New Team Account</button><br>
-
-      <div class="TableContainer">
-        <table class="TeamTable" style="overflow: scroll;">
-          <tr v-for="i in 100">
-            <td>S</td>
-            <td>{{ i }}</td>
-          </tr>
-        </table>
-
-
-        <table class="PlayerTable">
-          <tr v-for="i in 100">
-            <td>S</td>
-            <td>{{ i }}</td>
-          </tr>
-        </table>
+      <div style="margin-bottom: 40px;">
+        <img src="../assets/images/testUser.png" width="100px" height="100px">
+        <h4 style="margin-top: 10px; color: #fadc7f;">{{currentUserEmail}}</h4>
       </div>
+
+      <!--Team Sportfolios -->
+      <div class="SBdataEntry">
+        <div class="title">
+          <h5 align="center">Team Sportfolios</h5>
+        </div>
+        <div class="dataTable">
+          <table width="100%">
+            <tr v-for="t in teamSportfolios">
+              <td>{{ t }}</td>
+            </tr>
+            <tr>
+              <td @click="$emit('showTeam'); closeNav();">+ New Team Sportfolio</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <!--End of Team Sportfolios -->
+
+      <!--Player Sportfolios -->
+      <div class="SBdataEntry">
+        <div class="title">
+          <h5 align="center">Player Sportfolios</h5>
+        </div>
+        <div class="dataTable">
+          <table width="100%">
+            <tr v-for="p in playerSportfolios">
+              <td>{{ i }}</td>
+            </tr>
+            <tr>
+              <td @click="$emit('showPlayer'); closeNav();">+ New Player Sportfolio</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <!--End of Player Sportfolios -->
+
     </div>
 </template>
 
 <script>
+  import firebase from 'firebase'
+
   export default {
     name: 'SideNav',
-    props: {
-      sportfolios: {
-        default(){
-          return []
-        }
+    data() {
+      return {
+        loggedInUser: '',
+        currentUserEmail: '',
+        teamSportfolios: [],
+        playerSportfolios: []
       }
     },
     methods: {
       closeNav: function() {
         document.getElementById("mySidenav").style.width = "0";
+      },
+      getTeamSportfolios: function() {
+        var email = this.currentUserEmail.replace('.', '');
+        console.log("EMAIL: " + email);
+        var self = this
+        firebase.database().ref('Users/' + email + '/AdminTeams').on('value', function(snapshot){
+          var obj = snapshot.val()
+          if (obj) {
+            self.teamSportfolios = Object.keys(obj);
+          }
+          console.log("TEAM SPORTFOLIOS:");
+          console.log(self.teamSportfolios);
+        });
       }
+    },
+    mounted() {
+      this.$nextTick(() => {
+        console.log("NEXT TICK");
+          this.loggedInUser = firebase.auth().currentUser;
+          this.currentUserEmail = this.loggedInUser.email;
+          this.getTeamSportfolios();
+      });
     }
   }
 </script>
@@ -86,29 +131,71 @@
       color: rgba(250, 220, 127, 0.9);
   }
 
-  .TeamTable {
-    width: 80%;
+  .SBdataEntry {
+    width: 200px;
+    height: 250px;
+    background: rgb(180, 41, 102);
+    border-width: 5px;
+    border-color: rgb(180, 41, 102);
+    border-style: solid;
+    border-radius: 35px;
+    position: relative;
     margin: 10%;
-    background-color: white;
-    height: 40%;
-    max-height: 100px;
+    margin-bottom: 50px;
+  }
+
+  .title {
+    width: 190px;
+    height: 50px;
+    background: white;
+    border-radius: 35px 35px 0px 0px;
+    border-bottom-color: rgb(180, 41, 102);
+    border-bottom-width: medium;
+    border-bottom-style: solid;
+    background-color: #fadc7f;
+  }
+
+  .dataTable {
+    width: 190px;
+    max-height: 189px;
+    height: 189px;
+    background-color: #fadc7f;
     overflow: scroll;
+    border-radius: 0px 0px 30px 30px;
   }
 
-  .PlayerTable {
-    width: 80%;
-    margin: 10%;
-    background-color: blue;
-    height: 40%;
-    max-height: 100px;
-    overflow: scroll;
+  table, th {
+    border: 1px solid rgb(180, 41, 102);
   }
 
-  .TableContainer {
-    height: 450px;
-    max-height: 450px;
-    background-color: grey;
-
+  td {
+    border-bottom: 1px solid rgb(180, 41, 102);
+    color: rgb(180, 41, 102);
   }
 
+  h5 {
+    line-height: 50px;
+    height: 50px;
+    color: rgb(180, 41, 102);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+  }
+  img {
+    zoom: 50%;
+  }
+  .dataLabelCell {
+    overflow: hidden;
+  }
+  .dataLabel {
+    margin-top: 15px;
+    font-size: 25px;
+    line-height: 50px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+vertical-align: middle;
+
+  }
 </style>

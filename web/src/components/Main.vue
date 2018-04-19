@@ -7,8 +7,7 @@
 
     <side-nav id="mySidenav"
               @showPlayer="showPlayer"
-              @showTeam="showTeam"
-              :sportfolios="sportfolios">
+              @showTeam="showTeam">
     </side-nav>
 
     <div id="mainPage" v-if="viewMode==='mainViewMode'">
@@ -531,7 +530,6 @@ export default {
   }
 
   .teamWiz {
-    background-color: grey;
   }
 
 
