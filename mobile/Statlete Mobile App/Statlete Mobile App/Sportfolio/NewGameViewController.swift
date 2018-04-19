@@ -66,6 +66,7 @@ class NewGameViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
                 controller.game = SoccerGame(team: "teamNate", gameID: "teamNate-1")
                 controller.game.loadGameFromDatabase(completion: { success in
                     if success {
+                        
                     }
                     else {
                     }

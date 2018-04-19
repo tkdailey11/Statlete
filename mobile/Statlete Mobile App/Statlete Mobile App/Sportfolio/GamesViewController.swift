@@ -67,12 +67,13 @@ class GamesViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     if success {
                         controller.game.listenForPlayers()
                         controller.game.listenToDatabase()
+                        // sempahore.signal()
                     }
                     else {
                     }
                 })
+                //semaphore.wait()
             }
-            //semaphore.wait()
         }
     }
 
