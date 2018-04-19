@@ -8,7 +8,8 @@
 
     <side-nav id="mySidenav"
               @showPlayer="showPlayer"
-              @showTeam="showTeam">
+              @showTeam="showTeam"
+              @teamSelected="teamSelected">
     </side-nav>
 
     <div id="notImplementedAlert" class="alert alert-primary alert-dismissible fade show" role="alert">
@@ -20,7 +21,7 @@
 
     <div id="mainPage" v-if="viewMode==='mainViewMode'">
       <div class="mainHeader">
-        <h1 style="color: rgb(180, 41, 102);">Team Name</h1>
+        <h1 style="color: rgb(180, 41, 102);">{{selectedTeamId}}</h1>
         <div class="button-wrapper">
           <button @click="editTeamSettings" class="btn btn-outline-primary">Edit Team Settings</button>
           <button @click="viewTeamStats" class="btn btn-outline-primary">View Team Stats</button>
@@ -104,7 +105,8 @@
     <!-- END WIZARDS -->
     <game-view v-if="viewMode==='isInGameView'"
                @GameViewClose="viewMode='mainViewMode'"
-               :gameID="activeGameId">
+               :gameID="activeGameId"
+               :players="players">
     </game-view>
     <team-settings v-if="viewMode==='teamSettingsView'"
                    @TeamSettingsClose="viewMode='mainViewMode'">
@@ -134,6 +136,7 @@ export default {
       playerName: '',
       activeGameId: '',
       selectedSport: 'basketball',
+      selectedTeamId: '',
       /*
         View Modes:
           - mainViewMode (default)
@@ -183,8 +186,7 @@ export default {
         this.loggedInUser = firebase.auth().currentUser;
         this.currentUserEmail = this.loggedInUser.email;
         this.teamID = "team2";
-        this.getGames();
-        this.getPlayers();
+        //this.getGames();
         this.getSportfolios();
     });
   },
@@ -208,6 +210,11 @@ export default {
     },
     showTeam: function() {
       this.viewMode = 'isCreatingTeam'
+    },
+    teamSelected: function(event) {
+      this.selectedTeamId = event;
+      this.getGames();
+      this.getPlayers();
     },
     hideCreating: function() {
       this.viewMode = 'mainViewMode'
@@ -344,41 +351,33 @@ export default {
       var teamIDList = [];
       var email = this.currentUserEmail.replace('.', '');
       var self = this;
-      var userTeamIDList = firebase.database().ref('/Users/' + email + '/AdminTeams/')
-      if(typeof userTeamIDList !== 'undefined') {
-        userTeamIDList.on('value', function(snapshot) {
-          var obj2 = snapshot.val();
-          if(obj2) {
-            teamIDList = Object.keys(obj2); // Has all the team IDs that email is admin for
-
-            var keysList = [];
-            self.gamesList = [];
-
-            teamIDList.forEach(function(id) {
-              var gamesListRef = firebase.database().ref('/TeamSportfolios/' + id + '/Games/');
-              if (typeof gamesListRef !== 'undefined') {
-                gamesListRef.on('value', function(snapshot) {
-                  var obj = snapshot.val();
-                  if (obj) {
-                    keysList = Object.keys(obj);
-                    if(typeof keysList !== 'undefined' && keysList.length > 0){
-                      var gamesRef = firebase.database().ref('/SoccerGames/');
-                      //self.gamesList = [];
-                      keysList.forEach(function(key) {
-                        self.gamesList.push(key);
-                      });
-                    }
-                  }
-                });
+        console.log('IN GET GAMES');
+        var keysList = [];
+        self.gamesList = [];
+          var gamesListRef = firebase.database().ref('/TeamSportfolios/' + self.selectedTeamId + '/Games/');
+          if (typeof gamesListRef !== 'undefined') {
+            gamesListRef.on('value', function(snapshot) {
+              var obj = snapshot.val();
+              if (obj) {
+                self.gamesList = Object.keys(obj);
+                // if(typeof keysList !== 'undefined' && keysList.length > 0){
+                //   var gamesRef = firebase.database().ref('/SoccerGames/');
+                //   self.gamesList = [];
+                //   keysList.forEach(function(key) {
+                //     if(!self.gamesList[key])
+                //     {
+                //       self.gamesList.push(key);
+                //     }
+                //   });
+                // }
               }
             });
           }
-        });
-      }
     },
     getPlayers() {
-      var id = this.teamID;
+      var id = this.selectedTeamId;
       var self = this;
+      self.players = [];
       var playersRef = firebase.database().ref('/TeamSportfolios/' + id + '/Players/');
       playersRef.on('value', function(snapshot) {
         var obj = snapshot.val();
@@ -409,20 +408,23 @@ export default {
       var id = this.teamID;
       var keysList = [];
       var self = this;
-
+      console.log('^^^^^^^^');
       var email = this.currentUserEmail.replace('.', '');
       var sportfoliosListRef = firebase.database().ref('/Users/' + email + '/AdminTeams/');
       sportfoliosListRef.on('value', function(snapshot) {
         var obj = snapshot.val();
         keysList = Object.keys(obj);
+        self.selectedTeamId = keysList[0];
+        self.getGames();
+        self.getPlayers();
         var sportfoliosRef = firebase.database().ref('/TeamSportfolios');
         self.sportfolios = [];
         keysList.forEach(function(key) {
           sportfoliosRef.child(key).once('value', function(snap) {
             self.sportfolios.push(snap.val());
           })
-        });
-      });
+        })
+      })
     }
   }
 }

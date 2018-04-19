@@ -13,7 +13,7 @@
         </div>
         <div class="dataTable">
           <table width="100%">
-            <tr v-for="t in teamSportfolios">
+            <tr v-for="t in teamSportfolios" @click="$emit('teamSelected', t); closeNav();">
               <td>{{ t }}</td>
             </tr>
             <tr>

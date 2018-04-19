@@ -3,7 +3,7 @@
     <div class="TopBanner">
       <h2 style="float: left; margin: 30px 30px 0px 10px;">{{gameID}}</h2>
     </div>
-    <player-stat-selector style="float: left;"></player-stat-selector>
+    <player-stat-selector style="float: left;" :players="players"></player-stat-selector>
     <sb-data-entry style="float: left;"></sb-data-entry>
     <div style="float: left;">
       <sb-field></sb-field>
@@ -16,7 +16,8 @@
   export default {
     name: 'GameView',
     props: {
-      gameID: ''
+      gameID: '',
+      players: {}
     }
   }
 </script>

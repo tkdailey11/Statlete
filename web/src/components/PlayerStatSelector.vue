@@ -28,20 +28,6 @@
     name: 'PlayerStatSelector',
     props: {
       players: {
-        default(){
-          return {
-            'p1': 'Tyler',
-            'p2': 'Joe',
-            'p3': 'Brandon',
-            'p4': 'Taylor',
-            'p5': 'Nate',
-            'p6': 'Tyler2',
-            'p7': 'Joe2',
-            'p8': 'Brandon2',
-            'p9': 'Taylor2',
-            'p0': 'Nate2'
-          }
-        }
       },
       addPlayerEnabled: {
         default: true
