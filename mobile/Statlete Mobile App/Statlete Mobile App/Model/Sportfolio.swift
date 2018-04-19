@@ -10,18 +10,22 @@ import Foundation
 
 class Sportfolio{
     
-    public let id : String = String()
+    public var sportfolioId : String = String()
     public var name: String = String()
-    public let type: String = String()
-    public var sport: String = String()
+    public var games: [String:[String:String]] = [String:[String:String]]()
+    public var players: [String:[String:String]] = [String:[String:String]]()
+    public var playerStats: [String: [String: Int]] = [String: [String: Int]]() // if team sportfolio 
     
-    public var linkable: Bool = Bool()
-    public var viewable: Bool = Bool()
-
-    init(name: String, user: String){
+    init(sportfolioId: String, name: String, games: [String: [String : String]], players: [String: [String : String]], playerStats: [String: [String: Int]]){
+        self.sportfolioId = sportfolioId
+        self.name = name
+        self.games = games
+        self.players = players
+        self.playerStats = playerStats
+    }
+    init(){
         
     }
-
     
     
     

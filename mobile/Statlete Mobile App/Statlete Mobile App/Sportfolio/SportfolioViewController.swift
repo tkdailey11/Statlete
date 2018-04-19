@@ -20,8 +20,9 @@ class SportfolioViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var blurView: UIVisualEffectView!
     
     var isSideMenuHidden: Bool = true
+    var thisSportfolio: Sportfolio = Sportfolio() // names to display
     
-    var sportfolios: [String] = ["sportfolio 1", "sportfolio 2", "sportfolio 3"]
+    var sportfolios: [String] = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +34,7 @@ class SportfolioViewController: UIViewController, UITableViewDelegate, UITableVi
         sideView.layer.shadowOpacity = 0.8
         sideView.layer.shadowOffset = CGSize(width: 5, height: 0)
         viewConstraint.constant = -175
-        sportfolios = DB.currentUser.sportfolioNames
+        sportfolios = Array(DB.currentUser.mySportfolios.keys)
   
     }
     
@@ -89,24 +90,14 @@ class SportfolioViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        
     }
    
   
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

@@ -16,18 +16,18 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBOutlet weak var SportfoliosTitleLabel: UILabel!
     @IBOutlet weak var AddButton: UIButton!
-    var dataset: [String] = ["Bulldogs", "Rebels", "REAL"]
     
     var teamSportfolios: [String] = []
     var playerSportfolios: [String] = []
+    
+    var selectedSportfolioName: String = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
        
         self.nameLabel.text = DB.currentUser.name
-        loadViewIfNeeded()
-        print("myyyy naaaaaame is:    \(DB.currentUser.name)")
+       // loadViewIfNeeded()
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -54,13 +54,14 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
         self.nameLabel.text = DB.currentUser.name
         teamSportfolios = []
         playerSportfolios = []
-          DB.currentUser.sportfolioNames = []
+        DB.currentUser.mySportfolios = [:]
         for team in DB.currentUser.AdminTeams {
             DB.database.child("TeamSportfolios").child(team).child("TeamName").observeSingleEvent(of: .value, with: { (snapshot) in
                 let teamname = snapshot.value as? String ?? ""
                 self.teamSportfolios.append(teamname)
                 if !teamname.isEmpty{
-                    DB.currentUser.sportfolioNames.append(teamname)
+                   // DB.currentUser.sportfolioNames.append(teamname)
+                    DB.currentUser.mySportfolios[teamname] = team
                 }
                 self.tableView.reloadData()
             })
@@ -72,7 +73,8 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
                 let teamname = snapshot.value as? String ?? ""
                 self.playerSportfolios.append(teamname)
                 if !teamname.isEmpty{
-                    DB.currentUser.sportfolioNames.append(teamname)
+                     DB.currentUser.mySportfolios[teamname] = team
+                   // DB.currentUser.sportfolioNames.append(teamname)
                 }
                 
                 self.tableView.reloadData()
@@ -111,7 +113,7 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let cell = self.tableView.cellForRow(at: indexPath) as! SportfolioCell
-        let sname: String = cell.nameLabel.text!
+        selectedSportfolioName = cell.nameLabel.text!
         
         // get info from db and segue
         
@@ -123,7 +125,30 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
         if segue.identifier == "toSelectSportfolio"{
             let vc = segue.destination as! SportfolioViewController
             print("i am preparing")
+            var sid: String = String()
+            if(DB.currentUser.mySportfolios.keys.contains(selectedSportfolioName)){
+                sid = DB.currentUser.mySportfolios[selectedSportfolioName]! // get id from name
+            }
             
+            if(playerSportfolios.contains(selectedSportfolioName)){
+                // search db in PlayerSportfolio
+                 print("selected is contained in PLAYER SPORTFOLIOOOOOO")
+                
+            }else if(teamSportfolios.contains(selectedSportfolioName)){
+                print("selected is contained in TEAM SPORTFOLIOOOOOO")
+                
+            }
+            
+            DB.database.child("TeamSportfolios/\(sid)").observeSingleEvent(of: .value, with: { (snapshot) in
+                let value = snapshot.value as! NSDictionary
+                var players = value["Players"] as? NSDictionary
+                var games = value["Games"] as? NSDictionary
+                var sport = value["Sport"] as? String
+                var creator = value["Creator"] as? String
+            //    var admins = value["Admins"] as? String
+            })
+           
+       //   vc.thisSportfolio = Sportfolio(sportfolioId: sid, name: selectedSportfolioName, games: games, players: <#T##[String : [String : String]]#>, playerStats: <#T##[String : [String : Int]]#>)
             // get games from db
             // get other stuff from db 
         }

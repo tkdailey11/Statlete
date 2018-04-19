@@ -16,7 +16,7 @@ class User {
     var PlayerTeams: [String] = [String]()
     var phoneNumber: String = String()
     
-    var sportfolioNames: [String] = [String]()
+    var mySportfolios: [String : String] = [String : String]() // hold name and ids
     
     init(name: String, email: String) {
         self.name = name

@@ -12,10 +12,12 @@ class TeamSportfolioSetupViewController: UIViewController, UITextFieldDelegate {
 
    @IBOutlet weak var createButton: UIButton!
     
+    @IBOutlet weak var teamIdTextField: UITextField!
     @IBOutlet weak var addPlayersButton: UIButton!
   //  @IBOutlet weak var chooseSportButton: UIButton!
     @IBOutlet weak var teamNameTextField: UITextField!
     
+    @IBOutlet weak var teamTokenTextField: UITextField!
     @IBOutlet weak var backButton: UIButton!
     
     // default chosen sport to soccer
@@ -29,20 +31,23 @@ class TeamSportfolioSetupViewController: UIViewController, UITextFieldDelegate {
         
         // Do any additional setup after loading the view.
         let teamNamePaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.teamNameTextField.frame.height))
-        teamNameTextField.layer.borderWidth = 0.8
-        teamNameTextField.layer.borderColor = UIColor.red.cgColor
+       
         teamNameTextField.leftView = teamNamePaddingView
         teamNameTextField.leftViewMode = UITextFieldViewMode.always
-        teamNameTextField.layer.cornerRadius = 5
-        addPlayersButton.layer.borderWidth = 0.8
-        addPlayersButton.layer.borderColor = UIColor.red.cgColor
-        addPlayersButton.layer.cornerRadius = 5
-        /*chooseSportButton.layer.borderWidth = 0.8
-        chooseSportButton.layer.borderColor = UIColor.red.cgColor
-        chooseSportButton.layer.cornerRadius = 5*/
-        createButton.layer.borderWidth = 1
-        createButton.layer.borderColor = UIColor.red.cgColor
-        createButton.layer.cornerRadius = 5
+        
+        teamNameTextField.delegate = self
+        teamIdTextField.delegate = self
+        teamTokenTextField.delegate = self
+        
+        let teamPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.teamNameTextField.frame.height))
+        let teamline = CALayer()
+        teamline.frame = CGRect(x: 0, y: teamNameTextField.frame.height - 1, width: teamNameTextField.frame.width , height: 1)
+        teamline.backgroundColor = Colors.color5.cgColor
+        teamNameTextField.leftView = teamPaddingView
+        teamNameTextField.leftViewMode = UITextFieldViewMode.always
+        teamPaddingView.layer.addSublayer(teamline)
+        
+        
         
         
     }
@@ -73,7 +78,9 @@ class TeamSportfolioSetupViewController: UIViewController, UITextFieldDelegate {
     }
     @IBAction func createButtonClicked(_ sender: UIButton) {
         // create new team sportfolio
-        var sportfolioId = "id101" // need to generate this?
+        var sportfolioId = teamIdTextField.text!
+        var teamToken: String = teamTokenTextField.text!
+    
         var teamName: String = teamNameTextField.text!
         var players : [String : String] = [:] // need to get these from the AddPLayers page
         var sport: String = "soccer"
@@ -87,7 +94,7 @@ class TeamSportfolioSetupViewController: UIViewController, UITextFieldDelegate {
         }else{
             sport = "football"
         }
-        var tsf : TeamSportfolio = TeamSportfolio(id: id, creator: id, sport: sport, players: players, teamName: teamName)
+     //   var tsf : TeamSportfolio = TeamSportfolio(id: id, creator: id, sport: sport, players: players, teamName: teamName)
         
         // update current user
         DB.currentUser.AdminTeams.append(sportfolioId)
