@@ -8,10 +8,16 @@
 
 import UIKit
 
+protocol TopBarDelegate: class {
+    func backButtonClicked()
+}
+
 class TopBar: UIControl {
     
     let backButton = UIButton()
     let gameLabel: UILabel = UILabel()
+    
+    weak var delegate: TopBarDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,7 +39,7 @@ class TopBar: UIControl {
     }
     
     @objc func backButtonPressed() {
-        print("Back")
+        delegate?.backButtonClicked()
     }
     
     func setGameLabel(to label: String) {

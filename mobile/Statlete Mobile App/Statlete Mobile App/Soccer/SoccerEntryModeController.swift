@@ -8,10 +8,17 @@
 
 import UIKit
 
-class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDelegate, SubstitutionBarDelegate, PossessionViewDelegate, ScoreboardViewDelegate {
+
+
+class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDelegate, SubstitutionBarDelegate, PossessionViewDelegate, ScoreboardViewDelegate, TopBarDelegate {
     
     func getHalf() -> Int {
         return game.half
+    }
+    
+    func backButtonClicked() {
+        //self.performSegue(withIdentifier: "backToGamesView", sender: nil)
+        //self.dismiss(animated: true, completion: nil)
     }
     
     
@@ -43,7 +50,6 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         
         substitutionBar.collectionView.reloadData()
         
-        //timerForLoadedPlayers = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(reloadSubBar), userInfo: nil, repeats: false)
         
         view.backgroundColor = UIColor.white
         
@@ -65,6 +71,7 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         topBar = TopBar(frame: topBarFrame)
         view.addSubview(topBar)
         topBar.setGameLabel(to: game.name)
+        topBar.delegate = self
         
         // ScoreboardView
         scoreboardView = ScoreboardView(frame: scoreboardViewFrame)
@@ -109,9 +116,11 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         view.sendSubview(toBack: statView)
         
         self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTime), userInfo: nil, repeats: true)
+         let timer2 = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.reloadSubBar), userInfo: nil, repeats: false)
     }
     
     @objc func reloadSubBar() {
+        substitutionBar.collectionView.reloadData()
     }
     
     // Called when a tab is selected in the bottomBar

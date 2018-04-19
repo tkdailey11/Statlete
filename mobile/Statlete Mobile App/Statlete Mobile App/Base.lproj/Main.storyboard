@@ -1098,9 +1098,6 @@
                                 <rect key="frame" x="164" y="63" width="94" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <connections>
-                                    <segue destination="c8d-1D-mlW" kind="show" identifier="toVEGamesStatsViewController" id="uZv-5T-5rp"/>
-                                </connections>
                             </button>
                         </subviews>
                         <constraints>
@@ -1122,6 +1119,7 @@
                     <connections>
                         <outlet property="newGameButton" destination="vb4-BU-GbR" id="JyV-Gb-c3L"/>
                         <outlet property="tableView" destination="Jky-SB-awk" id="y0B-1B-4TU"/>
+                        <segue destination="c8d-1D-mlW" kind="show" identifier="toVEGamesStatsViewController" id="GeI-KV-qY3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mvm-aY-vhT" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2004,6 +2002,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="B4Y-Hf-K2x"/>
                     </view>
+                    <connections>
+                        <segue destination="BRa-ON-JW3" kind="show" identifier="backToGamesView" id="reW-ue-B67"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5nj-aQ-1po" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2192,6 +2193,7 @@
         <image name="settings" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="reW-ue-B67"/>
         <segue reference="4ds-gg-4Ty"/>
         <segue reference="mJF-Bp-NCH"/>
         <segue reference="XUr-1V-426"/>

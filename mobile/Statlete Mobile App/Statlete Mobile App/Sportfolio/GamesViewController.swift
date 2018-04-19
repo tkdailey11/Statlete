@@ -10,7 +10,7 @@ import UIKit
 
 class GamesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
   
-    
+    var gameToOpen: String = String()
 
     @IBOutlet weak var newGameButton: UIButton!
     var games: [String] = ["Game 1", "Game2", "Game3"]
@@ -51,13 +51,18 @@ class GamesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(indexPath.row)
+        gameToOpen = Array(DB.currentSportfolio.games.keys)[indexPath.row]
+        
+        
+        self.performSegue(withIdentifier: "toVEGamesStatsViewController", sender: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toVEGamesStatsViewController" {
             //let semaphore = DispatchSemaphore(value: 0)
             if let controller = segue.destination as? VEGameStatsViewController {
-                controller.game = SoccerGame(team: "teamNate", gameID: "teamNate-1")
+                let sid = DB.currentSportfolio.sportfolioId
+                controller.game = SoccerGame(team: sid, gameID: gameToOpen)
                 controller.game.loadGameFromDatabase(completion: { success in
                     if success {
                         controller.game.listenForPlayers()
