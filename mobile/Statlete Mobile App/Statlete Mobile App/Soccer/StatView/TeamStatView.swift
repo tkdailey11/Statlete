@@ -61,6 +61,7 @@ class TeamStatView: UIControl, UITableViewDelegate, UITableViewDataSource {
         addSubview(oppTeamPossessionLabel)
         
         tableView.frame = CGRect(x: bounds.minX, y: bounds.minY + 120, width: bounds.width, height: bounds.height - 120)
+        tableView.backgroundColor = UIColor.black
         addSubview(tableView)
     }
     

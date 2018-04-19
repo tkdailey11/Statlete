@@ -69,8 +69,6 @@ class SoccerGame {
     init(team: String, gameID: String) {
         self.id = gameID
         self.team = team
-        listenForPlayers()
-        listenToDatabase()
     }
     
     

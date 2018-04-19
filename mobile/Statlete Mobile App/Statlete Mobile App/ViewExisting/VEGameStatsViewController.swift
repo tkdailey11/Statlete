@@ -58,6 +58,7 @@ class VEGameStatsViewController: UIViewController, StatViewDelegate, ScoreboardV
     }
     
     @objc func update() {
+        topBar.setGameLabel(to: game.name)
         if !game.inProgress {
             scoreboardView.timeLabel.text = getTimeStringFrom(minutes: 0, seconds: 0)
             return

@@ -57,6 +57,7 @@ class StatView: UIControl, UITableViewDelegate, UITableViewDataSource, TeamStatV
         playerTableView.register(nib, forCellReuseIdentifier: "PlayerStatCell")
         
         addSubview(playerTableView)
+        playerTableView.backgroundColor = UIColor.black
         playerTableView.frame = CGRect(x: bounds.minX, y: bounds.minY + 60, width: bounds.width, height: bounds.height - 60)
         
         teamStatView = TeamStatView(frame: CGRect(x: bounds.minX, y: bounds.minY + 60, width: bounds.width, height: bounds.height - 60))

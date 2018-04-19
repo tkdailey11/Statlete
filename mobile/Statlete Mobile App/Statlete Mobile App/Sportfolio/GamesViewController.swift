@@ -49,15 +49,19 @@ class GamesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toVEGamesStatsViewController" {
+            //let semaphore = DispatchSemaphore(value: 0)
             if let controller = segue.destination as? VEGameStatsViewController {
                 controller.game = SoccerGame(team: "team2", gameID: "team2-1")
                 controller.game.loadGameFromDatabase(completion: { success in
                     if success {
+                        controller.game.listenForPlayers()
+                        controller.game.listenToDatabase()
                     }
                     else {
                     }
                 })
             }
+            //semaphore.wait()
         }
     }
 
