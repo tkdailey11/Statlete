@@ -54,11 +54,11 @@ class NewGameViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toNewGameEntryMode" {
             if let controller = segue.destination as? SoccerEntryModeController {
-                controller.game = SoccerGame(team: "team2", gameID: "team2-1", name: "vs. Sparta 06", halfLength: 45)
+                controller.game = SoccerGame(team: "teamNate", gameID: "teamNate-1", name: "Nate's Game", halfLength: 45)
                 
                 
                 /*
-                controller.game = SoccerGame(team: "team2", gameID: "team2-1")
+                controller.game = SoccerGame(team: "teamNate", gameID: "teamNate-1")
                 controller.game.loadGameFromDatabase(completion: { success in
                     if success {
                     }

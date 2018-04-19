@@ -51,7 +51,7 @@ class GamesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         if segue.identifier == "toVEGamesStatsViewController" {
             //let semaphore = DispatchSemaphore(value: 0)
             if let controller = segue.destination as? VEGameStatsViewController {
-                controller.game = SoccerGame(team: "team2", gameID: "team2-1")
+                controller.game = SoccerGame(team: "teamNate", gameID: "teamNate-1")
                 controller.game.loadGameFromDatabase(completion: { success in
                     if success {
                         controller.game.listenForPlayers()

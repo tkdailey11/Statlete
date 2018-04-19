@@ -260,9 +260,16 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
                 substitutionBar.setOpposingTeamButtonToNotSelected()
             }
             else {
-                DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period2").child(game.statNames[index]).updateChildValues(["\(minute):\(second)":"p\(CurrentlySelectedNumber)"])
-                DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period2").child(game.statNames[index]).updateChildValues(["Total": self.game.my2ndHalfTotals[game.statNames[index]]!+1])
-                DB.database.child("SoccerGames").child(game.id).child("Players").child("p\(CurrentlySelectedNumber)").updateChildValues([game.statNames[index]: self.game.players["p\(CurrentlySelectedNumber)"]![game.statNames[index]]!+1])
+                if CurrentlySelectedNumber == -1 {
+                    DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period2").child(game.statNames[index]).updateChildValues(["\(minute):\(second)":" "])
+                    DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period2").child(game.statNames[index]).updateChildValues(["Total": self.game.my2ndHalfTotals[game.statNames[index]]!+1])
+                }
+                else {
+                    DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period2").child(game.statNames[index]).updateChildValues(["\(minute):\(second)":"p\(CurrentlySelectedNumber)"])
+                    DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period2").child(game.statNames[index]).updateChildValues(["Total": self.game.my2ndHalfTotals[game.statNames[index]]!+1])
+                    DB.database.child("SoccerGames").child(game.id).child("Players").child("p\(CurrentlySelectedNumber)").updateChildValues([game.statNames[index]: self.game.players["p\(CurrentlySelectedNumber)"]![game.statNames[index]]!+1])
+                    CurrentlySelectedNumber = -1
+                }
             }
         }
         if index == 0 {
