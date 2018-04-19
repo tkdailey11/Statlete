@@ -124,6 +124,7 @@ export default {
       teamToken: '',
       teamID: '',
       playerName: '',
+      activeGameId: '',
       selectedSport: 'basketball',
       /*
         View Modes:
@@ -279,43 +280,60 @@ export default {
       this.viewMode = 'teamStatsView';
       console.log("VIEW TEAM STATS");
     },
+    //inGameView() {
+      //this.viewMode = 'isInGameView';
+      //console.log("In Game View");
+    //},
     viewPlayerInfo() {
       this.viewMode = 'playerDetailView';
       console.log("View PLAYER INFO");
     },
+    //<!-- CHANGE THIS -->
     getGames() {
-      this.teamID = 'idn12';
-      var id = this.teamID;
+      var teamIDList = [];
+      var email = this.currentUserEmail.replace('.', '');
+      var userTeamIDList = firebase.database().ref('/Users/' + email + '/AdminTeams/')
+      if(typeof userTeamIDList !== 'undefined') {
+        userTeamIDList.on('value', function(snapshot) {
+          var obj2 = snapshot.val();
+          if(obj2) {
+            teamIDList = Object.keys(obj2); // Has all the team IDs that email is admin for
+          }
+        });
+      }
+      //this.teamID = 'idn12';
+      //this.teamID = '';
+      //var id = this.teamID;
       var keysList = [];
       var self = this;
+      self.gamesList = [];
 
-      var gamesListRef = firebase.database().ref('/TeamSportfolios/' + id + '/Games/');
-      if (typeof gamesListRef !== 'undefined') {
-        gamesListRef.on('value', function(snapshot) {
-          var obj = snapshot.val();
-          if (obj) {
-            keysList = Object.keys(obj);
-
-            if(typeof keysList !== 'undefined' && keysList.length > 0){
-              var gamesRef = firebase.database().ref('/SoccerGames');
-              self.gamesList = [];
-              keysList.forEach(function(key) {
-                gamesRef.child(key).once('value', function(snap) {
-                  self.gamesList.push(snap.val());
-                })
-              });
+      teamIDList.forEach(function(id) {
+        var gamesListRef = firebase.database().ref('/TeamSportfolios/' + id + '/Games/');
+        if (typeof gamesListRef !== 'undefined') {
+          gamesListRef.on('value', function(snapshot) {
+            var obj = snapshot.val();
+            if (obj) {
+              keysList = Object.keys(obj);
+              if(typeof keysList !== 'undefined' && keysList.length > 0){
+                var gamesRef = firebase.database().ref('/SoccerGames/');
+                //self.gamesList = [];
+                keysList.forEach(function(key) {
+                  self.gamesList.push(key);
+                });
+              }
+              else{
+                console.log("UNDEFINED - 1");
+              }
+            } else {
+              console.log("NULL");
             }
-            else{
-              console.log("UNDEFINED - 1");
-            }
-          } else {
-            console.log("NULL");
-          }
 
-        });
-      } else {
-        console.log("UNDEFINED - 2");
-      }
+          });
+        } else {
+          console.log("UNDEFINED - 2");
+        }
+      });
     },
     getPlayers() {
       this.teamID = 'idn12';
