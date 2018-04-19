@@ -17,7 +17,6 @@
       <players-list :addPlayerEnabled="false"
                     style="float: left;"></players-list>
     </div>
-    <button @click="goBack">Go Back</button>
   </div>
 </template>
 
@@ -83,7 +82,7 @@
     float: left;
     display: block;
     min-width: 1000px;
-    margin:-20px 25px 50px 35px;
+    margin:-20px 50px 50px 35px;
   }
   .TextField {
     color: white;

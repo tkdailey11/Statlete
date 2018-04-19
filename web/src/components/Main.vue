@@ -29,7 +29,7 @@
       <div class="mainBody">
         <games-list :games="gamesList"
                     style="margin-top: 20px;"
-                    @gameSelected="viewMode='isInGameView'"></games-list>
+                    @gameSelected="gameSelected"></games-list>
         <players-list style="margin-top: 20px;"
                       @playerSelected="viewPlayerInfo"
                       @addPlayerClicked="showModal"
@@ -104,7 +104,7 @@
     <!-- END WIZARDS -->
     <game-view v-if="viewMode==='isInGameView'"
                @GameViewClose="viewMode='mainViewMode'"
-               :gameID="'team1-1'">
+               :gameID="activeGameId">
     </game-view>
     <team-settings v-if="viewMode==='teamSettingsView'"
                    @TeamSettingsClose="viewMode='mainViewMode'">
@@ -217,8 +217,9 @@ export default {
       console.log("ALERT");
       //this.viewMode = 'isCreatingPlayer'
     },
-    onComplete: function() {
-      alert('Yay. Done!');
+    gameSelected: function(event) {
+      this.activeGameId = this.gamesList[event - 1];
+      this.viewMode='isInGameView';
     },
     nextClickedPlayer(currentPage) {
       if(currentPage==1){
@@ -247,8 +248,47 @@ export default {
       return true;
     },
     submitTeamSportfolio(){
-      alert('Submit Team Sportfolio');
       this.hideCreating();
+
+      var email = this.currentUserEmail.replace('.', '');
+      var nam = this.teamName;
+      var tok = this.teamToken;
+      var teamData = {
+          "Admins" : {
+            [email] : 'admin1'
+          },
+          "Creator" : email,
+          "TeamName" : nam,
+          "Token" : tok
+      }
+
+      var s = this.sportfolios.splice(-1)[0];
+      var playerObj = {};
+      s.forEach( function (player)
+      {
+        var key = 'p' + player.num;
+        if(player.name==='') {
+          playerObj[key] = ' ';
+        }
+        else {
+          playerObj[key] = player.name;
+        }
+      });
+      teamData.Players = playerObj;
+
+      var id = this.teamID;
+      firebase.database().ref('TeamSportfolios/').update({
+        [id] : teamData
+      });
+
+      firebase.database().ref('Users/' + email + '/AdminTeams').update({
+        [this.teamID] : " "
+      });
+
+      this.teamID = '';
+      this.teamToken = '';
+      this.selectedSport = 'basketball';
+      this.teamName = '';
     },
     nextClickedTeam(currentPage) {
       if(currentPage==0){
@@ -273,43 +313,7 @@ export default {
 
       }
       else{
-        this.hideCreating()
 
-        var email = this.currentUserEmail.replace('.', '');
-        var nam = this.teamName;
-        var tok = this.teamToken;
-        var teamData = {
-            "Admins" : {
-              [email] : 'admin1'
-            },
-            "Creator" : email,
-            "TeamName" : nam,
-            "Token" : tok
-        }
-
-        var s = this.sportfolios.splice(-1)[0];
-        var playerObj = {};
-        s.forEach( function (player)
-        {
-          var key = 'p' + player.num;
-          if(player.name==='') {
-            playerObj[key] = ' ';
-          }
-          else {
-            playerObj[key] = player.name;
-          }
-        });
-        teamData.Players = playerObj;
-
-        var id = this.teamID;
-        firebase.database().ref('TeamSportfolios/').update({
-          [id] : teamData
-        });
-
-        this.teamID = '';
-        this.teamToken = '';
-        this.selectedSport = 'basketball';
-        this.teamName = '';
       }
       return true; //return false if you want to prevent moving to next page
     },
