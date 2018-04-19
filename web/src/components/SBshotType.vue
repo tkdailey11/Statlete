@@ -32,6 +32,7 @@
     border-style: solid;
     border-radius: 35px;
     margin: 50px;
+    margin-top: 25px;
     opacity: 0.5;
   }
   .GCF {

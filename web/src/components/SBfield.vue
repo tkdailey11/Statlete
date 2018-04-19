@@ -41,6 +41,7 @@
     border-style: solid;
     border-radius: 35px;
     margin: 50px;
+    margin-bottom: 25px;
   }
   .fill {
     display: flex;

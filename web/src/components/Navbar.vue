@@ -2,6 +2,7 @@
   <div id="navbar">
     <nav class="navbar navbar-fixed-top myNav">
       <div class="OpenNavDiv" @click="openNav"><icon name="cog" scale="1.5" style="color: white;"></icon></div>
+      <button @click="goBack">Go Back</button>
       <div class="LogoutDiv" @click="logout"><p style="display: inline-block; margin-right: 15px; color: white;"><b>Logout</b></p><icon name="sign-out-alt" scale="1.5" style="color: white; margin: -6px;"></icon></div>
     </nav>
   </div>
@@ -16,6 +17,9 @@
       },
       logout: function() {
         this.$emit('shouldLogout')
+      },
+      goBack: function() {
+        this.$emit('GoBackClicked');
       }
     },
     mounted() {

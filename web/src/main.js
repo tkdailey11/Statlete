@@ -59,6 +59,9 @@ Vue.component('landing-page', FLP);
 import Wizard from '@/components/Wizard';
 Vue.component('tkd-wizard', Wizard);
 
+import PlayerStatSelector from '@/components/PlayerStatSelector';
+Vue.component('player-stat-selector', PlayerStatSelector);
+
 import VModal from 'vue-js-modal'
 Vue.use(VModal)
 import Vue2TouchEvents from 'vue2-touch-events'

@@ -1,6 +1,5 @@
 <template>
   <div id="TeamStats">
-    <button @click="goBack">Go Back</button>
 <!--
 Code here
 -->

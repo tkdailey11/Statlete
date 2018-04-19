@@ -3,7 +3,8 @@
     <new-player @newPlayerAdded="hideModal" />
     <statlete-navbar v-if="!(viewMode==='isCreatingTeam' || viewMode==='isCreatingPlayer')"
                      @shouldOpenNav="openNav"
-                     @shouldLogout="logout"></statlete-navbar>
+                     @shouldLogout="logout"
+                     @GoBackClicked="hideCreating"></statlete-navbar>
 
     <side-nav id="mySidenav"
               @showPlayer="showPlayer"
@@ -102,7 +103,8 @@
     </div>
     <!-- END WIZARDS -->
     <game-view v-if="viewMode==='isInGameView'"
-               @GameViewClose="viewMode='mainViewMode'">
+               @GameViewClose="viewMode='mainViewMode'"
+               :gameID="'team1-1'">
     </game-view>
     <team-settings v-if="viewMode==='teamSettingsView'"
                    @TeamSettingsClose="viewMode='mainViewMode'">

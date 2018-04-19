@@ -1,18 +1,11 @@
 <template>
   <div id="PlayerDetailView">
-    <button @click="goBack">Go Back</button>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'PlayerDetailView',
-    methods: {
-      goBack: function() {
-        this.$emit('PlayerDetailViewClose');
-        console.log('CLOSE');
-      }
-    }
+    name: 'PlayerDetailView'
   }
 </script>
 

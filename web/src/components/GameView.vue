@@ -1,6 +1,9 @@
 <template>
   <div id="GameView">
-    <button @click="goBack">Go Back</button>
+    <div class="TopBanner">
+      <h2 style="float: left; margin: 30px 30px 0px 10px;">{{gameID}}</h2>
+    </div>
+    <player-stat-selector style="float: left;"></player-stat-selector>
     <sb-data-entry style="float: left;"></sb-data-entry>
     <div style="float: left;">
       <sb-field></sb-field>
@@ -12,10 +15,8 @@
 <script>
   export default {
     name: 'GameView',
-    methods: {
-      goBack: function() {
-        this.$emit('GameViewClose');
-      }
+    props: {
+      gameID: ''
     }
   }
 </script>
@@ -25,5 +26,12 @@
     width: 100vw;
     min-height: 100vh;
     background-color: white;
+  }
+  .TopBanner {
+    width: 100vw;
+    background-color: grey;
+    min-height: 100px;
+    margin-bottom: -20px;
+    border: medium black solid;
   }
 </style>
