@@ -54,13 +54,14 @@ class NewGameViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toNewGameEntryMode" {
             if let controller = segue.destination as? SoccerEntryModeController {
+                
                 let sid = DB.currentSportfolio.sportfolioId
                 let gameName = nameTextField.text ?? ""
                 let gameID = "\(sid)-\(DB.currentSportfolio.games.count+1)"
                 controller.game = SoccerGame(team: sid, gameID: gameID, name: gameName, halfLength: 45)
                 DB.currentSportfolio.games[gameID] = gameName
                 DB.database.child("TeamSportfolios/\(sid)/Games").updateChildValues([gameID: gameName])
-                
+ 
                 /*
                 controller.game = SoccerGame(team: "teamNate", gameID: "teamNate-1")
                 controller.game.loadGameFromDatabase(completion: { success in

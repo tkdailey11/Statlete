@@ -62,6 +62,7 @@ class SoccerGame {
         oppPossession = 0
         loadPlayers()
         addGameToDatabase()
+        listenForPlayers()
         isLoaded = true
     }
     
