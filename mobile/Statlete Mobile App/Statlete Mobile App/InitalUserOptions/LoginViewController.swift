@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
 
    
     @IBOutlet weak var backButton: UIButton!
@@ -19,8 +19,9 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
+      
+        self.emailTextField.delegate = self
+        self.passwordTextField.delegate = self
         let emailPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.emailTextField.frame.height))
         let passwordPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.passwordTextField.frame.height))
         
@@ -43,7 +44,10 @@ class LoginViewController: UIViewController {
         loginButton.layer.cornerRadius = 10
 
     }
-    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
     @IBAction func loginButtonClicked(_ sender: UIButton) {
         Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) { (user, error) in
             if (error != nil) {
@@ -52,11 +56,13 @@ class LoginViewController: UIViewController {
             else {
                 let email = self.emailTextField.text!
                 let id = email.replacingOccurrences(of: ".", with: "")
-                
+              
                 DB.database.child("Users").child(id).observeSingleEvent(of: .value, with: { (snapshot) in
                     let value = snapshot.value as? NSDictionary
+                    print("VALUEEE!!!!!!!!!!!!!!! \(value)")
                     let name = value?["Name"] as? String ?? ""
                     let phone = value?["Phone"] as? String ?? ""
+                    print("NAME: \(name)")
                     DB.currentUser = User(name: name, email: email)
                     
                     var adminTeams: [String] = []
@@ -77,9 +83,10 @@ class LoginViewController: UIViewController {
                     
                     DB.currentUser.phoneNumber = phone
                 })
-                
-                self.performSegue(withIdentifier: "toHome", sender: self)
-                
+ 
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "toHome", sender: self)
+                }
             }
         }
     }

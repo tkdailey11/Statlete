@@ -33,6 +33,7 @@ class SportfolioViewController: UIViewController, UITableViewDelegate, UITableVi
         sideView.layer.shadowOpacity = 0.8
         sideView.layer.shadowOffset = CGSize(width: 5, height: 0)
         viewConstraint.constant = -175
+        sportfolios = DB.currentUser.sportfolioNames
   
     }
     
@@ -78,12 +79,16 @@ class SportfolioViewController: UIViewController, UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sportfolios.count
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "SideMenuCell", for: indexPath) as UITableViewCell
         
         cell.textLabel?.text = sportfolios[indexPath.row]
         
         return cell
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
     }
    
   

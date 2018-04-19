@@ -8,14 +8,14 @@
 
 import UIKit
 protocol AddPlayersDelegate{
-    func playersAdded(value: [Int: String])
+    func playersAdded(value: [String: String])
 }
 
 class ChoosePlayersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     var delegate: AddPlayersDelegate?
     var playerNames: [String] = [String](repeating: "", count: 20)
-    var playerNumbers: [Int] = [Int](repeating: 0, count: 20)
-    var players: [Int : String] = [:]
+    var playerNumbers: [String] = [String](repeating: "", count: 20)
+    var players: [String : String] = [:]
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     override func didReceiveMemoryWarning() {
@@ -24,7 +24,7 @@ class ChoosePlayersViewController: UIViewController, UITableViewDelegate, UITabl
     }
     @IBAction func doneButtonClicked(_ sender: UIButton) {
         for i in 0...playerNames.count - 1{
-            if(playerNames[i] != ""){
+            if(playerNames[i] != "" ){
               players[playerNumbers[i]] = playerNames[i]
                 
             }
@@ -40,6 +40,8 @@ class ChoosePlayersViewController: UIViewController, UITableViewDelegate, UITabl
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -55,6 +57,8 @@ class ChoosePlayersViewController: UIViewController, UITableViewDelegate, UITabl
         
         return cell
     }
+    
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
      
         let index: Int = textField.tag
@@ -64,7 +68,7 @@ class ChoosePlayersViewController: UIViewController, UITableViewDelegate, UITabl
             print("PLAYER'S NUMBER : \(textField.text ?? "no number")")
             if(textField.text != nil && !(textField.text?.isEmpty)!){
                 
-                playerNumbers[index] = Int(textField.text!)!
+                playerNumbers[index] = "p" + textField.text!
             }
         }
         else if (textField.accessibilityIdentifier == "name"){
@@ -75,10 +79,13 @@ class ChoosePlayersViewController: UIViewController, UITableViewDelegate, UITabl
             }
         }
     }
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        return true
+        self.view.endEditing(true)
+        return false
     }
+    /*func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return true
+    }*/
     
    
 }

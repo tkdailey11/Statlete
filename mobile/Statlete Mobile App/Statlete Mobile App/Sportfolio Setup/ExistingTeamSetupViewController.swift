@@ -16,23 +16,38 @@ class ExistingTeamSetupViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+       
     }
 
+    @IBAction func createButtonClicked(_ sender: UIButton) {
+        print("create was clicked")
+        var teamId: String = teamIDTextField.text!
+        var token: String = teamTokenTextField.text!
+        let id = DB.currentUser.email.replacingOccurrences(of: ".", with: "")
+     
+        
+        // add this user to the teams admins list
+        DB.database.child("TeamSportfolios").child(teamId).child("Admins").updateChildValues([id: " "])
+        
+        
+        // update current user
+        DB.currentUser.AdminTeams.append(teamId)
+        
+        // add to database - Users
+        DB.database.child("Users").child(id).child("AdminTeams").updateChildValues([teamId : " "])
+        
+        // add to database - Team Sportfolio
+        //DB.database.child("TeamSportfolios").child(sportfolioId).updateChildValues(["Admins" : " ", "Creator" : id, "Games": " ", "Players" : " ", "Sport" : "soccer", "TeamName": teamName, "Token": " "])
+        //DB.database.child("TeamSportfolios").child(sportfolioId).child("Players").updateChildValues(allplayers)
+        self.performSegue(withIdentifier: "toSportfolio", sender: self)
+        
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+   
 
 }

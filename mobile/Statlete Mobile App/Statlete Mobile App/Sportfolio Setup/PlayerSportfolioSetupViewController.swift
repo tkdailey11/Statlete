@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PlayerSportfolioSetupViewController: UIViewController{
+class PlayerSportfolioSetupViewController: UIViewController, UITextFieldDelegate{
 
     // text fields
     @IBOutlet weak var playerNameTextField: UITextField!
@@ -29,6 +29,11 @@ class PlayerSportfolioSetupViewController: UIViewController{
  
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        playerNameTextField.delegate = self
+        teamIDTextField.delegate = self
+        tokenTextField.delegate = self
+        
         let playerPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.playerNameTextField.frame.height))
         let playerline = CALayer()
         playerline.frame = CGRect(x: 0, y: playerNameTextField.frame.height - 1, width: playerNameTextField.frame.width , height: 1)
@@ -43,6 +48,11 @@ class PlayerSportfolioSetupViewController: UIViewController{
         super.didReceiveMemoryWarning()
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "chooseSport"{
             let vc = segue.destination as! ChooseSportViewController
@@ -66,7 +76,7 @@ class PlayerSportfolioSetupViewController: UIViewController{
         DB.database.child("Users").child(id).child("PlayerTeams").updateChildValues([sportfolioId: " "]) // changing PlayerTeams to PlayerSportfolios
         
         // Add data in PlayerSportfolio
-        var pname: String = DB.currentUser.name
+        let pname: String = playerNameTextField.text ?? DB.currentUser.name
         DB.database.child("PlayerSportfolios").child(sportfolioId).updateChildValues(["Games": " ", "Name": pname, "Number": " ", "TeamID": "NA", "TotalStats": " ", "User": id])
         
          self.performSegue(withIdentifier: "toSportfolio", sender: self)

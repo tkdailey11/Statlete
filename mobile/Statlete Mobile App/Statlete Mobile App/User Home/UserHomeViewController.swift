@@ -24,12 +24,17 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
+       
+        self.nameLabel.text = DB.currentUser.name
+        loadViewIfNeeded()
+        print("myyyy naaaaaame is:    \(DB.currentUser.name)")
+        
         tableView.delegate = self
         tableView.dataSource = self
      
         let nib = UINib.init(nibName: "SportfolioCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "SportfolioCell")
-        nameLabel.text = DB.currentUser.name
+     
 
     }
 
@@ -46,17 +51,32 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
 
     
     func loadSportfolios() {
+        self.nameLabel.text = DB.currentUser.name
+        teamSportfolios = []
+        playerSportfolios = []
+          DB.currentUser.sportfolioNames = []
         for team in DB.currentUser.AdminTeams {
             DB.database.child("TeamSportfolios").child(team).child("TeamName").observeSingleEvent(of: .value, with: { (snapshot) in
-                self.teamSportfolios.append(snapshot.value as? String ?? "")
+                let teamname = snapshot.value as? String ?? ""
+                self.teamSportfolios.append(teamname)
+                if !teamname.isEmpty{
+                    DB.currentUser.sportfolioNames.append(teamname)
+                }
                 self.tableView.reloadData()
             })
+         
         }
         for team in DB.currentUser.PlayerTeams {
             DB.database.child("PlayerSportfolios").child(team).child("Name").observeSingleEvent(of: .value, with: { (snapshot) in
                 print("SNAPSHOT!!!!!!!!!!!        !!!!: \(snapshot)")
-                self.playerSportfolios.append(snapshot.value as? String ?? "")
+                let teamname = snapshot.value as? String ?? ""
+                self.playerSportfolios.append(teamname)
+                if !teamname.isEmpty{
+                    DB.currentUser.sportfolioNames.append(teamname)
+                }
+                
                 self.tableView.reloadData()
+                
             })
         }
         /*
@@ -87,6 +107,27 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 98
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let cell = self.tableView.cellForRow(at: indexPath) as! SportfolioCell
+        let sname: String = cell.nameLabel.text!
+        
+        // get info from db and segue
+        
+        self.performSegue(withIdentifier: "toSelectSportfolio", sender: nil)
+        
+        
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toSelectSportfolio"{
+            let vc = segue.destination as! SportfolioViewController
+            print("i am preparing")
+            
+            // get games from db
+            // get other stuff from db 
+        }
+        
     }
     
 

@@ -8,13 +8,16 @@
 
 import UIKit
 
-class NewGameViewController: UIViewController {
-
-    var pickerData: [Int] = [10, 12, 15]
+class NewGameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+   
+    
+    var duration: Int = 0
+    var pickerData: [String] = ["10", "12", "15"]
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.durationPicker.delegate = self
+        self.durationPicker.dataSource = self
+      
     }
 
     @IBOutlet weak var durationPicker: UIPickerView!
@@ -28,10 +31,25 @@ class NewGameViewController: UIViewController {
     
     @IBOutlet weak var createButton: UIButton!
     
+
     @IBAction func backButtonClicked(_ sender: UIButton) {
            _ = navigationController?.popViewController(animated: true)
     }
     
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return pickerData.count
+    }
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return pickerData[row]
+    }
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        duration = Int(pickerData[row])!
+        print("duration of game: \(duration)")
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toNewGameEntryMode" {
@@ -52,14 +70,4 @@ class NewGameViewController: UIViewController {
         }
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

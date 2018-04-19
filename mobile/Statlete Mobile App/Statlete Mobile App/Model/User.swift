@@ -16,7 +16,7 @@ class User {
     var PlayerTeams: [String] = [String]()
     var phoneNumber: String = String()
     
-    var mySportfolios: [Sportfolio] = [Sportfolio]()
+    var sportfolioNames: [String] = [String]()
     
     init(name: String, email: String) {
         self.name = name

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TeamSportfolioSetupViewController: UIViewController {
+class TeamSportfolioSetupViewController: UIViewController, UITextFieldDelegate {
 
    @IBOutlet weak var createButton: UIButton!
     
@@ -20,11 +20,13 @@ class TeamSportfolioSetupViewController: UIViewController {
     
     // default chosen sport to soccer
     var chosenSport: Int = 1
-    var players: [Int: String] = [:]
+    var allplayers: [String: String] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        teamNameTextField.delegate = self
+        
         // Do any additional setup after loading the view.
         let teamNamePaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.teamNameTextField.frame.height))
         teamNameTextField.layer.borderWidth = 0.8
@@ -65,12 +67,17 @@ class TeamSportfolioSetupViewController: UIViewController {
         }
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
     @IBAction func createButtonClicked(_ sender: UIButton) {
         // create new team sportfolio
-        var sportfolioId = "id89" // need to generate this?
+        var sportfolioId = "id101" // need to generate this?
         var teamName: String = teamNameTextField.text!
         var players : [String : String] = [:] // need to get these from the AddPLayers page
         var sport: String = "soccer"
+      
      
         let id = DB.currentUser.email.replacingOccurrences(of: ".", with: "")
         if(chosenSport == 1){
@@ -90,7 +97,7 @@ class TeamSportfolioSetupViewController: UIViewController {
         
         // add to database - Team Sportfolio
         DB.database.child("TeamSportfolios").child(sportfolioId).updateChildValues(["Admins" : " ", "Creator" : id, "Games": " ", "Players" : " ", "Sport" : "soccer", "TeamName": teamName, "Token": " "])
-        
+        DB.database.child("TeamSportfolios").child(sportfolioId).child("Players").updateChildValues(allplayers)
         self.performSegue(withIdentifier: "toSportfolio", sender: self)
 
         
@@ -101,8 +108,8 @@ class TeamSportfolioSetupViewController: UIViewController {
 }
 
 extension TeamSportfolioSetupViewController: PopupDelegate, AddPlayersDelegate{
-    func playersAdded(value: [Int : String]) {
-        players = value
+    func playersAdded(value: [String : String]) {
+        allplayers = value
     }
     
     func sportSelected(value: Int) {

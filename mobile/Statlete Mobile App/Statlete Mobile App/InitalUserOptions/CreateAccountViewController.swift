@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class CreateAccountViewController: UIViewController{
+class CreateAccountViewController: UIViewController, UITextFieldDelegate{
     
    
     @IBOutlet weak var emailTextField: UITextField!
@@ -19,7 +19,9 @@ class CreateAccountViewController: UIViewController{
     @IBOutlet weak var nameTextField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.nameTextField.delegate = self
+        self.emailTextField.delegate = self
+        self.passwordTextField.delegate = self
         // text field padding
         let namePaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.nameTextField.frame.height))
         let emailPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.emailTextField.frame.height))
@@ -52,10 +54,15 @@ class CreateAccountViewController: UIViewController{
         
         
     }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
   
     @IBAction func backButtonClicked(_ sender: UIButton) {
          _ = navigationController?.popViewController(animated: true)
     }
+    
     
     
     @IBAction func createAccountClicked(_ sender: UIButton) {
