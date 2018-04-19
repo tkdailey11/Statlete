@@ -18,6 +18,11 @@ class PlayersViewController: UIViewController,UICollectionViewDataSource, UIColl
         collectionView.delegate = self
         collectionView.dataSource = self
        
+        let timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.reloadCollectionView), userInfo: nil, repeats: true)
+    }
+    
+    @objc func reloadCollectionView() {
+        collectionView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,13 +33,16 @@ class PlayersViewController: UIViewController,UICollectionViewDataSource, UIColl
         return 1
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return players.count
+        return DB.currentSportfolio.players.count
     }
    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
        var cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlayerCell", for: indexPath) as! PlayerCollectionCell
-        cell.numberLabel.text =  players[indexPath.item]
+        //cell.numberLabel.text =  players[indexPath.item]
+        var playerNumber: String = Array(DB.currentSportfolio.players.keys)[indexPath.row]
+        playerNumber.removeFirst()
+        cell.numberLabel.text = playerNumber
         return cell
         
      }

@@ -23,19 +23,25 @@ class GamesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         let nib = UINib.init(nibName: "GameCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "GameCell")
-
+        let timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.reloadTableView), userInfo: nil, repeats: true)
+    }
+    
+    @objc func reloadTableView() {
+        tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return games.count
+        //return games.count
+        return DB.currentSportfolio.games.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GameCell", for: indexPath) as! GameCell
-        cell.commonInit(name: games[indexPath.row], live: true)
+        //cell.commonInit(name: games[indexPath.row], live: true)
+        cell.commonInit(name: DB.currentSportfolio.games[Array(DB.currentSportfolio.games.keys)[indexPath.row]]!, live: true)
         cell.backgroundColor = .clear
         return cell
     }

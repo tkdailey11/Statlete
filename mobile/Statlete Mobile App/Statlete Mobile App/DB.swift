@@ -13,5 +13,6 @@ class DB {
     
     public static var currentUser: User = User(name: "", email: "")
     public static var database: DatabaseReference = DatabaseReference()
+    public static var currentSportfolio = Sportfolio()
     
 }

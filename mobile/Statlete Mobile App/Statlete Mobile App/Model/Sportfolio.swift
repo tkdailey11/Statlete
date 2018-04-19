@@ -8,6 +8,7 @@
 
 import Foundation
 
+/*
 class Sportfolio{
     
     public var sportfolioId : String = String()
@@ -26,7 +27,25 @@ class Sportfolio{
     init(){
         
     }
-    
-    
-    
 }
+*/
+
+class Sportfolio{
+    
+    public var sportfolioId : String = String()
+    public var name: String = String()
+    public var games: [String:String] = [String:String]()
+    public var players: [String:String] = [String:String]()
+    //public var playerStats: [String: [String: Int]] = [String: [String: Int]]() // if team sportfolio
+    
+    init(sportfolioId: String, name: String, games: [String:String], players: [String:String]) {
+        self.sportfolioId = sportfolioId
+        self.name = name
+        self.games = games
+        self.players = players
+    }
+    init(){
+        
+    }
+}
+
