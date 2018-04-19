@@ -116,7 +116,7 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         view.sendSubview(toBack: statView)
         
         self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTime), userInfo: nil, repeats: true)
-         let timer2 = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.reloadSubBar), userInfo: nil, repeats: false)
+         let timer2 = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(self.reloadSubBar), userInfo: nil, repeats: false)
     }
     
     @objc func reloadSubBar() {
