@@ -46,10 +46,10 @@
   #SBdataEntry {
     width: 310px;
     height: 500px;
-    background: rgb(180, 41, 102);
+    background: white;
     margin-left: 50px;
     border-width: 5px;
-    border-color: rgb(180, 41, 102);
+    border-color: orange;
     border-style: solid;
     border-radius: 35px;
     position: relative;
@@ -61,10 +61,10 @@
     height: 75px;
     background: white;
     border-radius: 35px 35px 0px 0px;
-    border-bottom-color: rgb(180, 41, 102);
+    border-bottom-color: orange;
     border-bottom-width: medium;
     border-bottom-style: solid;
-    background-color: #fadc7f;
+    background-color: white;
   }
 
   #dataFooter {
@@ -72,9 +72,9 @@
     height: 75px;
     position: absolute;
     bottom: 0;
-    background-color: #fadc7f;
+    background-color: white;
     border-radius: 0px 0px 35px 35px;
-    border-top-color: rgb(180, 41, 102);
+    border-top-color: orange;
     border-top-width: medium;
     border-top-style: solid;
     text-align: center;
@@ -88,17 +88,17 @@
     width: 300px;
     max-height: 413px;
     height: 413px;
-    background-color: #fadc7f;
+    background-color: white;
     overflow: scroll;
     border-radius: 0px 0px 30px 30px;
   }
 
   table, th {
-    border: 1px solid rgb(180, 41, 102);
+    border: 1px solid orange;
   }
 
   td {
-    border-bottom: 1px solid rgb(180, 41, 102);
+    border-bottom: 1px solid orange;
     color: rgb(180, 41, 102);
   }
 

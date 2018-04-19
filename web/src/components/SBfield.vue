@@ -34,10 +34,10 @@
   .SBfield {
     width: 600px;
     height: 500px;
-    background: rgb(180, 41, 102);
+    background: orange;
     margin-left: 50px;
     border-width: 5px;
-    border-color: rgb(180, 41, 102);
+    border-color: orange;
     border-style: solid;
     border-radius: 35px;
     margin: 50px;
@@ -46,7 +46,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden
+    overflow: hidden;
   }
   .fill img {
       flex-shrink: 0;
@@ -55,6 +55,7 @@
       margin: 6px;
       border-radius: 35px;
       border: 5px #fadc7f solid;
+      opacity: 0.5;
   }
   #FieldIMG {
     z-index: 1;

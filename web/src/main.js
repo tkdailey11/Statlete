@@ -75,15 +75,9 @@ Vue.config.productionTip = false
 Vue.use(VueFormWizard)
 Vue.use(VueGoodWizard)
 
-import VueSticky from 'vue-sticky-js';
-Vue.use(VueSticky.install);
-
-import VueScrollingTable from "vue-scrolling-table";
-Vue.use(VueScrollingTable);
-//import { TableComponent, TableColumn } from 'vue-table-component';
-
-//Vue.use(TableComponent);
-//Vue.use(TableColumn);
+import 'vue-awesome/icons'
+import Icon from 'vue-awesome/components/Icon'
+Vue.component('icon', Icon)
 
 let app;
 firebase.initializeApp(config);

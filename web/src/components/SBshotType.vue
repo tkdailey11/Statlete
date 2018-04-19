@@ -25,13 +25,14 @@
   .SBshotType{
     width: 600px;
     height: 100px;
-    background: #fadc7f;
+    background: white;
     margin-left: 50px;
     border-width: 5px;
-    border-color: rgb(180, 41, 102);
+    border-color: orange;
     border-style: solid;
     border-radius: 35px;
     margin: 50px;
+    opacity: 0.5;
   }
   .GCF {
     zoom: 25%;

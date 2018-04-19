@@ -6,7 +6,7 @@
     <div id="playersTable">
       <table cellpadding="10" width="100%">
         <tr v-for="key in Object.keys(players)" @click="trClicked(key)">
-          <td>{{ key.replace('p', '#') }}</td>
+          <td hover="background-color: orange;">{{ key.replace('p', '#') }}</td>
           <td style="text-align:left;">{{players[key].trim()}}</td>
         </tr>
       </table>
@@ -48,12 +48,12 @@
   #PlayersList {
     width: 310px;
     height: 500px;
-    background: rgb(180, 41, 102);
+    background: white;
     margin-left: 50px;
     border-width: 5px;
-    border-color: rgb(180, 41, 102);
+    border-color: orange;
     border-style: solid;
-    border-radius: 35px;
+    border-radius: 40px;
     position: relative;
   }
 
@@ -61,10 +61,10 @@
     width: 100%;
     height: 75px;
     border-radius: 35px 35px 0px 0px;
-    border-bottom-color: rgb(180, 41, 102);
+    border-bottom-color: orange;
     border-bottom-width: medium;
     border-bottom-style: solid;
-    background-color: #fadc7f;
+    background-color: white;
   }
 
   #plFooter {
@@ -72,9 +72,9 @@
     height: 75px;
     position: absolute;
     bottom: 0;
-    background-color: #fadc7f;
+    background-color: white;
     border-radius: 0px 0px 35px 35px;
-    border-top-color: rgb(180, 41, 102);
+    border-top-color: orange;
     border-top-width: medium;
     border-top-style: solid;
     text-align: center;
@@ -83,29 +83,37 @@
     font-size: 25px;
     color: rgb(180, 41, 102);
   }
+  #plFooter:hover {
+    background-color: rgba(255,165,0, 0.7);
+  }
 
   #playersTable {
     width: 300px;
     max-height: 350px;
     height: 350px;
-    background-color: #fadc7f;
+    background-color: white;
     overflow: scroll;
     margin-bottom: 0px;
     margin: 0px;
   }
 
   table, th {
-    border: 1px solid rgb(180, 41, 102);
+    border: 1px solid orange;
   }
 
   td {
-    border-bottom: 1px solid rgb(180, 41, 102);
+    border-bottom: 1px solid orange;
     color: rgb(180, 41, 102);
-    background-color: #fadc7f;
+    background-color: white;
   }
 
   tr {
     width: 500px;
+  }
+
+  tr:hover td {
+    background-color: rgba(255,165,0, 0.7);
+    cursor: pointer;
   }
 
   h1 {

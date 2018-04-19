@@ -185,7 +185,10 @@ export default {
       })
     },
     openNav: function() {
-      document.getElementById("mySidenav").style.width = "250px";
+      setTimeout(function(){
+        document.getElementById("mySidenav").style.width = "250px";
+      }, 90);
+
     },
     showTeam: function() {
       this.viewMode = 'isCreatingTeam'
@@ -467,9 +470,9 @@ export default {
     margin-top: 20px;
     cursor: pointer;
     color: white;
-    background-color: rgb(180, 41, 102);
-    border-color: rgb(180, 41, 102);
-    color: rgba(250, 220, 127, 0.9);
+    background-color: orange;
+    border-color: orange;
+    color: rgb(180, 41, 102);
   }
   button:hover {
     background-color: rgba(250, 220, 127, 0.9);
@@ -538,9 +541,8 @@ export default {
 
 
   #mainPage {
-    height: 100vh;
-background: radial-gradient(circle, rgba(240,138,59,0.7) 0%, rgba(246,113,78,0.7) 53%, rgba(237,108,73,0.7) 77%);
-background-color: white;
+    min-height: 100vh;
+    background-color: white;
   }
 
   #leftList {

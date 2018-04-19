@@ -3,7 +3,7 @@
       <a href="javascript:void(0)" class="closebtn" @click="closeNav">&times;</a>
       <div style="margin-bottom: 40px;">
         <img src="../assets/images/testUser.png" width="100px" height="100px">
-        <h4 style="margin-top: 10px; color: #fadc7f;">{{currentUserEmail}}</h4>
+        <h4 style="margin-top: 10px; color: white;">{{currentUserEmail}}</h4>
       </div>
 
       <!--Team Sportfolios -->
@@ -96,7 +96,7 @@
       z-index: 1; /* Stay on top */
       top: 0; /* Stay at the top */
       left: 0;
-      background-color: #e64f52;
+      background-color: orange;
       overflow-x: hidden; /* Disable horizontal scroll */
       padding-top: 60px; /* Place content 60px from the top */
       transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
@@ -128,7 +128,7 @@
       right: 25px;
       font-size: 36px;
       margin-left: 50px;
-      color: rgba(250, 220, 127, 0.9);
+      color: white;
   }
 
   .SBdataEntry {
@@ -152,14 +152,14 @@
     border-bottom-color: rgb(180, 41, 102);
     border-bottom-width: medium;
     border-bottom-style: solid;
-    background-color: #fadc7f;
+    background-color: white;
   }
 
   .dataTable {
     width: 190px;
     max-height: 189px;
     height: 189px;
-    background-color: #fadc7f;
+    background-color: white;
     overflow: scroll;
     border-radius: 0px 0px 30px 30px;
   }
@@ -195,7 +195,11 @@
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: center;
-vertical-align: middle;
+    vertical-align: middle;
+  }
 
+  tr:hover td {
+    background-color: rgba(255,165,0, 0.7);
+    cursor: pointer;
   }
 </style>
