@@ -31,16 +31,32 @@ Code here
 
 <div class="SBdataEntry">
   <div class="title">
-    <h5 style="margin-right: 10px;" v-for="i in 10" />
-    <h5 align="center" v-for="statType in statTypes" style="margin-right: 10px;">{{ statType }}</h5>
+    <div style="border-right: 1px solid orange;">
+    </div>
+    <h5 align="center" v-for="statType in statTypes" style="border: 1px solid orange; padding-right: 10px; padding-left: 10px;">{{ statType }}</h5>
   </div>
   <div class="dataTable">
     <table>
-      <tr v-for="p in playerSportfolios">
-        <td>{{ i }}</td>
-      </tr>
-      <tr>
-        <td @click="$emit('showPlayer'); closeNav();">+ New Player Sportfolio</td>
+      <tr v-for="p in players">
+        <td style="width: 163px; min-width: 163px; border: thin solid orange; border-right-width: 2px;">{{ p.replace('p', '#') }}</td>
+        <td v-for="statType in statTypes">
+          <span v-if="statType.length == 7">
+            <p v-if="playerData[p][statType]" style="width: 80px; margin-right: 10px; margin-top: 10px;">{{playerData[p][statType]}}</p>
+            <p v-else style="width: 80px; margin-right: 10px; margin-top: 10px;">0</p>
+          </span>
+          <span v-if="statType.length == 8">
+            <p v-if="playerData[p][statType]" style="width: 90px; margin-right: 17px; margin-top: 10px;">{{playerData[p][statType]}}</p>
+            <p v-else style="width: 90px; margin-right: 17px; margin-top: 10px;">0</p>
+          </span>
+          <span v-if="statType.length == 5">
+            <p v-if="playerData[p][statType]" style="width: 60px; margin-right: 8px; margin-top: 10px;">{{playerData[p][statType]}}</p>
+            <p v-else style="width: 60px; margin-right: 8px; margin-top: 10px;">0</p>
+          </span>
+          <span v-if="statType.length == 11">
+            <p v-if="playerData[p][statType]" style="width: 125px; margin-right: 20px; margin-top: 10px;">{{playerData[p][statType]}}</p>
+            <p v-else style="width: 125px; margin-right: 20px; margin-top: 10px;">0</p>
+          </span>
+        </td>
       </tr>
     </table>
   </div>
@@ -64,6 +80,16 @@ Code here
         playerData: {},
         loggedInUser: '',
         currentUserEmail: '',
+        playerSportfolios: [{name: 'Tyler'},
+                            {name: 'Joe'},
+                            {name: 'Brandon'},
+                            {name: 'Taylor'},
+                            {name: 'Nate'},
+                            {name: 'Tyler2'},
+                            {name: 'Joe2'},
+                            {name: 'Brandon2'},
+                            {name: 'Taylor2'},
+                            {name: 'Nate2'}]
       }
   	},
     methods: {
@@ -155,45 +181,52 @@ Code here
 */
 
 
-
+#TeamStats {
+  width: 100%;
+  height: 95vh;
+  background-color: white;
+}
 
 .SBdataEntry {
-  height: 250px;
-  background: rgb(180, 41, 102);
+  height: 500px;
+  min-width: 84.5vw;
+  background: white;
   border-width: 5px;
-  border-color: rgb(180, 41, 102);
+  border-color: orange;
   border-style: solid;
   border-radius: 15px;
   margin: 10%;
   margin-bottom: 50px;
-    overflow: auto;
 }
 
 .title {
-  height: 20%;
+  height: 10%;
   background: white;
   border-radius: 15px 15px 0px 0px;
-  border-bottom-color: rgb(180, 41, 102);
+  border-bottom-color: orange;
   border-bottom-width: medium;
   border-bottom-style: solid;
-  background-color: #fadc7f;
+  background-color: white;
   display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
 }
 
 .dataTable {
-  max-height: 80%;
-  height: 189px;
-  background-color: #fadc7f;
-  overflow: scroll;
+  max-height: 90%;
+  height: 450px;
+  background-color: white;
+  overflow-y: scroll;
   border-radius: 0px 0px 15px 15px;
 }
 
 table, th {
-  border: 1px solid rgb(180, 41, 102);
+  border: 1px solid orange;
 }
 
 td {
-  border-bottom: 1px solid rgb(180, 41, 102);
+  border-bottom: 1px solid orange;
   color: rgb(180, 41, 102);
 }
 

@@ -10,8 +10,14 @@
               @showTeam="showTeam">
     </side-nav>
 
-    <div id="mainPage" v-if="viewMode==='mainViewMode'">
+    <div id="notImplementedAlert" class="alert alert-primary alert-dismissible fade show" role="alert">
+      <p>This functionality has not yet been implemented. Please check back soon!</p>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="margin: 7px; background-color: transparent;">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
 
+    <div id="mainPage" v-if="viewMode==='mainViewMode'">
       <div class="mainHeader">
         <h1 style="color: rgb(180, 41, 102);">Team Name</h1>
         <div class="button-wrapper">
@@ -33,7 +39,7 @@
     <!-- WIZARDS -->
     <div v-else>
       <div id="PlayerWizard" v-if="viewMode==='isCreatingPlayer'" style="padding-top=100px;">
-          <vue-good-wizard
+          <tkd-wizard
             :steps="playerSteps"
             :onNext="nextClickedPlayer"
             :onBack="backClickedPlayer">
@@ -57,18 +63,19 @@
               <input type="text" v-model="teamToken" placeholder="Team Token"><br>
               <br>
             </div>
-          </vue-good-wizard>
+          </tkd-wizard>
       </div>
 
       <div id="TeamWizard" v-if="viewMode==='isCreatingTeam'" class="teamWiz">
-        <vue-good-wizard
+        <tkd-wizard
           :steps="teamSteps"
-          :onNext="nextClickedTeam"
-          :onBack="backClickedTeam">
+          :onBack="backClickedTeam"
+          :validatePlayer="validatePlayersList"
+          @SubmitSportfolio="submitTeamSportfolio">
 
           <div slot="teamPage1">
             <label class="myLabel">Team Name:</label>
-            <input type="text" v-model="teamName" placeholder="Team Name"><br>
+            <input class="teamNameEntry" type="text" v-model="teamName" placeholder="Team Name"><br>
             <br>
             <label class="myLabel">Sport:</label>
             <br>
@@ -90,7 +97,7 @@
             <input type="text" v-model="teamToken" placeholder="Team Token"><br>
             <br>
           </div>
-        </vue-good-wizard>
+        </tkd-wizard>
       </div>
     </div>
     <!-- END WIZARDS -->
@@ -163,6 +170,13 @@ export default {
     }
   },
   mounted () {
+    jQuery("#notImplementedAlert").hide();
+    var niMsg = jQuery("#notImplementedAlert");
+
+    niMsg.on("close.bs.alert", function () {
+          niMsg.hide();
+          return false;
+    });
     this.$nextTick(() => {
         this.loggedInUser = firebase.auth().currentUser;
         this.currentUserEmail = this.loggedInUser.email;
@@ -197,7 +211,9 @@ export default {
       this.viewMode = 'mainViewMode'
     },
     showPlayer: function() {
-      this.viewMode = 'isCreatingPlayer'
+      jQuery("#notImplementedAlert").show();
+      console.log("ALERT");
+      //this.viewMode = 'isCreatingPlayer'
     },
     onComplete: function() {
       alert('Yay. Done!');
@@ -224,8 +240,37 @@ export default {
     backClickedPlayer(currentPage) {
       return false; //return false if you want to prevent moving to previous page
     },
+    validatePlayersList() {
+      alert('VALIDATE PLAYERS LIST');
+      return true;
+    },
+    submitTeamSportfolio(){
+      alert('Submit Team Sportfolio');
+      this.hideCreating();
+    },
     nextClickedTeam(currentPage) {
-      if(currentPage==2){
+      if(currentPage==0){
+        var tn_str = this.teamName;
+        if(tn_str===''){
+          alert('Please Enter a Team Name');
+          return false;
+        }
+
+        var isLookingUpTeam = true;
+        var teamNameValid = false;
+
+        var ref = firebase.database().ref('TeamSportfolios');
+        ref.once('value').then(function(snapshot) {
+          teamNameValid = !snapshot.child(tn_str).exists();
+          alert('Valid: ' + teamNameValid);
+          return true;
+        });
+        return false;
+      }
+      else if (currentPage==1) {
+
+      }
+      else{
         this.hideCreating()
 
         var email = this.currentUserEmail.replace('.', '');
@@ -438,6 +483,7 @@ export default {
       transition: margin-left .5s;
       margin:0px;
       min-height: 100%;
+      background-color: white;
   }
 
   /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
