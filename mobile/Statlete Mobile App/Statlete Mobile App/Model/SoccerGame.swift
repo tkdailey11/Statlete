@@ -30,6 +30,7 @@ class SoccerGame {
     var oppPossession: TimeInterval = 0
     var inProgress: Bool = false //
     var team: String = String()
+    var live: Bool = true
     
     var players: [String: [String: Int]] = [:]
     var playerIDs: [String: String] = [:]
@@ -117,47 +118,6 @@ class SoccerGame {
             print("EEEEERRRROOOORRRR")
         }
     }
-    
-    /*
-    init(gameID: String, completion: @escaping (Bool) -> Void) {
-        self.id = gameID
-        
-        DB.database.child("SoccerGames/\(self.id)").observeSingleEvent(of: .value, with: { (snapshot) in
-            let value = snapshot.value as! NSDictionary ?? [:]
-            self.loadGameFromDatabase(with: value)
-            self.isLoaded = true
-            completion(true)
-        }) { (error) in
-            completion(false)
-            print("EEEEERRRROOOORRRR")
-        }
-    }
- */
-    
-    /*
-    func loadGameFromDatabase() {
-        DB.database.child("SoccerGames").child(self.id).observeSingleEvent(of: .value, with: { (snapshot) in
-            let value = snapshot.value as? NSDictionary
-            print("Made It")
-        })
-    }
- */
-    
-    /*
-    func loadGameFromDatabase() {
-        print("Here")
-        let semaphore = DispatchSemaphore(value: 0)
-        DispatchQueue.main.async {
-            DB.database.child("SoccerGames").child(self.id).observeSingleEvent(of: .value, with: { (snapshot) in
-                let value = snapshot.value as? NSDictionary
-                print("Made It")
-                semaphore.signal()
-            })
-        }
-        semaphore.wait()
-        print("There")
-    }
-    */
  
     func loadPlayers() {
         
@@ -168,6 +128,7 @@ class SoccerGame {
                 for stat in self.statNames {
                     self.players[key]![stat] = 0
                 }
+                self.players[key]!["Minutes"] = 0
                 let playerSportfolioID = value[key] ?? ""
                 self.playerIDs[key] = playerSportfolioID
                 DB.database.child("PlayerSportfolios/\(playerSportfolioID)/Name").observeSingleEvent(of: .value, with: { (snapshot) in
@@ -179,7 +140,7 @@ class SoccerGame {
                 let playerString = player.key
                 DB.database.child("SoccerGames/\(self.id)/Players/").updateChildValues([playerString: " "])
                 
-                DB.database.child("SoccerGames/\(self.id)/Players/\(playerString)").updateChildValues([self.statNames[0]: self.players[playerString]![self.statNames[0]]!, self.statNames[1]: self.players[playerString]![self.statNames[1]]!, self.statNames[2]: self.players[playerString]![self.statNames[2]]!, self.statNames[3]: self.players[playerString]![self.statNames[3]]!, self.statNames[4]: self.players[playerString]![self.statNames[4]]!, self.statNames[5]: self.players[playerString]![self.statNames[5]]!, self.statNames[6]: self.players[playerString]![self.statNames[6]]!, self.statNames[7]: self.players[playerString]![self.statNames[7]]!, self.statNames[8]: self.players[playerString]![self.statNames[8]]!, self.statNames[9]: self.players[playerString]![self.statNames[9]]!, self.statNames[10]: self.players[playerString]![self.statNames[10]]!])
+                DB.database.child("SoccerGames/\(self.id)/Players/\(playerString)").updateChildValues([self.statNames[0]: self.players[playerString]![self.statNames[0]]!, self.statNames[1]: self.players[playerString]![self.statNames[1]]!, self.statNames[2]: self.players[playerString]![self.statNames[2]]!, self.statNames[3]: self.players[playerString]![self.statNames[3]]!, self.statNames[4]: self.players[playerString]![self.statNames[4]]!, self.statNames[5]: self.players[playerString]![self.statNames[5]]!, self.statNames[6]: self.players[playerString]![self.statNames[6]]!, self.statNames[7]: self.players[playerString]![self.statNames[7]]!, self.statNames[8]: self.players[playerString]![self.statNames[8]]!, self.statNames[9]: self.players[playerString]![self.statNames[9]]!, self.statNames[10]: self.players[playerString]![self.statNames[10]]!, "Minutes": 0])
             }
         })
     }
@@ -220,6 +181,9 @@ class SoccerGame {
         DB.database.child("SoccerGames").child(self.id).child("Period").observe(.value, with: { (snapshot) in
             self.half = snapshot.value as? Int ?? 1
         })
+        DB.database.child("SoccerGames").child(self.id).child("Live").observe(.value, with: { (snapshot) in
+            self.live = snapshot.value as? Bool ?? false
+        })
         DB.database.child("SoccerGames").child(self.id).child("InProgress").observe(.value, with: { (snapshot) in
             self.inProgress = snapshot.value as? Bool ?? false
         })
@@ -258,6 +222,7 @@ class SoccerGame {
         
         DB.database.child("SoccerGames").child(id).updateChildValues(["Date": dateString, "HalfLength": halfLength, "Name": name, "Period": half])
         DB.database.child("SoccerGames").child(id).updateChildValues(["MyTotals": " "])
+        DB.database.child("SoccerGames").child(id).updateChildValues(["Live": true])
         DB.database.child("SoccerGames").child(id).child("MyTotals").updateChildValues(["Period1": " ", "Period2": " "])
         DB.database.child("SoccerGames").child(id).updateChildValues(["OpponentsTotals": " "])
         DB.database.child("SoccerGames").child(id).child("OpponentsTotals").updateChildValues(["Period1": " ", "Period2": " "])
@@ -275,12 +240,20 @@ class SoccerGame {
     }
     
     func listenForPlayers() {
+        sleep(1)
         for player in Array(players.keys) {
             DB.database.child("SoccerGames/\(id)/Players/\(player)").observe(.value, with: { (snapshot) in
                 let value = snapshot.value as? [String: Int]
                 for stat in value! {
                     self.players[player]![stat.key] = stat.value
                 }
+            })
+        }
+        
+        for player in Array(players.keys) {
+            DB.database.child("SoccerGames").child(self.id).child("Players").child(player).child("Minutes").observe(.value, with: { (snapshot) in
+                let value = snapshot.value as? Int ?? 0
+                self.players[player]!["Minutes"] = value
             })
         }
     }

@@ -40,7 +40,6 @@ class GamesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GameCell", for: indexPath) as! GameCell
-        //cell.commonInit(name: games[indexPath.row], live: true)
         cell.commonInit(name: DB.currentSportfolio.games[Array(DB.currentSportfolio.games.keys)[indexPath.row]]!, live: true)
         cell.backgroundColor = .clear
         return cell
@@ -67,7 +66,7 @@ class GamesViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     if success {
                         controller.game.listenForPlayers()
                         controller.game.listenToDatabase()
-                        // sempahore.signal()
+                        //semaphore.signal()
                     }
                     else {
                     }

@@ -165,7 +165,7 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
                 DB.database.child("SoccerGames").child(self.game.id).updateChildValues(["InProgress": false])
                 DB.database.child("SoccerGames").child(self.game.id).updateChildValues(["Period": 2])
                 self.outOfPlaySelected()
-                self.scoreboardView!.half = 2
+                self.scoreboardView!.halfChanged()
                 self.scoreboardView!.setNeedsDisplay()
             }))
             alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
@@ -187,6 +187,9 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
                 DB.database.child("SoccerGames").child(self.game.id).updateChildValues(["InProgress": false])
                 DB.database.child("SoccerGames").child(self.game.id).updateChildValues(["Period": -1])
                 self.outOfPlaySelected()
+                self.timer.invalidate()
+                self.scoreboardView!.endGame()
+                DB.database.child("SoccerGames").child(self.game.id).updateChildValues(["Live": false])
                 self.scoreboardView!.setNeedsDisplay()
             }))
             alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))

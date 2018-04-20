@@ -147,6 +147,18 @@ class ScoreboardView: UIControl {
         
     }
     
+    func halfChanged() {
+        let timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(reload), userInfo: nil, repeats: false)
+    }
+    
+    @objc func reload() {
+        setNeedsDisplay()
+    }
+    
+    func endGame() {
+        timeLabel.text = "Final"
+    }
+    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if (timeBox.contains(touches.first!.location(in: self))) {
             sendActions(for: .valueChanged)
