@@ -27,6 +27,10 @@ class ViewController: UIViewController {
         CreateAccountButton.layer.borderColor = Colors.tempcolor.cgColor
         
     }
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
+
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -37,14 +41,11 @@ class ViewController: UIViewController {
 }
 
 
-
-
 final class GradientView: UIView{
     override func draw(_ rect: CGRect) {
         let gradient: CAGradientLayer = CAGradientLayer()
         gradient.frame = CGRect(x: 0, y: 0, width: superview!.frame.size.width, height: superview!.frame.size.height)
-      gradient.colors = [Colors.color2.cgColor, Colors.color0.cgColor]
-      
+        gradient.colors = [Colors.red.cgColor, Colors.tangerine.cgColor, Colors.orange.cgColor]
         gradient.zPosition = -1
       
         layer.addSublayer(gradient)

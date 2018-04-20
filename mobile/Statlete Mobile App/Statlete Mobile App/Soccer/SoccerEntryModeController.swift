@@ -19,6 +19,9 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     func backButtonClicked() {
         //self.performSegue(withIdentifier: "backToGamesView", sender: nil)
         //self.dismiss(animated: true, completion: nil)
+        print("clicked")
+        _ = navigationController?.popViewController(animated: true)
+        _ = navigationController?.popViewController(animated: true)
     }
     
     

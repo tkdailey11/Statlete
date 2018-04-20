@@ -26,8 +26,13 @@ class ViewExistingTeamViewController: UIViewController, UITextFieldDelegate {
         teamIDTextField.leftViewMode = UITextFieldViewMode.always
         teamPaddingView.layer.addSublayer(teamline)
         viewButton.layer.cornerRadius = 10
+        navigationController?.isNavigationBarHidden = false
         
-        //   _ = navigationController?.popViewController(animated: true)
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.view.backgroundColor = .clear
+        
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)

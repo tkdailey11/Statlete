@@ -23,19 +23,22 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate{
         self.emailTextField.delegate = self
         self.passwordTextField.delegate = self
         // text field padding
-        let namePaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.nameTextField.frame.height))
-        let emailPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.emailTextField.frame.height))
-        let passwordPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.passwordTextField.frame.height))
+        let namePaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: self.nameTextField.frame.height))
+        let emailPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: self.emailTextField.frame.height))
+        let passwordPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: self.passwordTextField.frame.height))
        
         // text field underline border
         let nameline = CALayer()
-        nameline.frame = CGRect(x: namePaddingView.frame.width, y: nameTextField.frame.height - 1, width: nameTextField.frame.width - namePaddingView.frame.width, height: 1)
+        print(view.bounds.debugDescription)
+     
+        nameline.frame = CGRect(x: 0 , y: nameTextField.frame.height - 1, width: view.bounds.width * 0.7, height: 1)
         nameline.backgroundColor = UIColor.white.cgColor
+        print(nameline.frame.debugDescription)
         let emailline = CALayer()
-        emailline.frame = CGRect(x: emailPaddingView.frame.width, y: nameTextField.frame.height - 1, width: nameTextField.frame.width - emailPaddingView.frame.width, height: 1)
+        emailline.frame = CGRect(x: 0, y: nameTextField.frame.height - 1, width: view.bounds.width * 0.7, height: 1)
         emailline.backgroundColor = UIColor.white.cgColor
         let passwordline = CALayer()
-        passwordline.frame = CGRect(x: passwordPaddingView.frame.width, y: passwordTextField.frame.height - 1, width: passwordTextField.frame.width - passwordPaddingView.frame.width, height: 1)
+        passwordline.frame = CGRect(x: 0, y: passwordTextField.frame.height - 1, width: view.bounds.width * 0.7, height: 1)
         passwordline.backgroundColor = UIColor.white.cgColor
    
         // add attributes to text fields
@@ -51,8 +54,15 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate{
         passwordTextField.leftViewMode = UITextFieldViewMode.always
         passwordPaddingView.layer.addSublayer(passwordline)
         createAccountButton.layer.cornerRadius = 10
+        navigationController?.isNavigationBarHidden = false
+
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.view.backgroundColor = .clear
         
         
+        self.navigationController?.navigationBar.tintColor = UIColor.white
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
@@ -97,4 +107,19 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate{
     }
     
 }
+
+final class OtherGradientView: UIView{
+    override func draw(_ rect: CGRect) {
+        let gradient: CAGradientLayer = CAGradientLayer()
+        gradient.frame = CGRect(x: 0, y: 0, width: superview!.frame.size.width, height: superview!.frame.size.height)
+        gradient.colors = [Colors.tangerine.cgColor, Colors.orange.cgColor]
+        gradient.zPosition = -1
+        
+        layer.addSublayer(gradient)
+    }
+}
+
+
+
+
 

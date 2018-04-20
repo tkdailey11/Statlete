@@ -40,6 +40,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.leftViewMode = UITextFieldViewMode.always
         passwordPaddingView.layer.addSublayer(passwordline)
 
+        navigationController?.isNavigationBarHidden = false
+        
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.view.backgroundColor = .clear
+
+        self.navigationController?.navigationBar.tintColor = UIColor.white
+
+
         
         loginButton.layer.cornerRadius = 10
 

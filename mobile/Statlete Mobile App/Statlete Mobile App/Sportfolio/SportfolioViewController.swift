@@ -50,7 +50,6 @@ class SportfolioViewController: UIViewController, UITableViewDelegate, UITableVi
             pageView.isUserInteractionEnabled = true
         }
         isSideMenuHidden = !isSideMenuHidden
-       
     }
     
    

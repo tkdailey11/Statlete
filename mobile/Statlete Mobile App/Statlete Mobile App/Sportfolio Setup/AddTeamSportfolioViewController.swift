@@ -35,6 +35,16 @@ class AddTeamSportfolioViewController: UIViewController {
         playerButton.layer.shadowOpacity = 0.9
         
         playerButton.layer.shadowColor = Colors.color4.cgColor
+        
+        navigationController?.isNavigationBarHidden = false
+        
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.view.backgroundColor = .clear
+        
+        
+        self.navigationController?.navigationBar.tintColor = UIColor.white
         // Do any additional setup after loading the view.
     }
 

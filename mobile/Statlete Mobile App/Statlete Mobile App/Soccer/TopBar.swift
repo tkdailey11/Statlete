@@ -33,12 +33,13 @@ class TopBar: UIControl {
         backButton.setTitleColor(Colors.color2, for: .normal)
         backButton.titleLabel?.textAlignment = .center
         backButton.setTitle("Back", for: .normal)
-        backButton.frame = CGRect(x: bounds.minX, y: bounds.maxY-30, width: 55, height: 30)
+        backButton.frame = CGRect(x: bounds.minX, y: bounds.minY, width: 55, height: 50)
         backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
         addSubview(backButton)
     }
     
     @objc func backButtonPressed() {
+       
         delegate?.backButtonClicked()
     }
     
