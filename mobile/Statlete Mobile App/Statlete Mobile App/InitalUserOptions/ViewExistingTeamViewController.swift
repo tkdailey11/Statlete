@@ -17,9 +17,9 @@ class ViewExistingTeamViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         teamIDTextField.delegate = self
-        let teamPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.teamIDTextField.frame.height))
+        let teamPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: self.teamIDTextField.frame.height))
         let teamline = CALayer()
-        teamline.frame = CGRect(x: teamPaddingView.frame.width, y: teamIDTextField.frame.height - 1, width: teamIDTextField.frame.width - teamPaddingView.frame.width, height: 1)
+        teamline.frame = CGRect(x:0, y: teamIDTextField.frame.height - 1, width: view.bounds.width * 0.7, height: 1)
         
         teamline.backgroundColor = UIColor.white.cgColor
         teamIDTextField.leftView = teamPaddingView
@@ -33,6 +33,9 @@ class ViewExistingTeamViewController: UIViewController, UITextFieldDelegate {
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.view.backgroundColor = .clear
         
+        
+        self.navigationController?.navigationBar.tintColor = UIColor.white
+        
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
@@ -43,10 +46,7 @@ class ViewExistingTeamViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func backButtonClicked(_ sender: UIButton) {
-         _ = navigationController?.popViewController(animated: true)
-    }
-    
+   
 
     /*
     // MARK: - Navigation

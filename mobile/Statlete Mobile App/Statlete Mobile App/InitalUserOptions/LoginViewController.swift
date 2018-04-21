@@ -22,13 +22,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
       
         self.emailTextField.delegate = self
         self.passwordTextField.delegate = self
-        let emailPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.emailTextField.frame.height))
-        let passwordPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.passwordTextField.frame.height))
+        
+        let emailPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: self.emailTextField.frame.height))
+        let passwordPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: self.passwordTextField.frame.height))
         
         let emailline = CALayer()
-        emailline.frame = CGRect(x: emailPaddingView.frame.width, y: emailTextField.frame.height - 1, width: emailTextField.frame.width + emailPaddingView.frame.width, height: 1)
+        emailline.frame = CGRect(x: 0, y: emailTextField.frame.height - 1, width: view.bounds.width * 0.7, height: 1)
         let passwordline = CALayer()
-        passwordline.frame = CGRect(x: passwordPaddingView.frame.width, y: passwordTextField.frame.height - 1, width: passwordTextField.frame.width + passwordPaddingView.frame.width, height: 1)
+        passwordline.frame = CGRect(x: 0, y: passwordTextField.frame.height - 1, width: view.bounds.width * 0.7, height: 1)
         passwordline.backgroundColor = UIColor.white.cgColor
         emailline.backgroundColor = UIColor.white.cgColor
         
