@@ -44,8 +44,8 @@ class StatCell: UITableViewCell {
         addSubview(label)
         self.autoresizingMask = [.flexibleWidth]
         
-        minusButton.backgroundColor = Colors.color2
-        plusButton.backgroundColor = Colors.color2
+        minusButton.backgroundColor = Colors.orange
+        plusButton.backgroundColor = Colors.orange
         
         plusButton.addTarget(self, action: #selector(plusButtonPressed), for: .touchUpInside)
         minusButton.addTarget(self, action: #selector(minusButtonPressed), for: .touchUpInside)

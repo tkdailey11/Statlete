@@ -311,6 +311,8 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
             else {
                 if game.my1stHalfTotals[game.statNames[index]]! > 0 {
                     DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["Total": self.game.my1stHalfTotals[game.statNames[index]]!-1])
+                    
+                    
                 }
             }
         }

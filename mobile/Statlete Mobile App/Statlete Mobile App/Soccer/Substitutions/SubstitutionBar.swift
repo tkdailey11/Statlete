@@ -41,7 +41,7 @@ class SubstitutionBar: UIControl, UICollectionViewDelegate, UICollectionViewData
     }
     
     func commonInit() {
-        backgroundColor = Colors.color2
+        backgroundColor = Colors.red
         layout.scrollDirection = UICollectionViewScrollDirection.horizontal
         collectionView.setCollectionViewLayout(layout, animated: true)
         collectionView.delegate = self
@@ -51,12 +51,12 @@ class SubstitutionBar: UIControl, UICollectionViewDelegate, UICollectionViewData
         collectionView.register(nib, forCellWithReuseIdentifier: "SubCell")
         addSubview(collectionView)
         collectionView.frame = CGRect(x: bounds.minX + opposingTeamButtonFrameWidth, y: bounds.minY, width: bounds.width - opposingTeamButtonFrameWidth, height: bounds.height)
-        collectionView.backgroundColor = Colors.color2
+        collectionView.backgroundColor = Colors.red
         
         opposingTeamButton.setTitle("Opp. Team", for: .normal)
         opposingTeamButton.frame = CGRect(x: bounds.minX, y: bounds.minY, width: opposingTeamButtonFrameWidth, height: bounds.height).insetBy(dx: 10, dy: 5)
         opposingTeamButton.backgroundColor = UIColor.white
-        opposingTeamButton.setTitleColor(UIColor(red: 108.0/255.0, green: 12.0/255.0, blue: 12.0/255.0, alpha: 1.0), for: .normal)
+        opposingTeamButton.setTitleColor(Colors.red, for: .normal)
         opposingTeamButton.titleLabel?.textAlignment = .center
         opposingTeamButton.titleLabel?.lineBreakMode = .byWordWrapping
         opposingTeamButton.titleLabel?.numberOfLines = 0

@@ -87,8 +87,39 @@ class SportfolioViewController: UIViewController, UITableViewDelegate, UITableVi
         
         return cell
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let sid = DB.currentUser.mySportfolios[sportfolios[indexPath.row]] ?? ""
         
+        // Check if is player sportfolio or team and load it accordingly
+        
+        DB.loadTeamSportfolio(with: sid, completion: { success in
+            if success {
+                self.thisSportfolio = DB.currentSportfolio
+                self.view.setNeedsDisplay()
+            }
+            else {
+            }
+        })
+        
+        /* Load a team sportfolio
+        DB.database.child("TeamSportfolios/\(sid)").observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as! NSDictionary
+            var players = value["Players"] as? [String: String] ?? [:]
+            var games = value["Games"] as? [String: String] ?? [:]
+            var sport = value["Sport"] as? String ?? ""
+            var creator = value["Creator"] as? String ?? ""
+            var admins = value["Admins"] as? [String: String] ?? [:]
+            var teamName = value["TeamName"] as? String ?? ""
+            var token = value["Token"] as? String ?? ""
+            let teamSportfolio = Sportfolio(sportfolioId: sid, name: teamName, games: games, players: players, sport: sport, creator: creator, admins: Array(admins.keys), token: token)
+            self.thisSportfolio = teamSportfolio
+            DB.currentSportfolio = teamSportfolio
+            self.view.setNeedsDisplay()
+        })
+ */
+        
+        // Load player sportfolio
         
     }
    

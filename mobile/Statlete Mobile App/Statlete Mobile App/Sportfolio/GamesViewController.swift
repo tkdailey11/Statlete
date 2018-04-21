@@ -28,13 +28,15 @@ class GamesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     @objc func reloadTableView() {
         tableView.reloadData()
+        if (!DB.currentSportfolio.admins.contains(DB.currentUser.email.replacingOccurrences(of: ".", with: ""))) {
+            newGameButton.isHidden = true
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //return games.count
         return DB.currentSportfolio.games.count
     }
     

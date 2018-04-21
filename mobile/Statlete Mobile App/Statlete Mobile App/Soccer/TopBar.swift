@@ -22,7 +22,7 @@ class TopBar: UIControl {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = UIColor.white
-        gameLabel.textColor = Colors.color2
+        gameLabel.textColor = Colors.red
         gameLabel.frame = CGRect(x: bounds.minX + (bounds.width/4), y: bounds.midY - (bounds.height/4), width: bounds.width/2, height: 3.0 / 4.0 * bounds.height)
         gameLabel.textAlignment = .center
         gameLabel.text = ""
@@ -30,7 +30,7 @@ class TopBar: UIControl {
         addSubview(gameLabel)
         
         backButton.backgroundColor = UIColor.white
-        backButton.setTitleColor(Colors.color2, for: .normal)
+        backButton.setTitleColor(Colors.red, for: .normal)
         backButton.titleLabel?.textAlignment = .center
         backButton.setTitle("Back", for: .normal)
         backButton.frame = CGRect(x: bounds.minX, y: bounds.minY, width: 55, height: 50)

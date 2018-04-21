@@ -22,13 +22,9 @@ class SoccerGame {
     var my2ndHalfTotals = [String: Int]()
     var opp1stHalfTotals = [String: Int]()
     var opp2ndHalfTotals = [String: Int]()
-    var my1stHalfStats: StatSet = StatSet()
-    var my2ndHalfStats: StatSet = StatSet()
-    var opp1stHalfStats: StatSet = StatSet()
-    var opp2ndHalfStats: StatSet = StatSet()
     var myPossession: TimeInterval = 0
     var oppPossession: TimeInterval = 0
-    var inProgress: Bool = false //
+    var inProgress: Bool = false
     var team: String = String()
     var live: Bool = true
     

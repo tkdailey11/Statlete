@@ -95,7 +95,7 @@ class PossessionView: UIControl {
         }
         
         // Draw myTeam
-        context.setFillColor(Colors.color2.cgColor)
+        context.setFillColor(Colors.orange.cgColor)
         context.setLineWidth(3)
         
         if currentlySelected == .myTeam {
@@ -103,7 +103,7 @@ class PossessionView: UIControl {
             myTeamPossessionLabel.textColor = UIColor.white
         }
         else {
-            context.setStrokeColor(Colors.color2.cgColor)
+            context.setStrokeColor(Colors.orange.cgColor)
             myTeamPossessionLabel.textColor = UIColor.black
         }
         context.addPath(CGPath(roundedRect: myTeamPossessionBoxFrame, cornerWidth: 20, cornerHeight: 20, transform: nil))
@@ -115,7 +115,7 @@ class PossessionView: UIControl {
             opposingTeamPossessionLabel.textColor = UIColor.white
         }
         else {
-            context.setStrokeColor(Colors.color2.cgColor)
+            context.setStrokeColor(Colors.orange.cgColor)
             opposingTeamPossessionLabel.textColor = UIColor.black
         }
         context.addPath(CGPath(roundedRect: opposingTeamPossessionBoxFrame, cornerWidth: 20, cornerHeight: 20, transform: nil))
@@ -128,7 +128,7 @@ class PossessionView: UIControl {
             outOfPlayPossessionLabel.textColor = UIColor.white
         }
         else {
-            context.setStrokeColor(Colors.color2.cgColor)
+            context.setStrokeColor(Colors.orange.cgColor)
             outOfPlayPossessionLabel.textColor = UIColor.black
         }
         context.addPath(CGPath(roundedRect: outOfPlayPossessionBoxFrame, cornerWidth: 20, cornerHeight: 20, transform: nil))

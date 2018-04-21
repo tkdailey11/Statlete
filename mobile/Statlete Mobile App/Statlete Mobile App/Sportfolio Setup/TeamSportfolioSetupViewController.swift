@@ -70,6 +70,19 @@ class TeamSportfolioSetupViewController: UIViewController, UITextFieldDelegate {
             let vc = segue.destination as! ChoosePlayersViewController
             vc.delegate = self
         }
+        if segue.identifier == "toSportfolio"{
+            let vc = segue.destination as! SportfolioViewController
+            var sid = teamIdTextField.text!
+            
+            DB.loadTeamSportfolio(with: sid, completion: { success in
+                if success {
+                    vc.thisSportfolio = DB.currentSportfolio
+                    vc.view.setNeedsDisplay()
+                }
+                else {
+                }
+            })
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -103,15 +116,14 @@ class TeamSportfolioSetupViewController: UIViewController, UITextFieldDelegate {
         DB.database.child("Users").child(id).child("AdminTeams").updateChildValues([sportfolioId : " "])
         
         // add to database - Team Sportfolio
-        DB.database.child("TeamSportfolios").child(sportfolioId).updateChildValues(["Admins" : " ", "Creator" : id, "Games": " ", "Players" : " ", "Sport" : "soccer", "TeamName": teamName, "Token": " "])
+        DB.database.child("TeamSportfolios").child(sportfolioId).updateChildValues(["Admins" : " ", "Creator" : id, "Games": " ", "Players" : " ", "Sport" : "soccer", "TeamName": teamName, "Token": teamToken])
         DB.database.child("TeamSportfolios").child(sportfolioId).child("Players").updateChildValues(allplayers)
+        DB.database.child("TeamSportfolios").child(sportfolioId).child("Admins").updateChildValues([id: " "])
         self.performSegue(withIdentifier: "toSportfolio", sender: self)
 
         
     }
     
- 
-
 }
 
 extension TeamSportfolioSetupViewController: PopupDelegate, AddPlayersDelegate{

@@ -100,7 +100,7 @@ class SoccerShotChartEntryView: UIControl {
         for shot in shots {
             let loc = shot.loc
             if shot.type == .goal {
-                context.setFillColor(UIColor(red: 108.0/255.0, green: 12.0/255.0, blue: 12.0/255.0, alpha: 1.0).cgColor)
+                context.setFillColor(Colors.red.cgColor)
                 context.fillEllipse(in: CGRect(x: loc.x - shotDimensions/2, y: loc.y - shotDimensions/2, width: shotDimensions, height: shotDimensions))
             }
             if shot.type == .shotOnGoal {
@@ -109,13 +109,14 @@ class SoccerShotChartEntryView: UIControl {
                 let shapeLayer = CAShapeLayer()
                 shapeLayer.path = circlePath.cgPath
                 shapeLayer.fillColor = UIColor.clear.cgColor
-                shapeLayer.strokeColor = UIColor(red: 108.0/255.0, green: 12.0/255.0, blue: 12.0/255.0, alpha: 1.0).cgColor
+                shapeLayer.strokeColor = Colors.red.cgColor
                 shapeLayer.lineWidth = 2.0
                 
                 layer.addSublayer(shapeLayer)
             }
             if shot.type == .shot {
-                context.setFillColor(UIColor(red: 108.0/255.0, green: 12.0/255.0, blue: 12.0/255.0, alpha: 1.0).cgColor)
+                context.setFillColor(Colors.red.cgColor)
+                context.setStrokeColor(Colors.red.cgColor)
                 let dimensions = shotDimensions * 0.8
                 context.setLineWidth(2.0)
                 context.move(to: CGPoint(x: loc.x - dimensions/2, y: loc.y - dimensions/2))
@@ -135,7 +136,7 @@ class SoccerShotChartEntryView: UIControl {
         
         let dimensions = min(symbolFrame.width, symbolFrame.height) * 0.75
         
-        context.setFillColor(UIColor(red: 108.0/255.0, green: 12.0/255.0, blue: 12.0/255.0, alpha: 1.0).cgColor)
+        context.setFillColor(Colors.red.cgColor)
         var circleFrame = CGRect(x: symbolFrame.midX - dimensions/2, y: symbolFrame.maxY - dimensions, width: dimensions, height: dimensions)
         context.fillEllipse(in: circleFrame)
         goalLabel.frame = labelFrame
@@ -143,7 +144,7 @@ class SoccerShotChartEntryView: UIControl {
         // Draw Shot on target selector
         (symbolFrame, labelFrame) = shotOnGoalBoxFrame.divided(atDistance: shotOnGoalBoxFrame.height/2, from: CGRectEdge.minYEdge)
         
-        context.setFillColor(UIColor(red: 108.0/255.0, green: 12.0/255.0, blue: 12.0/255.0, alpha: 1.0).cgColor)
+        context.setFillColor(Colors.red.cgColor)
         circleFrame = CGRect(x: symbolFrame.midX - dimensions/2, y: symbolFrame.maxY - dimensions, width: dimensions, height: dimensions)
         context.fillEllipse(in: circleFrame)
         context.setFillColor(UIColor.white.cgColor)
@@ -153,13 +154,14 @@ class SoccerShotChartEntryView: UIControl {
         // Shot off target selector
         (symbolFrame, labelFrame) = shotBoxFrame.divided(atDistance: shotBoxFrame.height/2, from: CGRectEdge.minYEdge)
         
-        context.setFillColor(UIColor(red: 108.0/255.0, green: 12.0/255.0, blue: 12.0/255.0, alpha: 1.0).cgColor)
+        context.setFillColor(Colors.red.cgColor)
         circleFrame = CGRect(x: symbolFrame.midX - dimensions/2, y: symbolFrame.maxY - dimensions, width: dimensions, height: dimensions)
         let offset: CGFloat = dimensions/10
         let topLeftCorner: CGPoint = CGPoint(x: circleFrame.minX + offset, y: circleFrame.minY + offset)
         let topRightCorner: CGPoint = CGPoint(x: circleFrame.maxX - offset, y: circleFrame.minY + offset)
         let bottomRightCorner: CGPoint = CGPoint(x: circleFrame.maxX - offset, y: circleFrame.maxY - offset)
         let bottomLeftCorner: CGPoint = CGPoint(x: circleFrame.minX + offset, y: circleFrame.maxY - offset)
+        context.setStrokeColor(Colors.red.cgColor)
         context.setLineWidth(3.0)
         context.move(to: topLeftCorner)
         context.addLine(to: bottomRightCorner)

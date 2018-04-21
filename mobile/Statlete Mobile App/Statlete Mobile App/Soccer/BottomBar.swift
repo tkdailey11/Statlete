@@ -34,7 +34,7 @@ class BottomBar: UIControl {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = Colors.color2
+        backgroundColor = Colors.red
         
         //////////
         tab1Label.frame = tab1Frame

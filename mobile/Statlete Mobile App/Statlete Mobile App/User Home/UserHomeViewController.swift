@@ -139,19 +139,17 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
                 
             }
             
-            DB.database.child("TeamSportfolios/\(sid)").observeSingleEvent(of: .value, with: { (snapshot) in
-                let value = snapshot.value as! NSDictionary
-                var players = value["Players"] as? [String: String] ?? [:]
-                var games = value["Games"] as? [String: String] ?? [:]
-                var sport = value["Sport"] as? String
-                var creator = value["Creator"] as? String
-                var admins = value["Admins"] as? NSDictionary
-                var teamName = value["TeamName"] as? String
-                var token = value["Token"] as? String
-                let teamSportfolio = Sportfolio(sportfolioId: sid, name: teamName!, games: games, players: players)
-                vc.thisSportfolio = teamSportfolio
-                DB.currentSportfolio = teamSportfolio
+            
+            //////////////////////
+            DB.loadTeamSportfolio(with: sid, completion: { success in
+                if success {
+                    vc.thisSportfolio = DB.currentSportfolio
+                    vc.view.setNeedsDisplay()
+                }
+                else {
+                }
             })
+            //////////////////////
            
        //   vc.thisSportfolio = Sportfolio(sportfolioId: sid, name: selectedSportfolioName, games: games, players: <#T##[String : [String : String]]#>, playerStats: <#T##[String : [String : Int]]#>)
             // get games from db
