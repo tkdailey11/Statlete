@@ -14,9 +14,11 @@ class User {
     var email: String = String()
     var AdminTeams: [String] = [String]() // list of sportfolio ids
     var PlayerTeams: [String] = [String]()
+    var PlayerSportfolios: [String: String] = [String : String]() // id - linkedteamid (empty if not linked)
     var phoneNumber: String = String()
+    var linkedTeams: [String: String] = [String : String]() // player sportfolios linked to team
     
-    var mySportfolios: [String : String] = [String : String]() // hold name and ids
+    var mySportfolios: [String : String] = [String : String]() // ID as key, NAME as value
     
     init(name: String, email: String) {
         self.name = name

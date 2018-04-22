@@ -17,9 +17,10 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var SportfoliosTitleLabel: UILabel!
     @IBOutlet weak var AddButton: UIButton!
     
+    @IBOutlet weak var profileImage: UIImageView!
     var teamSportfolios: [String] = []
     var playerSportfolios: [String] = []
-    
+    //var playerSportfolios: [String:String] = [:]
     var selectedSportfolioName: String = String()
     
     override func viewDidLoad() {
@@ -28,7 +29,11 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
        
         self.nameLabel.text = DB.currentUser.name
        // loadViewIfNeeded()
-        
+        profileImage.layer.borderWidth = 1
+        profileImage.layer.masksToBounds = false
+        profileImage.layer.borderColor = UIColor.red.cgColor
+        profileImage.layer.cornerRadius = profileImage.frame.height / 2
+        profileImage.clipsToBounds = true
         tableView.delegate = self
         tableView.dataSource = self
      
@@ -36,6 +41,10 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.register(nib, forCellReuseIdentifier: "SportfolioCell")
      
 
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -67,11 +76,12 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
             })
          
         }
-        for team in DB.currentUser.PlayerTeams {
+        for team in DB.currentUser.PlayerSportfolios.keys {
             DB.database.child("PlayerSportfolios").child(team).child("Name").observeSingleEvent(of: .value, with: { (snapshot) in
                 print("SNAPSHOT!!!!!!!!!!!        !!!!: \(snapshot)")
                 let teamname = snapshot.value as? String ?? ""
                 self.playerSportfolios.append(teamname)
+                //self.playerSportfolios[team] = teamname
                 if !teamname.isEmpty{
                      DB.currentUser.mySportfolios[teamname] = team
                    // DB.currentUser.sportfolioNames.append(teamname)
@@ -126,6 +136,7 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
             let vc = segue.destination as! SportfolioViewController
             print("i am preparing")
             var sid: String = String()
+          
             if(DB.currentUser.mySportfolios.keys.contains(selectedSportfolioName)){
                 sid = DB.currentUser.mySportfolios[selectedSportfolioName]! // get id from name
             }
@@ -133,22 +144,52 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
             if(playerSportfolios.contains(selectedSportfolioName)){
                 // search db in PlayerSportfolio
                  print("selected is contained in PLAYER SPORTFOLIOOOOOO")
+                // check if linked to team
+                if(DB.currentUser.PlayerSportfolios[sid] == "NA"){
+                    DB.loadPlayerSportfolio(with: sid, completion: {success in
+                        if success{
+                             vc.thisSportfolio = DB.currentSportfolio
+                            vc.view.setNeedsDisplay()
+                        }else{
+                            
+                        }
+                    })
+                }else{
+                    sid = DB.currentUser.PlayerSportfolios[sid]! // get teamid 
+                    DB.loadTeamSportfolio(with: sid, completion: { success in
+                        if success {
+                            vc.thisSportfolio = DB.currentSportfolio
+                            vc.view.setNeedsDisplay()
+                        }
+                        else {
+                        }
+                    })
+                }
+                
                 
             }else if(teamSportfolios.contains(selectedSportfolioName)){
                 print("selected is contained in TEAM SPORTFOLIOOOOOO")
+                DB.loadTeamSportfolio(with: sid, completion: { success in
+                    if success {
+                        vc.thisSportfolio = DB.currentSportfolio
+                        vc.view.setNeedsDisplay()
+                    }
+                    else {
+                    }
+                })
                 
             }
             
             
             //////////////////////
-            DB.loadTeamSportfolio(with: sid, completion: { success in
+           /* DB.loadTeamSportfolio(with: sid, completion: { success in
                 if success {
                     vc.thisSportfolio = DB.currentSportfolio
                     vc.view.setNeedsDisplay()
                 }
                 else {
                 }
-            })
+            })*/
             //////////////////////
            
        //   vc.thisSportfolio = Sportfolio(sportfolioId: sid, name: selectedSportfolioName, games: games, players: <#T##[String : [String : String]]#>, playerStats: <#T##[String : [String : Int]]#>)

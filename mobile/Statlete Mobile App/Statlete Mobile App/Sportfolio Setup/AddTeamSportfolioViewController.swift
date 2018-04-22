@@ -13,10 +13,10 @@ class AddTeamSportfolioViewController: UIViewController {
     
     @IBOutlet weak var playerButton: UIButton!
     @IBOutlet weak var teamButton: UIButton!
-    @IBOutlet weak var backButton: UIButton!
+   // @IBOutlet weak var backButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.isNavigationBarHidden = true
+        //self.navigationController?.isNavigationBarHidden = true
        // teamButton.layer.borderWidth = 0.6
         //teamButton.layer.borderColor = Colors.color2.cgColor
         teamButton.layer.cornerRadius = 10
@@ -38,13 +38,14 @@ class AddTeamSportfolioViewController: UIViewController {
         
         navigationController?.isNavigationBarHidden = false
         
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.isTranslucent = true
+     //   navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        //navigationController?.navigationBar.shadowImage = UIImage()
+     //   navigationController?.navigationBar.isTranslucent = true
         navigationController?.view.backgroundColor = .clear
+        navigationItem.title = "Choose Sportfolio"
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "Avenir Next Ultra Light", size: 20)!]
         
-        
-        self.navigationController?.navigationBar.tintColor = UIColor.white
+        self.navigationController?.navigationBar.tintColor = Colors.red
         // Do any additional setup after loading the view.
     }
 
@@ -53,11 +54,11 @@ class AddTeamSportfolioViewController: UIViewController {
         // Dispose of any resources that can be recreated.
         
     }
-    
+   /*
     @IBAction func backButtonClicked(_ sender: UIButton) {
            _ = navigationController?.popViewController(animated: true)
     }
-    
+    */
     /*
     // MARK: - Navigation
 

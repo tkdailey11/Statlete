@@ -36,13 +36,14 @@ class Sportfolio{
     public var name: String = String()
     public var games: [String:String] = [String:String]()
     public var players: [String:String] = [String:String]()
-    public var sport: String = String()
+    public var sport: Int = Int()
     public var creator: String = String()
     public var admins: [String] = []
     public var token: String = String()
+    public var type: Int = Int() // 0 if player sportfolio, 1 if team sportfolio
     //public var playerStats: [String: [String: Int]] = [String: [String: Int]]() // if team sportfolio
     
-    init(sportfolioId: String, name: String, games: [String:String], players: [String:String], sport: String, creator: String, admins: [String], token: String) {
+    init(sportfolioId: String, name: String, games: [String:String], players: [String:String], sport: Int, creator: String, admins: [String], token: String, type: Int) {
         self.sportfolioId = sportfolioId
         self.name = name
         self.games = games
@@ -51,6 +52,7 @@ class Sportfolio{
         self.creator = creator
         self.admins = admins
         self.token = token
+        self.type = type
     }
     init(){
         

@@ -90,7 +90,7 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate{
                 let phoneNumber = ""
                 let name = self.nameTextField.text!
                 
-                DB.database.child("Users").child(id).updateChildValues(["Name": name, "Phone": phoneNumber, "AdminTeams": " ", "PlayerTeams": " "])
+                DB.database.child("Users").child(id).updateChildValues(["Name": name, "Phone": phoneNumber, "AdminTeams": " ", "PlayerSportfolios": " "])
                 
                 // Create a new user object
                  DB.currentUser = User(name: name, email: email)

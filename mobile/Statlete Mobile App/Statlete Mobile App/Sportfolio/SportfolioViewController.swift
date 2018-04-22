@@ -20,10 +20,11 @@ class SportfolioViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var blurView: UIVisualEffectView!
     
     var isSideMenuHidden: Bool = true
-    var thisSportfolio: Sportfolio = Sportfolio() // names to display
+    var thisSportfolio: Sportfolio = Sportfolio()
     
     var sportfolios: [String] = [String]()
-    
+   // var sportfolioNames: [String] = [String]() // names to display
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,6 +36,7 @@ class SportfolioViewController: UIViewController, UITableViewDelegate, UITableVi
         sideView.layer.shadowOffset = CGSize(width: 5, height: 0)
         viewConstraint.constant = -175
         sportfolios = Array(DB.currentUser.mySportfolios.keys)
+     //   sportfolioNames = Array(DB.currentUser.mySportfolios.keys)
   
     }
     
@@ -83,8 +85,10 @@ class SportfolioViewController: UIViewController, UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "SideMenuCell", for: indexPath) as UITableViewCell
         
-        cell.textLabel?.text = sportfolios[indexPath.row]
-        
+       cell.textLabel?.text = sportfolios[indexPath.row]
+      //  cell.textLabel?.text = sportfolioNames[indexPath.row]
+    
+
         return cell
     }
     
@@ -92,15 +96,37 @@ class SportfolioViewController: UIViewController, UITableViewDelegate, UITableVi
         let sid = DB.currentUser.mySportfolios[sportfolios[indexPath.row]] ?? ""
         
         // Check if is player sportfolio or team and load it accordingly
-        
-        DB.loadTeamSportfolio(with: sid, completion: { success in
-            if success {
-                self.thisSportfolio = DB.currentSportfolio
-                self.view.setNeedsDisplay()
+        if(DB.currentUser.AdminTeams.contains(sid)){
+            DB.loadTeamSportfolio(with: sid, completion: { success in
+                if success {
+                    self.thisSportfolio = DB.currentSportfolio
+                    self.view.setNeedsDisplay()
+                }
+                else {
+                }
+            })
+        }else if(DB.currentUser.PlayerSportfolios.keys.contains(sid)){
+            if(DB.currentUser.PlayerSportfolios[sid] == "NA"){
+                // not linked to a team - load playersportfolio
+                DB.loadPlayerSportfolio(with: sid, completion: {success in
+                    if success{
+                        self.thisSportfolio = DB.currentSportfolio
+                        self.view.setNeedsDisplay()
+                    }
+                })
+            }else{
+                // load teamsportfolio with sid.value (team id)
+                DB.loadTeamSportfolio(with: sid, completion: { success in
+                    if success {
+                        self.thisSportfolio = DB.currentSportfolio
+                        self.view.setNeedsDisplay()
+                    }
+                    else {
+                    }
+                })
             }
-            else {
-            }
-        })
+        }
+   
         
         /* Load a team sportfolio
         DB.database.child("TeamSportfolios/\(sid)").observeSingleEvent(of: .value, with: { (snapshot) in

@@ -18,8 +18,10 @@ class TeamSportfolioSetupViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var teamNameTextField: UITextField!
     
     @IBOutlet weak var teamTokenTextField: UITextField!
-    @IBOutlet weak var backButton: UIButton!
+   
+    @IBOutlet weak var chooseSportButton: UIButton!
     
+   
     // default chosen sport to soccer
     var chosenSport: Int = 1
     var allplayers: [String: String] = [:]
@@ -42,20 +44,24 @@ class TeamSportfolioSetupViewController: UIViewController, UITextFieldDelegate {
         let teamPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.teamNameTextField.frame.height))
         let teamline = CALayer()
         teamline.frame = CGRect(x: 0, y: teamNameTextField.frame.height - 1, width: teamNameTextField.frame.width , height: 1)
-        teamline.backgroundColor = Colors.color5.cgColor
+        teamline.backgroundColor = Colors.color0.cgColor
         teamNameTextField.leftView = teamPaddingView
         teamNameTextField.leftViewMode = UITextFieldViewMode.always
         teamPaddingView.layer.addSublayer(teamline)
+        teamNameTextField.textAlignment = NSTextAlignment.center
+        chooseSportButton.layer.cornerRadius = chooseSportButton.frame.height / 2
         
+        addPlayersButton.layer.cornerRadius = addPlayersButton.frame.height / 2
+        navigationController?.view.backgroundColor = .clear
+        navigationItem.title = "New Team"
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "Avenir Next Ultra Light", size: 20)!]
         
+        self.navigationController?.navigationBar.tintColor = Colors.red
         
         
     }
   
-    @IBAction func backButtonClicked(_ sender: UIButton) {
-           _ = navigationController?.popViewController(animated: true)
-           _ = navigationController?.popViewController(animated: true)
-    }
+   
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

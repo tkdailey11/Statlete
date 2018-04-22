@@ -15,7 +15,11 @@ class ExistingTeamSetupViewController: UIViewController {
     @IBOutlet weak var teamIDTextField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        navigationController?.view.backgroundColor = .clear
+        navigationItem.title = "Existing Team"
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "Avenir Next Ultra Light", size: 20)!]
+        
+        self.navigationController?.navigationBar.tintColor = Colors.red
        
     }
 
@@ -39,6 +43,8 @@ class ExistingTeamSetupViewController: UIViewController {
         // add to database - Team Sportfolio
         //DB.database.child("TeamSportfolios").child(sportfolioId).updateChildValues(["Admins" : " ", "Creator" : id, "Games": " ", "Players" : " ", "Sport" : "soccer", "TeamName": teamName, "Token": " "])
         //DB.database.child("TeamSportfolios").child(sportfolioId).child("Players").updateChildValues(allplayers)
+        
+       
         self.performSegue(withIdentifier: "toSportfolio", sender: self)
         
     }

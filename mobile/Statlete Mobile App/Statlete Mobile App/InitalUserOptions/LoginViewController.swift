@@ -84,14 +84,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     }
                     DB.currentUser.AdminTeams = adminTeams
                     
-                    var playerTeams: [String] = []
-                    let playerTeamsSet = value?["PlayerTeams"] as? [String: String] ?? [:]
-                    let playerTeamsIDs = playerTeamsSet.keys
-                    for playerTeamsID in playerTeamsIDs {
-                        playerTeams.append(playerTeamsID)
-                    }
-                    DB.currentUser.PlayerTeams = playerTeams // change this when db changes from PlayerTeams to PlayerSportfolios
+                    var playerSportfolios: [String:String] = [:]
+                    let playerSportfoliosSet = value?["PlayerSportfolios"] as? [String: String] ?? [:]
+                    let playerSportfolioDs = playerSportfoliosSet.keys
                     
+                    for psf in playerSportfoliosSet {
+                        playerSportfolios[psf.key] = psf.value
+                        //playerTeams.append(playerTeamsID)
+                    }
+                    // iterate and save playerteamid && team id if linked 
+                 //   DB.currentUser.PlayerTeams = playerTeams // change this when db changes from PlayerTeams to PlayerSportfolios
+                    DB.currentUser.PlayerSportfolios = playerSportfolios
                     DB.currentUser.phoneNumber = phone
                 })
  
