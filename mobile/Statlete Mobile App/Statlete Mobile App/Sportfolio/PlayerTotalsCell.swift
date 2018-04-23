@@ -15,8 +15,9 @@ class PlayerTotalsCell: UITableViewCell {
         // Initialization code
     }
 
-    @IBOutlet weak var statNameTextField: UITextField!
-    @IBOutlet weak var numberTextField: UITextField!
+    @IBOutlet weak var statNameLabel: UILabel!
+    @IBOutlet weak var statValueLabel: UILabel!
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

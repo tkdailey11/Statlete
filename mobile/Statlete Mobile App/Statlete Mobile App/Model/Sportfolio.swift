@@ -41,7 +41,7 @@ class Sportfolio{
     public var admins: [String] = []
     public var token: String = String()
     public var type: Int = Int() // 0 if player sportfolio, 1 if team sportfolio
-    public var playerStats: NSDictionary = NSDictionary() // if team sportfolio
+    public var playerStats: [String:NSDictionary] = [String:NSDictionary]()// if team sportfolio
     
     public var psTotals: [String: String] = [:] // this is for player sportfolio only to hold totalStats
     

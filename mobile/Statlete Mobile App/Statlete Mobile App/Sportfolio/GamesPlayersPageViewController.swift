@@ -18,6 +18,10 @@ class GamesPlayersPageViewController: UIPageViewController, UIPageViewController
         
         self.delegate = self
         self.dataSource = self
+        navigationController?.isNavigationBarHidden = true
+       
+        
+        self.navigationController?.navigationBar.tintColor = UIColor.white
         
         // pages
         let page1: UIViewController! = storyboard?.instantiateViewController(withIdentifier: "page1") as? GamesViewController
@@ -34,7 +38,9 @@ class GamesPlayersPageViewController: UIPageViewController, UIPageViewController
     
         
     }
-  
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
+    }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let viewControllerIndex = pages.index(of: viewController) else {

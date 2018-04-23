@@ -67,7 +67,7 @@ class DB {
             let playersData = value["Players"] as? NSDictionary ?? [:]
             print(playersData)
             
-            self.currentSportfolio.playerStats = playersData
+            self.currentSportfolio.playerStats[gameid] = playersData
             //self.currentSportfolio.addToTotals(player: "", stats: playersData)
             completion(true)
             

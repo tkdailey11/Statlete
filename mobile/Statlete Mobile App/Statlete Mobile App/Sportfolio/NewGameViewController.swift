@@ -26,7 +26,7 @@ class NewGameViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         navigationController?.view.backgroundColor = .clear
         
         
-        self.navigationController?.navigationBar.tintColor = UIColor.white
+        self.navigationController?.navigationBar.tintColor = Colors.red
 
     }
 

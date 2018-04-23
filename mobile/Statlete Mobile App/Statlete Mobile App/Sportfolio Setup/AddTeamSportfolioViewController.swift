@@ -38,16 +38,22 @@ class AddTeamSportfolioViewController: UIViewController {
         
         navigationController?.isNavigationBarHidden = false
         
-     //   navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        //navigationController?.navigationBar.shadowImage = UIImage()
-     //   navigationController?.navigationBar.isTranslucent = true
-        navigationController?.view.backgroundColor = .clear
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.view.backgroundColor = .white
+        self.edgesForExtendedLayout = UIRectEdge.top
+        
+     
         navigationItem.title = "Choose Sportfolio"
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "Avenir Next Ultra Light", size: 20)!]
         
+
+
         self.navigationController?.navigationBar.tintColor = Colors.red
         // Do any additional setup after loading the view.
     }
+   
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

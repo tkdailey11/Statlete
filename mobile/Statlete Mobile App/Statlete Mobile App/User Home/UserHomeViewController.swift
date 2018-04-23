@@ -158,6 +158,16 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
                         if success{
                              vc.thisSportfolio = DB.currentSportfolio
                             vc.view.setNeedsDisplay()
+                            for game in DB.currentSportfolio.games.keys{
+                                DB.loadPlayerStats(with: game, completion: { success in
+                                    if success{
+                                        
+                                    }
+                                    else{
+                                        
+                                    }
+                                })
+                            }
                         }else{
                             
                         }
@@ -181,6 +191,16 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
                     if success {
                         vc.thisSportfolio = DB.currentSportfolio
                         vc.view.setNeedsDisplay()
+                        for game in DB.currentSportfolio.games.keys{
+                            DB.loadPlayerStats(with: game, completion: { success in
+                                if success{
+                                    
+                                }
+                                else{
+                                    
+                                }
+                            })
+                        }
                     }
                     else {
                     }

@@ -56,7 +56,6 @@
 		DC6F8DEB20749C2400C38E4D /* ChoosePlayersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6F8DEA20749C2400C38E4D /* ChoosePlayersViewController.swift */; };
 		DC6F8DED2074A0B800C38E4D /* NewGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6F8DEC2074A0B800C38E4D /* NewGameViewController.swift */; };
 		DC760D20208D78DB00D43AC1 /* PlayerTotalsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC760D1E208D78DB00D43AC1 /* PlayerTotalsCell.swift */; };
-		DC760D21208D78DB00D43AC1 /* PlayerTotalsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC760D1F208D78DB00D43AC1 /* PlayerTotalsCell.xib */; };
 		DC83F251207993AF005623AA /* GameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC83F24F207993AF005623AA /* GameCell.swift */; };
 		DC83F252207993AF005623AA /* GameCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC83F250207993AF005623AA /* GameCell.xib */; };
 		DC936F0D207961F700F4E86C /* GamesPlayersPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC936F0C207961F700F4E86C /* GamesPlayersPageViewController.swift */; };
@@ -125,7 +124,6 @@
 		DC6F8DEA20749C2400C38E4D /* ChoosePlayersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePlayersViewController.swift; sourceTree = "<group>"; };
 		DC6F8DEC2074A0B800C38E4D /* NewGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGameViewController.swift; sourceTree = "<group>"; };
 		DC760D1E208D78DB00D43AC1 /* PlayerTotalsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTotalsCell.swift; sourceTree = "<group>"; };
-		DC760D1F208D78DB00D43AC1 /* PlayerTotalsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayerTotalsCell.xib; sourceTree = "<group>"; };
 		DC83F24F207993AF005623AA /* GameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCell.swift; sourceTree = "<group>"; };
 		DC83F250207993AF005623AA /* GameCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameCell.xib; sourceTree = "<group>"; };
 		DC936F0C207961F700F4E86C /* GamesPlayersPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesPlayersPageViewController.swift; sourceTree = "<group>"; };
@@ -292,7 +290,6 @@
 				DC83F24F207993AF005623AA /* GameCell.swift */,
 				DC83F250207993AF005623AA /* GameCell.xib */,
 				DC760D1E208D78DB00D43AC1 /* PlayerTotalsCell.swift */,
-				DC760D1F208D78DB00D43AC1 /* PlayerTotalsCell.xib */,
 			);
 			path = Sportfolio;
 			sourceTree = "<group>";
@@ -409,7 +406,6 @@
 				04C374BD2078401E000F7063 /* TeamStatCell.xib in Resources */,
 				DC83F252207993AF005623AA /* GameCell.xib in Resources */,
 				0456940B2080674C0092C184 /* GoogleService-Info.plist in Resources */,
-				DC760D21208D78DB00D43AC1 /* PlayerTotalsCell.xib in Resources */,
 				04F32DA12076F37B00E9C0CA /* PlayerStatCell.xib in Resources */,
 				DC0EE771204F78D700D550F5 /* Main.storyboard in Resources */,
 			);

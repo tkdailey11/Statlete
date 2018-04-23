@@ -8,16 +8,22 @@
 
 import UIKit
 
-class PlayerInTeamViewController: UIViewController {
+class PlayerInTeamViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    @IBOutlet weak var tableView: UITableView!
     @IBAction func dismissPopup(_ sender: UIButton) {
          dismiss(animated: true, completion: nil)
     }
-    var playerStats: [String: String] = [:]
+    var playerStats: [String: Int] = [:]
+    var statNames: [String] = []
+    var statValues: [Int] = []
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        tableView.delegate = self
+        tableView.dataSource = self
         // Do any additional setup after loading the view.
+     //   statNames = ArrayplayerStats.keys
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,6 +32,18 @@ class PlayerInTeamViewController: UIViewController {
     }
     
     // table view
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+     return playerStats.count
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "playerTotalsCell", for: indexPath) as! PlayerTotalsCell
+        cell.statNameLabel.text  = statNames[indexPath.row]
+        cell.statValueLabel.text = "\(statValues[indexPath.row])"
+        return cell
+    }
 
     
 
