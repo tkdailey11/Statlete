@@ -11,6 +11,7 @@ import UIKit
 class GamesPlayersPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
   
     var pages = [UIViewController]()
+    var playerData: [String : [String : String]] = [:] // Key: p#, Value:  key: statnam value: count
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +30,8 @@ class GamesPlayersPageViewController: UIPageViewController, UIPageViewController
         let pageControl = UIPageControl.appearance(whenContainedInInstancesOf: [GamesPlayersPageViewController.self])
         pageControl.pageIndicatorTintColor = UIColor.lightGray
         pageControl.currentPageIndicatorTintColor = UIColor.black
+        
+    
         
     }
   
@@ -75,6 +78,7 @@ class GamesPlayersPageViewController: UIPageViewController, UIPageViewController
         super.didReceiveMemoryWarning()
     }
     
+  
 
     /*
     // MARK: - Navigation

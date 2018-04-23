@@ -24,6 +24,9 @@ class GamesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let nib = UINib.init(nibName: "GameCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "GameCell")
         let timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.reloadTableView), userInfo: nil, repeats: true)
+       
+        //load players
+        
     }
     
     @objc func reloadTableView() {
@@ -77,15 +80,21 @@ class GamesViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    func loadPlayerData(){
+        let allgames = DB.currentSportfolio.games.keys
+        for game in allgames{
+            // iterate through all games add player totals to
+            DB.loadPlayerStats(with: game, completion: { success in
+                if success {
+                    
+                }
+                else {
+                }
+            })
+        }
     }
-    */
+
+  
 
 }

@@ -13,6 +13,7 @@ class PlayerInTeamViewController: UIViewController {
     @IBAction func dismissPopup(_ sender: UIButton) {
          dismiss(animated: true, completion: nil)
     }
+    var playerStats: [String: String] = [:]
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,15 +25,8 @@ class PlayerInTeamViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    // table view
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    
 
 }

@@ -101,6 +101,17 @@ class SportfolioViewController: UIViewController, UITableViewDelegate, UITableVi
                 if success {
                     self.thisSportfolio = DB.currentSportfolio
                     self.view.setNeedsDisplay()
+                    for game in DB.currentSportfolio.games.keys{
+                        DB.loadPlayerStats(with: game, completion: { success in
+                            if success{
+                                
+                            }
+                            else{
+                                
+                            }
+                        })
+                    }
+                   
                 }
                 else {
                 }
@@ -120,6 +131,16 @@ class SportfolioViewController: UIViewController, UITableViewDelegate, UITableVi
                     if success {
                         self.thisSportfolio = DB.currentSportfolio
                         self.view.setNeedsDisplay()
+                        for game in DB.currentSportfolio.games.keys{
+                            DB.loadPlayerStats(with: game, completion: { success in
+                                if success{
+                                    
+                                }
+                                else{
+                                    
+                                }
+                            })
+                        }
                     }
                     else {
                     }

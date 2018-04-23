@@ -29,14 +29,19 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
        
         self.nameLabel.text = DB.currentUser.name
        // loadViewIfNeeded()
-        profileImage.layer.borderWidth = 1
+    //    profileImage.layer.borderWidth = 1
         profileImage.layer.masksToBounds = false
-        profileImage.layer.borderColor = UIColor.red.cgColor
+        
+        profileImage.layer.shadowColor = UIColor.black.cgColor
+        profileImage.layer.shadowOpacity = 0.8
+        profileImage.layer.shadowOffset = CGSize(width: 5, height: 0)
+        
+      //  profileImage.layer.borderColor = UIColor.red.cgColor
         profileImage.layer.cornerRadius = profileImage.frame.height / 2
         profileImage.clipsToBounds = true
         tableView.delegate = self
         tableView.dataSource = self
-     
+      
         let nib = UINib.init(nibName: "SportfolioCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "SportfolioCell")
      
@@ -115,6 +120,9 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
             cell.commonInit(imageName: "soccer", name: playerSportfolios[indexPath.row-teamSportfolios.count])
         }
         return cell
+    }
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = .clear
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -201,5 +209,18 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
     
 
 }
+
+final class HomeGradientView: UIView{
+    override func draw(_ rect: CGRect) {
+        let gradient: CAGradientLayer = CAGradientLayer()
+        gradient.frame = CGRect(x: 0, y: 0, width: superview!.frame.size.width, height: superview!.frame.size.height)
+        gradient.colors = [Colors.orange.cgColor, Colors.lightyellow.cgColor]
+        gradient.zPosition = -1
+        
+        layer.addSublayer(gradient)
+    }
+}
+
+
 
 

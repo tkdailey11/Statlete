@@ -41,7 +41,9 @@ class Sportfolio{
     public var admins: [String] = []
     public var token: String = String()
     public var type: Int = Int() // 0 if player sportfolio, 1 if team sportfolio
-    //public var playerStats: [String: [String: Int]] = [String: [String: Int]]() // if team sportfolio
+    public var playerStats: NSDictionary = NSDictionary() // if team sportfolio
+    
+    public var psTotals: [String: String] = [:] // this is for player sportfolio only to hold totalStats
     
     init(sportfolioId: String, name: String, games: [String:String], players: [String:String], sport: Int, creator: String, admins: [String], token: String, type: Int) {
         self.sportfolioId = sportfolioId
@@ -56,6 +58,10 @@ class Sportfolio{
     }
     init(){
         
+    }
+    
+    func addToTotals(player: String){
+       
     }
 }
 

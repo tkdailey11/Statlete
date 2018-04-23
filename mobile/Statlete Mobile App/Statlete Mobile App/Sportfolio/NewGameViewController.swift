@@ -17,7 +17,17 @@ class NewGameViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         super.viewDidLoad()
         self.durationPicker.delegate = self
         self.durationPicker.dataSource = self
-      
+        
+        navigationController?.isNavigationBarHidden = false
+        
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.view.backgroundColor = .clear
+        
+        
+        self.navigationController?.navigationBar.tintColor = UIColor.white
+
     }
 
     @IBOutlet weak var durationPicker: UIPickerView!
