@@ -12,7 +12,7 @@ class NewGameViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
    
     
     var duration: Int = 0
-    var pickerData: [String] = ["10", "12", "15"]
+    var pickerData: [String] = ["45", "40", "35", "30", "25", "20"]
     override func viewDidLoad() {
         super.viewDidLoad()
         self.durationPicker.delegate = self
@@ -68,7 +68,7 @@ class NewGameViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
                 let sid = DB.currentSportfolio.sportfolioId
                 let gameName = nameTextField.text ?? ""
                 let gameID = "\(sid)-\(DB.currentSportfolio.games.count+1)"
-                controller.game = SoccerGame(team: sid, gameID: gameID, name: gameName, halfLength: 45)
+                controller.game = SoccerGame(team: sid, gameID: gameID, name: gameName, halfLength: duration)
                 DB.currentSportfolio.games[gameID] = gameName
                 DB.database.child("TeamSportfolios/\(sid)/Games").updateChildValues([gameID: gameName])
  

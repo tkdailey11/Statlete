@@ -45,7 +45,7 @@ class GamesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GameCell", for: indexPath) as! GameCell
-        cell.commonInit(name: DB.currentSportfolio.games[Array(DB.currentSportfolio.games.keys)[indexPath.row]]!, live: true)
+        cell.commonInit(name: DB.currentSportfolio.games[Array(DB.currentSportfolio.games.keys)[indexPath.row]]!, live: (DB.currentSportfolio.liveGames[Array(DB.currentSportfolio.games.keys)[indexPath.row]] ?? false)!)
         cell.backgroundColor = .clear
         return cell
     }
@@ -63,20 +63,20 @@ class GamesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toVEGamesStatsViewController" {
-            //let semaphore = DispatchSemaphore(value: 0)
             if let controller = segue.destination as? VEGameStatsViewController {
                 let sid = DB.currentSportfolio.sportfolioId
                 controller.game = SoccerGame(team: sid, gameID: gameToOpen)
                 controller.game.loadGameFromDatabase(completion: { success in
                     if success {
-                        controller.game.listenForPlayers()
-                        controller.game.listenToDatabase()
-                        //semaphore.signal()
+                        if (controller.game.live == true) {
+                            controller.game.listenForPlayers()
+                            controller.game.listenToDatabase()
+                        }
+                        controller.view.setNeedsDisplay()
                     }
                     else {
                     }
                 })
-                //semaphore.wait()
             }
         }
     }
@@ -94,7 +94,5 @@ class GamesViewController: UIViewController, UITableViewDelegate, UITableViewDat
             })
         }
     }
-
-  
 
 }

@@ -42,6 +42,7 @@ class Sportfolio{
     public var token: String = String()
     public var type: Int = Int() // 0 if player sportfolio, 1 if team sportfolio
     public var playerStats: [String:NSDictionary] = [String:NSDictionary]()// if team sportfolio
+    public var liveGames: [String: Bool] = [:]
     
     public var psTotals: [String: String] = [:] // this is for player sportfolio only to hold totalStats
     
@@ -55,9 +56,19 @@ class Sportfolio{
         self.admins = admins
         self.token = token
         self.type = type
+        setLiveGames()
     }
     init(){
         
+    }
+    
+    func setLiveGames() {
+        for game in Array(games.keys) {
+            DB.database.child("SoccerGames/\(game)/Live").observe(.value, with: { (snapshot) in
+                let value = snapshot.value as? Bool ?? false
+                self.liveGames[game] = value
+            })
+        }
     }
     
     func addToTotals(player: String){

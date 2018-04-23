@@ -39,9 +39,7 @@ class DB {
     public static func loadPlayerSportfolio(with sid: String, completion: @escaping (Bool) -> Void) {
         DB.database.child("PlayerSportfolios/\(sid)").observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as! NSDictionary
-          //  var players = value["Players"] as? [String: String] ?? [:]
             let games = value["Games"] as? [String: String] ?? [:]
-           // var sport = value["Sport"] as? String ?? ""
             let sport = value["Sport"] as? Int ?? 1
             let creator = value["User"] as? String ?? ""
             let num = value["Number"] as? Int ?? 0

@@ -17,7 +17,6 @@ class VEGameStatsViewController: UIViewController, StatViewDelegate, ScoreboardV
 
     @IBOutlet weak var tableView: UITableView!
     
-    var topBar: TopBar = TopBar()
     var scoreboardView: ScoreboardView = ScoreboardView()
     var statView: StatView = StatView()
     
@@ -34,15 +33,22 @@ class VEGameStatsViewController: UIViewController, StatViewDelegate, ScoreboardV
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         
+        navigationController?.isNavigationBarHidden = false
+        
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.view.backgroundColor = .clear
+        
+        self.navigationController?.navigationBar.tintColor = Colors.red
+        
+        navigationItem.title = game.name
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "Avenir Next Ultra Light", size: 20)!]
+        
         sleep(1)
         
         
-        
-        topBar = TopBar(frame: CGRect(x: view.bounds.minX, y: view.bounds.minY, width: view.bounds.width, height: 50))
-        view.addSubview(topBar)
-        topBar.setGameLabel(to: game.name)
-        
-        scoreboardView = ScoreboardView(frame: CGRect(x: view.bounds.minX, y: view.bounds.minY + 50, width: view.bounds.width, height: 80))
+        scoreboardView = ScoreboardView(frame: CGRect(x: view.bounds.minX, y: view.bounds.minY + (navigationController?.navigationBar.frame.height ?? 0), width: view.bounds.width, height: 80))
         view.addSubview(scoreboardView)
         scoreboardView.myTeamScoreLabel.text = String(game.myTeamScore)
         scoreboardView.opposingTeamScoreLabel.text = String(game.opposingTeamScore)
@@ -50,17 +56,42 @@ class VEGameStatsViewController: UIViewController, StatViewDelegate, ScoreboardV
         scoreboardView.delegate = self
         scoreboardView.setNeedsDisplay()
         
-        statView = StatView(frame: CGRect(x: view.bounds.minX, y: view.bounds.minY + 130, width: view.bounds.width, height: view.bounds.height - 130))
+        statView = StatView(frame: CGRect(x: view.bounds.minX, y: view.bounds.minY + (navigationController?.navigationBar.frame.height ?? 0) + 80, width: view.bounds.width, height: view.bounds.height - (navigationController?.navigationBar.frame.height ?? 0) + 80))
         statView.delegate = self
         view.addSubview(statView)
+        
+        let timer2 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateNavBarTitle), userInfo: nil, repeats: false)
         
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(update), userInfo: nil, repeats: true)
     }
     
+     @objc func updateNavBarTitle() {
+        navigationItem.title = game.name
+    }
+    
     @objc func update() {
-        topBar.setGameLabel(to: game.name)
+        if !game.live {
+            scoreboardView.timeLabel.text = "Final"
+            scoreboardView.half = 2
+            scoreboardView.setNeedsDisplay()
+            scoreboardView.myTeamScoreLabel.text = String(game.my1stHalfTotals["Goals"]! + game.my2ndHalfTotals["Goals"]!)
+            scoreboardView.opposingTeamScoreLabel.text = String(game.opp1stHalfTotals["Goals"]! + game.opp2ndHalfTotals["Goals"]!)
+            scoreboardView.setNeedsDisplay()
+            statView.teamStatView.updateLabels()
+            statView.playerTableView.reloadData()
+            statView.teamStatView.tableView.reloadData()
+            timer.invalidate()
+            return
+        }
         if !game.inProgress {
             scoreboardView.timeLabel.text = getTimeStringFrom(minutes: 0, seconds: 0)
+            scoreboardView.half = game.half
+            scoreboardView.myTeamScoreLabel.text = String(game.my1stHalfTotals["Goals"]! + game.my2ndHalfTotals["Goals"]!)
+            scoreboardView.opposingTeamScoreLabel.text = String(game.opp1stHalfTotals["Goals"]! + game.opp2ndHalfTotals["Goals"]!)
+            scoreboardView.setNeedsDisplay()
+            statView.teamStatView.updateLabels()
+            statView.playerTableView.reloadData()
+            statView.teamStatView.tableView.reloadData()
             return
         }
         if !hasChangedHalf && game.half == 2 {

@@ -43,7 +43,7 @@ class SoccerGame {
     init(team: String, gameID: String, name: String, halfLength: Int) {
         self.team = team
         self.id = gameID
-        self.halfLength = 45
+        self.halfLength = halfLength
         self.name = name
         date = Date()
         half = 1
@@ -107,6 +107,7 @@ class SoccerGame {
                     }
                 }
             }
+            self.live = value["Live"] as? Bool ?? false
             self.isLoaded = true
             completion(true)
         }) { (error) in
