@@ -68,7 +68,7 @@ class DB {
             print(playersData)
             
             self.currentSportfolio.playerStats = playersData
-            self.currentSportfolio.addToTotals(player: "", stats: playersData)
+            //self.currentSportfolio.addToTotals(player: "", stats: playersData)
             completion(true)
             
         }) { (error) in
