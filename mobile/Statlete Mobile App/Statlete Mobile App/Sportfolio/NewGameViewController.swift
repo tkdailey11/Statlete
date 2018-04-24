@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewGameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class NewGameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
    
    
     @IBAction func shotChartSwitch(_ sender: UISwitch) {
@@ -17,8 +17,11 @@ class NewGameViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     var duration: Int = 0
     var pickerData: [String] = ["45", "40", "35", "30", "25", "20"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.opponentNameTextField.delegate = self
+        self.nameTextField.delegate = self
         self.durationPicker.delegate = self
         self.durationPicker.dataSource = self
         
@@ -68,6 +71,7 @@ class NewGameViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         duration = Int(pickerData[row])!
         print("duration of game: \(duration)")
     }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false

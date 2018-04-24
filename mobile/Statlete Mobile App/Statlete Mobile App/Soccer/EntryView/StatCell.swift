@@ -56,6 +56,7 @@ class StatCell: UITableViewCell {
     
     @objc func plusButtonPressed() {
         delegate?.plusButtonPressed(index: index!)
+        plusButton.isHighlighted = true
     }
     
     @objc func minusButtonPressed() {
