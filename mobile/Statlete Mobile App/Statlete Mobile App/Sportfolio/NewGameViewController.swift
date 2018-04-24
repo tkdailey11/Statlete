@@ -10,7 +10,11 @@ import UIKit
 
 class NewGameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
    
-    
+   
+    @IBAction func shotChartSwitch(_ sender: UISwitch) {
+    }
+    @IBAction func viewableSwitch(_ sender: UISwitch) {
+    }
     var duration: Int = 0
     var pickerData: [String] = ["45", "40", "35", "30", "25", "20"]
     override func viewDidLoad() {
@@ -26,8 +30,12 @@ class NewGameViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         navigationController?.view.backgroundColor = .clear
         
         
+        navigationItem.title = "New Game"
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "Avenir Next Ultra Light", size: 20)!]
+        
         self.navigationController?.navigationBar.tintColor = Colors.red
 
+        
     }
 
     @IBOutlet weak var durationPicker: UIPickerView!

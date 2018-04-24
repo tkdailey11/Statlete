@@ -16,6 +16,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var passwordTextField: UITextField!
     
+    @IBOutlet weak var incorrectLabel: UILabel!
     @IBOutlet weak var emailTextField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +56,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         loginButton.layer.cornerRadius = 10
 
     }
+   
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
@@ -63,14 +65,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) { (user, error) in
             if (error != nil) {
                 print(error!)
+               
             }
             else {
+
                 let email = self.emailTextField.text!
                 let id = email.replacingOccurrences(of: ".", with: "")
               
                 DB.database.child("Users").child(id).observeSingleEvent(of: .value, with: { (snapshot) in
                     let value = snapshot.value as? NSDictionary
-                    print("VALUEEE!!!!!!!!!!!!!!! \(value)")
+                  
                     let name = value?["Name"] as? String ?? ""
                     let phone = value?["Phone"] as? String ?? ""
                     print("NAME: \(name)")
