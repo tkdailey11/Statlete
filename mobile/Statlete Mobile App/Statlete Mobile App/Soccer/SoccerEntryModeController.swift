@@ -53,6 +53,7 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         navigationController?.view.backgroundColor = .white
         self.edgesForExtendedLayout = UIRectEdge.top
         
+       // navigationItem.leftBarButtonItem = navigationItem.
         
         navigationItem.title = game.name
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "Avenir Next Ultra Light", size: 20)!]

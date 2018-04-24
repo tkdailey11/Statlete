@@ -25,7 +25,7 @@ class PlayersViewController: UIViewController,UICollectionViewDataSource, UIColl
             // player sportfolio --> change label to say your stats
             
         }else{
-         //  getStats(for: "p12")
+            //  getStats(for: "p12")
         }
         
     }
@@ -87,6 +87,7 @@ class PlayersViewController: UIViewController,UICollectionViewDataSource, UIColl
                     print(type(of: p))
                     print(p["Assists"])
                     print(p["Goals"])
+                     print(p["Red Cards"])
                     var val: Int = p["Assists"] as? Int ?? 0
                     stats["Assists"] = stats["Assists"]! + val
                     val = p["Corners"] as? Int ?? 0
@@ -100,7 +101,7 @@ class PlayersViewController: UIViewController,UICollectionViewDataSource, UIColl
                     val = p["Offsides"] as? Int ?? 0
                     stats["Offsides"] = stats["Offsides"]! + val
                     val = p["'Red Cards'"] as? Int ?? 0
-                    stats["Red Cards"] = stats["RedCards"]! + val
+                    stats["RedCards"] = stats["RedCards"]! + val
                     val = p["Saves"] as? Int ?? 0
                     stats["Saves"] = stats["Saves"]! + val
                     val = p["Shots"] as? Int ?? 0

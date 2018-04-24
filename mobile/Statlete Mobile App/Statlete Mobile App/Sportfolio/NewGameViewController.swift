@@ -68,6 +68,11 @@ class NewGameViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         duration = Int(pickerData[row])!
         print("duration of game: \(duration)")
     }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toNewGameEntryMode" {

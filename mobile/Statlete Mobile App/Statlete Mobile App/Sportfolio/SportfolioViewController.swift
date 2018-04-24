@@ -127,7 +127,8 @@ class SportfolioViewController: UIViewController, UITableViewDelegate, UITableVi
                 })
             }else{
                 // load teamsportfolio with sid.value (team id)
-                DB.loadTeamSportfolio(with: sid, completion: { success in
+                let tid = DB.currentUser.PlayerSportfolios[sid]
+                DB.loadTeamSportfolio(with: tid!, completion: { success in
                     if success {
                         self.thisSportfolio = DB.currentSportfolio
                         self.view.setNeedsDisplay()

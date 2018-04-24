@@ -34,9 +34,11 @@ class GameCell: UITableViewCell {
             liveTagLabel.text = "LIVE"
             liveTagLabel.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
         }
- */
-        liveTagLabel.text = "LIVE"
-        nameLabel.text = name
+         */ else{
+            liveTagView.backgroundColor = Colors.orange
+            liveTagLabel.text = "LIVE"
+        }
+          nameLabel.text = name
     }
     
 }
