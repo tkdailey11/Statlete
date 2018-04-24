@@ -17,9 +17,6 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     }
     
     func backButtonClicked() {
-        //self.performSegue(withIdentifier: "backToGamesView", sender: nil)
-        //self.dismiss(animated: true, completion: nil)
-        print("clicked")
         _ = navigationController?.popViewController(animated: true)
         _ = navigationController?.popViewController(animated: true)
     }
@@ -34,7 +31,6 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     var oppTeamSelected: Bool = false
     var CurrentlySelectedNumber: Int = -1
     
-    //var topBar: TopBar = TopBar()
     var bottomBar: BottomBar = BottomBar()
     var scoreboardView: ScoreboardView?
     var substitutionBar: SubstitutionBar = SubstitutionBar()
@@ -69,22 +65,15 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         let possessionBarFrame: CGRect = CGRect(x: view.bounds.minX, y: view.bounds.maxY - 160, width: view.bounds.width, height: 120)
         let bottomBarFrame: CGRect = CGRect(x: view.bounds.minX, y: view.bounds.maxY - 40, width: view.bounds.width, height: 40)
         var rect: CGRect = CGRect(x: view.bounds.minX, y: view.bounds.minY + (navigationController?.navigationBar.frame.height ?? 0), width: view.bounds.width, height: view.bounds.height - 160 - (navigationController?.navigationBar.frame.height ?? 0))
-        //var topBarFrame: CGRect = CGRect()
         var scoreboardViewFrame: CGRect = CGRect()
         var substitutionBarFrame: CGRect = CGRect()
         var entryViewFrame: CGRect = CGRect()
         var shotChartFrame: CGRect = CGRect()
-        //(topBarFrame, rect) = rect.divided(atDistance: 50, from: CGRectEdge.minYEdge)
         (scoreboardViewFrame, rect) = rect.divided(atDistance: 80, from: CGRectEdge.minYEdge)
         (substitutionBarFrame, entryViewFrame) = rect.divided(atDistance: 50, from: CGRectEdge.minYEdge)
         shotChartFrame = entryViewFrame
-        let statViewFrame = CGRect(x: view.bounds.minX, y: view.bounds.minY /*+ topBarFrame.height*/ + scoreboardViewFrame.height, width: view.bounds.width, height: view.bounds.height - (/*topBarFrame.height*/scoreboardViewFrame.height + bottomBarFrame.height))
+        let statViewFrame = CGRect(x: view.bounds.minX, y: view.bounds.minY + scoreboardViewFrame.height + (navigationController?.navigationBar.frame.height ?? 0), width: view.bounds.width, height: view.bounds.height - (scoreboardViewFrame.height + bottomBarFrame.height + (navigationController?.navigationBar.frame.height ?? 0)))
         
-        // TopBar
-        //topBar = TopBar(frame: topBarFrame)
-        //view.addSubview(topBar)
-        //topBar.setGameLabel(to: game.name)
-        //topBar.delegate = self
         
         // ScoreboardView
         scoreboardView = ScoreboardView(frame: scoreboardViewFrame)
