@@ -7,10 +7,30 @@
 //
 
 import UIKit
+import Firebase
 
 class UserHomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-  
+    @IBAction func logoutButton(_ sender: UIButton) {
+        let alert = UIAlertController(title: "Logout?", message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+            
+            do{
+                try Auth.auth().signOut()
+                DB.currentUser = User(name: "", email: "")
+                self.performSegue(withIdentifier: "toBeginning", sender: nil)
+                
+                
+            }catch let signOutError as NSError{
+                print("Error signing out: %@", signOutError)
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alert, animated: true)
+        
+        
+    }
+    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
@@ -50,6 +70,18 @@ class UserHomeViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = true
         
+    }
+    func logout(){
+        // do alert, when click logout call this 
+        // firebase.auth.logout?
+        /*let alert = UIAlertController(title: "Start Game?", message: "", preferredStyle: .alert)
+         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+         DB.database.child("SoccerGames").child(self.game.id).updateChildValues(["PeriodStartTime": Int(Date().timeIntervalSince1970)])
+         DB.database.child("SoccerGames").child(self.game.id).updateChildValues(["InProgress": true])
+         
+         }))
+         alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+         self.present(alert, animated: true)*/
     }
 
     override func didReceiveMemoryWarning() {

@@ -302,6 +302,9 @@
                                     <constraint firstAttribute="height" constant="24" id="qzS-fg-506"/>
                                 </constraints>
                                 <state key="normal" title=" " image="settings"/>
+                                <connections>
+                                    <action selector="logoutButton:" destination="G4c-N7-Scb" eventType="touchUpInside" id="9sS-4k-UOd"/>
+                                </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="OZV-2m-XvL">
                                 <rect key="frame" x="0.0" y="400" width="375" height="267"/>
@@ -398,6 +401,7 @@
                         <outlet property="profileImage" destination="MD3-Ye-gDJ" id="qoi-yt-S23"/>
                         <outlet property="tableView" destination="OZV-2m-XvL" id="gib-8g-dfg"/>
                         <segue destination="Vcd-qo-bwI" kind="show" identifier="toSelectSportfolio" id="mJF-Bp-NCH"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="toBeginning" id="HYR-Zy-g17"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zkV-RX-xod" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1602,11 +1606,11 @@
         <scene sceneID="mTN-2i-TWc">
             <objects>
                 <viewController id="Vcd-qo-bwI" customClass="SportfolioViewController" customModule="Statlete_Mobile_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="oj3-zk-LPP">
+                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="oj3-zk-LPP">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YqW-5N-R2j">
+                            <containerView opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YqW-5N-R2j">
                                 <rect key="frame" x="0.0" y="73.5" width="375" height="593.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="535" id="U6A-2M-bgJ"/>
@@ -1615,23 +1619,23 @@
                                     <segue destination="bb4-Em-hCJ" kind="embed" id="yp0-QR-Ejl"/>
                                 </connections>
                             </containerView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bN8-d4-2XM" userLabel="Menu Button">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bN8-d4-2XM" userLabel="Menu Button">
                                 <rect key="frame" x="10" y="30" width="32" height="32"/>
                                 <state key="normal" image="menu"/>
                                 <connections>
                                     <action selector="menuButton:" destination="Vcd-qo-bwI" eventType="touchUpInside" id="cPx-Wz-K8c"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hWG-3D-nmi">
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hWG-3D-nmi">
                                 <rect key="frame" x="0.0" y="62" width="175" height="605"/>
                                 <subviews>
-                                    <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rfg-28-Jvc">
+                                    <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rfg-28-Jvc">
                                         <rect key="frame" x="0.0" y="0.0" width="175" height="605"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bh0-PX-tFC">
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="bh0-PX-tFC">
                                             <rect key="frame" x="0.0" y="0.0" width="175" height="605"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mbx-bH-Zbb">
+                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mbx-bH-Zbb">
                                                     <rect key="frame" x="10" y="10" width="155" height="65"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
@@ -1704,7 +1708,7 @@
                                     <constraint firstItem="Rfg-28-Jvc" firstAttribute="centerX" secondItem="hWG-3D-nmi" secondAttribute="centerX" id="uaS-ak-D9b"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uww-3u-hBv">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uww-3u-hBv">
                                 <rect key="frame" x="187.5" y="40" width="0.0" height="0.0"/>
                                 <attributedString key="attributedText"/>
                                 <nil key="highlightedColor"/>
@@ -2075,7 +2079,7 @@
         <image name="home icon" width="50" height="50"/>
         <image name="menu" width="32" height="32"/>
         <image name="prof" width="574" height="640"/>
-        <image name="settings" width="50" height="50"/>
+        <image name="settings" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="unr-wb-PXA"/>
@@ -2083,5 +2087,6 @@
         <segue reference="mJF-Bp-NCH"/>
         <segue reference="Je5-fw-34p"/>
         <segue reference="TG2-Vb-6XM"/>
+        <segue reference="HYR-Zy-g17"/>
     </inferredMetricsTieBreakers>
 </document>

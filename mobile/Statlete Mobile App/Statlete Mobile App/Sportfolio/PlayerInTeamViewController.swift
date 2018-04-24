@@ -23,7 +23,12 @@ class PlayerInTeamViewController: UIViewController, UITableViewDelegate, UITable
         tableView.dataSource = self
         // Do any additional setup after loading the view.
      //   statNames = ArrayplayerStats.keys
+        // timer
+         let timer2 = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(self.reloadtable), userInfo: nil, repeats: false)
         
+    }
+    @objc func reloadtable(){
+        tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {

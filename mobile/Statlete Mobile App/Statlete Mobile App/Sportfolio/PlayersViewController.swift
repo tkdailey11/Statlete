@@ -28,6 +28,7 @@ class PlayersViewController: UIViewController,UICollectionViewDataSource, UIColl
             //  getStats(for: "p12")
         }
         
+        
     }
     func clearstats(){
         stats = ["Assists": 0, "Corners": 0, "Crosses": 0, "Fouls": 0,"Goals": 0,"Minutes": 0,"Offsides": 0,"RedCards": 0,"Saves": 0,"Shots": 0,"Shots on Goal": 0, "Yellow Cards": 0]
@@ -60,6 +61,7 @@ class PlayersViewController: UIViewController,UICollectionViewDataSource, UIColl
         return cell
         
      }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.item)
         clearstats()
