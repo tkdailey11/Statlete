@@ -42,7 +42,7 @@
 
     </div>
     <!-- WIZARDS -->
-    <div v-else class="WizardsDiv">
+    <div v-if="viewMode==='isCreatingPlayer' || viewMode==='isCreatingTeam'" class="WizardsDiv">
       <div id="PlayerWizard" v-if="viewMode==='isCreatingPlayer'" style="padding-top=100px min-height: 100vh;">
           <tkd-wizard
             :steps="playerSteps"
