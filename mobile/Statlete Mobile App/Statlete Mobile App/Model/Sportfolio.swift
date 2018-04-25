@@ -56,10 +56,29 @@ class Sportfolio{
         self.admins = admins
         self.token = token
         self.type = type
+        listenForGames()
         setLiveGames()
     }
     init(){
         
+    }
+    
+    func listenForGames() {
+        if type == 0 {
+            DB.database.child("PlayerSportfolios/\(sportfolioId)/Games").observe(.value, with: { (snapshot) in
+                let value = snapshot.value as? [String: String] ?? [:]
+                self.games = value
+                self.setLiveGames()
+            })
+        }
+        else {
+            DB.database.child("TeamSportfolios/\(sportfolioId)/Games").observe(.value, with: { (snapshot) in
+                let value = snapshot.value as? [String: String] ?? [:]
+                self.games = value
+                self.setLiveGames()
+            })
+        }
+        setLiveGames()
     }
     
     func setLiveGames() {

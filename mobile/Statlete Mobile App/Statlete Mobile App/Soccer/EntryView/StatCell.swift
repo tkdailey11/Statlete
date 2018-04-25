@@ -8,6 +8,13 @@
 
 import UIKit
 
+extension UIView{
+    func blink() {
+        self.alpha = 0.2
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: [], animations: {self.alpha = 1.0}, completion: nil)
+    }
+}
+
 protocol StatCellDelegate: class {
     func plusButtonPressed(index: Int)
     func minusButtonPressed(index: Int)
@@ -47,13 +54,8 @@ class StatCell: UITableViewCell {
         minusButton.backgroundColor = Colors.orange
         plusButton.backgroundColor = Colors.orange
         
-        plusButton.setTitleColor(UIColor.black, for: .highlighted)
-        minusButton.setTitleColor(UIColor.black, for: .highlighted)
-        
         plusButton.addTarget(self, action: #selector(plusButtonPressed), for: .touchUpInside)
-        plusButton.addTarget(self, action: #selector(plusButtonDown), for: .touchDown)
         minusButton.addTarget(self, action: #selector(minusButtonPressed), for: .touchUpInside)
-        minusButton.addTarget(self, action: #selector(minusButtonDown), for: .touchDown)
         
         selectionStyle = .none
         picture.autoresizingMask = [.flexibleWidth]
@@ -61,22 +63,11 @@ class StatCell: UITableViewCell {
     
     @objc func plusButtonPressed() {
         delegate?.plusButtonPressed(index: index!)
-        plusButton.alpha = 1.0
-        plusButton.isHighlighted = true
-    }
-    
-    @objc func plusButtonDown() {
-        plusButton.alpha = 0.5
+        plusButton.blink()
     }
     
     @objc func minusButtonPressed() {
         delegate?.minusButtonPressed(index: index!)
-        minusButton.alpha = 1.0
-        minusButton.isHighlighted = true
+        minusButton.blink()
     }
-    
-    @objc func minusButtonDown() {
-        minusButton.alpha = 0.5
-    }
-    
 }

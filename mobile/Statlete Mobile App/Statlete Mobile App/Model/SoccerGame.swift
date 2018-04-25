@@ -115,6 +115,14 @@ class SoccerGame {
             print("EEEEERRRROOOORRRR")
         }
     }
+    func loadPlayerNames() {
+        DB.database.child("TeamSportfolios/\(self.team)/Players").observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? [String: String] ?? ["": ""]
+            for key in value.keys {
+                self.playerNames[key] = value[key]
+            }
+        })
+    }
  
     func loadPlayers() {
         
@@ -126,11 +134,14 @@ class SoccerGame {
                     self.players[key]![stat] = 0
                 }
                 self.players[key]!["Minutes"] = 0
-                let playerSportfolioID = value[key] ?? ""
-                self.playerIDs[key] = playerSportfolioID
+                //let playerSportfolioID = value[key] ?? ""
+                //self.playerIDs[key] = playerSportfolioID
+                self.playerNames[key] = value[key]
+                /*
                 DB.database.child("PlayerSportfolios/\(playerSportfolioID)/Name").observeSingleEvent(of: .value, with: { (snapshot) in
                     self.playerNames[key] = snapshot.value as? String ?? ""
                 })
+                 */
             }
             DB.database.child("SoccerGames/\(self.id)").updateChildValues(["Players": " "])
             for player in self.players {

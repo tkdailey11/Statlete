@@ -57,8 +57,13 @@ class GamesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         print(indexPath.row)
         gameToOpen = Array(DB.currentSportfolio.games.keys)[indexPath.row]
         
-        
-        self.performSegue(withIdentifier: "toVEGamesStatsViewController", sender: nil)
+        if DB.currentSportfolio.admins.contains(DB.currentUser.email.replacingOccurrences(of: ".", with: "")) {
+            //self.performSegue(withIdentifier: "toVEGamesStatsViewController", sender: nil)
+            self.performSegue(withIdentifier: "toEntryMode", sender: nil)
+        }
+        else {
+            self.performSegue(withIdentifier: "toVEGamesStatsViewController", sender: nil)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -69,6 +74,25 @@ class GamesViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 controller.game.loadGameFromDatabase(completion: { success in
                     if success {
                         if (controller.game.live == true) {
+                            controller.game.loadPlayerNames()
+                            controller.game.listenForPlayers()
+                            controller.game.listenToDatabase()
+                        }
+                        controller.view.setNeedsDisplay()
+                    }
+                    else {
+                    }
+                })
+            }
+        }
+        if segue.identifier == "toEntryMode" {
+            if let controller = segue.destination as? SoccerEntryModeController {
+                let sid = DB.currentSportfolio.sportfolioId
+                controller.game = SoccerGame(team: sid, gameID: gameToOpen)
+                controller.game.loadGameFromDatabase(completion: { success in
+                    if success {
+                        if (controller.game.live == true) {
+                            controller.game.loadPlayerNames()
                             controller.game.listenForPlayers()
                             controller.game.listenToDatabase()
                         }

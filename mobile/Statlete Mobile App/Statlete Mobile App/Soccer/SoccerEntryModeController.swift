@@ -45,13 +45,14 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        sleep(1)
+        print(self.view.frame.debugDescription)
         
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.view.backgroundColor = .white
         self.edgesForExtendedLayout = UIRectEdge.top
+        navigationController?.isNavigationBarHidden = false
         
         navigationItem.title = game.name
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "Avenir Next Ultra Light", size: 20)!]
@@ -64,9 +65,14 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         let possessionBarFrame: CGRect = CGRect(x: view.bounds.minX, y: view.bounds.maxY - 160, width: view.bounds.width, height: 120)
         let bottomBarFrame: CGRect = CGRect(x: view.bounds.minX, y: view.bounds.maxY - 40, width: view.bounds.width, height: 40)
         
+        /*
+        if navigationController!.navigationBar.frame.minY != 0 {
+            navigationController!.navigationBar.frame = CGRect(x: view.bounds.minX, y: view.bounds.minY, width: navigationController!.navigationBar.frame.width, height: navigationController!.navigationBar.frame.height)
+        }
+         */
         
         let navBarMaxY = (navigationController?.navigationBar.frame.maxY ?? 0)
-        
+        print(navBarMaxY)
         var rect: CGRect = CGRect(x: view.bounds.minX, y: navBarMaxY, width: view.bounds.width, height: view.bounds.height - 160 - navBarMaxY)
         
         print(navigationController!.navigationBar.frame.debugDescription)
@@ -129,6 +135,7 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     
     @objc func reloadSubBar() {
         substitutionBar.collectionView.reloadData()
+        navigationItem.title = game.name
     }
     
     // Called when a tab is selected in the bottomBar
