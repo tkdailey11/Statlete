@@ -37,7 +37,7 @@
     },
     methods: {
       playerWasSelected(event) {
-        alert(event)
+        console.log(event);
       },
       updateDB(event){
         alert(event)
@@ -64,6 +64,7 @@
   #GameView {
     width: 100vw;
     min-height: 100vh;
+    height: 100vh;
     background-color: white;
   }
   .TopBanner {

@@ -69,8 +69,6 @@
     border-bottom: 3px solid rgb(109,8,8);
   }
   .myButton {
-    background-color: orange;
-    color: rgb(180, 41, 102);
     margin-top: 10px;
     margin-left: 20px;
   }
@@ -94,5 +92,18 @@
   .ListContainer {
     min-width: 1000px;
     background-color: blue;
+  }
+  button {
+    margin-top: 20px;
+    cursor: pointer;
+    color: white;
+    background-color: rgb(255,158,0);
+    border-color: rgb(224,0,16);
+    color: rgb(224,0,16);
+  }
+  button:hover {
+    background-color: rgb(242,209,24);
+    border-color: rgb(224,0,16);
+    color: rgb(180, 41, 102);
   }
 </style>

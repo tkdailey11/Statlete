@@ -1,7 +1,7 @@
 <template>
   <div class="playerSelectionBox" style="overflow:scroll; height:310px;">
     <table style="width:100%;">
-      <tr v-for="i in Object.keys(players).length" :key="i">
+      <tr v-for="i in players.length" :key="i">
         <td>Row: {{i}}</td>
         <td><player-entry-box :key="uniqueID()" :index="i" :playerName="players[i-1].name" :playerNumber="players[i-1].num" @updatedPlayerInfo="updateInfo"></player-entry-box></td>
       </tr>
@@ -35,8 +35,8 @@
     },
     data () {
       return {
-        numRows: 10,
-        players: [{},{},{},{},{},{},{},{},{},{}]
+        players: [],
+        numRows: 15
       }
     },
     methods: {
@@ -54,6 +54,22 @@
           num: event.num
         }
       }
+    },
+    props: {
+      sport: {
+        default: 'basketball',
+        type: String
+      }
+    },
+    mounted() {
+      //do something after mounting vue instance
+      this.players = [{},{},{},{},{},
+                      {},{},{},{},{},
+                      {},{},{},{},{}];
+      if(this.sport === 'soccer'){
+        this.players.push({}, {}, {}, {}, {});
+      }
+      console.log('Length: ' + this.players.length);
     }
   }
 </script>
@@ -64,12 +80,27 @@
     width: auto;
     max-width: 500px;
     display: inline-block;
-    background-color: rgb(109,8,8);
     overflow: scroll;
     border: 3px solid black;
-    color: white;
   }
   th, td {
-    border: 1px solid white;
+    color: rgb(252,102,0);
+  }
+  button {
+    margin-top: 20px;
+    cursor: pointer;
+    color: white;
+    background-color: rgb(255,158,0);
+    border-color: rgb(224,0,16);
+    color: rgb(224,0,16);
+    width: 150px;
+    height: 50px;
+    border-radius: 25px;
+    margin-left: -110px;
+  }
+  button:hover {
+    background-color: rgb(242,209,24);
+    border-color: rgb(224,0,16);
+    color: rgb(180, 41, 102);
   }
 </style>

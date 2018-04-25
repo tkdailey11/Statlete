@@ -5,7 +5,7 @@
     <input type="password" v-model="password" placeholder="Password"><br>
     <button class="btn btn-outline-primary btn-social" @click="signIn">Sign In</button><br>
     <button class="btn btn-outline-primary btn-social" @click="signInGoogle">Google</button><br>
-    <p style="color: white;">Don't have an account? <router-link to="/sign-up" style="color: rgb(242,209,24);">Click here to create one!</router-link></p>
+    <p style="color: white;">Don't have an account? <router-link to="/sign-up" class="link">Click here to create one!</router-link></p>
   </div>
 </template>
 
@@ -51,6 +51,12 @@
 <style scoped>
   .login {
     margin-top: 40px;
+  }
+  .link {
+    color: rgb(242,209,24);
+  }
+  .link:hover {
+    color: white;
   }
   input {
     margin: 10px 0;

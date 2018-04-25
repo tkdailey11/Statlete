@@ -13,7 +13,7 @@
         </div>
         <div class="dataTable">
           <table width="100%">
-            <tr v-for="t in teamSportfolios" @click="$emit('teamSelected', t); closeNav();">
+            <tr v-for="t in teamSportfolios" @click="selectedTeam(t)">
               <td>{{ t }}</td>
             </tr>
             <tr>
@@ -73,6 +73,20 @@
           }
           console.log("TEAM SPORTFOLIOS:");
           console.log(self.teamSportfolios);
+        });
+      },
+      selectedTeam(id){
+        var self = this;
+        firebase.database().ref('TeamSportfolios').child(id).once('value', function(snapshot){
+          var obj = snapshot.val();
+          var name = obj.TeamName;
+          var data = {
+            Name: name,
+            Id: id,
+            Token: obj.Token
+          }
+          self.$emit('teamSelected', data);
+          self.closeNav();
         });
       }
     },
@@ -134,9 +148,9 @@
   .SBdataEntry {
     width: 200px;
     height: 250px;
-    background: rgb(180, 41, 102);
+    background: white;
     border-width: 5px;
-    border-color: rgb(180, 41, 102);
+    border-color: white;
     border-style: solid;
     border-radius: 35px;
     position: relative;
@@ -149,34 +163,34 @@
     height: 50px;
     background: white;
     border-radius: 35px 35px 0px 0px;
-    border-bottom-color: rgb(180, 41, 102);
+    border-bottom-color: white;
     border-bottom-width: medium;
     border-bottom-style: solid;
-    background-color: white;
+    background-color: rgb(252,102,0);
   }
 
   .dataTable {
     width: 190px;
     max-height: 189px;
     height: 189px;
-    background-color: white;
+    background-color: rgb(252,102,0);
     overflow: scroll;
     border-radius: 0px 0px 30px 30px;
   }
 
   table, th {
-    border: 1px solid rgb(180, 41, 102);
+    border: 1px solid white;
   }
 
   td {
-    border-bottom: 1px solid rgb(180, 41, 102);
-    color: rgb(180, 41, 102);
+    border-bottom: 1px solid white;
+    color: white;
   }
 
   h5 {
     line-height: 50px;
     height: 50px;
-    color: rgb(180, 41, 102);
+    color: white;
     text-overflow: ellipsis;
     white-space: nowrap;
 

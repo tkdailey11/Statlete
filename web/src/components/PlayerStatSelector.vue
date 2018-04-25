@@ -43,9 +43,13 @@
     },
     methods: {
       trClicked: function(idx) {
-        this.selectedPlayer = idx;
+        if(this.selectedPlayer === idx){
+          this.selectedPlayer = ''
+        }
+        else {
+          this.selectedPlayer = idx;
+        }
         this.$emit('playerSelected', this.selectedPlayer);
-        console.log(idx + ' Clicked');
       }
     }
   }

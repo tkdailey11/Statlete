@@ -19,10 +19,6 @@ export default {
   color: #2c3e50;
 }
 body {
-  /*background: rgb(240,138,59);*/
-/*background: radial-gradient(circle, rgba(240,138,59,1) 0%, rgba(246,113,78,1) 53%, rgba(237,108,73,1) 77%);
-background-color: white;
-*/
 /***  CSS Gradient  ***/
 /*  Chrome 1-9 and Safari 4-5.0  */
 height: 100vh;
@@ -30,7 +26,7 @@ background-image: -webkit-gradient(linear, left top, left bottom,
       color-stop( 0.0, rgb(224, 0, 16) ),
       color-stop( 0.135, rgb(235, 95, 17) ),
       color-stop( 0.500, rgb(252, 102, 0) ),
-      color-stop( 0.798, rgb(255, 158, 0) );
+      color-stop( 0.798, rgb(255, 158, 0) ));
 
       /***  CSS Gradient  ***/
       /*  Chrome 1-9 and Safari 4-5.0  */

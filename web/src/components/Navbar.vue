@@ -46,7 +46,10 @@
     cursor: pointer;
     opacity: 0.5;
   }
-
+  .GoHome:hover {
+    cursor: pointer;
+    opacity: 0.5;
+  }
   .OpenNavDiv {
     float: left;
     margin-bottom: -5px;

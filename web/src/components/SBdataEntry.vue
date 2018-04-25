@@ -69,11 +69,12 @@
     background: white;
     margin-left: 50px;
     border-width: 5px;
-    border-color: orange;
+    border-color: rgb(235,95,17);
     border-style: solid;
     border-radius: 35px;
     position: relative;
     margin: 50px 0px 50px 50px;
+    box-shadow: 5px 5px 5px grey;
   }
 
   #title {
@@ -81,7 +82,7 @@
     height: 75px;
     background: white;
     border-radius: 35px 35px 0px 0px;
-    border-bottom-color: orange;
+    border-bottom-color: rgb(235,95,17);
     border-bottom-width: medium;
     border-bottom-style: solid;
     background-color: white;
@@ -94,14 +95,14 @@
     bottom: 0;
     background-color: white;
     border-radius: 0px 0px 35px 35px;
-    border-top-color: orange;
+    border-top-color: rgb(235,95,17);
     border-top-width: medium;
     border-top-style: solid;
     text-align: center;
     vertical-align: middle;
     line-height: 75px;
     font-size: 25px;
-    color: rgb(180, 41, 102);
+    color: rgb(224,0,16);
   }
 
   #dataTable {
@@ -114,18 +115,18 @@
   }
 
   table, th {
-    border: 1px solid orange;
+    border: 1px solid rgb(235,95,17);
   }
 
   td {
-    border-bottom: 1px solid orange;
-    color: rgb(180, 41, 102);
+    border-bottom: 1px solid rgb(235,95,17);
+    color: rgb(224,0,16);
   }
 
   h2 {
     line-height: 75px;
     height: 75px;
-    color: rgb(180, 41, 102);
+    color: rgb(224,0,16);
     text-overflow: ellipsis;
     white-space: nowrap;
 

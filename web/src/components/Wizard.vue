@@ -68,8 +68,7 @@ export default {
     nextStepLabel: {default: 'Next'},
     finalStepLabel: {default: 'Save'},
     onNext: {},
-    onBack: {},
-    validatePlayer: {}
+    onBack: {}
   },
 
   data () {
@@ -117,19 +116,16 @@ export default {
         var ref = firebase.database().ref('TeamSportfolios');
         ref.once('value').then(function(snapshot) {
           var teamNameValid = !snapshot.child(tn_str).exists();
-          alert('Valid: ' + teamNameValid);
           if (teamNameValid && self.currentStep < self.steps.length-1) {
             self.currentStep++;
           }
         });
     },
     goNextPlayers (skipFunction) {
-      if(this.validatePlayer()){
-        var self = this;
-        /* Do Player Validation Here */
-        if (self.currentStep < self.steps.length-1) {
-          self.currentStep++;
-        }
+      var self = this;
+      /* Do Player Validation Here */
+      if (self.currentStep < self.steps.length-1) {
+        self.currentStep++;
       }
     },
     goBack (skipFunction) {
@@ -170,6 +166,7 @@ export default {
 .wizard {
   position: relative;
   width:  100%;
+  color: rgb(252,102,0);
 }
 
 .wizard__steps{
@@ -203,7 +200,7 @@ export default {
   left:  -50%;
   bottom:  12px;
   height:  3px;
-  background-color: #b9c7d2;
+  background-color: white;
 }
 
 .wizard__step__indicator{
@@ -211,7 +208,7 @@ export default {
   display:  block;
   width:  16px;
   height:  16px;
-  background-color: #51abe4;
+  background-color: rgb(224,0,16);
   border-radius: 50%;
   border: 3px solid #fff;
   position:  absolute;
@@ -222,15 +219,15 @@ export default {
 }
 
 .wizard__step.active .wizard__step__indicator{
-  background-color: pink;
+  background-color: rgb(242,209,24);
 }
 
 .wizard__step.active:not(:first-child) .wizard__step__line{
-  background-color: #6eb165; /* green */
+  background-color: rgb(242,209,24); /* green */
 }
 
 .wizard__step__label{
-  color:  #98a4af;
+  color: rgb(242,209,24);
   font-weight: bold;
 }
 
@@ -241,8 +238,8 @@ export default {
   min-height:  400px;
   margin-left:  50px;
   margin-right:  50px;
-  border:  1px solid #aebac4;
-  background-color: #fff;
+  border:  3px solid white;
+  background-color: white;
   position: relative;
   border-radius: 5px;
   padding-bottom: 50px;
@@ -257,7 +254,7 @@ export default {
   display: block;
   width:  30px;
   height:  30px;
-  border:  1px solid #aebac4;
+  border:  1px solid white;
   top:  85px; /* height of step + body margin -15 */
   border-top-right-radius: 5px;
   background-color: #fff;
@@ -277,16 +274,16 @@ export default {
   bottom:  0px;
   height:  50px;
   width:  100%;
-  border-top:  1px solid #aebac4;
-  background-color: #b9c7d2;
+  border-top:  1px solid rgb(242,209,24);
+  background-color: rgba(252,102,0, 0.7);
 }
 
 .wizard__body__actions a{
   width:  120px;
   height:  100%;
   display: block;
-  background-color: #51abe4;
-  color:  white;
+  background-color: rgb(235,95,17);
+  color: white;
   font-weight: bold;
   text-align: center;
   line-height: 50px;
@@ -313,8 +310,8 @@ export default {
 }
 
 .vgw-icon.vgw-next::after{
-  border-bottom: 2px solid white;
-  border-right: 2px solid white;
+  border-bottom: 2px solid rgb(242,209,24);
+  border-right: 2px solid rgb(242,209,24);
 }
 
 .vgw-icon.vgw-prev::after{
@@ -324,11 +321,16 @@ export default {
 }
 
 .wizard__body__actions a:hover{
-  background-color: #357fae;
+  background-color: rgb(224,0,16);
+  color: white;
 }
 
 .wizard__body__actions a.final-step{
-  background-color: #6eb165;
+  background-color: rgb(252,102,0);
+}
+
+.wizard__body__actions a.final-step:hover{
+  background-color: rgb(224,0,16);
 }
 
 </style>

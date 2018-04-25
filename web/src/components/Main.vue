@@ -21,26 +21,28 @@
 
     <div id="mainPage" v-if="viewMode==='mainViewMode'">
       <div class="mainHeader">
-        <h1 style="color: rgb(180, 41, 102);">{{selectedTeamId}}</h1>
-        <div class="button-wrapper">
-          <button @click="editTeamSettings" class="btn btn-outline-primary">Edit Team Settings</button>
-          <button @click="viewTeamStats" class="btn btn-outline-primary">View Team Stats</button>
-        </div>
+        <h1 style="color: rgb(224, 0, 16); margin: 25px 50px 50px 50px;">{{selectedTeamName}}</h1>
       </div>
       <div class="mainBody">
         <games-list :games="gamesList"
                     style="margin-top: 20px;"
-                    @gameSelected="gameSelected"></games-list>
+                    @gameSelected="gameSelected">
+        </games-list>
         <players-list style="margin-top: 20px;"
                       @playerSelected="viewPlayerInfo"
                       @addPlayerClicked="showModal"
-                      :players="players"></players-list>
+                      :players="players">
+        </players-list>
+        <div class="button-wrapper">
+          <button @click="editTeamSettings" class="btn btn-outline-primary myButton">Edit Team Settings</button>
+          <button @click="viewTeamStats" class="btn btn-outline-primary myButton">View Team Stats</button>
+        </div>
       </div>
 
     </div>
     <!-- WIZARDS -->
-    <div v-else>
-      <div id="PlayerWizard" v-if="viewMode==='isCreatingPlayer'" style="padding-top=100px;">
+    <div v-else class="WizardsDiv">
+      <div id="PlayerWizard" v-if="viewMode==='isCreatingPlayer'" style="padding-top=100px min-height: 100vh;">
           <tkd-wizard
             :steps="playerSteps"
             :onNext="nextClickedPlayer"
@@ -69,35 +71,37 @@
       </div>
 
       <div id="TeamWizard" v-if="viewMode==='isCreatingTeam'" class="teamWiz">
+        <h1 style="color: rgb(242,209,24); margin-bottom: 50px;">Create a New Team Sportfolio</h1>
         <tkd-wizard
           :steps="teamSteps"
           :onBack="backClickedTeam"
-          :validatePlayer="validatePlayersList"
           @SubmitSportfolio="submitTeamSportfolio">
 
           <div slot="teamPage1">
             <label class="myLabel">Team Name:</label>
-            <input class="teamNameEntry" type="text" v-model="teamName" placeholder="Team Name"><br>
-            <br>
-            <label class="myLabel">Sport:</label>
-            <br>
-            <select-sport :initialSport="selectedSport" style="display: inline-block;" @sportWasSelected="selectedSport=$event"></select-sport>
-            <h1></h1>
+            <input class="teamNameEntry" type="text" v-model="teamName" placeholder="Team Name">
+
+            <div class="SportSelector">
+              <label class="mySportLabel" for="sportSelector">Sport:</label>
+              <select-sport id="sportSelector" :initialSport="selectedSport" style="display: inline-block;" @sportWasSelected="selectedSport=$event"></select-sport>
+            </div>
           </div>
 
           <div slot="teamPage2">
             <h4>Add Players</h4>
-            <player-selection-box @playerInfo="setPlayerInfo"></player-selection-box>
+            <player-selection-box @playerInfo="setPlayerInfo"
+                                  :sport="selectedSport"></player-selection-box>
           </div>
 
           <div slot="teamPage3">
-            <h4>Step 3</h4>
-            <label class="myLabel">Team ID:</label>
-            <input type="text" v-model="teamID" placeholder="Team ID"><br>
-            <br>
-            <label class="myLabel">Team Token:</label>
-            <input type="text" v-model="teamToken" placeholder="Team Token"><br>
-            <br>
+            <div class="step3Body">
+              <label class="myLabel">Team ID:</label>
+              <input type="text" v-model="teamID" placeholder="Team ID"><br>
+              <br>
+              <label class="myLabel">Team Token:</label>
+              <input type="text" v-model="teamToken" placeholder="Team Token"><br>
+              <br>
+            </div>
           </div>
         </tkd-wizard>
       </div>
@@ -109,7 +113,9 @@
                :players="players">
     </game-view>
     <team-settings v-if="viewMode==='teamSettingsView'"
-                   @TeamSettingsClose="viewMode='mainViewMode'">
+                   @TeamSettingsClose="viewMode='mainViewMode'"
+                   :id="selectedTeamId"
+                   :tok="selectedTeamToken">
     </team-settings>
     <team-stats v-if="viewMode==='teamStatsView'"
                    @TeamStatsClose="viewMode='mainViewMode'">
@@ -137,6 +143,8 @@ export default {
       activeGameId: '',
       selectedSport: 'basketball',
       selectedTeamId: '',
+      selectedTeamName: '',
+      selectedTeamToken: '',
       /*
         View Modes:
           - mainViewMode (default)
@@ -212,7 +220,9 @@ export default {
       this.viewMode = 'isCreatingTeam'
     },
     teamSelected: function(event) {
-      this.selectedTeamId = event;
+      this.selectedTeamId = event.Id;
+      this.selectedTeamName = event.Name;
+      this.selectedTeamToken = event.Token;
       this.getGames();
       this.getPlayers();
     },
@@ -249,10 +259,6 @@ export default {
     },
     backClickedPlayer(currentPage) {
       return false; //return false if you want to prevent moving to previous page
-    },
-    validatePlayersList() {
-      alert('VALIDATE PLAYERS LIST');
-      return true;
     },
     submitTeamSportfolio(){
       this.hideCreating();
@@ -297,37 +303,11 @@ export default {
       this.selectedSport = 'basketball';
       this.teamName = '';
     },
-    nextClickedTeam(currentPage) {
-      if(currentPage==0){
-        var tn_str = this.teamName;
-        if(tn_str===''){
-          alert('Please Enter a Team Name');
-          return false;
-        }
-
-        var isLookingUpTeam = true;
-        var teamNameValid = false;
-
-        var ref = firebase.database().ref('TeamSportfolios');
-        ref.once('value').then(function(snapshot) {
-          teamNameValid = !snapshot.child(tn_str).exists();
-          alert('Valid: ' + teamNameValid);
-          return true;
-        });
-        return false;
-      }
-      else if (currentPage==1) {
-
-      }
-      else{
-
-      }
-      return true; //return false if you want to prevent moving to next page
-    },
     backClickedTeam(currentPage) {
       return false; //return false if you want to prevent moving to previous page
     },
     setPlayerInfo(event) {
+      console.log('[[[[[[[ SET PLAYER INFO ]]]]]]]');
       this.sportfolios.push(event);
     },
     editTeamSettings() {
@@ -491,7 +471,7 @@ export default {
       transition: margin-left .5s;
       margin:0px;
       min-height: 100%;
-      background-color: white;
+      background-color: transparent;
   }
 
   /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
@@ -505,47 +485,39 @@ export default {
   }
 
   .myLabel {
-    display: inline-block;
     width: auto;
     text-align: right;
     padding-right: 30px;
   }
 
-  .sportColor {
-    background-color: blue;
+  .mySportLabel {
+    margin: 0px 40px 0px 0px;
   }
 
   .sportSelect {
     width: 210px;
     height: 97px;
-    display: inline-block;
   }
   button {
     margin-top: 20px;
     cursor: pointer;
     color: white;
-    background-color: orange;
-    border-color: orange;
-    color: rgb(180, 41, 102);
+    background-color: rgb(255,158,0);
+    border-color: rgb(224,0,16);
+    color: rgb(224,0,16);
   }
   button:hover {
-    background-color: rgba(250, 220, 127, 0.9);
-    border-color: rgba(250, 220, 127, 0.9);
+    background-color: rgb(242,209,24);
+    border-color: rgb(224,0,16);
     color: rgb(180, 41, 102);
   }
-  .wizard-tab-content {
-    display: flex; // to avoid horizontal scroll when animating
-    .wizard-tab-container {
-      display: block;
-      animation: fadeInRight 0.3s;
-    }
-  }
+
 
   .mainHeader {
     width: 100%;
-    height: 10%;
+    height: 20%;
     min-height: 100px;
-    max-height: 100px;
+    max-height: 110px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -568,10 +540,12 @@ export default {
   }
 
   .button-wrapper {
-    width: inherit;
+    float: right;
     white-space: nowrap;
     margin-top: 18px;
-    margin-right: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 75px;
   }
 
   .mainHeader h1 {
@@ -591,8 +565,40 @@ export default {
   }
 
   .teamWiz {
+    margin-top: 50px;
   }
 
+  .myButton {
+    height: 50px;
+    max-height: 50px;
+    margin: 50px;
+  }
+  .WizardsDiv {
+    height: 100vh;
+    min-height: 100vh;
+    background-color: transparent;
+  }
+  .teamNameEntry {
+    border: none;
+    margin-bottom: 10px;
+    border-bottom: 2px rgb(252,102,0) solid;
+  }
+
+  ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgba(255,0,0,0.5);
+    opacity: 1; /* Firefox */
+  }
+
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: rgba(255,0,0,0.5);
+  }
+
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    color: rgba(255,0,0,0.5);
+  }
+
+  .SportSelector {
+  }
 
   #mainPage {
     min-height: 100vh;
