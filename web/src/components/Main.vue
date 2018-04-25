@@ -26,7 +26,8 @@
       <div class="mainBody">
         <games-list :games="gamesList"
                     style="margin-top: 20px;"
-                    @gameSelected="gameSelected">
+                    @gameSelected="gameSelected"
+                    @AddGame="addGame">
         </games-list>
         <players-list style="margin-top: 20px;"
                       @playerSelected="viewPlayerInfo"
@@ -75,7 +76,8 @@
         <tkd-wizard
           :steps="teamSteps"
           :onBack="backClickedTeam"
-          @SubmitSportfolio="submitTeamSportfolio">
+          @SubmitSportfolio="submitTeamSportfolio"
+          @SetDefaultPid="setPid">
 
           <div slot="teamPage1">
             <label class="myLabel">Team Name:</label>
@@ -96,10 +98,10 @@
           <div slot="teamPage3">
             <div class="step3Body">
               <label class="myLabel">Team ID:</label>
-              <input type="text" v-model="teamID" placeholder="Team ID"><br>
+              <input class="teamIdEntry" type="text" v-model="teamID" placeholder="Team ID"><br>
               <br>
               <label class="myLabel">Team Token:</label>
-              <input type="text" v-model="teamToken" placeholder="Team Token"><br>
+              <input class="teamTokenEntry" type="text" v-model="teamToken" placeholder="Team Token"><br>
               <br>
             </div>
           </div>
@@ -193,9 +195,9 @@ export default {
     this.$nextTick(() => {
         this.loggedInUser = firebase.auth().currentUser;
         this.currentUserEmail = this.loggedInUser.email;
-        this.teamID = "team2";
-        //this.getGames();
+        this.getGames();
         this.getSportfolios();
+        console.log("NEXT TICK");
     });
   },
   methods: {
@@ -404,6 +406,173 @@ export default {
             self.sportfolios.push(snap.val());
           })
         })
+      })
+    },
+    setPid() {
+      this.teamID = this.teamName + '_' + Math.random().toString(36).substring(2,7);
+    },
+    addGame() {
+      var gameID = this.selectedTeamId + '_' + Math.random().toString(36).substring(2,7);
+      var data = {
+          "Date" : "4-21-2018",
+          "HalfLength" : 45,
+          "InProgress" : true,
+          "Live" : true,
+          "MyTotals" : {
+            "Period1" : {
+              "Assists" : {
+                "Total" : 0
+              },
+              "Corners" : {
+                "Total" : 0
+              },
+              "Crosses" : {
+                "Total" : 0
+              },
+              "Fouls" : {
+                "Total" : 0
+              },
+              "Goals" : {
+                "Total" : 0
+              },
+              "Offsides" : {
+                "Total" : 0
+              },
+              "Red Cards" : {
+                "Total" : 0
+              },
+              "Saves" : {
+                "Total" : 0
+              },
+              "Shots" : {
+                "Total" : 0
+              },
+              "Shots on Goal" : {
+                "Total" : 0
+              },
+              "Yellow Cards" : {
+                "Total" : 0
+              }
+            },
+            "Period2" : {
+              "Assists" : {
+                "Total" : 0
+              },
+              "Corners" : {
+                "Total" : 0
+              },
+              "Crosses" : {
+                "Total" : 0
+              },
+              "Fouls" : {
+                "Total" : 0
+              },
+              "Goals" : {
+                "Total" : 0
+              },
+              "Offsides" : {
+                "Total" : 0
+              },
+              "Red Cards" : {
+                "Total" : 0
+              },
+              "Saves" : {
+                "Total" : 0
+              },
+              "Shots" : {
+                "Total" : 0
+              },
+              "Shots on Goal" : {
+                "Total" : 0
+              },
+              "Yellow Cards" : {
+                "Total" : 0
+              }
+            },
+            "Possession" : 0
+          },
+          "Name" : gameID,
+          "OpponentsTotals" : {
+            "Period1" : {
+              "Assists" : {
+                "Total" : 0
+              },
+              "Corners" : {
+                "Total" : 0
+              },
+              "Crosses" : {
+                "Total" : 0
+              },
+              "Fouls" : {
+                "Total" : 0
+              },
+              "Goals" : {
+                "Total" : 0
+              },
+              "Offsides" : {
+                "Total" : 0
+              },
+              "Red Cards" : {
+                "Total" : 0
+              },
+              "Saves" : {
+                "Total" : 0
+              },
+              "Shots" : {
+                "Total" : 0
+              },
+              "Shots on Goal" : {
+                "Total" : 0
+              },
+              "Yellow Cards" : {
+                "Total" : 0
+              }
+            },
+            "Period2" : {
+              "Assists" : {
+                "Total" : 0
+              },
+              "Corners" : {
+                "Total" : 0
+              },
+              "Crosses" : {
+                "Total" : 0
+              },
+              "Fouls" : {
+                "Total" : 0
+              },
+              "Goals" : {
+                "Total" : 0
+              },
+              "Offsides" : {
+                "Total" : 0
+              },
+              "Red Cards" : {
+                "Total" : 0
+              },
+              "Saves" : {
+                "Total" : 0
+              },
+              "Shots" : {
+                "Total" : 0
+              },
+              "Shots on Goal" : {
+                "Total" : 0
+              },
+              "Yellow Cards" : {
+                "Total" : 0
+              }
+            },
+            "Possession" : 0
+          },
+          "Period" : 1,
+          "PeriodStartTime" : 1524338307
+        }
+      var ref = firebase.database().ref('SoccerGames').update({
+        [gameID] : data
+      })
+      var ref = firebase.database().ref('TeamSportfolios').child(this.selectedTeamId).child('Games').update({
+        [gameID] : 'game'
       })
     }
   }

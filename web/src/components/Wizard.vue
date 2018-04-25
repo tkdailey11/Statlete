@@ -48,7 +48,7 @@
           <!-- <img src="../images/next.png" alt="next icon"> -->
         </a>
         <a
-          v-if="currentStep == steps.length - 1" class="wizard__next pull-right final-step" @click="submit()">
+          v-if="currentStep == steps.length - 1" class="wizard__next pull-right final-step" @click="goNext()">
           {{finalStepLabel}}
         </a>
       </div>
@@ -98,11 +98,37 @@ export default {
     submit(skipFunction) {
       this.$emit('SubmitSportfolio');
       console.log('SubmitSportfolio');
-      this.currentStep++;
+      //this.currentStep++;
     },
     goNext(skipFunction) {
+      console.log('NextClicked');
       if (this.currentStep < this.steps.length-1) {
         this.currentStep++;
+        console.log('++');
+      }
+      else{
+        var id_str = jQuery('.teamIdEntry').val();
+        var tok_str = jQuery('.teamTokenEntry').val();
+        if(id_str===''){
+          alert('Please enter a unique team ID');
+        }
+        else {
+          var self = this;
+          firebase.database().ref('TeamSportfolios').child(id_str).once('value', function(snapshot){
+            if(snapshot.val()){
+              alert('That ID already exists! Please choose another one');
+            }
+            else {
+              if (tok_str==='') {
+                alert('Please enter a team token');
+              }
+              else {
+                alert('Good Choice! That ID\'s unique');
+                self.submit();
+              }
+            }
+          })
+        }
       }
     },
     goNextTeamName (skipFunction) {
@@ -111,21 +137,17 @@ export default {
           alert('Please Enter a Team Name');
           return false;
         }
+        else {
+          this.teamName = tn_str;
+          this.currentStep++;
+          return true;
+        }
 
-        var self = this;
-        var ref = firebase.database().ref('TeamSportfolios');
-        ref.once('value').then(function(snapshot) {
-          var teamNameValid = !snapshot.child(tn_str).exists();
-          if (teamNameValid && self.currentStep < self.steps.length-1) {
-            self.currentStep++;
-          }
-        });
     },
     goNextPlayers (skipFunction) {
-      var self = this;
-      /* Do Player Validation Here */
-      if (self.currentStep < self.steps.length-1) {
-        self.currentStep++;
+      if (this.currentStep < this.steps.length-1) {
+        this.currentStep++;
+        this.$emit('SetDefaultPid')
       }
     },
     goBack (skipFunction) {

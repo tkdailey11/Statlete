@@ -28,8 +28,7 @@
     },
     methods: {
       addGameClicked: function() {
-        console.log("Add Game");
-        this.games.push({gameID: 'game'+(Object.keys(this.games).length + 1)})
+        this.$emit('AddGame');
       },
       trClicked: function(idx) {
         this.$emit('gameSelected', idx);
