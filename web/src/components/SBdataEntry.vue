@@ -5,7 +5,7 @@
     </div>
     <div id="dataTable">
       <table width="100%">
-        <tr v-for="obj in dataPoints">
+        <tr v-for="obj in dataTypes">
           <td class="minusButton" @click="minusClicked(obj)">
             <img src="../assets/images/minusButton.png">
           </td>
@@ -22,21 +22,41 @@
 </template>
 
 <script>
+  import firebase from 'firebase'
+
   export default {
     name: 'GamesList',
     props: {
-      dataPoints: {
-        default(){
-          return ['Goals', 'Assists', 'Shots', 'Yellow Cards1234567890', 'Red Cards', 'Saves', 'Shots', 'S.O.G.']
-        }
-      }
+      gameID: ''
     },
     methods: {
       minusClicked(obj) {
-        alert('Minus: ' + obj);
+        this.$emit('StatChange', 'minus:' + obj)
       },
       plusClicked(obj) {
-        alert('Plus: ' + obj);
+        this.$emit('StatChange', 'plus:' + obj)
+      }
+    },
+    data() {
+      return {
+        dataTypes: []
+      }
+    },
+    mounted() {
+      var self = this
+      console.log("GAME ID: " + self.gameID);
+      var dbRef = firebase.database().ref('SoccerGames/' + self.gameID + '/MyTotals/Period1/');
+      if(dbRef){
+        dbRef.once('value', function(snapshot){
+          var keys = []
+          var obj = snapshot.val();
+          if(Object){
+            keys = Object.keys(obj)
+          }
+          console.log('KEYS: ');
+          console.log(keys);
+          self.dataTypes = keys;
+        })
       }
     }
   }

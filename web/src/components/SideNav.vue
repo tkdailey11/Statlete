@@ -202,4 +202,69 @@
     background-color: rgba(255,165,0, 0.7);
     cursor: pointer;
   }
+
+
+
+
+
+
+
+.sidenav{
+  height: 100vh;
+  background-image: -webkit-gradient(linear, left top, left bottom,
+        color-stop( 0.0, rgb(224, 0, 16) ),
+        color-stop( 0.135, rgb(235, 95, 17) ),
+        color-stop( 0.500, rgb(252, 102, 0) ),
+        color-stop( 0.798, rgb(255, 158, 0) ),
+        color-stop( 1.0, rgb(213, 213, 213) ));
+
+        /***  CSS Gradient  ***/
+        /*  Chrome 1-9 and Safari 4-5.0  */
+        background-image: -webkit-gradient(linear, left top, left bottom,
+              color-stop( 0.0, rgb(224, 0, 16) ),
+              color-stop( 0.216, rgb(235, 95, 17) ),
+              color-stop( 0.626, rgb(252, 102, 0) ),
+              color-stop( 0.873, rgb(255, 158, 0) ),
+              color-stop( 1.0, rgb(255, 158, 0) ));
+
+        /*  Chrome 10+ Safari 5.1+ Mobile Safari  */
+        background-image: -webkit-linear-gradient(top,
+              rgb(224, 0, 16),
+              rgb(235, 95, 17) 21.6%,
+              rgb(252, 102, 0) 62.6%,
+              rgb(255, 158, 0) 87.3%,
+              rgb(255, 158, 0) );
+
+        /*  Firefox 3.6+  */
+        background-image: -moz-linear-gradient(top,
+              rgb(224, 0, 16),
+              rgb(235, 95, 17) 21.6%,
+              rgb(252, 102, 0) 62.6%,
+              rgb(255, 158, 0) 87.3%,
+              rgb(255, 158, 0) );
+
+        /*  IE 10+  */
+        background-image: -ms-linear-gradient(top,
+              rgb(224, 0, 16),
+              rgb(235, 95, 17) 21.6%,
+              rgb(252, 102, 0) 62.6%,
+              rgb(255, 158, 0) 87.3%,
+              rgb(255, 158, 0) );
+
+        /*  Opera 11.10+  */
+        background-image: -o-linear-gradient(top,
+              rgb(224, 0, 16),
+              rgb(235, 95, 17) 21.6%,
+              rgb(252, 102, 0) 62.6%,
+              rgb(255, 158, 0) 87.3%,
+              rgb(255, 158, 0) );
+
+        /*  W3C  */
+        background-image: linear-gradient(top,
+              rgb(224, 0, 16),
+              rgb(235, 95, 17) 21.6%,
+              rgb(252, 102, 0) 62.6%,
+              rgb(255, 158, 0) 87.3%,
+              rgb(255, 158, 0) );
+            }
 </style>

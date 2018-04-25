@@ -1,11 +1,11 @@
 <template>
   <div class="login">
-    <h1 style="color: rgba(250, 220, 127, 0.9);">Statlete</h1>
+    <h1 style="color: white;">Statlete</h1>
     <input type="text" v-model="email" placeholder="Email"><br>
     <input type="password" v-model="password" placeholder="Password"><br>
     <button class="btn btn-outline-primary btn-social" @click="signIn">Sign In</button><br>
     <button class="btn btn-outline-primary btn-social" @click="signInGoogle">Google</button><br>
-    <p style="color: rgba(250, 220, 127, 0.9);">Don't have an account? <router-link to="/sign-up" style="color: rgb(180, 41, 102);">Click here to create one!</router-link></p>
+    <p style="color: white;">Don't have an account? <router-link to="/sign-up" style="color: rgb(242,209,24);">Click here to create one!</router-link></p>
   </div>
 </template>
 
@@ -59,7 +59,7 @@
     border: 0;
     outline: 0;
     background: transparent;
-    border-bottom: 3px solid rgb(180, 41, 102);
+    border-bottom: 3px solid rgb(224,0,16);
     color: white;
   }
   button {
@@ -67,15 +67,15 @@
     width: 10%;
     cursor: pointer;
     color: white;
-    background-color: rgb(180, 41, 102);
-    border-color: rgb(180, 41, 102);
-    color: rgba(250, 220, 127, 0.9);
+    background-color: rgb(224,0,16);
+    border-color: rgb(224,0,16);
+    color: white;
   }
 
   button:hover {
-    background-color: rgba(250, 220, 127, 0.9);
-    border-color: rgba(250, 220, 127, 0.9);
-    color: rgb(180, 41, 102);
+    background-color: white;
+    border-color: rgb(224,0,16);
+    color: rgb(224,0,16);
   }
 
   p {
@@ -90,19 +90,19 @@
     font-size: 60px;
   }
   input:-webkit-autofill {
-      -webkit-box-shadow:0 0 0 50px rgba(250, 220, 127, 0.9) inset; /* Change the color to your own background color */
-      -webkit-text-fill-color: rgb(180, 41, 102);
+      -webkit-box-shadow:0 0 0 50px white inset; /* Change the color to your own background color */
+      -webkit-text-fill-color: rgb(224,0,16);
       border-radius: 5px;
   }
 
   input:-webkit-autofill:focus {
-      -webkit-box-shadow: /*your box-shadow*/,0 0 0 50px rgba(250, 220, 127, 0.9) inset;
-      -webkit-text-fill-color: rgb(180, 41, 102);
+      -webkit-box-shadow: /*your box-shadow*/,0 0 0 50px white inset;
+      -webkit-text-fill-color: rgb(224,0,16);
       border-radius: 5px;
   }
 
   ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: rgba(250, 220, 127, 0.9);
+    color: white;
     opacity: 1; /* Firefox */
 }
 </style>

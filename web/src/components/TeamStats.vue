@@ -30,14 +30,14 @@ Code here
 
 <div class="SBdataEntry">
   <div class="title">
-    <div style="border-right: 1px solid orange;">
+    <div style="border-right: 1px solid rgb(235,95,17);">
     </div>
-    <h5 align="center" v-for="statType in statTypes" style="border: 1px solid orange; padding-right: 10px; padding-left: 10px;">{{ statType }}</h5>
+    <h5 align="center" v-for="statType in statTypes" style="border: 1px solid rgb(235,95,17); padding-right: 10px; padding-left: 10px;">{{ statType }}</h5>
   </div>
   <div class="dataTable">
     <table>
       <tr v-for="p in players">
-        <td style="width: 163px; min-width: 163px; border: thin solid orange; border-right-width: 2px;">{{ p.replace('p', '#') }}</td>
+        <td style="width: 163px; min-width: 163px; border: thin solid rgb(235,95,17); border-right-width: 2px;">{{ p.replace('p', '#') }}</td>
         <td v-for="statType in statTypes">
           <span v-if="statType.length == 7">
             <p v-if="playerData[p][statType]" style="width: 80px; margin-right: 10px; margin-top: 10px;">{{playerData[p][statType]}}</p>
@@ -191,18 +191,19 @@ Code here
   min-width: 84.5vw;
   background: white;
   border-width: 5px;
-  border-color: orange;
+  border-color: rgb(235,95,17);
   border-style: solid;
   border-radius: 15px;
   margin: 10%;
   margin-bottom: 50px;
+  box-shadow: 5px 5px 5px grey;
 }
 
 .title {
   height: 10%;
   background: white;
   border-radius: 15px 15px 0px 0px;
-  border-bottom-color: orange;
+  border-bottom-color: rgb(235,95,17);
   border-bottom-width: medium;
   border-bottom-style: solid;
   background-color: white;
@@ -221,18 +222,18 @@ Code here
 }
 
 table, th {
-  border: 1px solid orange;
+  border: 1px solid rgb(235,95,17);
 }
 
 td {
-  border-bottom: 1px solid orange;
-  color: rgb(180, 41, 102);
+  border-bottom: 1px solid rgb(235,95,17);
+  color: rgb(224,0,16);
 }
 
 h5 {
   line-height: 50px;
   height: 50px;
-  color: rgb(180, 41, 102);
+  color: rgb(224,0,16);
 
 }
 img {

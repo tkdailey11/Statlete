@@ -3,8 +3,14 @@
     <div class="TopBanner">
       <h2 style="float: left; margin: 30px 30px 0px 10px;">{{gameID}}</h2>
     </div>
-    <player-stat-selector style="float: left;" :players="players"></player-stat-selector>
-    <sb-data-entry style="float: left;"></sb-data-entry>
+    <player-stat-selector style="float: left;"
+                          :players="players"
+                          @playerSelected="playerWasSelected">
+    </player-stat-selector>
+    <sb-data-entry style="float: left;"
+                   @StatChange="updateDB"
+                   :gameID="gameID">
+    </sb-data-entry>
     <div style="float: left;">
       <sb-field></sb-field>
       <sb-shot-type></sb-shot-type>
@@ -13,11 +19,43 @@
 </template>
 
 <script>
+  import firebase from 'firebase'
+
   export default {
     name: 'GameView',
     props: {
       gameID: '',
-      players: {}
+      players: {},
+      teamID: ''
+    },
+    data() {
+      return {
+        selectedPlayer: '',
+        statString: '',
+        currentPeriod: 'Period1'
+      }
+    },
+    methods: {
+      playerWasSelected(event) {
+        alert(event)
+      },
+      updateDB(event){
+        alert(event)
+        var self = this;
+        var input = event.split(":");
+        if(input[0]==='minus'){
+          alert('Subtracting Stats is not yet supported')
+        }
+        else{
+          var dbRef = firebase.database().ref('SoccerGames/').child(self.gameID).child(self.currentPeriod)
+          dbRef = dbRef.child(input[1])
+        }
+
+      }
+    },
+    mounted() {
+      //do something after mounting vue instance
+      console.log(this.gameID);
     }
   }
 </script>

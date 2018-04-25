@@ -6,17 +6,17 @@
       <div class="playersTable">
         <table cellpadding="10" width="100%">
           <tr v-for="key in Object.keys(players)" @click="trClicked(key)">
-            <td v-if="key === selectedPlayer" hover="background-color: orange;" style="background-color: rgba(180, 41, 102, 0.5);">{{ key.replace('p', '#') }}</td>
-            <td v-else hover="background-color: orange;" style="background-color: white;">{{ key.replace('p', '#') }}</td>
-            <td v-if="key === selectedPlayer" style="text-align:left; background-color: rgba(180, 41, 102, 0.5);">{{players[key].trim()}}</td>
-            <td v-else style="text-align:left; background-color: white;">{{players[key].trim()}}</td>
+            <td v-if="key === selectedPlayer" style="background-color: rgba(235,95,17,0.7); color: white;">{{ key.replace('p', '#') }}</td>
+            <td v-else>{{ key.replace('p', '#') }}</td>
+            <td v-if="key === selectedPlayer" style="text-align:left; background-color: rgba(235,95,17,0.7); color: white;">{{players[key].trim()}}</td>
+            <td v-else style="text-align:left;">{{players[key].trim()}}</td>
           </tr>
         </table>
       </div>
-      <div class="plFooter" @click="trClicked('otherTeam')" v-if="selectedPlayer === 'otherTeam'" style="background-color: rgba(180, 41, 102, 0.5);">
+      <div class="plFooter" @click="trClicked('otherTeam')" v-if="selectedPlayer === 'otherTeam'" style="background-color: rgba(235,95,17,0.7); color: white;">
         Opponent
       </div>
-      <div class="plFooter" @click="trClicked('otherTeam')" v-else style="background-color: white;">
+      <div class="plFooter" @click="trClicked('otherTeam')" v-else>
         Opponent
       </div>
     </div>
@@ -57,18 +57,19 @@
     height: 500px;
     background: white;
     border-width: 5px;
-    border-color: orange;
+    border-color: rgb(235,95,17);
     border-style: solid;
     border-radius: 40px;
     position: relative;
     margin: 50px 0px 50px 50px;
+    box-shadow: 5px 5px 5px grey;
   }
 
   .plTitle {
     width: 100%;
     height: 75px;
     border-radius: 35px 35px 0px 0px;
-    border-bottom-color: orange;
+    border-bottom-color: rgb(235,95,17);
     border-bottom-width: medium;
     border-bottom-style: solid;
     background-color: white;
@@ -81,17 +82,19 @@
     bottom: 0;
     /*background-color: white;*/
     border-radius: 0px 0px 35px 35px;
-    border-top-color: orange;
+    border-top-color: rgb(235,95,17);
     border-top-width: medium;
     border-top-style: solid;
     text-align: center;
     vertical-align: middle;
     line-height: 75px;
     font-size: 25px;
-    color: rgb(180, 41, 102);
+    color: rgb(224,0,16);
   }
   .plFooter:hover {
-    background-color: rgba(255,165,0, 0.7);
+    background-color: rgba(235,95,17,0.7);
+    cursor: pointer;
+    color: white;
   }
 
   .playersTable {
@@ -105,12 +108,12 @@
   }
 
   table, th {
-    border: 1px solid orange;
+    border: 1px solid rgb(235,95,17);
   }
 
   td {
-    border-bottom: 1px solid orange;
-    color: rgb(180, 41, 102);
+    border-bottom: 1px solid rgb(235,95,17);
+    color: rgb(224,0,16);
     /*background-color: white;*/
   }
 
@@ -119,13 +122,14 @@
   }
 
   tr:hover td {
-    background-color: rgba(255,165,0, 0.7);
+    background-color: rgba(235,95,17,0.7);
     cursor: pointer;
+    color: white;
   }
 
   h1 {
     line-height: 75px;
     height: 75px;
-    color: rgb(180, 41, 102);
+    color: rgb(224,0,16);
   }
 </style>

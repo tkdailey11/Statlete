@@ -47,10 +47,11 @@
     background: white;
     margin-left: 50px;
     border-width: 5px;
-    border-color: orange;
+    border-color: rgb(235,95,17);
     border-style: solid;
     border-radius: 40px;
     position: relative;
+    box-shadow: 5px 5px 5px grey;
   }
 
   #title {
@@ -58,7 +59,7 @@
     height: 75px;
     background: white;
     border-radius: 35px 35px 0px 0px;
-    border-bottom-color: orange;
+    border-bottom-color: rgb(235,95,17);
     border-bottom-width: medium;
     border-bottom-style: solid;
     background-color: white;
@@ -71,18 +72,20 @@
     bottom: 0;
     background-color: white;
     border-radius: 0px 0px 35px 35px;
-    border-top-color: orange;
+    border-top-color: rgb(235,95,17);
     border-top-width: medium;
     border-top-style: solid;
     text-align: center;
     vertical-align: middle;
     line-height: 75px;
     font-size: 25px;
-    color: rgb(180, 41, 102);
+    color: rgb(224,0,16);
   }
 
   #glFooter:hover {
-    background-color: rgba(255,165,0, 0.7);
+    background-color: rgba(235,95,17,0.7);
+    cursor: pointer;
+    color: white;
   }
 
   #gamesTable {
@@ -94,23 +97,24 @@
   }
 
   tr:hover td {
-    background-color: rgba(255,165,0, 0.7);
+    background-color: rgba(235,95,17,0.7);
     cursor: pointer;
+    color: white;
   }
 
   table, th, td {
-    border: 1px solid orange;
+    border: 1px solid rgb(235,95,17);
   }
 
   td {
-    border-bottom: 1px solid orange;
-    color: rgb(180, 41, 102);
+    border-bottom: 1px solid rgb(235,95,17);
+    color: rgb(224,0,16);
     background-color: white;
   }
 
   h1 {
     line-height: 75px;
     height: 75px;
-    color: rgb(180, 41, 102);
+    color: rgb(224,0,16);
   }
 </style>
