@@ -29,7 +29,7 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     var timerForLoadedPlayers = Timer()
     
     var oppTeamSelected: Bool = false
-    var CurrentlySelectedNumber: Int = -1
+    var currentlySelectedNumber: Int = -1
     
     var bottomBar: BottomBar = BottomBar()
     var scoreboardView: ScoreboardView?
@@ -53,8 +53,6 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         navigationController?.view.backgroundColor = .white
         self.edgesForExtendedLayout = UIRectEdge.top
         
-       // navigationItem.leftBarButtonItem = navigationItem.
-        
         navigationItem.title = game.name
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "Avenir Next Ultra Light", size: 20)!]
         
@@ -65,7 +63,14 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         
         let possessionBarFrame: CGRect = CGRect(x: view.bounds.minX, y: view.bounds.maxY - 160, width: view.bounds.width, height: 120)
         let bottomBarFrame: CGRect = CGRect(x: view.bounds.minX, y: view.bounds.maxY - 40, width: view.bounds.width, height: 40)
-        var rect: CGRect = CGRect(x: view.bounds.minX, y: view.bounds.minY + (navigationController?.navigationBar.frame.height ?? 0), width: view.bounds.width, height: view.bounds.height - 160 - (navigationController?.navigationBar.frame.height ?? 0))
+        
+        
+        let navBarMaxY = (navigationController?.navigationBar.frame.maxY ?? 0)
+        
+        var rect: CGRect = CGRect(x: view.bounds.minX, y: navBarMaxY, width: view.bounds.width, height: view.bounds.height - 160 - navBarMaxY)
+        
+        print(navigationController!.navigationBar.frame.debugDescription)
+        print(rect.debugDescription)
         var scoreboardViewFrame: CGRect = CGRect()
         var substitutionBarFrame: CGRect = CGRect()
         var entryViewFrame: CGRect = CGRect()
@@ -73,7 +78,7 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         (scoreboardViewFrame, rect) = rect.divided(atDistance: 80, from: CGRectEdge.minYEdge)
         (substitutionBarFrame, entryViewFrame) = rect.divided(atDistance: 50, from: CGRectEdge.minYEdge)
         shotChartFrame = entryViewFrame
-        let statViewFrame = CGRect(x: view.bounds.minX, y: view.bounds.minY + scoreboardViewFrame.height + (navigationController?.navigationBar.frame.height ?? 0), width: view.bounds.width, height: view.bounds.height - (scoreboardViewFrame.height + bottomBarFrame.height + (navigationController?.navigationBar.frame.height ?? 0)))
+        let statViewFrame = CGRect(x: view.bounds.minX, y: view.bounds.minY + scoreboardViewFrame.height + navBarMaxY, width: view.bounds.width, height: view.bounds.height - (scoreboardViewFrame.height + bottomBarFrame.height + navBarMaxY))
         
         
         // ScoreboardView
@@ -119,7 +124,7 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         view.sendSubview(toBack: statView)
         
         self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTime), userInfo: nil, repeats: true)
-         let timer2 = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(self.reloadSubBar), userInfo: nil, repeats: false)
+         let timer2 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.reloadSubBar), userInfo: nil, repeats: false)
     }
     
     @objc func reloadSubBar() {
@@ -255,15 +260,17 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
                 substitutionBar.setOpposingTeamButtonToNotSelected()
             }
             else {
-                if CurrentlySelectedNumber == -1 {
+                if currentlySelectedNumber == -1 {
                     DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["\(minute):\(second)":" "])
                     DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["Total": self.game.my1stHalfTotals[game.statNames[index]]!+1])
                 }
                 else {
-                    DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["\(minute):\(second)":"p\(CurrentlySelectedNumber)"])
+                    DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["\(minute):\(second)":"p\(currentlySelectedNumber)"])
                     DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["Total": self.game.my1stHalfTotals[game.statNames[index]]!+1])
-                    DB.database.child("SoccerGames").child(game.id).child("Players").child("p\(CurrentlySelectedNumber)").updateChildValues([game.statNames[index]: self.game.players["p\(CurrentlySelectedNumber)"]![game.statNames[index]]!+1])
-                    CurrentlySelectedNumber = -1
+                    DB.database.child("SoccerGames").child(game.id).child("Players").child("p\(currentlySelectedNumber)").updateChildValues([game.statNames[index]: self.game.players["p\(currentlySelectedNumber)"]![game.statNames[index]]!+1])
+                    currentlySelectedNumber = -1
+                    substitutionBar.currentlySelectedButton?.isSelected = false
+                    substitutionBar.currentlySelectedButton = nil
                 }
             }
         }
@@ -275,22 +282,24 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
                 substitutionBar.setOpposingTeamButtonToNotSelected()
             }
             else {
-                if CurrentlySelectedNumber == -1 {
+                if currentlySelectedNumber == -1 {
                     DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period2").child(game.statNames[index]).updateChildValues(["\(minute):\(second)":" "])
                     DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period2").child(game.statNames[index]).updateChildValues(["Total": self.game.my2ndHalfTotals[game.statNames[index]]!+1])
                 }
                 else {
-                    DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period2").child(game.statNames[index]).updateChildValues(["\(minute):\(second)":"p\(CurrentlySelectedNumber)"])
+                    DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period2").child(game.statNames[index]).updateChildValues(["\(minute):\(second)":"p\(currentlySelectedNumber)"])
                     DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period2").child(game.statNames[index]).updateChildValues(["Total": self.game.my2ndHalfTotals[game.statNames[index]]!+1])
-                    DB.database.child("SoccerGames").child(game.id).child("Players").child("p\(CurrentlySelectedNumber)").updateChildValues([game.statNames[index]: self.game.players["p\(CurrentlySelectedNumber)"]![game.statNames[index]]!+1])
-                    CurrentlySelectedNumber = -1
+                    DB.database.child("SoccerGames").child(game.id).child("Players").child("p\(currentlySelectedNumber)").updateChildValues([game.statNames[index]: self.game.players["p\(currentlySelectedNumber)"]![game.statNames[index]]!+1])
+                    currentlySelectedNumber = -1
+                    substitutionBar.currentlySelectedButton?.isSelected = false
+                    substitutionBar.currentlySelectedButton = nil
                 }
             }
         }
         if index == 0 {
             scoreboardView?.myTeamScoreLabel.text = String(game.my1stHalfTotals[game.statNames[index]]! + game.my2ndHalfTotals[game.statNames[index]]!)
             scoreboardView?.opposingTeamScoreLabel.text = String(game.opp1stHalfTotals[game.statNames[index]]! + game.opp2ndHalfTotals[game.statNames[index]]!)
-            CurrentlySelectedNumber = -1
+            currentlySelectedNumber = -1
         }
         scoreboardView!.setNeedsDisplay()
         statView.teamStatView.tableView.reloadData()
@@ -310,7 +319,18 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
             }
             else {
                 if game.my1stHalfTotals[game.statNames[index]]! > 0 {
-                    DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["Total": self.game.my1stHalfTotals[game.statNames[index]]!-1])
+                    
+                    if currentlySelectedNumber == -1 {
+                        DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["Total": self.game.my1stHalfTotals[game.statNames[index]]!-1])
+                    }
+                    else {DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["Total": self.game.my1stHalfTotals[game.statNames[index]]!-1])
+                        
+                        // Delete stat from player
+                        
+                        currentlySelectedNumber = -1
+                        substitutionBar.currentlySelectedButton?.isSelected = false
+                        substitutionBar.currentlySelectedButton = nil
+                    }
                     
                     
                 }
@@ -326,7 +346,17 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
             }
             else {
                 if game.my2ndHalfTotals[game.statNames[index]]! > 0 {
-                    DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period1").child(game.statNames[index]).updateChildValues(["Total": self.game.my2ndHalfTotals[game.statNames[index]]!-1])
+                    if currentlySelectedNumber == -1 {
+                        DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period2").child(game.statNames[index]).updateChildValues(["Total": self.game.my2ndHalfTotals[game.statNames[index]]!-1])
+                    }
+                    else {DB.database.child("SoccerGames").child(game.id).child("MyTotals").child("Period2").child(game.statNames[index]).updateChildValues(["Total": self.game.my2ndHalfTotals[game.statNames[index]]!-1])
+                        
+                        // Delete stat from player
+                        
+                        currentlySelectedNumber = -1
+                        substitutionBar.currentlySelectedButton?.isSelected = false
+                        substitutionBar.currentlySelectedButton = nil
+                    }
                 }
             }
         }
@@ -367,7 +397,16 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     ///// SubstitutionBar Callbacks  ///////
     ////////////////////////////////////////
     func oppTeamButtonPressed() {
-        oppTeamSelected = true
+        if oppTeamSelected {
+            oppTeamSelected = false
+            substitutionBar.setOpposingTeamButtonToNotSelected()
+        }
+        else {
+            oppTeamSelected = true
+            substitutionBar.setOpposingTeamButtonToSelected()
+            substitutionBar.clearSelectedPlayer()
+            currentlySelectedNumber = -1
+        }
     }
     
     func getNumberOfPlayers() -> Int {
@@ -379,7 +418,17 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     }
     
     func playerSelected(number: Int) {
-        CurrentlySelectedNumber = number
+        if currentlySelectedNumber == number {
+            currentlySelectedNumber = -1
+        }
+        else {
+            currentlySelectedNumber = number
+            if oppTeamSelected {
+                substitutionBar.setOpposingTeamButtonToNotSelected()
+                oppTeamSelected = false
+            }
+        }
+        
     }
     
     ////////////////////////////////////////

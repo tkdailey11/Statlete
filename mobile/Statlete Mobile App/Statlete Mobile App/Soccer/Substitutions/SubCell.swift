@@ -9,7 +9,7 @@
 import UIKit
 
 protocol SubCellDelegate: class {
-    func buttonPressed(number: Int)
+    func buttonPressed(button: UIButton, number: Int)
 }
 
 class SubCell: UICollectionViewCell {
@@ -32,6 +32,19 @@ class SubCell: UICollectionViewCell {
         button.setTitle("#\(number)", for: .normal)
         button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         button.setTitleColor(Colors.red, for: .normal)
+        
+        UIGraphicsBeginImageContext(CGSize(width: 1, height: 1))
+        UIGraphicsGetCurrentContext()!.setFillColor(UIColor.darkGray.cgColor)
+        UIGraphicsGetCurrentContext()!.fill(CGRect(x: 0, y: 0, width: 1, height: 1))
+        var colorImage = UIGraphicsGetImageFromCurrentImageContext()
+        button.setBackgroundImage(colorImage, for: .selected)
+
+        UIGraphicsGetCurrentContext()!.setFillColor(UIColor.white.cgColor)
+        UIGraphicsGetCurrentContext()!.fill(CGRect(x: 0, y: 0, width: 1, height: 1))
+        colorImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        button.setBackgroundImage(colorImage, for: .normal)
     }
     
     func subButtonInit() {
@@ -42,6 +55,7 @@ class SubCell: UICollectionViewCell {
     }
     
     @objc func buttonPressed() {
-        delegate?.buttonPressed(number: number)
+        delegate?.buttonPressed(button: self.button, number: number)
+        
     }
 }

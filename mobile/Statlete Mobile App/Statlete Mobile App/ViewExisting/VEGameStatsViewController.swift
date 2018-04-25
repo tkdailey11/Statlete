@@ -47,8 +47,9 @@ class VEGameStatsViewController: UIViewController, StatViewDelegate, ScoreboardV
         
         sleep(1)
         
+        let navBarMaxY = (navigationController?.navigationBar.frame.maxY ?? 0)
         
-        scoreboardView = ScoreboardView(frame: CGRect(x: view.bounds.minX, y: view.bounds.minY + (navigationController?.navigationBar.frame.height ?? 0), width: view.bounds.width, height: 80))
+        scoreboardView = ScoreboardView(frame: CGRect(x: view.bounds.minX, y: navBarMaxY, width: view.bounds.width, height: 80))
         view.addSubview(scoreboardView)
         scoreboardView.myTeamScoreLabel.text = String(game.myTeamScore)
         scoreboardView.opposingTeamScoreLabel.text = String(game.opposingTeamScore)
@@ -56,7 +57,7 @@ class VEGameStatsViewController: UIViewController, StatViewDelegate, ScoreboardV
         scoreboardView.delegate = self
         scoreboardView.setNeedsDisplay()
         
-        statView = StatView(frame: CGRect(x: view.bounds.minX, y: view.bounds.minY + (navigationController?.navigationBar.frame.height ?? 0) + 80, width: view.bounds.width, height: view.bounds.height - (navigationController?.navigationBar.frame.height ?? 0) + 80))
+        statView = StatView(frame: CGRect(x: view.bounds.minX, y: view.bounds.minY + navBarMaxY + 80, width: view.bounds.width, height: view.bounds.height - navBarMaxY - 80))
         statView.delegate = self
         view.addSubview(statView)
         

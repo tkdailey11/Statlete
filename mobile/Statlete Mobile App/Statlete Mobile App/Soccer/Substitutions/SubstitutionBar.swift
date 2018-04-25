@@ -17,10 +17,7 @@ protocol SubstitutionBarDelegate: class {
 
 class SubstitutionBar: UIControl, UICollectionViewDelegate, UICollectionViewDataSource, SubCellDelegate {
     
-    func buttonPressed(number: Int) {
-        delegate?.playerSelected(number: number)
-    }
-    
+    var currentlySelectedButton: UIButton? = nil
     
     weak var delegate: SubstitutionBarDelegate?
     
@@ -29,6 +26,7 @@ class SubstitutionBar: UIControl, UICollectionViewDelegate, UICollectionViewData
     
     let opposingTeamButtonFrameWidth: CGFloat = 80.0
     let opposingTeamButton = UIButton()
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -67,7 +65,7 @@ class SubstitutionBar: UIControl, UICollectionViewDelegate, UICollectionViewData
     }
     
     func setOpposingTeamButtonToSelected() {
-        opposingTeamButton.backgroundColor = UIColor.red
+        opposingTeamButton.backgroundColor = UIColor.darkGray
     }
     
     func setOpposingTeamButtonToNotSelected() {
@@ -76,7 +74,6 @@ class SubstitutionBar: UIControl, UICollectionViewDelegate, UICollectionViewData
     
     @objc func opposingTeamButtonPressed() {
        delegate!.oppTeamButtonPressed()
-        setOpposingTeamButtonToSelected()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -85,14 +82,6 @@ class SubstitutionBar: UIControl, UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        /*
-        if indexPath.row == delegate!.getNumberOfPlayers() {
-            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SubCell", for: indexPath) as? SubCell {
-                cell.subButtonInit()
-                return cell
-            }
-        }
-         */
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SubCell", for: indexPath) as? SubCell {
             var numString = delegate!.getPlayerNumber()[indexPath.row]
             numString.removeFirst()
@@ -101,6 +90,32 @@ class SubstitutionBar: UIControl, UICollectionViewDelegate, UICollectionViewData
             return cell
         }
         return UICollectionViewCell()
+    }
+    
+    func buttonPressed(button: UIButton, number: Int) {
+        delegate?.playerSelected(number: number)
+        if currentlySelectedButton == nil {
+            button.isSelected = true
+            currentlySelectedButton = button
+        }
+        else {
+            if currentlySelectedButton == button {
+                button.isSelected = false
+                currentlySelectedButton = nil
+            }
+            else {
+                currentlySelectedButton!.isSelected = false
+                button.isSelected = true
+                currentlySelectedButton = button
+            }
+        }
+    }
+    
+    func clearSelectedPlayer() {
+        if currentlySelectedButton != nil {
+            currentlySelectedButton?.isSelected = false
+            currentlySelectedButton = nil
+        }
     }
     
 }
