@@ -12,9 +12,9 @@
                    @StatChange="updateDB"
                    :gameID="gameID">
     </sb-data-entry>
-    <div style="float: left;">
-      <sb-field></sb-field>
-      <sb-shot-type></sb-shot-type>
+    <div id="fieldEntry">
+      <sb-field :field-shot-type="shotType"></sb-field>
+      <sb-shot-type @ShotTypeChanged="shotTypeChanged"></sb-shot-type>
     </div>
   </div>
 </template>
@@ -33,7 +33,8 @@
       return {
         selectedPlayer: '',
         statString: '',
-        currentPeriod: 'Period1'
+        currentPeriod: 'Period1',
+        shotType: 'gcf'
       }
     },
     methods: {
@@ -52,6 +53,10 @@
           dbRef = dbRef.child(input[1])
         }
 
+      },
+      shotTypeChanged(event){
+        alert('Shot Type Changed from ' + this.shotType + ' to ' + event);
+        this.shotType = event;
       }
     },
     mounted() {
@@ -90,5 +95,8 @@
     position: relative;
 
     box-shadow: 5px 5px 5px grey;
+  }
+  #fieldEntry {
+    float: left;
   }
 </style>
