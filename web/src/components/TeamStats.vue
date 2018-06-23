@@ -1,10 +1,10 @@
 <template>
-  <div id="TeamStats">
-<!--
+  <div class="TeamStats">
+    <!--
 Code here
 -->
 
-<!--
+    <!--
     <div class="tableContainer">
       <table id="Stats">
         <thead>
@@ -28,38 +28,40 @@ Code here
     </div>
 -->
 
-<div class="SBdataEntry">
-  <div class="title">
-    <div style="border-right: 1px solid rgb(235,95,17);">
+    <div class="SBdataEntry">
+      <div class="title">
+        <div id="headerBuffer">
+        </div>
+        <div id="headers">
+          <h5 align="center" v-for="statType in statTypes">{{ statType }}</h5>
+        </div>
+      </div>
+      <div id="dataTable">
+        <table>
+          <tr v-for="p in players">
+            <th style="width: 163px; min-width: 163px; border: thin solid rgb(235,95,17); border-right-width: 2px;">{{ p.replace('p', '#') }}</th>
+            <td v-for="statType in statTypes">
+              <span v-if="statType.length == 7">
+                <p v-if="playerData[p][statType]" style="width: 80px; margin-right: 10px; margin-top: 10px;">{{playerData[p][statType]}}</p>
+                <p v-else style="width: 80px; margin-right: 10px; margin-top: 10px;">0</p>
+              </span>
+              <span v-if="statType.length == 8">
+                <p v-if="playerData[p][statType]" style="width: 90px; margin-right: 17px; margin-top: 10px;">{{playerData[p][statType]}}</p>
+                <p v-else style="width: 90px; margin-right: 17px; margin-top: 10px;">0</p>
+              </span>
+              <span v-if="statType.length == 5">
+                <p v-if="playerData[p][statType]" style="width: 60px; margin-right: 8px; margin-top: 10px;">{{playerData[p][statType]}}</p>
+                <p v-else style="width: 60px; margin-right: 8px; margin-top: 10px;">0</p>
+              </span>
+              <span v-if="statType.length == 11">
+                <p v-if="playerData[p][statType]" style="width: 125px; margin-right: 20px; margin-top: 10px;">{{playerData[p][statType]}}</p>
+                <p v-else style="width: 125px; margin-right: 20px; margin-top: 10px;">0</p>
+              </span>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
-    <h5 align="center" v-for="statType in statTypes" style="border: 1px solid rgb(235,95,17); padding-right: 10px; padding-left: 10px;">{{ statType }}</h5>
-  </div>
-  <div class="dataTable">
-    <table>
-      <tr v-for="p in players">
-        <td style="width: 163px; min-width: 163px; border: thin solid rgb(235,95,17); border-right-width: 2px;">{{ p.replace('p', '#') }}</td>
-        <td v-for="statType in statTypes">
-          <span v-if="statType.length == 7">
-            <p v-if="playerData[p][statType]" style="width: 80px; margin-right: 10px; margin-top: 10px;">{{playerData[p][statType]}}</p>
-            <p v-else style="width: 80px; margin-right: 10px; margin-top: 10px;">0</p>
-          </span>
-          <span v-if="statType.length == 8">
-            <p v-if="playerData[p][statType]" style="width: 90px; margin-right: 17px; margin-top: 10px;">{{playerData[p][statType]}}</p>
-            <p v-else style="width: 90px; margin-right: 17px; margin-top: 10px;">0</p>
-          </span>
-          <span v-if="statType.length == 5">
-            <p v-if="playerData[p][statType]" style="width: 60px; margin-right: 8px; margin-top: 10px;">{{playerData[p][statType]}}</p>
-            <p v-else style="width: 60px; margin-right: 8px; margin-top: 10px;">0</p>
-          </span>
-          <span v-if="statType.length == 11">
-            <p v-if="playerData[p][statType]" style="width: 125px; margin-right: 20px; margin-top: 10px;">{{playerData[p][statType]}}</p>
-            <p v-else style="width: 125px; margin-right: 20px; margin-top: 10px;">0</p>
-          </span>
-        </td>
-      </tr>
-    </table>
-  </div>
-</div>
 
 
   </div>
@@ -134,6 +136,21 @@ Code here
           this.currentUserEmail = this.loggedInUser.email;
           this.getGameData();
       });
+
+      document.getElementById("dataTable").addEventListener("scroll", scrollTableFunction);
+      document.getElementById("headers").addEventListener("scroll", scrollHeaderFunction);
+
+      function scrollTableFunction() {
+        var tabl = document.getElementById("dataTable");
+        var headr = document.getElementById("headers");
+        headr.scrollLeft = tabl.scrollLeft;
+      }
+
+      function scrollHeaderFunction() {
+        var tabl = document.getElementById("dataTable");
+        var headr = document.getElementById("headers");
+        tabl.scrollLeft = headr.scrollLeft;
+      }
     }
   }
 </script>
@@ -180,10 +197,12 @@ Code here
 */
 
 
-#TeamStats {
+.TeamStats {
   width: 100%;
-  height: 95vh;
+  height: 100vh;
+  min-height: 500px;
   background-color: white;
+  padding: 7%;
 }
 
 .SBdataEntry {
@@ -194,7 +213,7 @@ Code here
   border-color: rgb(235,95,17);
   border-style: solid;
   border-radius: 15px;
-  margin: 10%;
+  /* Margin was at 10% */
   margin-bottom: 50px;
   box-shadow: 5px 5px 5px grey;
 }
@@ -207,13 +226,26 @@ Code here
   border-bottom-width: medium;
   border-bottom-style: solid;
   background-color: white;
+
+  width: 100%;
+}
+#headerBuffer{
+  border-right: 2px solid rgb(235,95,17);
+  float: left;
+  width: 164px;
+  height: 100%;
+}
+#headers{
+  overflow: hidden;
+  max-height: 100%;
   display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: flex-end;
+flex-direction: row;
+flex-wrap: nowrap;
+border-radius: 0px 10px 0px 0px;
+overflow-x: scroll;
 }
 
-.dataTable {
+#dataTable {
   max-height: 90%;
   height: 450px;
   background-color: white;
@@ -223,6 +255,7 @@ Code here
 
 table, th {
   border: 1px solid rgb(235,95,17);
+  color: rgb(224,0,16);
 }
 
 td {
@@ -234,7 +267,8 @@ h5 {
   line-height: 50px;
   height: 50px;
   color: rgb(224,0,16);
-
+  padding-left: 11px;
+  padding-right: 11px;
 }
 img {
   zoom: 50%;
@@ -252,5 +286,6 @@ img {
   text-align: center;
   vertical-align: middle;
 }
-
+th:first-child{
+}
 </style>

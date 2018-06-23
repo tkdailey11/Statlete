@@ -640,7 +640,6 @@ export default {
       transition: margin-left .5s;
       margin:0px;
       min-height: 100%;
-      background-color: transparent;
   }
 
   /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
@@ -730,7 +729,7 @@ export default {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-
+    background-color: white;
   }
 
   .teamWiz {

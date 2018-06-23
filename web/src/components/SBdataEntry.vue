@@ -1,7 +1,7 @@
 <template>
   <div id="SBdataEntry">
     <div id="title">
-      <h2 align="center">Team/Player Stats</h2>
+      <h2 align="center" style="color: white;">Team/Player Stats</h2>
     </div>
     <div id="dataTable">
       <table width="100%">
@@ -67,14 +67,15 @@
     width: 310px;
     height: 500px;
     background: white;
-    margin-left: 50px;
+    /*margin-left: 50px;*/
     border-width: 5px;
     border-color: rgb(235,95,17);
     border-style: solid;
     border-radius: 35px;
     position: relative;
-    margin: 50px 0px 50px 50px;
+    /*margin: 50px 0px 50px 50px;*/
     box-shadow: 5px 5px 5px grey;
+    padding-left: 100px;
   }
 
   #title {

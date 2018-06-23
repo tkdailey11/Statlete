@@ -7,7 +7,8 @@
                           :players="players"
                           @playerSelected="playerWasSelected">
     </player-stat-selector>
-    <sb-data-entry style="float: left;"
+    <sb-data-entry id="sbde1"
+                   style="float: left;"
                    @StatChange="updateDB"
                    :gameID="gameID">
     </sb-data-entry>
@@ -63,8 +64,8 @@
 <style scoped>
   #GameView {
     width: 100vw;
-    min-height: 100vh;
-    height: 100vh;
+    min-height: 250vh;
+    height: 250vh;
     background-color: white;
     margin-top: 0px;
   }
@@ -74,5 +75,20 @@
     min-height: 100px;
     margin-bottom: -20px;
     border: medium black solid;
+  }
+  #sbde1{
+    padding-left: 0px;
+    width: 310px;
+    height: 500px;
+    background: white;
+    margin: 50px;
+    margin-right: 0px;
+    border-width: 5px;
+    border-color: rgb(235,95,17);
+    border-style: solid;
+    border-radius: 35px;
+    position: relative;
+
+    box-shadow: 5px 5px 5px grey;
   }
 </style>
