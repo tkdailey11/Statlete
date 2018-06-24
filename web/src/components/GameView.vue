@@ -13,8 +13,10 @@
                    :gameID="gameID">
     </sb-data-entry>
     <div id="fieldEntry">
-      <sb-field :field-shot-type="shotType"></sb-field>
-      <sb-shot-type @ShotTypeChanged="shotTypeChanged"></sb-shot-type>
+      <sb-field :shots="shotsArr"
+                @ShotPlaced="shotPlaced"></sb-field>
+      <sb-shot-type @ShotTypeChanged="shotTypeChanged"
+                    @SBSTUndo="undoClicked"></sb-shot-type>
     </div>
   </div>
 </template>
@@ -34,7 +36,8 @@
         selectedPlayer: '',
         statString: '',
         currentPeriod: 'Period1',
-        shotType: 'gcf'
+        shotType: 'gcf',
+        shotsArr: []
       }
     },
     methods: {
@@ -42,7 +45,6 @@
         console.log(event);
       },
       updateDB(event){
-        alert(event)
         var self = this;
         var input = event.split(":");
         if(input[0]==='minus'){
@@ -54,9 +56,20 @@
         }
 
       },
+      shotPlaced(event){
+        var shotData = {
+          style: event.style,
+          shotType: this.shotType
+        };
+        this.shotsArr.push(shotData);
+      },
       shotTypeChanged(event){
-        alert('Shot Type Changed from ' + this.shotType + ' to ' + event);
         this.shotType = event;
+      },
+      undoClicked(){
+        if (this.shotsArr.length > 0) {
+          this.shotsArr.pop();
+        }
       }
     },
     mounted() {

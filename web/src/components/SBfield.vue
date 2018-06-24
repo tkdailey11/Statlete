@@ -15,10 +15,13 @@
 <script>
   export default {
     name: 'SBfield',
-    props: ['fieldShotType'],
+    props: {
+      //fieldShotType: '',
+      shots: []
+    },
     data() {
       return {
-        shots: []
+        //shots: []
       }
     },
     methods: {
@@ -31,12 +34,10 @@
       var self = this;
       jQuery('#FieldIMG').click(function(e) {
         var offset = jQuery(this).offset();
-        //alert('Offset left: ' + offset.left + '\nOffset top: ' + offset.top);
-        //alert('X: ' + e.pageX + ' Y: ' + e.pageY);
-        //alert('left: ' + (e.pageX - offset.left - 290) + '  top: ' + (e.pageY - offset.top) + '  width: ' + e.width);
-
-        self.shots.push({ style: { left: e.pageX - offset.left - 300 + 'px', top: e.pageY - offset.top - 255 + 'px' }, shotType: self.fieldShotType});
-        console.log(self.shots);
+        self.$emit('ShotPlaced', {
+                                    style: { left: e.pageX - offset.left - 300 + 'px',
+                                             top: e.pageY - offset.top - 255 + 'px' },
+                                  });
       });
     }
   }
