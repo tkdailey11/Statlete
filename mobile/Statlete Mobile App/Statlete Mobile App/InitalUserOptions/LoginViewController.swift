@@ -50,17 +50,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         navigationController?.view.backgroundColor = .clear
 
         self.navigationController?.navigationBar.tintColor = UIColor.white
-
-
-        
         loginButton.layer.cornerRadius = 10
-
     }
    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
+    
     @IBAction func loginButtonClicked(_ sender: UIButton) {
         Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) { (user, error) in
             if (error != nil) {

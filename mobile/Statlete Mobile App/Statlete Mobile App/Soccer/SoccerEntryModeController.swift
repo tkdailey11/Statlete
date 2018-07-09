@@ -45,8 +45,6 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(self.view.frame.debugDescription)
-        
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
@@ -65,18 +63,12 @@ class SoccerEntryModeController: UIViewController, EntryViewDelegate, StatViewDe
         let possessionBarFrame: CGRect = CGRect(x: view.bounds.minX, y: view.bounds.maxY - 160, width: view.bounds.width, height: 120)
         let bottomBarFrame: CGRect = CGRect(x: view.bounds.minX, y: view.bounds.maxY - 40, width: view.bounds.width, height: 40)
         
-        /*
-        if navigationController!.navigationBar.frame.minY != 0 {
-            navigationController!.navigationBar.frame = CGRect(x: view.bounds.minX, y: view.bounds.minY, width: navigationController!.navigationBar.frame.width, height: navigationController!.navigationBar.frame.height)
-        }
-         */
+        
         
         let navBarMaxY = (navigationController?.navigationBar.frame.maxY ?? 0)
         print(navBarMaxY)
         var rect: CGRect = CGRect(x: view.bounds.minX, y: navBarMaxY, width: view.bounds.width, height: view.bounds.height - 160 - navBarMaxY)
         
-        print(navigationController!.navigationBar.frame.debugDescription)
-        print(rect.debugDescription)
         var scoreboardViewFrame: CGRect = CGRect()
         var substitutionBarFrame: CGRect = CGRect()
         var entryViewFrame: CGRect = CGRect()

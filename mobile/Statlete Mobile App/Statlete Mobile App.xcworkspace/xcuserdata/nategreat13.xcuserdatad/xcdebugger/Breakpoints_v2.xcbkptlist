@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Statlete Mobile App/Soccer/SoccerEntryModeController.swift"
-            timestampString = "546373216.778739"
+            timestampString = "552865074.8302079"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "396"
-            endingLineNumber = "396"
+            startingLineNumber = "388"
+            endingLineNumber = "388"
             landmarkName = "getPlayerInfo(index:)"
             landmarkType = "7">
             <Locations>
@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Statlete Mobile App/Soccer/SoccerEntryModeController.swift"
-            timestampString = "546373217.01535"
+            timestampString = "552865074.83079"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "288"
-            endingLineNumber = "288"
+            startingLineNumber = "280"
+            endingLineNumber = "280"
             landmarkName = "plusButtonPressed(index:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -138,7 +138,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Statlete Mobile App/User Home/UserHomeViewController.swift"
-            timestampString = "546372721.380289"
+            timestampString = "552865074.8310519"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "126"
@@ -154,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Statlete Mobile App/Soccer/SoccerEntryModeController.swift"
-            timestampString = "546373217.01763"
+            timestampString = "552865074.8311909"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
+            startingLineNumber = "125"
+            endingLineNumber = "125"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -266,11 +266,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Statlete Mobile App/Soccer/SoccerEntryModeController.swift"
-            timestampString = "546373217.0212229"
+            timestampString = "552865074.831495"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "407"
-            endingLineNumber = "407"
+            startingLineNumber = "399"
+            endingLineNumber = "399"
             landmarkName = "oppTeamButtonPressed()"
             landmarkType = "7">
          </BreakpointContent>
@@ -282,11 +282,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Statlete Mobile App/Soccer/SoccerEntryModeController.swift"
-            timestampString = "546373217.023109"
+            timestampString = "552865074.831599"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "428"
-            endingLineNumber = "428"
+            startingLineNumber = "420"
+            endingLineNumber = "420"
             landmarkName = "playerSelected(number:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -330,11 +330,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Statlete Mobile App/Soccer/SoccerEntryModeController.swift"
-            timestampString = "546373217.02705"
+            timestampString = "552865074.831952"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Statlete Mobile App/New Group/SoccerEntryModeViewController.swift"
+            timestampString = "552864908.5866441"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "15"
+            endingLineNumber = "15"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>

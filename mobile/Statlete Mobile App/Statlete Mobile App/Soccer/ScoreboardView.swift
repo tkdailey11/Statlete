@@ -168,6 +168,7 @@ class ScoreboardView: UIControl {
     //// Required Initializer ////
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+        setupDisplay()
     }
 }
 
