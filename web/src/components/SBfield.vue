@@ -16,8 +16,7 @@
   export default {
     name: 'SBfield',
     props: {
-      //fieldShotType: '',
-      shots: []
+      shots: null
     },
     data() {
       return {
@@ -55,6 +54,7 @@
     border-radius: 35px;
     margin: 50px;
     margin-bottom: 25px;
+    box-shadow: 5px 5px 5px grey;
   }
   .fill {
     display: flex;

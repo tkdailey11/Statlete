@@ -72,9 +72,26 @@
         }
       }
     },
+    beforeCreate() {
+      //do something before creating vue instance
+      console.log('BEFORE CREATE');
+    },
+    created() {
+      //do something after creating vue instance
+      console.log('CREATED');
+    },
     mounted() {
       //do something after mounting vue instance
       console.log(this.gameID);
+      console.log('MOUNTED');
+    },
+    beforeDestroy() {
+      //do something before destroying vue instance
+      alert('BEFORE DESTROY');
+    },
+    destroyed() {
+      //do something after destroying vue instance
+      alert('DESTROYED');
     }
   }
 </script>
