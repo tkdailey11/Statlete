@@ -1,5 +1,6 @@
 <template>
   <div class="main">
+    <p>Value: {{ testVal }}</p>
     <new-player @newPlayerAdded="hideModal" />
     <statlete-navbar v-if="!(viewMode==='isCreatingTeam' || viewMode==='isCreatingPlayer')"
                      @shouldOpenNav="openNav"
@@ -109,22 +110,28 @@
       </div>
     </div>
     <!-- END WIZARDS -->
-    <game-view v-if="viewMode==='isInGameView'"
+    <!--<game-view v-if="viewMode==='isInGameView'"
                @GameViewClose="viewMode='mainViewMode'"
                :gameID="activeGameId"
                :players="players">
-    </game-view>
+    </game-view>-->
+    <!--
     <team-settings v-if="viewMode==='teamSettingsView'"
                    @TeamSettingsClose="viewMode='mainViewMode'"
                    :id="selectedTeamId"
                    :tok="selectedTeamToken">
     </team-settings>
+    -->
+    <!--
     <team-stats v-if="viewMode==='teamStatsView'"
                    @TeamStatsClose="viewMode='mainViewMode'">
     </team-stats>
+    -->
+    <!--
     <player-detail-view v-if="viewMode==='playerDetailView'"
                    @PlayerDetailViewClose="viewMode='mainViewMode'">
     </player-detail-view>
+    -->
   </div>
 </template>
 
@@ -133,6 +140,13 @@ import firebase from 'firebase'
 
 export default {
   name: 'Main',
+  computed: {
+    testVal: {
+      get() {
+        return this.$store.state.value;
+      }
+    }
+  },
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
@@ -239,6 +253,7 @@ export default {
     gameSelected: function(event) {
       this.activeGameId = this.gamesList[event - 1];
       this.viewMode='isInGameView';
+      this.$router.push('/gameview');
     },
     nextClickedPlayer(currentPage) {
       if(currentPage==1){

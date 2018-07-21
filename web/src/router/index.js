@@ -6,6 +6,11 @@ import SignUp from '@/components/SignUp'
 import firebase from 'firebase'
 import Main from '@/components/Main'
 import FLP from '@/components/FirstLandingPage'
+import GameView from '@/components/GameView'
+import TeamSettings from '@/components/TeamSettings'
+import TeamStats from '@/components/TeamStats'
+import PlayerDetailView from '@/components/PlayerDetailView'
+
 
 Vue.use(Router)
 
@@ -41,6 +46,38 @@ let router = new Router({
       path: '/flp',
       name: 'FLP',
       component: FLP,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/gameview',
+      name: 'GameView',
+      component: GameView,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/teamsettings',
+      name: 'TeamSettings',
+      component: TeamSettings,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/teamstats',
+      name: 'TeamStats',
+      component: TeamStats,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/playerdetail',
+      name: 'PlayerDetailView',
+      component: PlayerDetailView,
       meta: {
         requiresAuth: true
       }
