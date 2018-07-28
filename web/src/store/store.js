@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import VuexPersist from 'vuex-persist';
 import mainStore from './modules/mainStore'
+import gameViewStore from './modules/gameViewStore'
 
 Vue.use(Vuex);
 
@@ -25,7 +26,8 @@ export const store = new Vuex.Store({
 
     },
     modules: {
-      mainStore
+      mainStore,
+      gameViewStore
     },
     plugins: [vuexLocalStorage.plugin]
 });

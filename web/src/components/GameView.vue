@@ -28,22 +28,28 @@
   export default {
     name: 'GameView',
     computed: {
-      ...mapGetters([
-        'activeGameId',
-        'players',
-        'selectedTeamId'
-      ])
-    },
-    data() {
-      return {
-        selectedPlayer: '',
-        statString: '',
-        currentPeriod: 'Period1',
-        shotType: 'gcf',
-        shotsArr: []
-      }
+      ...mapGetters({
+        activeGameId: 'mainStore/activeGameId',
+        players: 'mainStore/players',
+        selectedTeamId: 'mainStore/selectedTeamId',
+        selectedPlayer: 'gameViewStore/selectedPlayer',
+        statString: 'gameViewStore/statString',
+        currentPeriod: 'gameViewStore/currentPeriod',
+        shotType: 'gameViewStore/shotType',
+        shotsArr: 'gameViewStore/shotsArr',
+        shotsArrLength: 'gameViewStore/shotsArrLength'
+      })
     },
     methods: {
+      ...mapMutations({
+        GV_SET_PLAYER: 'gameViewStore/GV_SET_PLAYER',
+        GV_SET_STAT_STRING: 'gameViewStore/GV_SET_STAT_STRING',
+        GV_SET_PERIOD: 'gameViewStore/GV_SET_PERIOD',
+        GV_SET_SHOT_TYPE: 'gameViewStore/GV_SET_SHOT_TYPE',
+        GV_SET_SHOTS_ARR: 'gameViewStore/GV_SET_SHOTS_ARR',
+        GV_APPEND_SHOT: 'gameViewStore/GV_APPEND_SHOT',
+        GV_REMOVE_SHOT: 'gameViewStore/GV_REMOVE_SHOT'
+      }),
       playerWasSelected(event) {
         console.log(event);
       },
@@ -64,14 +70,14 @@
           style: event.style,
           shotType: this.shotType
         };
-        this.shotsArr.push(shotData);
+        this.GV_APPEND_SHOT(shotData);
       },
       shotTypeChanged(event){
-        this.shotType = event;
+        this.GV_SET_SHOT_TYPE(event);
       },
       undoClicked(){
-        if (this.shotsArr.length > 0) {
-          this.shotsArr.pop();
+        if (this.shotsArrLength > 0) {
+          this.GV_REMOVE_SHOT();
         }
       }
     }

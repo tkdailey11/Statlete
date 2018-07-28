@@ -140,19 +140,19 @@ import { mapGetters, mapMutations } from 'vuex';
 export default {
   name: 'Main',
   computed: {
-    ...mapGetters([
-      'loggedInUser',
-      'selectedTeamId',
-      'selectedTeamName',
-      'selectedTeamToken',
-      'teamName',
-      'teamToken',
-      'teamID',
-      'selectedSport',
-      'currentUserEmail',
-      'activeGameId',
-      'players'
-    ])
+    ...mapGetters({
+      loggedInUser: 'mainStore/loggedInUser',
+      selectedTeamId: 'mainStore/selectedTeamId',
+      selectedTeamName: 'mainStore/selectedTeamName',
+      selectedTeamToken: 'mainStore/selectedTeamToken',
+      teamName: 'mainStore/teamName',
+      teamToken: 'mainStore/teamToken',
+      teamID: 'mainStore/teamID',
+      selectedSport: 'mainStore/selectedSport',
+      currentUserEmail: 'mainStore/currentUserEmail',
+      activeGameId: 'mainStore/activeGameId',
+      players: 'mainStore/players'
+    })
   },
   data () {
     return {
@@ -209,16 +209,16 @@ export default {
     });
   },
   methods: {
-    ...mapMutations([
-      'SET_LOGGED_IN_USER',
-      'SET_SELECTED_TEAM',
-      'SET_CURR_TEAM',
-      'SET_SELECTED_SPORT',
-      'SET_ACTIVE_GAME_ID',
-      'SET_SELECTED_TEAM_ID',
-      'SET_PLAYERS',
-      'APPEND_PLAYER'
-    ]),
+    ...mapMutations({
+      SET_LOGGED_IN_USER: 'mainStore/SET_LOGGED_IN_USER',
+      SET_SELECTED_TEAM: 'mainStore/SET_SELECTED_TEAM',
+      SET_CURR_TEAM: 'mainStore/SET_CURR_TEAM',
+      SET_SELECTED_SPORT: 'mainStore/SET_SELECTED_SPORT',
+      SET_ACTIVE_GAME_ID: 'mainStore/SET_ACTIVE_GAME_ID',
+      SET_SELECTED_TEAM_ID: 'mainStore/SET_SELECTED_TEAM_ID',
+      SET_PLAYERS: 'mainStore/SET_PLAYERS',
+      APPEND_PLAYER: 'mainStore/APPEND_PLAYER'
+    }),
     logout: function() {
       firebase.auth().signOut().then(() => {
         this.$router.replace('login')
