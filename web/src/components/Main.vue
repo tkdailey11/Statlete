@@ -252,7 +252,7 @@ export default {
     },
     gameSelected: function(event) {
       this.SET_ACTIVE_GAME_ID(this.gamesList[event - 1]);
-      this.viewMode='isInGameView';
+      //this.viewMode='isInGameView';
       this.$router.push('/gameview');
     },
     nextClickedPlayer(currentPage) {

@@ -1,7 +1,7 @@
 <template>
   <div id="GameView">
     <div class="TopBanner">
-      <h2 style="float: left; margin: 30px 30px 0px 10px;">{{gameID}}</h2>
+      <h2 style="float: left; margin: 30px 30px 0px 10px;">{{activeGameId}}</h2>
     </div>
     <player-stat-selector style="float: left;"
                           :players="players"
@@ -10,7 +10,7 @@
     <sb-data-entry id="sbde1"
                    style="float: left;"
                    @StatChange="updateDB"
-                   :gameID="gameID">
+                   :gameID="activeGameId">
     </sb-data-entry>
     <div id="fieldEntry">
       <sb-field :shots="shotsArr"
@@ -23,13 +23,16 @@
 
 <script>
   import firebase from 'firebase'
+  import { mapGetters, mapMutations } from 'vuex';
 
   export default {
     name: 'GameView',
-    props: {
-      gameID: '',
-      players: {},
-      teamID: ''
+    computed: {
+      ...mapGetters([
+        'activeGameId',
+        'players',
+        'selectedTeamId'
+      ])
     },
     data() {
       return {
@@ -51,7 +54,7 @@
           alert('Subtracting Stats is not yet supported')
         }
         else{
-          var dbRef = firebase.database().ref('SoccerGames/').child(self.gameID).child(self.currentPeriod)
+          var dbRef = firebase.database().ref('SoccerGames/').child(self.activeGameId).child(self.currentPeriod)
           dbRef = dbRef.child(input[1])
         }
 
@@ -71,27 +74,6 @@
           this.shotsArr.pop();
         }
       }
-    },
-    beforeCreate() {
-      //do something before creating vue instance
-      console.log('BEFORE CREATE');
-    },
-    created() {
-      //do something after creating vue instance
-      console.log('CREATED');
-    },
-    mounted() {
-      //do something after mounting vue instance
-      console.log(this.gameID);
-      console.log('MOUNTED');
-    },
-    beforeDestroy() {
-      //do something before destroying vue instance
-      alert('BEFORE DESTROY');
-    },
-    destroyed() {
-      //do something after destroying vue instance
-      alert('DESTROYED');
     }
   }
 </script>
