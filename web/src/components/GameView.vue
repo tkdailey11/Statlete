@@ -1,7 +1,7 @@
 <template>
   <div id="GameView">
     <div class="TopBanner">
-      <h2 style="float: left; margin: 30px 30px 0px 10px;">{{gameID}}</h2>
+      <h2 style="float: left; margin: 30px 30px 0px 10px;">{{activeGameId}}</h2>
     </div>
     <player-stat-selector style="float: left;"
                           :players="players"
@@ -10,7 +10,7 @@
     <sb-data-entry id="sbde1"
                    style="float: left;"
                    @StatChange="updateDB"
-                   :gameID="gameID">
+                   :gameID="activeGameId">
     </sb-data-entry>
     <div id="fieldEntry">
       <sb-field :shots="shotsArr"
@@ -23,24 +23,33 @@
 
 <script>
   import firebase from 'firebase'
+  import { mapGetters, mapMutations } from 'vuex';
 
   export default {
     name: 'GameView',
-    props: {
-      gameID: '',
-      players: {},
-      teamID: ''
-    },
-    data() {
-      return {
-        selectedPlayer: '',
-        statString: '',
-        currentPeriod: 'Period1',
-        shotType: 'gcf',
-        shotsArr: []
-      }
+    computed: {
+      ...mapGetters({
+        activeGameId: 'mainStore/activeGameId',
+        players: 'mainStore/players',
+        selectedTeamId: 'mainStore/selectedTeamId',
+        selectedPlayer: 'gameViewStore/selectedPlayer',
+        statString: 'gameViewStore/statString',
+        currentPeriod: 'gameViewStore/currentPeriod',
+        shotType: 'gameViewStore/shotType',
+        shotsArr: 'gameViewStore/shotsArr',
+        shotsArrLength: 'gameViewStore/shotsArrLength'
+      })
     },
     methods: {
+      ...mapMutations({
+        GV_SET_PLAYER: 'gameViewStore/GV_SET_PLAYER',
+        GV_SET_STAT_STRING: 'gameViewStore/GV_SET_STAT_STRING',
+        GV_SET_PERIOD: 'gameViewStore/GV_SET_PERIOD',
+        GV_SET_SHOT_TYPE: 'gameViewStore/GV_SET_SHOT_TYPE',
+        GV_SET_SHOTS_ARR: 'gameViewStore/GV_SET_SHOTS_ARR',
+        GV_APPEND_SHOT: 'gameViewStore/GV_APPEND_SHOT',
+        GV_REMOVE_SHOT: 'gameViewStore/GV_REMOVE_SHOT'
+      }),
       playerWasSelected(event) {
         console.log(event);
       },
@@ -51,7 +60,7 @@
           alert('Subtracting Stats is not yet supported')
         }
         else{
-          var dbRef = firebase.database().ref('SoccerGames/').child(self.gameID).child(self.currentPeriod)
+          var dbRef = firebase.database().ref('SoccerGames/').child(self.activeGameId).child(self.currentPeriod)
           dbRef = dbRef.child(input[1])
         }
 
@@ -61,37 +70,16 @@
           style: event.style,
           shotType: this.shotType
         };
-        this.shotsArr.push(shotData);
+        this.GV_APPEND_SHOT(shotData);
       },
       shotTypeChanged(event){
-        this.shotType = event;
+        this.GV_SET_SHOT_TYPE(event);
       },
       undoClicked(){
-        if (this.shotsArr.length > 0) {
-          this.shotsArr.pop();
+        if (this.shotsArrLength > 0) {
+          this.GV_REMOVE_SHOT();
         }
       }
-    },
-    beforeCreate() {
-      //do something before creating vue instance
-      console.log('BEFORE CREATE');
-    },
-    created() {
-      //do something after creating vue instance
-      console.log('CREATED');
-    },
-    mounted() {
-      //do something after mounting vue instance
-      console.log(this.gameID);
-      console.log('MOUNTED');
-    },
-    beforeDestroy() {
-      //do something before destroying vue instance
-      alert('BEFORE DESTROY');
-    },
-    destroyed() {
-      //do something after destroying vue instance
-      alert('DESTROYED');
     }
   }
 </script>

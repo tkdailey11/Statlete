@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+import { store } from './store/store';
 import router from './router'
 import firebase from 'firebase'
 import { config } from './helpers/firebaseConfig'
@@ -93,6 +94,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     app = new Vue({
       el: '#app',
       router,
+      store,
       components: { App },
       template: '<App/>'
     })

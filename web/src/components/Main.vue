@@ -109,44 +109,55 @@
       </div>
     </div>
     <!-- END WIZARDS -->
-    <game-view v-if="viewMode==='isInGameView'"
+    <!--<game-view v-if="viewMode==='isInGameView'"
                @GameViewClose="viewMode='mainViewMode'"
                :gameID="activeGameId"
                :players="players">
-    </game-view>
+    </game-view>-->
+    <!--
     <team-settings v-if="viewMode==='teamSettingsView'"
                    @TeamSettingsClose="viewMode='mainViewMode'"
                    :id="selectedTeamId"
                    :tok="selectedTeamToken">
     </team-settings>
+    -->
+    <!--
     <team-stats v-if="viewMode==='teamStatsView'"
                    @TeamStatsClose="viewMode='mainViewMode'">
     </team-stats>
+    -->
+    <!--
     <player-detail-view v-if="viewMode==='playerDetailView'"
                    @PlayerDetailViewClose="viewMode='mainViewMode'">
     </player-detail-view>
+    -->
   </div>
 </template>
 
 <script>
 import firebase from 'firebase'
-
+import { mapGetters, mapMutations } from 'vuex';
 export default {
   name: 'Main',
+  computed: {
+    ...mapGetters({
+      loggedInUser: 'mainStore/loggedInUser',
+      selectedTeamId: 'mainStore/selectedTeamId',
+      selectedTeamName: 'mainStore/selectedTeamName',
+      selectedTeamToken: 'mainStore/selectedTeamToken',
+      teamName: 'mainStore/teamName',
+      teamToken: 'mainStore/teamToken',
+      teamID: 'mainStore/teamID',
+      selectedSport: 'mainStore/selectedSport',
+      currentUserEmail: 'mainStore/currentUserEmail',
+      activeGameId: 'mainStore/activeGameId',
+      players: 'mainStore/players'
+    })
+  },
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
-      loggedInUser: '',
-      currentUserEmail: '',
-      teamName: '',
-      teamToken: '',
-      teamID: '',
       playerName: '',
-      activeGameId: '',
-      selectedSport: 'basketball',
-      selectedTeamId: '',
-      selectedTeamName: '',
-      selectedTeamToken: '',
       /*
         View Modes:
           - mainViewMode (default)
@@ -180,8 +191,7 @@ export default {
         }
       ],
       sportfolios: [],
-      gamesList: [],
-      players: []
+      gamesList: []
     }
   },
   mounted () {
@@ -193,20 +203,22 @@ export default {
           return false;
     });
     this.$nextTick(() => {
-        this.loggedInUser = firebase.auth().currentUser;
-        this.currentUserEmail = this.loggedInUser.email;
+        this.SET_LOGGED_IN_USER(firebase.auth().currentUser);
         this.getGames();
         this.getSportfolios();
-        console.log("NEXT TICK");
     });
   },
   methods: {
-    sendStuffToDB: function() {
-      console.log("SUBMIT TO DB");
-      firebase.database().ref('Users/').child('tkdailey11@gmailcom').child('AdminTeams').update({
-        "team1" : "qeguqer"
-      });
-    },
+    ...mapMutations({
+      SET_LOGGED_IN_USER: 'mainStore/SET_LOGGED_IN_USER',
+      SET_SELECTED_TEAM: 'mainStore/SET_SELECTED_TEAM',
+      SET_CURR_TEAM: 'mainStore/SET_CURR_TEAM',
+      SET_SELECTED_SPORT: 'mainStore/SET_SELECTED_SPORT',
+      SET_ACTIVE_GAME_ID: 'mainStore/SET_ACTIVE_GAME_ID',
+      SET_SELECTED_TEAM_ID: 'mainStore/SET_SELECTED_TEAM_ID',
+      SET_PLAYERS: 'mainStore/SET_PLAYERS',
+      APPEND_PLAYER: 'mainStore/APPEND_PLAYER'
+    }),
     logout: function() {
       firebase.auth().signOut().then(() => {
         this.$router.replace('login')
@@ -216,15 +228,17 @@ export default {
       setTimeout(function(){
         document.getElementById("mySidenav").style.width = "250px";
       }, 90);
-
     },
     showTeam: function() {
       this.viewMode = 'isCreatingTeam'
     },
     teamSelected: function(event) {
-      this.selectedTeamId = event.Id;
-      this.selectedTeamName = event.Name;
-      this.selectedTeamToken = event.Token;
+      this.SET_SELECTED_TEAM({
+        id: event.Id,
+        name: event.Name,
+        token: event.Token
+      });
+
       this.getGames();
       this.getPlayers();
     },
@@ -237,25 +251,20 @@ export default {
       //this.viewMode = 'isCreatingPlayer'
     },
     gameSelected: function(event) {
-      this.activeGameId = this.gamesList[event - 1];
-      this.viewMode='isInGameView';
+      this.SET_ACTIVE_GAME_ID(this.gamesList[event - 1]);
+      //this.viewMode='isInGameView';
+      this.$router.push('/gameview');
     },
     nextClickedPlayer(currentPage) {
       if(currentPage==1){
         this.hideCreating()
 
-        //build up json for database
-        console.log('**************************************');
-        console.log('TeamID: ' + this.teamID);
-        console.log('TeamToken: ' + this.teamToken);
-        console.log('Sport: ' + this.selectedSport);
-        console.log('TeamName: ' + this.teamName);
-        console.log('**************************************');
-
-        this.teamID = '';
-        this.teamToken = '';
-        this.selectedSport = 'basketball';
-        this.teamName = '';
+        this.SET_SELECTED_SPORT('basketball');
+        this.SET_CURR_TEAM({
+          id: '',
+          token: '',
+          name: ''
+        })
       }
       return true; //return false if you want to prevent moving to next page
     },
@@ -300,16 +309,19 @@ export default {
         [this.teamID] : " "
       });
 
-      this.teamID = '';
-      this.teamToken = '';
-      this.selectedSport = 'basketball';
-      this.teamName = '';
+      this.SET_CURR_TEAM({
+        id: '',
+        token: '',
+        name: ''
+      });
+      this.SET_SELECTED_SPORT('basketball');
     },
     backClickedTeam(currentPage) {
       return false; //return false if you want to prevent moving to previous page
     },
     setPlayerInfo(event) {
       console.log('[[[[[[[ SET PLAYER INFO ]]]]]]]');
+      //TODO: Update state here
       this.sportfolios.push(event);
     },
     editTeamSettings() {
@@ -333,38 +345,28 @@ export default {
       var teamIDList = [];
       var email = this.currentUserEmail.replace('.', '');
       var self = this;
-        console.log('IN GET GAMES');
-        var keysList = [];
-        self.gamesList = [];
-          var gamesListRef = firebase.database().ref('/TeamSportfolios/' + self.selectedTeamId + '/Games/');
-          if (typeof gamesListRef !== 'undefined') {
-            gamesListRef.on('value', function(snapshot) {
-              var obj = snapshot.val();
-              if (obj) {
-                self.gamesList = Object.keys(obj);
-                // if(typeof keysList !== 'undefined' && keysList.length > 0){
-                //   var gamesRef = firebase.database().ref('/SoccerGames/');
-                //   self.gamesList = [];
-                //   keysList.forEach(function(key) {
-                //     if(!self.gamesList[key])
-                //     {
-                //       self.gamesList.push(key);
-                //     }
-                //   });
-                // }
-              }
-            });
+
+      var keysList = [];
+      self.gamesList = [];
+      var gamesListRef = firebase.database().ref('/TeamSportfolios/' + self.selectedTeamId + '/Games/');
+      if (typeof gamesListRef !== 'undefined') {
+        gamesListRef.on('value', function(snapshot) {
+          var obj = snapshot.val();
+          if (obj) {
+            self.gamesList = Object.keys(obj);
           }
+        });
+      }
     },
     getPlayers() {
       var id = this.selectedTeamId;
       var self = this;
-      self.players = [];
+      self.SET_PLAYERS([]);
       var playersRef = firebase.database().ref('/TeamSportfolios/' + id + '/Players/');
       playersRef.on('value', function(snapshot) {
         var obj = snapshot.val();
         if(obj){
-          self.players = obj;
+          self.SET_PLAYERS(obj);
         }
       });
     },
@@ -372,22 +374,25 @@ export default {
       this.$modal.show('new-player');
     },
     hideModal (event) {
-      console.log('Hide Modal');
-      console.log(event);
-      var id = this.teamID;
+      var id = this.selectedTeamId;
       var playersRef = firebase.database().ref('/TeamSportfolios/' + id + '/Players/');
       var num = 'p' + event.num;
+      console.log('-----------------------');
+      console.log(id);
+      console.log(num);
       var name = event.name;
+      console.log(name);
       if(!name){
         name = ' ';
       }
       playersRef.update({
         [num] : name
       });
+      console.log('-----------------------');
       this.$modal.hide('new-player');
     },
     getSportfolios() {
-      var id = this.teamID;
+      var id = this.selectedTeamId;
       var keysList = [];
       var self = this;
       console.log('^^^^^^^^');
@@ -396,7 +401,7 @@ export default {
       sportfoliosListRef.on('value', function(snapshot) {
         var obj = snapshot.val();
         keysList = Object.keys(obj);
-        self.selectedTeamId = keysList[0];
+        self.SET_SELECTED_TEAM_ID(keysList[0]);
         self.getGames();
         self.getPlayers();
         var sportfoliosRef = firebase.database().ref('/TeamSportfolios');
@@ -779,5 +784,4 @@ export default {
   #rightList {
 
   }
-
 </style>
