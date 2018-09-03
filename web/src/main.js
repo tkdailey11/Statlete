@@ -39,6 +39,9 @@ Vue.component('team-stats', TeamStats);
 import PlayerDetailView from '@/components/PlayerDetailView';
 Vue.component('player-detail-view', PlayerDetailView);
 
+import PlayerHome from '@/components/PlayerHome';
+Vue.component('player-home', PlayerHome);
+
 import SideNav from '@/components/SideNav';
 Vue.component('side-nav', SideNav);
 

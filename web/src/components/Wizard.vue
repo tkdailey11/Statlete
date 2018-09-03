@@ -27,26 +27,42 @@
           <span>{{previousStepLabel}}</span>
         </a>
         <a
-          v-if="currentStep == 0" class="wizard__next pull-right"
+          v-if="currentStep == 0 && wizType=='team'" class="wizard__next pull-right"
           @click="goNextTeamName()">
           <span>{{nextStepLabel}}</span>
           <i class="vgw-icon vgw-next"></i>
           <!-- <img src="../images/next.png" alt="next icon"> -->
         </a>
         <a
-          v-if="currentStep != steps.length - 1 && currentStep == 1" class="wizard__next pull-right"
-          @click="goNextPlayers()">
+          v-if="currentStep == 0 && wizType=='player'" class="wizard__next pull-right"
+          @click="goNextPlayersOne()">
           <span>{{nextStepLabel}}</span>
           <i class="vgw-icon vgw-next"></i>
           <!-- <img src="../images/next.png" alt="next icon"> -->
         </a>
         <a
-          v-if="currentStep != steps.length - 1 && currentStep > 1" class="wizard__next pull-right"
-          @click="goNext()">
+          v-if="currentStep == 1 && wizType=='team'" class="wizard__next pull-right"
+          @click="goNextPlayers()">
           <span>{{nextStepLabel}}</span>
           <i class="vgw-icon vgw-next"></i>
           <!-- <img src="../images/next.png" alt="next icon"> -->
         </a>
+        <!--
+        <a
+          v-if="currentStep == 1 && wizType=='player'" class="wizard__next pull-right"
+          @click="goNextPlayersTwo()">
+          <span>{{nextStepLabel}}</span>
+          <i class="vgw-icon vgw-next"></i>
+        </a>-->
+        <!--
+        <a
+          v-if="currentStep == 2 && wizType=='team'" class="wizard__next pull-right"
+          @click="goNext()">
+          <span>{{nextStepLabel}}</span>
+          <i class="vgw-icon vgw-next"></i>
+          <img src="../images/next.png" alt="next icon">
+        </a>-->
+
         <a
           v-if="currentStep == steps.length - 1" class="wizard__next pull-right final-step" @click="goNext()">
           {{finalStepLabel}}
@@ -69,13 +85,15 @@ export default {
     finalStepLabel: {default: 'Save'},
     onNext: {},
     onBack: {},
-    submitTeam: {}
+    submitTeam: {},
+    submitPlayer: {}
   },
 
   data () {
     return {
       currentStep: 0,
-      teamName: ''
+      teamName: '',
+      wizType: 'team'
     };
   },
   computed: {
@@ -95,17 +113,20 @@ export default {
       return this.currentStep != 0;
     }
   },
+  mounted() {
+    //do something after mounting vue instance
+    if(this.steps.length == 2){
+      this.wizType = 'player'
+    }
+    else{
+      this.wizType = 'team'
+    }
+  },
   methods: {
-    submit(skipFunction) {
-      this.$emit('SubmitSportfolio');
-      console.log('SubmitSportfolio');
-      //this.currentStep++;
-    },
     goNext(skipFunction) {
       console.log('NextClicked');
-      if (this.currentStep < this.steps.length-1) {
-        this.currentStep++;
-        console.log('++');
+      if(this.steps.length == 2){
+        this.submitPlayer();
       }
       else{
         var id_str = jQuery('.teamIdEntry').val();
@@ -130,9 +151,17 @@ export default {
             }
           })
         }
-        //this.submitTeam()
-        alert('TEAM')
       }
+    },
+    goNextPlayersOne (skipFunction){
+      //add code to validate players info here...
+      this.currentStep++;
+      return true;
+    },
+    goNextPlayersTwo (skipFunction){
+      //add code to validate players info here...
+      this.currentStep++;
+      return true;
     },
     goNextTeamName (skipFunction) {
         var tn_str = jQuery('.teamNameEntry').val();
@@ -152,9 +181,6 @@ export default {
         this.currentStep++;
         this.$emit('SetDefaultPid')
       }
-      else{
-        alert('PLAYER')
-      }
     },
     goBack (skipFunction) {
       if (!skipFunction && typeof this.onBack == 'function'){
@@ -167,7 +193,7 @@ export default {
         this.currentStep--;
       }
     },
-  },
+  }
 };
 </script>
 

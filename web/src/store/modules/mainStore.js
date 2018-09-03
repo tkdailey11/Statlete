@@ -27,7 +27,6 @@ const getters = {
     return state.selectedTeam.id
   },
   selectedTeamName: state => {
-    alert('GET SELECTED TEAM NAME')
     return state.selectedTeam.name
   },
   selectedTeamToken: state => {

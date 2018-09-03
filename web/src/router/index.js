@@ -10,6 +10,7 @@ import GameView from '@/components/GameView'
 import TeamSettings from '@/components/TeamSettings'
 import TeamStats from '@/components/TeamStats'
 import PlayerDetailView from '@/components/PlayerDetailView'
+import PlayerHome from '@/components/PlayerHome'
 
 
 Vue.use(Router)
@@ -78,6 +79,14 @@ let router = new Router({
       path: '/playerdetail',
       name: 'PlayerDetailView',
       component: PlayerDetailView,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/playerhome',
+      name: 'PlayerHome',
+      component: PlayerHome,
       meta: {
         requiresAuth: true
       }
