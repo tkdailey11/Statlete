@@ -1,8 +1,7 @@
 <template>
   <div class="main">
     <new-player @newPlayerAdded="hideModal" />
-    <statlete-navbar v-if="!(viewMode==='isCreatingTeam' || viewMode==='isCreatingPlayer')"
-                     @shouldOpenNav="openNav"
+    <statlete-navbar @shouldOpenNav="openNav"
                      @shouldLogout="logout"
                      @GoBackClicked="hideCreating"></statlete-navbar>
 
@@ -19,7 +18,7 @@
       </button>
     </div>
 
-    <div id="mainPage" v-if="viewMode==='mainViewMode'">
+    <div id="mainPage">
       <div class="mainHeader">
         <h1 style="color: rgb(224, 0, 16); margin: 25px 50px 50px 50px;">{{selectedTeamName}}</h1>
       </div>
@@ -39,79 +38,7 @@
           <button @click="viewTeamStats" class="btn btn-outline-primary myButton">View Team Stats</button>
         </div>
       </div>
-
     </div>
-    <!-- WIZARDS -->
-    <div v-if="viewMode==='isCreatingPlayer' || viewMode==='isCreatingTeam'" class="WizardsDiv">
-      <div id="PlayerWizard" v-if="viewMode==='isCreatingPlayer'" style="padding-top=100px min-height: 100vh;">
-          <tkd-wizard
-            :steps="playerSteps"
-            :onNext="nextClickedPlayer"
-            :onBack="backClickedPlayer"
-            :submitPlayer="submitPlayerSportfolio">
-
-            <div slot="playerPage1">
-              <label class="myLabel">Player Name:</label>
-              <input type="text" v-model="teamName" placeholder="Player Name"><br>
-              <br>
-              <input type="text" v-model="playerNumber" placeholder="#"><br>
-              <br>
-              <label class="myLabel">Sport:</label>
-              <br>
-              <select-sport :initialSport="selectedSport" style="display: inline-block;" @sportWasSelected="selectedSport=$event"></select-sport>
-              <h1></h1>
-            </div>
-
-            <div slot="playerPage2">
-              <h4>Step 2</h4>
-              <label class="myLabel">Team ID:</label>
-              <input type="text" v-model="teamID" placeholder="Team ID"><br>
-              <br>
-              <label class="myLabel">Team Token:</label>
-              <input type="text" v-model="teamToken" placeholder="Team Token"><br>
-              <br>
-            </div>
-          </tkd-wizard>
-      </div>
-
-      <div id="TeamWizard" v-if="viewMode==='isCreatingTeam'" class="teamWiz">
-        <h1 style="color: rgb(242,209,24); margin-bottom: 50px;">Create a New Team Sportfolio</h1>
-        <tkd-wizard
-          :steps="teamSteps"
-          :onBack="backClickedTeam"
-          :submitTeam="submitTeamSportfolio"
-          @SetDefaultPid="setPid">
-
-          <div slot="teamPage1">
-            <label class="myLabel">Team Name:</label>
-            <input class="teamNameEntry" type="text" v-model="teamName" placeholder="Team Name">
-
-            <div class="SportSelector">
-              <label class="mySportLabel" for="sportSelector">Sport:</label>
-              <select-sport id="sportSelector" :initialSport="selectedSport" style="display: inline-block;" @sportWasSelected="selectedSport=$event"></select-sport>
-            </div>
-          </div>
-
-          <div slot="teamPage2">
-            <h4>Add Players</h4>
-            <player-selection-box @playerInfo="setPlayerInfo"
-                                  :sport="selectedSport"></player-selection-box>
-          </div>
-
-          <div slot="teamPage3">
-            <div class="step3Body">
-              <label class="myLabel">Team ID:</label>
-              <input class="teamIdEntry" type="text" v-model="teamID" placeholder="Team ID"><br>
-              <br>
-              <label class="myLabel">Team Token:</label>
-              <input class="teamTokenEntry" type="text" v-model="teamToken" placeholder="Team Token"><br>
-              <br>
-            </div>
-          </div>
-        </tkd-wizard>
-      </div>
-    </div>
-    <!-- END WIZARDS -->
     <!--<game-view v-if="viewMode==='isInGameView'"
                @GameViewClose="viewMode='mainViewMode'"
                :gameID="activeGameId"
@@ -144,7 +71,6 @@ export default {
   name: 'Main',
   computed: {
     ...mapGetters({
-      loggedInUser: 'mainStore/loggedInUser',
       selectedTeamId: 'mainStore/selectedTeamId',
       selectedTeamName: 'mainStore/selectedTeamName',
       selectedTeamToken: 'mainStore/selectedTeamToken',
@@ -155,45 +81,9 @@ export default {
   },
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
-      playerName: '',
-      playerNumber: '',
-      /*
-        View Modes:
-          - mainViewMode (default)
-          - isCreatingTeam
-          - isCreatingPlayer
-          - isInGameView
-      */
-      viewMode: 'mainViewMode',
-      playerSteps: [
-        {
-          label: 'Name and Sport',
-          slot: 'playerPage1',
-        },
-        {
-          label: 'Link (OPTIONAL)',
-          slot: 'playerPage2',
-        }
-      ],
-      teamSteps: [
-        {
-          label: 'Name and Sport',
-          slot: 'teamPage1',
-        },
-        {
-          label: 'Add Players',
-          slot: 'teamPage2',
-        },
-        {
-          label: 'Setup Linking (OPTIONAL)',
-          slot: 'teamPage3',
-        }
-      ],
       sportfolios: [],
       gamesList: [],
       teamName: '',
-      selectedSport: 'basketball',
       teamID: '',
       teamToken: ''
     }
@@ -208,7 +98,8 @@ export default {
     });
     this.$nextTick(() => {
         this.SET_LOGGED_IN_USER(firebase.auth().currentUser);
-        this.getGames();
+        this.getGamesTeam();
+        this.getPlayers();
         this.getSportfolios();
     });
   },
@@ -217,12 +108,9 @@ export default {
       SET_LOGGED_IN_USER: 'mainStore/SET_LOGGED_IN_USER',
       SET_SELECTED_TEAM: 'mainStore/SET_SELECTED_TEAM',
       SET_CURR_TEAM: 'mainStore/SET_CURR_TEAM',
-      //SET_CURR_TEAM_NAME: 'mainStore/SET_CURR_TEAM_NAME',
-      SET_SELECTED_SPORT: 'mainStore/SET_SELECTED_SPORT',
       SET_ACTIVE_GAME_ID: 'mainStore/SET_ACTIVE_GAME_ID',
       SET_SELECTED_TEAM_ID: 'mainStore/SET_SELECTED_TEAM_ID',
       SET_PLAYERS: 'mainStore/SET_PLAYERS',
-      APPEND_PLAYER: 'mainStore/APPEND_PLAYER'
     }),
     logout: function() {
       firebase.auth().signOut().then(() => {
@@ -235,7 +123,7 @@ export default {
       }, 90);
     },
     showTeam: function() {
-      this.viewMode = 'isCreatingTeam'
+      this.$router.push('/createteam')
     },
     teamSelected: function(event) {
       this.SET_SELECTED_TEAM({
@@ -244,155 +132,29 @@ export default {
         token: event.Token
       });
 
-      this.getGames();
+      this.getGamesTeam();
       this.getPlayers();
-    },
-    hideCreating: function() {
-      this.viewMode = 'mainViewMode'
     },
     showPlayer: function() {
       //jQuery("#notImplementedAlert").show();
       //console.log("ALERT");
-      this.viewMode = 'isCreatingPlayer'
+      this.$router.push('createplayer');
     },
     gameSelected: function(event) {
       this.SET_ACTIVE_GAME_ID(this.gamesList[event - 1]);
-      //this.viewMode='isInGameView';
       this.$router.push('/gameview');
     },
-    nextClickedPlayer(currentPage) {
-      if(currentPage==1){
-        this.hideCreating()
-
-        this.SET_SELECTED_SPORT('basketball');
-        this.SET_CURR_TEAM({
-          id: '',
-          token: '',
-          name: ''
-        })
-      }
-      return true; //return false if you want to prevent moving to next page
-    },
-    backClickedPlayer(currentPage) {
-      return false; //return false if you want to prevent moving to previous page
-    },
-    submitPlayerSportfolio(){
-      this.hideCreating();
-      alert('SUBMITTED PLAYER SPORTFOLIO');
-      var email = this.currentUserEmail.replace('.', '');
-
-      var playerData = {
-          "Games" : " ",
-          "Name" : this.teamName,
-          "Number" : this.playerNumber,
-          "TeamID" : this.teamID,
-          "TotalStats" : " ",
-          "User" : this.currentUserEmail
-      }
-
-      var id = this.teamName + '-' + this.teamID + '-' + Math.random().toString(36).substring(2,7);
-      firebase.database().ref('PlayerSportfolios/').update({
-        [id] : playerData
-      });
-
-      firebase.database().ref('Users/').child(email).child('PlayerTeams').update({
-        [this.teamID] : id
-      })
-
-
-
-      this.SET_SELECTED_SPORT('basketball');
-      this.SET_CURR_TEAM({
-        id: '',
-        token: '',
-        name: ''
-      });
-
-      this.teamID = ''
-      this.teamName = ''
-      this.teamToken = ''
-      this.playerNumber = ''
-    },
-    submitTeamSportfolio(){
-      this.hideCreating();
-
-      var email = this.currentUserEmail.replace('.', '');
-      var nam = this.teamName;
-      var tok = this.teamToken;
-      var teamData = {
-          "Admins" : {
-            [email] : 'admin1'
-          },
-          "Creator" : email,
-          "TeamName" : nam,
-          "Token" : tok
-      }
-
-      var s = this.sportfolios.splice(-1)[0];
-      var playerObj = {};
-      s.forEach( function (player)
-      {
-        var key = 'p' + player.num;
-        if(player.name==='') {
-          playerObj[key] = ' ';
-        }
-        else {
-          playerObj[key] = player.name;
-        }
-      });
-      teamData.Players = playerObj;
-
-      var id = this.teamID;
-      firebase.database().ref('TeamSportfolios/').update({
-        [id] : teamData
-      });
-
-      firebase.database().ref('Users/' + email + '/AdminTeams').update({
-        [this.teamID] : " "
-      });
-
-      this.SET_CURR_TEAM({
-        id: '',
-        token: '',
-        name: ''
-      });
-      this.SET_SELECTED_SPORT('basketball');
-      this.SET_SELECTED_TEAM({
-        id: this.teamID,
-        name: this.teamName,
-        token: this.teamToken
-      })
-
-      this.teamID = ''
-      this.teamName = ''
-      this.teamToken = ''
-    },
-    backClickedTeam(currentPage) {
-      return false; //return false if you want to prevent moving to previous page
-    },
-    setPlayerInfo(event) {
-      console.log('[[[[[[[ SET PLAYER INFO ]]]]]]]');
-      //TODO: Update state here
-      this.sportfolios.push(event);
-    },
     editTeamSettings() {
-      this.viewMode = 'teamSettingsView';
       console.log("EDIT TEAM SETTINGS");
     },
     viewTeamStats() {
-      this.viewMode = 'teamStatsView';
       console.log("VIEW TEAM STATS");
     },
-    //inGameView() {
-      //this.viewMode = 'isInGameView';
-      //console.log("In Game View");
-    //},
     viewPlayerInfo() {
-      this.viewMode = 'playerDetailView';
       console.log("View PLAYER INFO");
     },
     //<!-- CHANGE THIS -->
-    getGames() {
+    getGamesTeam() {
       var teamIDList = [];
       var email = this.currentUserEmail.replace('.', '');
       var self = this;
@@ -453,8 +215,6 @@ export default {
         var obj = snapshot.val();
         keysList = Object.keys(obj);
         self.SET_SELECTED_TEAM_ID(keysList[0]);
-        self.getGames();
-        self.getPlayers();
         var sportfoliosRef = firebase.database().ref('/TeamSportfolios');
         self.sportfolios = [];
         keysList.forEach(function(key) {
@@ -463,9 +223,6 @@ export default {
           })
         })
       })
-    },
-    setPid() {
-      this.teamID = this.teamName + '_' + Math.random().toString(36).substring(2,7);
     },
     addGame() {
       var gameID = this.selectedTeamId + '_' + Math.random().toString(36).substring(2,7);
@@ -718,10 +475,6 @@ export default {
     margin: 0px 40px 0px 0px;
   }
 
-  .sportSelect {
-    width: 210px;
-    height: 97px;
-  }
   button {
     margin-top: 20px;
     cursor: pointer;
@@ -787,25 +540,10 @@ export default {
     flex-wrap: wrap;
     background-color: white;
   }
-
-  .teamWiz {
-    margin-top: 50px;
-  }
-
   .myButton {
     height: 50px;
     max-height: 50px;
     margin: 50px;
-  }
-  .WizardsDiv {
-    height: 100vh;
-    min-height: 100vh;
-    background-color: transparent;
-  }
-  .teamNameEntry {
-    border: none;
-    margin-bottom: 10px;
-    border-bottom: 2px rgb(252,102,0) solid;
   }
 
   ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -821,18 +559,8 @@ export default {
     color: rgba(255,0,0,0.5);
   }
 
-  .SportSelector {
-  }
-
   #mainPage {
     min-height: 100vh;
     background-color: white;
-  }
-
-  #leftList {
-
-  }
-  #rightList {
-
   }
 </style>

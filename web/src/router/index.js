@@ -11,6 +11,9 @@ import TeamSettings from '@/components/TeamSettings'
 import TeamStats from '@/components/TeamStats'
 import PlayerDetailView from '@/components/PlayerDetailView'
 import PlayerHome from '@/components/PlayerHome'
+import WizardPlayer from '@/components/WizardPlayer'
+import WizardPlayerCopy from '@/components/WizardPlayerCopy'
+import WizardTeam from '@/components/WizardTeam'
 
 
 Vue.use(Router)
@@ -87,6 +90,22 @@ let router = new Router({
       path: '/playerhome',
       name: 'PlayerHome',
       component: PlayerHome,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/createplayer',
+      name: 'WizardPlayerCopy',
+      component: WizardPlayerCopy,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/createteam',
+      name: 'WizardTeam',
+      component: WizardTeam,
       meta: {
         requiresAuth: true
       }

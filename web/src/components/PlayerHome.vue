@@ -1,8 +1,9 @@
 <template>
   <div class="playerHome">
-    <statlete-navbar @shouldOpenNav="openNav"
+    <statlete-navbar v-if="!(viewMode==='isCreatingTeam' || viewMode==='isCreatingPlayer')"
+                     @shouldOpenNav="openNav"
                      @shouldLogout="logout"
-                     @GoBackClicked="hideCreating"></statlete-navbar>
+                     style="background-color: rgb(224, 0, 16);"></statlete-navbar>
 
     <side-nav id="mySidenav"
               @showPlayer="showPlayer"
@@ -10,22 +11,19 @@
               @teamSelected="teamSelected">
     </side-nav>
 
-    <div id="mainPage" v-if="viewMode==='mainViewMode'">
-      <div class="mainHeader">
-        <h1 style="color: rgb(224, 0, 16); margin: 25px 50px 50px 50px;">{{selectedTeamName}}</h1>
+    <div class="mainHeader">
+      <h1 style="color: rgb(224, 0, 16); margin: 25px 50px 50px 50px;">{{selectedTeamName}} - {{theTeamName}}</h1>
+    </div>
+    <div class="mainBody">
+      <games-list :games="gamesList"
+                  style="margin-top: 20px;"
+                  @gameSelected="gameSelected"
+                  @AddGame="addGame">
+      </games-list>
+      <div class="button-wrapper">
+        <button @click="editMySettings" class="btn btn-outline-primary myButton">Edit My Settings</button>
+        <button @click="viewMyStats" class="btn btn-outline-primary myButton">View My Stats</button>
       </div>
-      <div class="mainBody">
-        <games-list :games="gamesList"
-                    style="margin-top: 20px;"
-                    @gameSelected="gameSelected"
-                    @AddGame="addGame">
-        </games-list>
-        <div class="button-wrapper">
-          <button @click="editMySettings" class="btn btn-outline-primary myButton">Edit My Settings</button>
-          <button @click="viewMyStats" class="btn btn-outline-primary myButton">View My Stats</button>
-        </div>
-      </div>
-
     </div>
   </div>
 </template>
@@ -88,7 +86,8 @@ export default {
       teamName: '',
       selectedSport: 'basketball',
       teamID: '',
-      teamToken: ''
+      teamToken: '',
+      theTeamName: ''
     }
   },
   mounted () {
@@ -100,9 +99,13 @@ export default {
           return false;
     });
     this.$nextTick(() => {
-        this.SET_LOGGED_IN_USER(firebase.auth().currentUser);
         this.getGames();
-        this.getSportfolios();
+
+        var self = this;
+        firebase.database().ref('/TeamSportfolios/' + this.selectedTeamId + '/TeamName').once("value", function(snapshot){
+          console.log(snapshot);
+          self.theTeamName = snapshot.val();
+        })
     });
   },
   methods: {
@@ -117,18 +120,27 @@ export default {
       SET_PLAYERS: 'mainStore/SET_PLAYERS',
       APPEND_PLAYER: 'mainStore/APPEND_PLAYER'
     }),
-    logout: function() {
-      firebase.auth().signOut().then(() => {
-        this.$router.replace('login')
-      })
+    gameSelected: function(event) {
+      this.SET_ACTIVE_GAME_ID(this.gamesList[event - 1]);
+      //this.viewMode='isInGameView';
+      this.$router.push('/gameview');
     },
     openNav: function() {
       setTimeout(function(){
         document.getElementById("mySidenav").style.width = "250px";
       }, 90);
     },
+    logout: function() {
+      firebase.auth().signOut().then(() => {
+        this.$router.replace('login')
+      })
+    },
+    showPlayer: function() {
+      //jQuery("#notImplementedAlert").show();
+      this.$router.push('/createplayer')
+    },
     showTeam: function() {
-      this.viewMode = 'isCreatingTeam'
+      this.$router.push('/createteam')
     },
     teamSelected: function(event) {
       this.SET_SELECTED_TEAM({
@@ -137,36 +149,11 @@ export default {
         token: event.Token
       });
 
-      this.getGames();
+      this.getGamesTeam();
       this.getPlayers();
+      this.$router.push('/main');
     },
-    hideCreating: function() {
-      this.viewMode = 'mainViewMode'
-    },
-    showPlayer: function() {
-      //jQuery("#notImplementedAlert").show();
-      //console.log("ALERT");
-      this.viewMode = 'isCreatingPlayer'
-    },
-    gameSelected: function(event) {
-      this.SET_ACTIVE_GAME_ID(this.gamesList[event - 1]);
-      //this.viewMode='isInGameView';
-      this.$router.push('/gameview');
-    },
-    editMySettings() {
-      this.viewMode = 'teamSettingsView';
-      console.log("EDIT TEAM SETTINGS");
-    },
-    viewMyStats() {
-      this.viewMode = 'teamStatsView';
-      console.log("VIEW TEAM STATS");
-    },
-    viewPlayerInfo() {
-      this.viewMode = 'playerDetailView';
-      console.log("View PLAYER INFO");
-    },
-    //<!-- CHANGE THIS -->
-    getGames() {
+    getGamesTeam() {
       var teamIDList = [];
       var email = this.currentUserEmail.replace('.', '');
       var self = this;
@@ -174,6 +161,23 @@ export default {
       var keysList = [];
       self.gamesList = [];
       var gamesListRef = firebase.database().ref('/TeamSportfolios/' + self.selectedTeamId + '/Games/');
+      if (typeof gamesListRef !== 'undefined') {
+        gamesListRef.on('value', function(snapshot) {
+          var obj = snapshot.val();
+          if (obj) {
+            self.gamesList = Object.keys(obj);
+          }
+        });
+      }
+    },
+    getGamesPlayer() {
+      var teamIDList = [];
+      var email = this.currentUserEmail.replace('.', '');
+      var self = this;
+
+      var keysList = [];
+      self.gamesList = [];
+      var gamesListRef = firebase.database().ref('/PlayerSportfolios/' + self.selectedTeamId + '/Games/');
       if (typeof gamesListRef !== 'undefined') {
         gamesListRef.on('value', function(snapshot) {
           var obj = snapshot.val();
@@ -195,27 +199,31 @@ export default {
         }
       });
     },
-    getSportfolios() {
-      var id = this.selectedTeamId;
-      var keysList = [];
-      var self = this;
-      console.log('^^^^^^^^');
+    editMySettings() {
+      this.viewMode = 'teamSettingsView';
+      console.log("EDIT TEAM SETTINGS");
+    },
+    viewMyStats() {
+      this.viewMode = 'teamStatsView';
+      console.log("VIEW TEAM STATS");
+    },
+    //<!-- CHANGE THIS -->
+    getGames() {
+      var teamIDList = [];
       var email = this.currentUserEmail.replace('.', '');
-      var sportfoliosListRef = firebase.database().ref('/Users/' + email + '/AdminTeams/');
-      sportfoliosListRef.on('value', function(snapshot) {
-        var obj = snapshot.val();
-        keysList = Object.keys(obj);
-        self.SET_SELECTED_TEAM_ID(keysList[0]);
-        self.getGames();
-        self.getPlayers();
-        var sportfoliosRef = firebase.database().ref('/TeamSportfolios');
-        self.sportfolios = [];
-        keysList.forEach(function(key) {
-          sportfoliosRef.child(key).once('value', function(snap) {
-            self.sportfolios.push(snap.val());
-          })
-        })
-      })
+      var self = this;
+
+      var keysList = [];
+      self.gamesList = [];
+      var gamesListRef = firebase.database().ref('/TeamSportfolios/' + self.selectedTeamId + '/Games/');
+      if (typeof gamesListRef !== 'undefined') {
+        gamesListRef.on('value', function(snapshot) {
+          var obj = snapshot.val();
+          if (obj) {
+            self.gamesList = Object.keys(obj);
+          }
+        });
+      }
     },
     addGame() {
       var gameID = this.selectedTeamId + '_' + Math.random().toString(36).substring(2,7);
@@ -446,6 +454,8 @@ export default {
       transition: margin-left .5s;
       margin:0px;
       min-height: 100%;
+      background-color: white;
+      height: 100vh
   }
 
   /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */

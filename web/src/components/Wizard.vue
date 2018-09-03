@@ -4,7 +4,7 @@
       <li class="wizard__step"
         :class="{'active': currentStep >= index}"
         :style="{ width: 100/steps.length + '%' }"
-        v-for="(step, index) of steps" :key="index">
+        v-for="(step, index) of steps" :key="index + '-' + getRandom()">
         <span class="wizard__step__line"></span>
         <span class="wizard__step__label">{{step.label}}</span>
         <span class="wizard__step__indicator"></span>
@@ -38,14 +38,12 @@
           @click="goNextPlayersOne()">
           <span>{{nextStepLabel}}</span>
           <i class="vgw-icon vgw-next"></i>
-          <!-- <img src="../images/next.png" alt="next icon"> -->
         </a>
         <a
           v-if="currentStep == 1 && wizType=='team'" class="wizard__next pull-right"
           @click="goNextPlayers()">
           <span>{{nextStepLabel}}</span>
           <i class="vgw-icon vgw-next"></i>
-          <!-- <img src="../images/next.png" alt="next icon"> -->
         </a>
         <!--
         <a
@@ -152,6 +150,9 @@ export default {
           })
         }
       }
+    },
+    getRandom(){
+      return Math.random().toString(36).substring(2,7);
     },
     goNextPlayersOne (skipFunction){
       //add code to validate players info here...

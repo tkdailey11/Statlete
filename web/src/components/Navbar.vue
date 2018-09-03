@@ -36,7 +36,7 @@
       margin:0px;
   }
   .myNav {
-    background-color: rgb(224,0,16);
+    background-color: transparent;
   }
   .LogoutDiv{
     float: right;
