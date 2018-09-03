@@ -27,6 +27,7 @@ const getters = {
     return state.selectedTeam.id
   },
   selectedTeamName: state => {
+    alert('GET SELECTED TEAM NAME')
     return state.selectedTeam.name
   },
   selectedTeamToken: state => {
@@ -65,6 +66,9 @@ const mutations = {
   },
   SET_CURR_TEAM: (state, payload) => {
     state.currTeam = payload
+  },
+  SET_CURR_TEAM_NAME: (state, payload) => {
+    state.currTeam.name = payload
   },
   SET_SELECTED_SPORT: (state, payload) => {
     state.selectedSport = payload

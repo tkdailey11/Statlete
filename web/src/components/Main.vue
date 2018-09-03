@@ -76,7 +76,7 @@
         <tkd-wizard
           :steps="teamSteps"
           :onBack="backClickedTeam"
-          @SubmitSportfolio="submitTeamSportfolio"
+          :submitTeam="submitTeamSportfolio"
           @SetDefaultPid="setPid">
 
           <div slot="teamPage1">
@@ -145,10 +145,6 @@ export default {
       selectedTeamId: 'mainStore/selectedTeamId',
       selectedTeamName: 'mainStore/selectedTeamName',
       selectedTeamToken: 'mainStore/selectedTeamToken',
-      teamName: 'mainStore/teamName',
-      teamToken: 'mainStore/teamToken',
-      teamID: 'mainStore/teamID',
-      selectedSport: 'mainStore/selectedSport',
       currentUserEmail: 'mainStore/currentUserEmail',
       activeGameId: 'mainStore/activeGameId',
       players: 'mainStore/players'
@@ -191,7 +187,11 @@ export default {
         }
       ],
       sportfolios: [],
-      gamesList: []
+      gamesList: [],
+      teamName: '',
+      selectedSport: 'basketball',
+      teamID: '',
+      teamToken: ''
     }
   },
   mounted () {
@@ -206,6 +206,7 @@ export default {
         this.SET_LOGGED_IN_USER(firebase.auth().currentUser);
         this.getGames();
         this.getSportfolios();
+        alert('NEXT TICK');
     });
   },
   methods: {
@@ -213,6 +214,7 @@ export default {
       SET_LOGGED_IN_USER: 'mainStore/SET_LOGGED_IN_USER',
       SET_SELECTED_TEAM: 'mainStore/SET_SELECTED_TEAM',
       SET_CURR_TEAM: 'mainStore/SET_CURR_TEAM',
+      //SET_CURR_TEAM_NAME: 'mainStore/SET_CURR_TEAM_NAME',
       SET_SELECTED_SPORT: 'mainStore/SET_SELECTED_SPORT',
       SET_ACTIVE_GAME_ID: 'mainStore/SET_ACTIVE_GAME_ID',
       SET_SELECTED_TEAM_ID: 'mainStore/SET_SELECTED_TEAM_ID',
@@ -315,6 +317,11 @@ export default {
         name: ''
       });
       this.SET_SELECTED_SPORT('basketball');
+      this.SET_SELECTED_TEAM({
+        id: this.teamID,
+        name: this.teamName,
+        token: this.teamToken
+      })
     },
     backClickedTeam(currentPage) {
       return false; //return false if you want to prevent moving to previous page

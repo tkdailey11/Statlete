@@ -68,7 +68,8 @@ export default {
     nextStepLabel: {default: 'Next'},
     finalStepLabel: {default: 'Save'},
     onNext: {},
-    onBack: {}
+    onBack: {},
+    submitTeam: {}
   },
 
   data () {
@@ -124,11 +125,13 @@ export default {
               }
               else {
                 alert('Good Choice! That ID\'s unique');
-                self.submit();
+                self.submitTeam();
               }
             }
           })
         }
+        //this.submitTeam()
+        alert('TEAM')
       }
     },
     goNextTeamName (skipFunction) {
@@ -148,6 +151,9 @@ export default {
       if (this.currentStep < this.steps.length-1) {
         this.currentStep++;
         this.$emit('SetDefaultPid')
+      }
+      else{
+        alert('PLAYER')
       }
     },
     goBack (skipFunction) {
