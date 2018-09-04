@@ -1,8 +1,9 @@
 <template>
-  <div id="PlayerWizard" style="padding-top=100px min-height: 100vh;">
+  <div id="WizardPlayer" style="padding-top=100px min-height: 100vh;">
     <statlete-navbar @shouldOpenNav="openNav"
                      @shouldLogout="logout"
-                     @GoBackClicked="goHome"></statlete-navbar>
+                     @GoBackClicked="goHome"
+                     style="background: transparent;"></statlete-navbar>
 
     <side-nav id="mySidenav"
               @showPlayer="closeNav"
@@ -10,35 +11,8 @@
               @teamSelected="teamSelected">
     </side-nav>
     <h1 style="color: rgb(242,209,24); margin-bottom: 50px;">Create a New Player Sportfolio</h1>
-    <tkd-wizard
-      :steps="playerSteps"
-      :onBack="backClickedPlayer"
-      :submitPlayer="submitPlayerSportfolio">
-
-      <div slot="playerPage1">
-        <h3>Step 1</h3>
-        <!-- <label class="myLabel1">Player Name:</label> -->
-        <!-- <input type="text" v-model="teamName" placeholder="Player Name" id="playerNameEntry"><br> -->
-        <br>
-        <!-- <label class="myLabel2" id="playerNumberLabel">Player Number:</label> -->
-        <!-- <input type="text" v-model="playerNumber" placeholder="#" id="playerNumberEntry"><br> -->
-        <br>
-        <!-- <label class="myLabel3" id="sportLabelPlayer">Sport:</label> -->
-        <br>
-        <!-- <select-sport :initialSport="selectedSport" style="display: inline-block;" @sportWasSelected="selectedSport=$event" id="sportSelectorPlayer"></select-sport> -->
-        <h1></h1>
-      </div>
-
-      <div slot="playerPage2">
-        <h3>Step 2</h3>
-        <!-- <label class="myLabel4" id="teamIDLabelPlayer">Team ID:</label> -->
-        <!-- <input type="text" v-model="teamID" placeholder="Team ID" id="teamIDPlayer"><br> -->
-        <br>
-        <!-- <label class="myLabel5" id="teamTokenLabelPlayer">Team Token:</label> -->
-        <!-- <input type="text" v-model="teamToken" placeholder="Team Token" id="teamTokenPlayer"><br> -->
-        <br>
-      </div>
-    </tkd-wizard>
+    <tkd-wizardP>
+    </tkd-wizardP>
   </div>
 </template>
 
@@ -56,16 +30,6 @@ export default {
   data () {
     return {
       playerNumber: '',
-      playerSteps: [
-        {
-          label: 'Name and Sport',
-          slot: 'playerPage1',
-        },
-        {
-          label: 'Link (OPTIONAL)',
-          slot: 'playerPage2',
-        }
-      ],
       teamName: '',
       selectedSport: 'basketball',
       teamID: '',
@@ -110,8 +74,6 @@ export default {
       }
     },
     submitPlayerSportfolio(){
-      //this.hideCreating('playerHomeMode');
-      alert('SUBMITTED PLAYER SPORTFOLIO');
       var emailStr = this.currentUserEmail;
       var email = emailStr.replace('.', '');
 
@@ -124,6 +86,7 @@ export default {
       }
 
       var id = this.teamName + '-' + this.teamID;
+      alert(id)
       var exists = firebase.database().ref('PlayerSportfolios/'+ id).key;
 
       if(exists===null){
@@ -190,7 +153,7 @@ export default {
           }
         });
       }
-    },
+    }
   }
 }
 </script>

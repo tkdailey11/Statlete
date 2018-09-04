@@ -2,8 +2,7 @@
   <div class="main">
     <new-player @newPlayerAdded="hideModal" />
     <statlete-navbar @shouldOpenNav="openNav"
-                     @shouldLogout="logout"
-                     @GoBackClicked="hideCreating"></statlete-navbar>
+                     @shouldLogout="logout"></statlete-navbar>
 
     <side-nav id="mySidenav"
               @showPlayer="showPlayer"

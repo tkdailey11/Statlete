@@ -12,7 +12,6 @@ import TeamStats from '@/components/TeamStats'
 import PlayerDetailView from '@/components/PlayerDetailView'
 import PlayerHome from '@/components/PlayerHome'
 import WizardPlayer from '@/components/WizardPlayer'
-import WizardPlayerCopy from '@/components/WizardPlayerCopy'
 import WizardTeam from '@/components/WizardTeam'
 
 
@@ -96,8 +95,8 @@ let router = new Router({
     },
     {
       path: '/createplayer',
-      name: 'WizardPlayerCopy',
-      component: WizardPlayerCopy,
+      name: 'WizardPlayer',
+      component: WizardPlayer,
       meta: {
         requiresAuth: true
       }

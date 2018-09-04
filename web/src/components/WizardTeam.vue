@@ -10,39 +10,8 @@
               @teamSelected="teamSelected">
     </side-nav>
     <h1 style="color: rgb(242,209,24); margin-bottom: 50px;">Create a New Team Sportfolio</h1>
-    <tkd-wizard
-      :steps="teamSteps"
-      :onBack="backClickedTeam"
-      :submitTeam="submitTeamSportfolio"
-      @SetDefaultPid="setPid">
-
-      <div slot="teamPage1">
-        <label class="myLabel">Team Name:</label>
-        <input class="teamNameEntry" type="text" v-model="teamName" placeholder="Team Name">
-
-        <div class="SportSelector">
-          <label class="mySportLabel" for="sportSelector">Sport:</label>
-          <select-sport id="sportSelector" :initialSport="selectedSport" style="display: inline-block;" @sportWasSelected="selectedSport=$event"></select-sport>
-        </div>
-      </div>
-
-      <div slot="teamPage2">
-        <h4>Add Players</h4>
-        <player-selection-box @playerInfo="setPlayerInfo"
-                              :sport="selectedSport"></player-selection-box>
-      </div>
-
-      <div slot="teamPage3">
-        <div class="step3Body">
-          <label class="myLabel">Team ID:</label>
-          <input class="teamIdEntry" type="text" v-model="teamID" placeholder="Team ID"><br>
-          <br>
-          <label class="myLabel">Team Token:</label>
-          <input class="teamTokenEntry" type="text" v-model="teamToken" placeholder="Team Token"><br>
-          <br>
-        </div>
-      </div>
-    </tkd-wizard>
+    <tkd-wizardT>
+    </tkd-wizardT>
   </div>
 </template>
 

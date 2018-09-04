@@ -63,14 +63,14 @@ Vue.component('landing-page', FLP);
 import Wizard from '@/components/Wizard';
 Vue.component('tkd-wizard', Wizard);
 
-import WizardCopy from '@/components/WizardCopy';
-Vue.component('tkd-wizard-copy', WizardCopy);
+import WizardP from '@/components/WizardP';
+Vue.component('tkd-wizardP', WizardP);
+
+import WizardT from '@/components/WizardT';
+Vue.component('tkd-wizardT', WizardT);
 
 import WizardPlayer from '@/components/WizardPlayer';
 Vue.component('wizard-player', WizardPlayer);
-
-import WizardPlayerCopy from '@/components/WizardPlayerCopy';
-Vue.component('wizard-player-copy', WizardPlayerCopy);
 
 import WizardTeam from '@/components/WizardTeam';
 Vue.component('wizard-team', WizardTeam);

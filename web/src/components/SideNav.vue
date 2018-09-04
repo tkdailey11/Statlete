@@ -31,8 +31,8 @@
         </div>
         <div class="dataTable">
           <table width="100%">
-            <tr v-for="p in playerSportfolios">
-              <td>{{ i }}</td>
+            <tr v-for="p in playerSportfolios" @click="selectedPlayer(p)">
+              <td>{{ p }}</td>
             </tr>
             <tr>
               <td @click="$emit('showPlayer'); closeNav();">+ New Player Sportfolio</td>
@@ -47,6 +47,7 @@
 
 <script>
   import firebase from 'firebase'
+  import { mapGetters, mapMutations } from 'vuex';
 
   export default {
     name: 'SideNav',
@@ -59,11 +60,15 @@
       }
     },
     methods: {
+      ...mapMutations({
+        SET_SELECTED_TEAM: 'mainStore/SET_SELECTED_TEAM'
+      }),
       closeNav: function() {
         document.getElementById("mySidenav").style.width = "0";
       },
       getTeamSportfolios: function() {
-        var email = this.currentUserEmail.replace('.', '');
+        var emailStr = this.currentUserEmail;
+        var email = emailStr.replace('.', '');
         console.log("EMAIL: " + email);
         var self = this
         firebase.database().ref('Users/' + email + '/AdminTeams').on('value', function(snapshot){
@@ -73,6 +78,20 @@
           }
           console.log("TEAM SPORTFOLIOS:");
           console.log(self.teamSportfolios);
+        });
+      },
+      getPlayerSportfolios: function() {
+        var emailStr = this.currentUserEmail;
+        var email = emailStr.replace('.', '');
+        console.log("EMAIL: " + email);
+        var self = this
+        firebase.database().ref('Users/' + email + '/PlayerTeams').on('value', function(snapshot){
+          var obj = snapshot.val()
+          if (obj) {
+            self.playerSportfolios = Object.values(obj);
+          }
+          console.log("Player SPORTFOLIOS:");
+          console.log(self.playerSportfolios);
         });
       },
       selectedTeam(id){
@@ -88,6 +107,22 @@
           self.$emit('teamSelected', data);
           self.closeNav();
         });
+      },
+      selectedPlayer(id){
+        var self = this;
+        firebase.database().ref('PlayerSportfolios').child(id).once('value', function(snapshot){
+          var obj = snapshot.val();
+          var name = obj.Name;
+          var id = obj.TeamID;
+          var token = '';
+          self.SET_SELECTED_TEAM({
+            id,
+            name,
+            token
+          });
+          self.closeNav();
+          self.$router.push('/playerhome')
+        });
       }
     },
     mounted() {
@@ -96,6 +131,7 @@
           this.loggedInUser = firebase.auth().currentUser;
           this.currentUserEmail = this.loggedInUser.email;
           this.getTeamSportfolios();
+          this.getPlayerSportfolios();
       });
     }
   }

@@ -1,9 +1,9 @@
 <template>
-  <div class="wizard-copy">
+  <div class="wizardT">
     <ul class="wizard__steps">
       <li class="wizard__step"
         :class="{'active': currentStep >= index}"
-        :style="{ width: 100/steps.length + '%' }"
+        :style="{ width: 100/3 + '%' }"
         v-for="(step, index) of steps" :key="index">
         <span class="wizard__step__line"></span>
         <span class="wizard__step__label">{{step.label}}</span>
@@ -16,27 +16,32 @@
     </span>
     <div class="wizard__body">
       <div class="wizard__body__step">
-        <div v-if="isStepOne" class="stepOnePlayer">
-          <h3>Step 1</h3>
-          <label class="myLabel1">Player Name:</label>
-          <input type="text" v-model="teamName" placeholder="Player Name" id="playerNameEntry"><br>
+        <div v-if="currentStep == 0" id="teamPage1">
+          <label class="myLabel">Team Name:</label>
+          <input class="teamNameEntry" type="text" v-model="teamName" placeholder="Team Name">
           <br>
-          <label class="myLabel2" id="playerNumberLabel">Player Number:</label>
-          <input type="text" v-model="playerNumber" placeholder="#" id="playerNumberEntry"><br>
           <br>
           <label class="myLabel3" id="sportLabelPlayer">Sport:</label>
           <br>
           <select-sport :initialSport="selectedSport" style="display: inline-block;" @sportWasSelected="selectedSport=$event" id="sportSelectorPlayer"></select-sport>
-          <h1></h1>
+
         </div>
-        <div v-else class="stepTwoPlayer">
-          <h3>Step 2</h3>
-          <label class="myLabel4" id="teamIDLabelPlayer">Team ID:</label>
-          <input type="text" v-model="teamID" placeholder="Team ID" id="teamIDPlayer"><br>
-          <br>
-          <label class="myLabel5" id="teamTokenLabelPlayer">Team Token:</label>
-          <input type="text" v-model="teamToken" placeholder="Team Token" id="teamTokenPlayer"><br>
-          <br>
+
+        <div v-if="currentStep == 1" id="teamPage2">
+          <h4>Add Players</h4>
+          <player-selection-box @playerInfo="setPlayerInfo"
+                                :sport="selectedSport"></player-selection-box>
+        </div>
+
+        <div v-if="currentStep == 2" id="teamPage3">
+          <div class="step3Body">
+            <label class="myLabel">Team ID:</label>
+            <input class="teamIdEntry" type="text" v-model="teamID" placeholder="Team ID"><br>
+            <br>
+            <label class="myLabel">Team Token:</label>
+            <input class="teamTokenEntry" type="text" v-model="teamToken" placeholder="Team Token"><br>
+            <br>
+          </div>
         </div>
       </div>
       <div class="wizard__body__actions clearfix">
@@ -49,12 +54,18 @@
         </a>
         <a
           v-if="currentStep == 0" class="wizard__next pull-right"
-          @click="goNextPlayersOne()">
+          @click="goNextTeamName()">
           <span>{{nextStepLabel}}</span>
           <i class="vgw-icon vgw-next"></i>
         </a>
         <a
-          v-if="currentStep == 1" class="wizard__next pull-right final-step" @click="submitPlayerSportfolio()">
+          v-if="currentStep == 1" class="wizard__next pull-right"
+          @click="goNextPlayers()">
+          <span>{{nextStepLabel}}</span>
+          <i class="vgw-icon vgw-next"></i>
+        </a>
+        <a
+          v-if="currentStep == 2" class="wizard__next pull-right final-step" @click="submitTeamSportfolio()">
           {{finalStepLabel}}
         </a>
       </div>
@@ -68,7 +79,7 @@ import { mapGetters, mapMutations } from 'vuex';
 
 export default {
 
-  name: 'tkd-wizard-copy',
+  name: 'tkd-wizardT',
 
   props: {
     previousStepLabel: {default: 'Back'},
@@ -80,10 +91,12 @@ export default {
     return {
       currentStep: 0,
       teamName: '',
-      isStepOne: true,
       steps: [
         {
           label: 'Name and Sport'
+        },
+        {
+          label: 'Add Players'
         },
         {
           label: 'Linking (Optional)'
@@ -92,16 +105,22 @@ export default {
       playerNumber: '',
       selectedSport: 'basketball',
       teamID: '',
-      teamToken: ''
+      teamToken: '',
+      playersList: []
     };
   },
   computed: {
     ...mapGetters({
+      loggedInUser: 'mainStore/loggedInUser',
       selectedTeamId: 'mainStore/selectedTeamId',
-      currentUserEmail: 'mainStore/currentUserEmail'
+      selectedTeamName: 'mainStore/selectedTeamName',
+      selectedTeamToken: 'mainStore/selectedTeamToken',
+      currentUserEmail: 'mainStore/currentUserEmail',
+      activeGameId: 'mainStore/activeGameId',
+      players: 'mainStore/players'
     }),
     arrowPosition() {
-      var stepSize = 50;
+      var stepSize = 100/3;
       var currentStepStart = stepSize * this.currentStep;
       var currentStepMiddle = currentStepStart + (stepSize/2);
       return 'calc('+currentStepMiddle+'% - 14px)'
@@ -111,27 +130,24 @@ export default {
     }
   },
   methods: {
-    goNextPlayersOne (skipFunction){
-      //add code to validate players info here...
-      this.currentStep = 1;
-      this.isStepOne = false;
-      return true;
-    },
-    goBack (skipFunction) {
-      if (this.currentStep == 1) {
-        this.currentStep = 0;
-        this.isStepOne = true;
-      }
-    },
     ...mapMutations({
+      SET_LOGGED_IN_USER: 'mainStore/SET_LOGGED_IN_USER',
       SET_SELECTED_TEAM: 'mainStore/SET_SELECTED_TEAM',
       SET_CURR_TEAM: 'mainStore/SET_CURR_TEAM',
-      SET_SELECTED_SPORT: 'mainStore/SET_SELECTED_SPORT'
+      SET_SELECTED_SPORT: 'mainStore/SET_SELECTED_SPORT',
+      SET_ACTIVE_GAME_ID: 'mainStore/SET_ACTIVE_GAME_ID',
+      SET_SELECTED_TEAM_ID: 'mainStore/SET_SELECTED_TEAM_ID',
+      SET_PLAYERS: 'mainStore/SET_PLAYERS',
+      APPEND_PLAYER: 'mainStore/APPEND_PLAYER'
     }),
-    logout: function() {
-      firebase.auth().signOut().then(() => {
-        this.$router.replace('login')
-      })
+    setPlayerInfo(event) {
+      this.playersList.push(event);
+    },
+    goNextPlayers (skipFunction) {
+      if (this.currentStep < this.steps.length-1) {
+        this.currentStep++;
+        this.$emit('SetDefaultPid')
+      }
     },
     openNav: function() {
       setTimeout(function(){
@@ -141,81 +157,96 @@ export default {
     closeNav: function() {
       document.getElementById("mySidenav").style.width = "0";
     },
-    backClickedPlayer(currentPage) {
-      if(currentPage == 0){
-        return false; //return false if you want to prevent moving to previous page
-      }
-      else {
-        currentPage = 0;
-        return true;
-      }
+    goNextTeamName (skipFunction) {
+        var tn_str = jQuery('.teamNameEntry').val();
+        if(tn_str===''){
+          alert('Please Enter a Team Name');
+          return false;
+        }
+        else {
+          this.teamName = tn_str;
+          this.currentStep++;
+          return true;
+        }
+
     },
-    submitPlayerSportfolio(){
+    submitTeamSportfolio(){
       var emailStr = this.currentUserEmail;
       var email = emailStr.replace('.', '');
-      var self = this;
-
-      var playerData = {
-          "Name" : this.teamName,
-          "Number" : this.playerNumber,
-          "TeamID" : this.teamID,
-          "TotalStats" : " ",
-          "User" : emailStr
+      var nam = this.teamName;
+      var tok = this.teamToken;
+      var teamData = {
+          "Admins" : {
+            [email] : 'admin1'
+          },
+          "Creator" : email,
+          "TeamName" : nam,
+          "Token" : tok
       }
 
-      var id = this.teamName + '-' + this.teamID;
-      alert('ID: ' + id);
-      firebase.database().ref('PlayerSportfolios/' + id).once("value", function(snapshot){
-        if(!(snapshot.val()===null)){
-          alert('A sportfolio with those settings already exists. Please Try Again.')
-          return;
+      var s = this.playersList.splice(-1)[0];
+      var playerObj = {};
+      s.forEach( function (player)
+      {
+        var key = 'p' + player.num;
+        if(player.name==='') {
+          playerObj[key] = ' ';
         }
-        else{
-          console.log(snapshot.val());
-          firebase.database().ref('PlayerSportfolios/').update({
-            [id] : playerData
-          });
-
-          firebase.database().ref('Users/').child(email).child('PlayerTeams').update({
-            [self.teamID] : id
-          })
-
-
-
-          self.SET_SELECTED_SPORT('basketball');
-          self.SET_SELECTED_TEAM({
-            id: self.teamID,
-            token: self.teamToken,
-            name: self.teamName
-          });
-
-          self.teamID = ''
-          self.teamName = ''
-          self.teamToken = ''
-          self.playerNumber = ''
-
-          self.getGamesPlayer();
-          self.$router.push('playerHome');
+        else {
+          playerObj[key] = player.name;
         }
       });
+      teamData.Players = playerObj;
 
+      var id = this.teamID;
+      firebase.database().ref('TeamSportfolios/').update({
+        [id] : teamData
+      });
+
+      firebase.database().ref('Users/' + email + '/AdminTeams').update({
+        [this.teamID] : " "
+      });
+
+      this.SET_CURR_TEAM({
+        id: '',
+        token: '',
+        name: ''
+      });
+      this.SET_SELECTED_SPORT('basketball');
+      this.SET_SELECTED_TEAM({
+        id: this.teamID,
+        name: this.teamName,
+        token: this.teamToken
+      })
+
+      this.teamID = ''
+      this.teamName = ''
+      this.teamToken = ''
+
+      this.getGamesTeam();
+      this.getPlayers();
+
+      this.$router.push('/main');
     },
-    getGamesPlayer() {
-      var teamIDList = [];
-      var emailStr = this.currentUserEmail;
-      var email = emailStr.replace('.', '');
-      var self = this;
+    teamSelected: function(event) {
+      this.SET_SELECTED_TEAM({
+        id: event.Id,
+        name: event.Name,
+        token: event.Token
+      });
 
-      var keysList = [];
-      self.gamesList = [];
-      var gamesListRef = firebase.database().ref('/PlayerSportfolios/' + self.selectedTeamId + '/Games/');
-      if (typeof gamesListRef !== 'undefined') {
-        gamesListRef.on('value', function(snapshot) {
-          var obj = snapshot.val();
-          if (obj) {
-            self.gamesList = Object.keys(obj);
-          }
-        });
+      this.getGamesTeam();
+      this.getPlayers();
+    },
+    goHome: function(mode) {
+      this.$router.push('/main');
+    },
+    createPlayer: function() {
+      this.$router.push('/createplayer')
+    },
+    goBack: function() {
+      if (this.currentStep > 0) {
+        this.currentStep--;
       }
     }
   }
@@ -242,7 +273,7 @@ export default {
 
 /* Header Steps
 *******************************/
-.wizard-copy {
+.wizardT {
   position: relative;
   width:  100%;
   color: rgb(252,102,0);
@@ -410,6 +441,18 @@ export default {
 
 .wizard__body__actions a.final-step:hover{
   background-color: rgb(224,0,16);
+}
+
+.mySportLabel {
+  width: auto;
+  text-align: right;
+  padding-right: 30px;
+}
+
+.myLabel {
+  width: auto;
+  text-align: right;
+  padding-right: 30px;
 }
 
 .myLabel1 {
