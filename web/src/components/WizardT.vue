@@ -30,7 +30,8 @@
         <div v-if="currentStep == 1" id="teamPage2">
           <h4>Add Players</h4>
           <player-selection-box @playerInfo="setPlayerInfo"
-                                :sport="selectedSport"></player-selection-box>
+                                :sport="selectedSport"
+                                :playersList="playersList"></player-selection-box>
         </div>
 
         <div v-if="currentStep == 2" id="teamPage3">
@@ -141,7 +142,7 @@ export default {
       APPEND_PLAYER: 'mainStore/APPEND_PLAYER'
     }),
     setPlayerInfo(event) {
-      this.playersList.push(event);
+      this.playersList = event;
     },
     goNextPlayers (skipFunction) {
       if (this.currentStep < this.steps.length-1) {
@@ -156,6 +157,18 @@ export default {
     },
     closeNav: function() {
       document.getElementById("mySidenav").style.width = "0";
+    },
+    getPlayers() {
+      var id = this.selectedTeamId;
+      var self = this;
+      self.SET_PLAYERS([]);
+      var playersRef = firebase.database().ref('/TeamSportfolios/' + id + '/Players/');
+      playersRef.on('value', function(snapshot) {
+        var obj = snapshot.val();
+        if(obj){
+          self.SET_PLAYERS(obj);
+        }
+      });
     },
     goNextTeamName (skipFunction) {
         var tn_str = jQuery('.teamNameEntry').val();
@@ -184,9 +197,8 @@ export default {
           "Token" : tok
       }
 
-      var s = this.playersList.splice(-1)[0];
       var playerObj = {};
-      s.forEach( function (player)
+      this.playersList.forEach( function (player)
       {
         var key = 'p' + player.num;
         if(player.name==='') {
@@ -237,6 +249,23 @@ export default {
 
       this.getGamesTeam();
       this.getPlayers();
+    },
+    getGamesTeam() {
+      var teamIDList = [];
+      var email = this.currentUserEmail.replace('.', '');
+      var self = this;
+
+      var keysList = [];
+      self.gamesList = [];
+      var gamesListRef = firebase.database().ref('/TeamSportfolios/' + self.selectedTeamId + '/Games/');
+      if (typeof gamesListRef !== 'undefined') {
+        gamesListRef.on('value', function(snapshot) {
+          var obj = snapshot.val();
+          if (obj) {
+            self.gamesList = Object.keys(obj);
+          }
+        });
+      }
     },
     goHome: function(mode) {
       this.$router.push('/main');

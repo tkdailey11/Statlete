@@ -1,9 +1,9 @@
 <template>
   <div class="playerSelectionBox" style="overflow:scroll; height:310px;">
     <table style="width:100%;">
-      <tr v-for="i in players.length" :key="i">
+      <tr v-for="i in playersList.length" :key="i">
         <td>Row: {{i}}</td>
-        <td><player-entry-box :key="uniqueID()" :index="i" :playerName="players[i-1].name" :playerNumber="players[i-1].num" @updatedPlayerInfo="updateInfo"></player-entry-box></td>
+        <td><player-entry-box :key="uniqueID()" :index="i" :playerName="playersList[i-1].name" :playerNumber="playersList[i-1].num" @updatedPlayerInfo="updateInfo"></player-entry-box></td>
       </tr>
       <tr>
         <td><p></p></td>
@@ -21,23 +21,17 @@
   export default {
     name: 'playerSelectionBox',
     beforeDestroy() {
-      var playersList = [];
-      this.players.forEach( function (player) {
+      var players = [];
+      this.playersList.forEach( function (player) {
         if ('num' in player && !(player.num==='')) {
-          playersList.push(player)
+          players.push(player)
         }
         else if ('name' in player && !(player.name==='')) {
-          playersList.push(player)
+          players.push(player)
         }
       });
-
-      this.$emit('playerInfo', playersList);
-    },
-    data () {
-      return {
-        players: [],
-        numRows: 15
-      }
+      
+      this.$emit('playerInfo', players);
     },
     methods: {
       uniqueID: function () {
@@ -45,11 +39,10 @@
         return s;
       },
       buttonClicked: function() {
-        this.players.push({});
-        this.numRows++;
+        this.playersList.push({});
       },
       updateInfo: function(event) {
-        this.players[event.idx - 1] = {
+        this.playersList[event.idx - 1] = {
           name: event.name,
           num: event.num
         }
@@ -59,17 +52,27 @@
       sport: {
         default: 'basketball',
         type: String
-      }
+      },
+      playersList: {}
     },
     mounted() {
       //do something after mounting vue instance
-      this.players = [{},{},{},{},{},
-                      {},{},{},{},{},
-                      {},{},{},{},{}];
-      if(this.sport === 'soccer'){
-        this.players.push({}, {}, {}, {}, {});
+      var i;
+      if(this.sport === 'soccer' && this.playersList.length < 20){
+        for(i = this.playersList.length; i < 20; i++){
+          this.playersList.push({});
+        }
       }
-      console.log('Length: ' + this.players.length);
+      else if(this.sport === 'football' && this.playersList.length < 30){
+        for(i = this.playersList.length; i < 30; i++){
+          this.playersList.push({});
+        }
+      }
+      else {
+        for(i = this.playersList.length; i < 15; i++){
+          this.playersList.push({});
+        }
+      }
     }
   }
 </script>
