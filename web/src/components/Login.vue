@@ -1,11 +1,11 @@
 <template>
   <div class="login">
-    <h1>Statlete</h1>
+    <h1 style="color: white;">Statlete</h1>
     <input type="text" v-model="email" placeholder="Email"><br>
     <input type="password" v-model="password" placeholder="Password"><br>
     <button class="btn btn-outline-primary btn-social" @click="signIn">Sign In</button><br>
     <button class="btn btn-outline-primary btn-social" @click="signInGoogle">Google</button><br>
-    <p>Don't have an account? <router-link to="/sign-up">Click here to create one!</router-link></p>
+    <p style="color: white;">Don't have an account? <router-link to="/sign-up" class="link">Click here to create one!</router-link></p>
   </div>
 </template>
 
@@ -24,7 +24,7 @@
       signIn: function() {
         firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
           (user) => {
-            this.$router.replace('hello')
+            this.$router.replace('main')
           },
           function(err) {
             alert('Oops. ' + err.message)
@@ -37,7 +37,7 @@
           (user) => {
             var usr = user.user;
             console.log("USER: " + usr.email);
-            this.$router.replace('hello');
+            this.$router.replace('main');
           },
           function(err) {
             alert('Oops. ' + err.message)
@@ -52,6 +52,12 @@
   .login {
     margin-top: 40px;
   }
+  .link {
+    color: rgb(242,209,24);
+  }
+  .link:hover {
+    color: white;
+  }
   input {
     margin: 10px 0;
     width: 30%;
@@ -59,13 +65,25 @@
     border: 0;
     outline: 0;
     background: transparent;
-    border-bottom: 2px solid rgb(109,8,8);
+    border-bottom: 3px solid rgb(224,0,16);
+    color: white;
   }
   button {
     margin-top: 20px;
     width: 10%;
     cursor: pointer;
+    color: white;
+    background-color: rgb(224,0,16);
+    border-color: rgb(224,0,16);
+    color: white;
   }
+
+  button:hover {
+    background-color: white;
+    border-color: rgb(224,0,16);
+    color: rgb(224,0,16);
+  }
+
   p {
     margin-top: 40px;
     font-size: 13px;
@@ -77,4 +95,20 @@
   h1 {
     font-size: 60px;
   }
+  input:-webkit-autofill {
+      -webkit-box-shadow:0 0 0 50px white inset; /* Change the color to your own background color */
+      -webkit-text-fill-color: rgb(224,0,16);
+      border-radius: 5px;
+  }
+
+  input:-webkit-autofill:focus {
+      -webkit-box-shadow: /*your box-shadow*/,0 0 0 50px white inset;
+      -webkit-text-fill-color: rgb(224,0,16);
+      border-radius: 5px;
+  }
+
+  ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: white;
+    opacity: 1; /* Firefox */
+}
 </style>

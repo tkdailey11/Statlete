@@ -1,0 +1,33 @@
+.colors {
+  /* $green .bg-success*/
+  $c1_rgb_: rgb(240, 138, 59);
+  $c1_hex_: #f08a3b;
+  $c6_rgb_: rgba(246, 113, 78, 0.9);
+  $c6_hex_: #f6714e;
+  $c2_rgb_: rgb(237, 108, 73);
+  $c2_hex_: #ed6c49;
+  $c3_rgb_: rgb(230, 79, 82);
+  $c3_hex_: #e64f52;
+  $c4_rgb_: rgb(214, 53, 90);
+  $c4_hex_: #d6355a;
+  $c5_rgb_: rgb(180, 41, 102);
+  $c5_hex_: #b42966;
+  $c7_rgb_: rgba(250, 175, 50, 0.9);
+  $c7_hex_: #faaf32;
+  $c8_rgb_: rgba(250, 220, 127, 0.9);
+  $c8_hex_: #fadc7f;
+
+
+
+  /* NEW COLORS */
+  $c3_rgb: rgb(224,0,16);/*E00010*/
+  $shadw: rgb(235,95,17);/*Eb5f11*/
+  $c4_rgb: rgb(252,102,0);
+  $c5_rgb: rgb(255,158,0);
+  $c1_rgb: rgb(242,209,24);
+  $c2_rgb: rgb(247,204,78);
+
+
+
+
+}

@@ -1,0 +1,277 @@
+{
+  "PlayerSportfolios" : {
+    "id11" : {
+      "Email" : "example@example.com",
+      "Games" : {
+        "team1-1" : "(Game Name)"
+      },
+      "Name" : "Brandon Sehestedt",
+      "Number" : 89,
+      "TeamID" : "team1",
+      "TotalStats" : {
+        "Assists" : 0,
+        "Games" : 3,
+        "Goals" : 3
+      }
+    }
+  },
+  "SoccerGames" : {
+    "team1-1" : {
+      "Date" : "04-01-2018",
+      "MyTotals" : {
+        "Period1" : {
+          "Assists" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "Corners" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "Crosses" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "Fouls" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "Goals" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "Offsides" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "RedCards" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "Saves" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "Shots" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "ShotsOnGoal" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "YellowCards" : {
+            "Time" : "Player",
+            "Total" : 1
+          }
+        },
+        "Period2" : {
+          "Assists" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "Corners" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "Crosses" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "Fouls" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "Goals" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "Offsides" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "RedCards" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "Saves" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "Shots" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "ShotsOnGoal" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "YellowCards" : {
+            "Time" : "Player",
+            "Total" : 1
+          }
+        },
+        "Possession" : "20:00"
+      },
+      "Name" : "Game1",
+      "OpponentsTotals" : {
+        "Period1" : {
+          "Assists" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "Corners" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "Crosses" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "Fouls" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "Goals" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "Offsides" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "RedCards" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "Saves" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "Shots" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "ShotsOnGoal" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "YellowCards" : {
+            "Time" : "Player",
+            "Total" : 1
+          }
+        },
+        "Period2" : {
+          "Assists" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "Corners" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "Crosses" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "Fouls" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "Goals" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "Offsides" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "RedCards" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "Saves" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "Shots" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "ShotsOnGoal" : {
+            "Time" : "Player",
+            "Total" : 1
+          },
+          "YellowCards" : {
+            "Time" : "Player",
+            "Total" : 1
+          }
+        },
+        "Possession" : "25:00"
+      },
+      "Players" : {
+        "p24" : {
+          "Assists" : 3,
+          "Goals" : 0
+        },
+        "p89" : {
+          "Assists" : 0,
+          "Goals" : 3
+        }
+      }
+    }
+  },
+  "TeamSportfolios" : {
+    "team1" : {
+      "Admins" : {
+        "User(email)" : "(Placeholder)"
+      },
+      "Creator" : "User(email)",
+      "Games" : {
+        "team1-1" : "(Game Name)"
+      },
+      "Players" : {
+        "p(Roster Number)" : "(ID in PlayerSportfolios)",
+        "p89" : "id11"
+      },
+      "TeamName" : "Super Freaks",
+      "Token" : "123ABC"
+    },
+    "team2" : {
+      "Admins" : {
+        "SelenaGomez92@gmailcom" : " "
+      },
+      "Creator" : "TaylorSwift89@gmailcom",
+      "Games" : {
+        "team2-1" : "vs Kanye"
+      },
+      "Players" : {
+        "p89" : "id11"
+      },
+      "TeamName" : "Wildest Dreams",
+      "Token" : "TS1989"
+    }
+  },
+  "Users" : {
+    "(Email)" : {
+      "AdminTeams" : {
+        "(TeamSportfolio ID)" : "(Placeholder)"
+      },
+      "Name" : "Brandon",
+      "Phone" : "801-555-5555",
+      "PlayerTeams" : {
+        "(TeamSportfolio ID)" : "(PlayerSportfolio ID)"
+      }
+    },
+    "tkdailey11@gmailcom" : {
+      "AdminTeams" : {
+        "team1" : " "
+      },
+      "Name" : "Tyler",
+      "Phone" : "+1 435-222-3306",
+      "PlayerTeams" : {
+        "team2" : "id11"
+      }
+    }
+  }
+}
