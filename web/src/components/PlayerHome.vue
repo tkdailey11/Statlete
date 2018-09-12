@@ -18,7 +18,8 @@
       <games-list :games="gamesList"
                   style="margin-top: 20px;"
                   @gameSelected="gameSelected"
-                  @AddGame="addGame">
+                  @AddGame="addGame"
+                  :addGameEnabled="addGameEnabled">
       </games-list>
       <div class="button-wrapper">
         <button @click="editMySettings" class="btn btn-outline-primary myButton">Edit My Settings</button>
@@ -41,7 +42,8 @@ export default {
       selectedTeamToken: 'mainStore/selectedTeamToken',
       currentUserEmail: 'mainStore/currentUserEmail',
       activeGameId: 'mainStore/activeGameId',
-      players: 'mainStore/players'
+      players: 'mainStore/players',
+      addGameEnabled: 'playerStore/isAddGameEnabled'
     })
   },
   data () {
@@ -200,8 +202,7 @@ export default {
       });
     },
     editMySettings() {
-      this.viewMode = 'teamSettingsView';
-      console.log("EDIT TEAM SETTINGS");
+      this.$router.push('/playersettings')
     },
     viewMyStats() {
       this.viewMode = 'teamStatsView';

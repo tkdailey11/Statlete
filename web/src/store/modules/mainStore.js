@@ -63,6 +63,9 @@ const mutations = {
   SET_SELECTED_TEAM_ID: (state, payload) => {
     state.selectedTeam.id = payload
   },
+  SET_SELECTED_TEAM_TOKEN: (state, payload) => {
+    state.selectedTeam.token = payload
+  },
   SET_CURR_TEAM: (state, payload) => {
     state.currTeam = payload
   },

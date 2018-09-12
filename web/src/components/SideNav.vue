@@ -76,8 +76,6 @@
           if (obj) {
             self.teamSportfolios = Object.keys(obj);
           }
-          console.log("TEAM SPORTFOLIOS:");
-          console.log(self.teamSportfolios);
         });
       },
       getPlayerSportfolios: function() {
@@ -90,8 +88,6 @@
           if (obj) {
             self.playerSportfolios = Object.values(obj);
           }
-          console.log("Player SPORTFOLIOS:");
-          console.log(self.playerSportfolios);
         });
       },
       selectedTeam(id){

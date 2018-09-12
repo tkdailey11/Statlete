@@ -11,6 +11,7 @@ import TeamSettings from '@/components/TeamSettings'
 import TeamStats from '@/components/TeamStats'
 import PlayerDetailView from '@/components/PlayerDetailView'
 import PlayerHome from '@/components/PlayerHome'
+import PlayerSettings from '@/components/PlayerSettings'
 import WizardPlayer from '@/components/WizardPlayer'
 import WizardTeam from '@/components/WizardTeam'
 
@@ -89,6 +90,14 @@ let router = new Router({
       path: '/playerhome',
       name: 'PlayerHome',
       component: PlayerHome,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/playersettings',
+      name: 'PlayerSettings',
+      component: PlayerSettings,
       meta: {
         requiresAuth: true
       }

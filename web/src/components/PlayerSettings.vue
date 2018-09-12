@@ -1,5 +1,5 @@
 <template>
-  <div id="TeamSettings">
+  <div id="PlayerSettings">
     <statlete-navbar @shouldOpenNav="openNav"
                      @shouldLogout="logout"
                      style="background-color: rgb(224, 0, 16);"></statlete-navbar>
@@ -9,26 +9,49 @@
               @showTeam="showTeam"
               @teamSelected="teamSelected">
     </side-nav>
-
-    <div class="TextFieldContainer">
-      <div class="TextField" align="left">
-        <input class="MyText" id="teamIDtext" type="text" :placeholder="id" :value="selectedTeamId">
-        <button class="btn btn-default navbar-btn myButton" @click="submitTeamID">Submit</button>
-      </div>
-      <div class="TextField" align="left">
-        <input class="MyText" id="teamTokenID" type="text" :placeholder="tok" :value="selectedTeamToken">
-        <button class="btn btn-default navbar-btn myButton" @click="submitToken">Submit</button>
-      </div>
-    </div>
-    <div class="ListContainer">
-      <players-list :addPlayerEnabled="false"
-                    :title="'Admins'"
-                    style="float: left;"
-                    :players="admins"></players-list>
-      <players-list :addPlayerEnabled="false"
-                    style="float: left;"
-                    :players="players"></players-list>
-    </div>
+    
+    <h1 style="margin: 75px; color: rgb(224, 0, 16);">Player Settings Page</h1>
+    <table align="center">
+        <tr>
+            <td>
+                <div class="TextField" align="left">
+                    <label style="color: black;">Player Name:</label>
+                </div>
+            </td>
+            <td>
+                <div class="TextField" align="left">
+                    <input class="MyText" id="playerName" type="text" :placeholder="tok" :value="selectedTeamName">
+                    <button class="btn btn-default navbar-btn myButton" @click="submitPlayerName">Submit</button>
+                </div>
+            </td>
+        </tr>
+        <tr id="idTR">
+            <td>
+                <div class="TextField" align="left">
+                    <label style="color: black;">Team ID:</label>
+                </div>
+            </td>
+            <td>
+                <div class="TextField" align="left">
+                    <input disabled="true" class="MyText" id="teamIDtext" type="text" :placeholder="id" :value="selectedTeamId">
+                    <button disabled="true" class="btn btn-default navbar-btn myButton" @click="submitTeamID">Submit</button>
+                </div>
+            </td>
+        </tr>
+        <tr id="tokTR">
+            <td>
+                <div class="TextField" align="left">
+                    <label style="color: black;">Team Token:</label>
+                </div>
+            </td>
+            <td>
+                <div class="TextField" align="left">
+                    <input disabled="true" class="MyText" id="teamTokenID" type="text" :placeholder="tok" :value="selectedTeamToken">
+                    <button disabled="true" class="btn btn-default navbar-btn myButton" @click="submitToken">Submit</button>
+                </div>
+            </td>
+        </tr>
+    </table>
   </div>
 </template>
 
@@ -38,19 +61,12 @@
 import { resolve } from 'url';
 
   export default {
-    name: 'TeamSettings',
+    name: 'PlayerSettings',
     data: function() {
       return {
         teamID: '',
-        token: '',
-        admins: []
+        token: ''
       }
-    },
-    mounted(){
-      var self = this;
-      firebase.database().ref('/TeamSportfolios/' + this.selectedTeamId + '/Admins').on('value', function(snapshot){
-        self.admins = snapshot.val()
-      })
     },
     props: {
       id: {
@@ -59,6 +75,9 @@ import { resolve } from 'url';
       tok: {
         default: 'Token'
       }
+    },
+    mounted(){
+        jQuery("#idTR").find("MyText,myButton").attr("disabled", true);
     },
     computed: {
       ...mapGetters({
@@ -133,6 +152,14 @@ import { resolve } from 'url';
           console.log('DO NOT SUBMIT TOKEN');
         }
       },
+      submitPlayerName: function() {
+          if(confirm('Are you sure you want to update your name?')){
+              console.log('NAME CHANGE')
+          }
+          else{
+              console.log('DON\'T CHANGE NAME')
+          }
+      },
       logout: function() {
         firebase.auth().signOut().then(() => {
           this.$router.replace('login')
@@ -194,7 +221,7 @@ import { resolve } from 'url';
 </script>
 
 <style scoped>
-  #TeamSettings {
+  #PlayerSettings {
     width: 100%;
     height: 100%;
     min-height: 100vh;
@@ -221,6 +248,12 @@ import { resolve } from 'url';
     float: left;
     display: block;
     min-width: 1000px;
+    margin:-20px 50px 50px 35px;
+  }
+    .TextFieldContainer2 {
+    float: left;
+    display: block;
+    min-width: 300px;
     margin:-20px 50px 50px 35px;
   }
   .TextField {

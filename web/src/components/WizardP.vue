@@ -126,7 +126,8 @@ export default {
     ...mapMutations({
       SET_SELECTED_TEAM: 'mainStore/SET_SELECTED_TEAM',
       SET_CURR_TEAM: 'mainStore/SET_CURR_TEAM',
-      SET_SELECTED_SPORT: 'mainStore/SET_SELECTED_SPORT'
+      SET_SELECTED_SPORT: 'mainStore/SET_SELECTED_SPORT',
+      PL_SET_ADD_GAME_ENABLED: 'playerStore/PL_SET_ADD_GAME_ENABLED'
     }),
     logout: function() {
       firebase.auth().signOut().then(() => {
@@ -155,50 +156,132 @@ export default {
       var email = emailStr.replace('.', '');
       var self = this;
 
-      var playerData = {
-          "Name" : this.teamName,
-          "Number" : this.playerNumber,
-          "TeamID" : this.teamID,
-          "TotalStats" : " ",
-          "User" : emailStr
+      //this.teamName is really the player name
+      if(self.teamID == '' && self.teamToken != ''){
+        alert('Please enter a team id')
+        return;
       }
+      else if (self.teamToken == '' && self.teamID != ''){
+        alert('Please enter a team token')
+        return;
+      }
+      else if(self.teamToken != '' && self.teamID != ''){
+        //Validate token/id
+        firebase.database().ref('/TeamSportfolios/' + self.teamID + '/Token').once('value', function(snapshot){
+          if(snapshot.val() != self.teamToken){
+            alert('The provided team id and token don\'t match, please try again')
+          }
+          else{
+            //Verify the teamID exists
+            firebase.database().ref('/TeamSportfolios/' + self.teamID).once('value', function(snapshot){
+              if(snapshot.val() == null){
+                alert('That team ID doesn\'t exist, please try again')
+              }
+              else{
+                //id does exist, now make sure player with that name doesn't already exist
+                var players = snapshot.val().Players;
+                var playerfound = false;
+                Object.keys(players).forEach(player => {
+                  if(player.includes(self.playerNumber)){
+                    playerfound = true
+                  }
+                });
 
-      var id = this.teamName + '-' + this.teamID;
-      alert('ID: ' + id);
-      firebase.database().ref('PlayerSportfolios/' + id).once("value", function(snapshot){
-        if(!(snapshot.val()===null)){
-          alert('A sportfolio with those settings already exists. Please Try Again.')
-          return;
+                if(playerfound){
+                  alert('A player with that number already exists, please try again')
+                }
+                else{
+                  alert('Good to go')
+                  //Good to go
+                  var playerData = {
+                      "Name" : self.teamName,
+                      "Number" : self.playerNumber,
+                      "TeamID" : self.teamID,
+                      "TotalStats" : " ",
+                      "User" : emailStr
+                  }
+
+                  var id = self.teamName + '-' + self.teamID;
+                  alert('ID: ' + id);
+                  firebase.database().ref('PlayerSportfolios/' + id).once("value", function(snapshot){
+                    if(!(snapshot.val()===null)){
+                      alert('A sportfolio with those settings already exists. Please Try Again.')
+                      return;
+                    }
+                    else{
+                      firebase.database().ref('PlayerSportfolios/').update({
+                        [id] : playerData
+                      });
+
+                      firebase.database().ref('Users/').child(email).child('PlayerTeams').update({
+                        [self.teamID] : id
+                      })
+
+                      var playerNum = 'p' + self.playerNumber
+                      //Add to team's data
+                      firebase.database().ref('/TeamSportfolios/' + self.teamID + '/Players').update({
+                        [playerNum] : self.teamName
+                      })
+
+
+                      self.SET_SELECTED_SPORT('basketball');
+                      self.SET_SELECTED_TEAM({
+                        id: self.teamID,
+                        token: self.teamToken,
+                        name: self.teamName
+                      });
+
+                      self.teamID = ''
+                      self.teamName = ''
+                      self.teamToken = ''
+                      self.playerNumber = ''
+
+                      self.getGamesPlayer();
+                      self.PL_SET_ADD_GAME_ENABLED(false);
+                      self.$router.push('playerHome');
+                    }
+                  });
+                }
+              }
+            })
+          }
+        })
+      }
+      else{
+        //No team id and token
+        var fakeID =  Math.random().toString(36).substring(2,7);
+        var playerData = {
+            "Name" : self.teamName,
+            "Number" : self.playerNumber,
+            "TeamID" :  fakeID,
+            "TotalStats" : " ",
+            "User" : emailStr
         }
-        else{
-          console.log(snapshot.val());
-          firebase.database().ref('PlayerSportfolios/').update({
-            [id] : playerData
-          });
 
-          firebase.database().ref('Users/').child(email).child('PlayerTeams').update({
-            [self.teamID] : id
-          })
+        var id = self.teamName + '-' + fakeID;
+        firebase.database().ref('PlayerSportfolios/').update({
+          [id] : playerData
+        });
 
+        firebase.database().ref('Users/').child(email).child('PlayerTeams').update({
+          [fakeID] : id
+        })
 
+        self.SET_SELECTED_SPORT('basketball');
+        self.SET_SELECTED_TEAM({
+          id: self.teamID,
+          token: self.teamToken,
+          name: self.teamName
+        });
 
-          self.SET_SELECTED_SPORT('basketball');
-          self.SET_SELECTED_TEAM({
-            id: self.teamID,
-            token: self.teamToken,
-            name: self.teamName
-          });
+        self.teamID = ''
+        self.teamName = ''
+        self.teamToken = ''
+        self.playerNumber = ''
 
-          self.teamID = ''
-          self.teamName = ''
-          self.teamToken = ''
-          self.playerNumber = ''
-
-          self.getGamesPlayer();
-          self.$router.push('playerHome');
-        }
-      });
-
+        self.getGamesPlayer();
+        self.$router.push('playerHome');
+      }
     },
     getGamesPlayer() {
       var teamIDList = [];

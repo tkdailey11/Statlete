@@ -125,6 +125,7 @@ export default {
       this.$router.push('/createteam')
     },
     teamSelected: function(event) {
+      console.log('Selected: ' + event.Id)
       this.SET_SELECTED_TEAM({
         id: event.Id,
         name: event.Name,
@@ -136,7 +137,6 @@ export default {
     },
     showPlayer: function() {
       //jQuery("#notImplementedAlert").show();
-      //console.log("ALERT");
       this.$router.push('createplayer');
     },
     gameSelected: function(event) {
@@ -144,7 +144,7 @@ export default {
       this.$router.push('/gameview');
     },
     editTeamSettings() {
-      console.log("EDIT TEAM SETTINGS");
+      this.$router.push('/teamsettings');
     },
     viewTeamStats() {
       console.log("VIEW TEAM STATS");
@@ -189,25 +189,19 @@ export default {
       var id = this.selectedTeamId;
       var playersRef = firebase.database().ref('/TeamSportfolios/' + id + '/Players/');
       var num = 'p' + event.num;
-      console.log('-----------------------');
-      console.log(id);
-      console.log(num);
       var name = event.name;
-      console.log(name);
       if(!name){
         name = ' ';
       }
       playersRef.update({
         [num] : name
       });
-      console.log('-----------------------');
       this.$modal.hide('new-player');
     },
     getSportfolios() {
       var id = this.selectedTeamId;
       var keysList = [];
       var self = this;
-      console.log('^^^^^^^^');
       var email = this.currentUserEmail.replace('.', '');
       var sportfoliosListRef = firebase.database().ref('/Users/' + email + '/AdminTeams/');
       sportfoliosListRef.on('value', function(snapshot) {

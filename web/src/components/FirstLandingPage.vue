@@ -1,32 +1,8 @@
 <template>
 <div class="FLP">
-  <h1 style="margin: 75px;">Create Your First Sportfolio!</h1>
-    <vue-good-wizard :steps="teamSteps" :onNext="nextClickedTeam" :onBack="backClickedTeam">
-      <div slot="teamPage1">
-        <label class="myLabel">Team Name:</label>
-        <input type="text" v-model="teamName" placeholder="Team Name"><br>
-        <br>
-        <label class="myLabel">Sport:</label>
-        <br>
-        <select-sport :initialSport="selectedSport" style="display: inline-block;" @sportWasSelected="selectedSport=$event"></select-sport>
-        <h1></h1>
-      </div>
-
-      <div slot="teamPage2">
-        <h4>Add Players</h4>
-        <player-selection-box @playerInfo="setPlayerInfo"></player-selection-box>
-      </div>
-
-      <div slot="teamPage3">
-        <h4>Step 3</h4>
-        <label class="myLabel">Team ID:</label>
-        <input type="text" v-model="teamID" placeholder="Team ID"><br>
-        <br>
-        <label class="myLabel">Team Token:</label>
-        <input type="text" v-model="teamToken" placeholder="Team Token"><br>
-        <br>
-      </div>
-    </vue-good-wizard>
+  <h1 style="margin: 75px; color: rgb(242,209,24);">Create Your First Sportfolio!</h1>
+    <tkd-wizardT>
+    </tkd-wizardT>
   </div>
 </template>
 

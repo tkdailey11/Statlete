@@ -5,12 +5,12 @@
     </div>
     <div id="gamesTable">
       <table cellpadding="10" width="100%">
-        <tr v-for="idx in Object.keys(games).length" @click="trClicked(idx)">
+        <tr v-for="idx in Object.keys(games).length" @click="trClicked(idx)" :key="'game-'+idx">
           <td>{{ games[idx-1] }}</td>
         </tr>
       </table>
     </div>
-    <div id="glFooter" @click="addGameClicked">
+    <div id="glFooter" v-if="addGameEnabled" @click="addGameClicked">
       Add New Game
     </div>
   </div>
@@ -23,6 +23,11 @@
       games: {
         default(){
           return [{gameID: 'game1'}, {gameID: 'game2'}]
+        }
+      },
+      addGameEnabled: {
+        default(){
+          return true;
         }
       }
     },

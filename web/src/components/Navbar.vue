@@ -19,7 +19,12 @@
         this.$emit('shouldLogout')
       },
       goBack: function() {
-        this.$emit('GoBackClicked');
+        if(!(this.$route.path.includes('main') || this.$route.path.includes('playerhome'))){
+          this.$router.go(-1);
+        }
+        else{
+          console.log('Don\'t go back')
+        }
       }
     },
     mounted() {

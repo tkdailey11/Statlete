@@ -42,6 +42,9 @@ Vue.component('player-detail-view', PlayerDetailView);
 import PlayerHome from '@/components/PlayerHome';
 Vue.component('player-home', PlayerHome);
 
+import PlayerSettings from '@/components/PlayerSettings';
+Vue.component('player-settings', PlayerSettings);
+
 import SideNav from '@/components/SideNav';
 Vue.component('side-nav', SideNav);
 
