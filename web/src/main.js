@@ -81,6 +81,9 @@ Vue.component('wizard-team', WizardTeam);
 import PlayerStatSelector from '@/components/PlayerStatSelector';
 Vue.component('player-stat-selector', PlayerStatSelector);
 
+import NavComponent from '@/components/NavComponent';
+Vue.component('nav-component', NavComponent);
+
 import VModal from 'vue-js-modal'
 Vue.use(VModal)
 import Vue2TouchEvents from 'vue2-touch-events'

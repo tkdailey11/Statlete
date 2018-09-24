@@ -8,9 +8,6 @@
               @showTeam="showTeam"
               @teamSelected="teamSelected">
     </side-nav>
-
-    <!-- Insert content here -->
-
   </div>
 </template>
 
@@ -18,7 +15,7 @@
 import firebase from 'firebase'
 import { mapGetters, mapMutations } from 'vuex';
 export default {
-  name: 'Main',
+  name: 'NavComponent',
   computed: {
     ...mapGetters({
       selectedTeamId: 'mainStore/selectedTeamId',

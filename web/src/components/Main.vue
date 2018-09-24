@@ -1,14 +1,8 @@
 <template>
   <div class="main">
     <new-player @newPlayerAdded="hideModal" />
-    <statlete-navbar @shouldOpenNav="openNav"
-                     @shouldLogout="logout"></statlete-navbar>
 
-    <side-nav id="mySidenav"
-              @showPlayer="showPlayer"
-              @showTeam="showTeam"
-              @teamSelected="teamSelected">
-    </side-nav>
+    <nav-component />
 
     <div id="notImplementedAlert" class="alert alert-primary alert-dismissible fade show" role="alert">
       <p>This functionality has not yet been implemented. Please check back soon!</p>
@@ -106,7 +100,6 @@ export default {
     ...mapMutations({
       SET_LOGGED_IN_USER: 'mainStore/SET_LOGGED_IN_USER',
       SET_SELECTED_TEAM: 'mainStore/SET_SELECTED_TEAM',
-      SET_CURR_TEAM: 'mainStore/SET_CURR_TEAM',
       SET_ACTIVE_GAME_ID: 'mainStore/SET_ACTIVE_GAME_ID',
       SET_SELECTED_TEAM_ID: 'mainStore/SET_SELECTED_TEAM_ID',
       SET_PLAYERS: 'mainStore/SET_PLAYERS',
