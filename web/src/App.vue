@@ -18,6 +18,11 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+
+.myNav {
+      background: rgb(224,0,16);
+}
+
 body {
 /***  CSS Gradient  ***/
 /*  Chrome 1-9 and Safari 4-5.0  */

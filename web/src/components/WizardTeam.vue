@@ -1,14 +1,6 @@
 <template>
   <div id="TeamWizard" class="teamWiz">
-    <statlete-navbar @shouldOpenNav="openNav"
-                     @shouldLogout="logout"
-                     @GoBackClicked="goHome"></statlete-navbar>
-
-    <side-nav id="mySidenav"
-              @showPlayer="createPlayer"
-              @showTeam="closeNav"
-              @teamSelected="teamSelected">
-    </side-nav>
+    <nav-component />
     <h1 style="color: rgb(242,209,24); margin-bottom: 50px;">Create a New Team Sportfolio</h1>
     <tkd-wizardT>
     </tkd-wizardT>
@@ -22,12 +14,7 @@ export default {
   name: 'WizardTeam',
   computed: {
     ...mapGetters({
-      loggedInUser: 'mainStore/loggedInUser',
-      selectedTeamId: 'mainStore/selectedTeamId',
-      selectedTeamName: 'mainStore/selectedTeamName',
-      selectedTeamToken: 'mainStore/selectedTeamToken',
       currentUserEmail: 'mainStore/currentUserEmail',
-      activeGameId: 'mainStore/activeGameId',
       players: 'mainStore/players'
     })
   },
@@ -57,49 +44,15 @@ export default {
     }
   },
   mounted () {
-    jQuery("#notImplementedAlert").hide();
-    var niMsg = jQuery("#notImplementedAlert");
-
-    niMsg.on("close.bs.alert", function () {
-          niMsg.hide();
-          return false;
-    });
   },
   methods: {
     ...mapMutations({
-      SET_LOGGED_IN_USER: 'mainStore/SET_LOGGED_IN_USER',
       SET_SELECTED_TEAM: 'mainStore/SET_SELECTED_TEAM',
       SET_CURR_TEAM: 'mainStore/SET_CURR_TEAM',
-      //SET_CURR_TEAM_NAME: 'mainStore/SET_CURR_TEAM_NAME',
-      SET_SELECTED_SPORT: 'mainStore/SET_SELECTED_SPORT',
-      SET_ACTIVE_GAME_ID: 'mainStore/SET_ACTIVE_GAME_ID',
-      SET_SELECTED_TEAM_ID: 'mainStore/SET_SELECTED_TEAM_ID',
-      SET_PLAYERS: 'mainStore/SET_PLAYERS',
-      APPEND_PLAYER: 'mainStore/APPEND_PLAYER'
+      SET_SELECTED_SPORT: 'mainStore/SET_SELECTED_SPORT'
     }),
-    logout: function() {
-      firebase.auth().signOut().then(() => {
-        this.$router.replace('login')
-      })
-    },
-    backClickedTeam(currentPage) {
-      return false; //return false if you want to prevent moving to previous page
-    },
     setPid() {
       this.teamID = this.teamName + '_' + Math.random().toString(36).substring(2,7);
-    },
-    setPlayerInfo(event) {
-      console.log('[[[[[[[ SET PLAYER INFO ]]]]]]]');
-      //TODO: Update state here
-      this.sportfolios.push(event);
-    },
-    openNav: function() {
-      setTimeout(function(){
-        document.getElementById("mySidenav").style.width = "250px";
-      }, 90);
-    },
-    closeNav: function() {
-      document.getElementById("mySidenav").style.width = "0";
     },
     nextClickedPlayer(currentPage) {
       if(currentPage==1){
@@ -172,22 +125,6 @@ export default {
       this.getPlayers();
 
       this.$router.push('/main');
-    },
-    teamSelected: function(event) {
-      this.SET_SELECTED_TEAM({
-        id: event.Id,
-        name: event.Name,
-        token: event.Token
-      });
-
-      this.getGamesTeam();
-      this.getPlayers();
-    },
-    goHome: function(mode) {
-      this.$router.push('/main');
-    },
-    createPlayer: function() {
-      this.$router.push('/createplayer')
     }
   }
 }
@@ -374,19 +311,11 @@ export default {
   ::-ms-input-placeholder { /* Microsoft Edge */
     color: rgba(255,0,0,0.5);
   }
-
-  .SportSelector {
-  }
-
   #mainPage {
     min-height: 100vh;
     background-color: white;
   }
-
-  #leftList {
-
-  }
-  #rightList {
-
-  }
+  .myNav {
+      background: transparent;
+}
 </style>

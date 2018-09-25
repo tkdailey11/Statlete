@@ -1,5 +1,7 @@
 <template>
   <div class="wizardT">
+    <nav-component />
+    <h1 style="color: rgb(242,209,24); margin-bottom: 50px; background: transparent;">Create a New Team Sportfolio</h1>
     <ul class="wizard__steps">
       <li class="wizard__step"
         :class="{'active': currentStep >= index}"
@@ -394,13 +396,13 @@ export default {
   width:  30px;
   height:  30px;
   border:  1px solid white;
-  top:  85px; /* height of step + body margin -15 */
+  top:  230px; /* height of step + body margin -15 */
   border-top-right-radius: 5px;
   background-color: #fff;
   border-left: none;
   border-bottom:  none;
   transform: rotate(-45deg);
-  z-index: 2;
+  z-index: 1;
   -webkit-transition: left 0.3s;
   -o-transition: left 0.3s;
   transition: left 0.3s;
