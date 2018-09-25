@@ -1,7 +1,6 @@
 <template>
   <div class="main">
     <new-player @newPlayerAdded="hideModal" />
-
     <nav-component />
 
     <div id="notImplementedAlert" class="alert alert-primary alert-dismissible fade show" role="alert">
@@ -32,28 +31,6 @@
         </div>
       </div>
     </div>
-    <!--<game-view v-if="viewMode==='isInGameView'"
-               @GameViewClose="viewMode='mainViewMode'"
-               :gameID="activeGameId"
-               :players="players">
-    </game-view>-->
-    <!--
-    <team-settings v-if="viewMode==='teamSettingsView'"
-                   @TeamSettingsClose="viewMode='mainViewMode'"
-                   :id="selectedTeamId"
-                   :tok="selectedTeamToken">
-    </team-settings>
-    -->
-    <!--
-    <team-stats v-if="viewMode==='teamStatsView'"
-                   @TeamStatsClose="viewMode='mainViewMode'">
-    </team-stats>
-    -->
-    <!--
-    <player-detail-view v-if="viewMode==='playerDetailView'"
-                   @PlayerDetailViewClose="viewMode='mainViewMode'">
-    </player-detail-view>
-    -->
   </div>
 </template>
 
@@ -100,38 +77,11 @@ export default {
     ...mapMutations({
       SET_LOGGED_IN_USER: 'mainStore/SET_LOGGED_IN_USER',
       SET_SELECTED_TEAM: 'mainStore/SET_SELECTED_TEAM',
+      SET_CURR_TEAM: 'mainStore/SET_CURR_TEAM',
       SET_ACTIVE_GAME_ID: 'mainStore/SET_ACTIVE_GAME_ID',
       SET_SELECTED_TEAM_ID: 'mainStore/SET_SELECTED_TEAM_ID',
       SET_PLAYERS: 'mainStore/SET_PLAYERS',
     }),
-    logout: function() {
-      firebase.auth().signOut().then(() => {
-        this.$router.replace('login')
-      })
-    },
-    openNav: function() {
-      setTimeout(function(){
-        document.getElementById("mySidenav").style.width = "250px";
-      }, 90);
-    },
-    showTeam: function() {
-      this.$router.push('/createteam')
-    },
-    teamSelected: function(event) {
-      console.log('Selected: ' + event.Id)
-      this.SET_SELECTED_TEAM({
-        id: event.Id,
-        name: event.Name,
-        token: event.Token
-      });
-
-      this.getGamesTeam();
-      this.getPlayers();
-    },
-    showPlayer: function() {
-      //jQuery("#notImplementedAlert").show();
-      this.$router.push('createplayer');
-    },
     gameSelected: function(event) {
       this.SET_ACTIVE_GAME_ID(this.gamesList[event - 1]);
       this.$router.push('/gameview');
@@ -396,43 +346,7 @@ export default {
     color: #42b983;
   }
 
-  /* The side navigation menu */
-  .sidenav {
-      height: 100%; /* 100% Full-height */
-      width: 0; /* 0 width - change this with JavaScript */
-      position: fixed; /* Stay in place */
-      z-index: 1; /* Stay on top */
-      top: 0; /* Stay at the top */
-      left: 0;
-      background-color: #111; /* Black*/
-      overflow-x: hidden; /* Disable horizontal scroll */
-      padding-top: 60px; /* Place content 60px from the top */
-      transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
-  }
-
-  /* The navigation menu links */
-  .sidenav a {
-      padding: 8px 8px 8px 32px;
-      text-decoration: none;
-      font-size: 25px;
-      color: #818181;
-      display: block;
-      transition: 0.3s;
-  }
-
-  /* When you mouse over the navigation links, change their color */
-  .sidenav a:hover {
-      color: #f1f1f1;
-  }
-
-  /* Position and style the close button (top right corner) */
-  .sidenav .closebtn {
-      position: absolute;
-      top: 0;
-      right: 25px;
-      font-size: 36px;
-      margin-left: 50px;
-  }
+  
 
   /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
   .main {
@@ -440,27 +354,6 @@ export default {
       margin:0px;
       min-height: 100%;
   }
-
-  /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-  @media screen and (max-height: 450px) {
-      .sidenav {padding-top: 15px;}
-      .sidenav a {font-size: 18px;}
-  }
-
-  .glyphicon-menu-hamburger {
-    size: 50px;
-  }
-
-  .myLabel {
-    width: auto;
-    text-align: right;
-    padding-right: 30px;
-  }
-
-  .mySportLabel {
-    margin: 0px 40px 0px 0px;
-  }
-
   button {
     margin-top: 20px;
     cursor: pointer;
@@ -486,20 +379,6 @@ export default {
     flex-wrap: nowrap;
     overflow: hidden;
     white-space: nowrap;
-  }
-
-  .mainHeader .sportButton {
-    width: 40%;
-    min-width: 50px;
-    max-width: 200px;
-    min-height: 50px;
-    max-height: 50px;
-    float: right;
-    overflow: hidden;
-    white-space: nowrap;
-    margin-right: 5px;
-    margin-left: 5px;
-    text-overflow: ellipsis;
   }
 
   .button-wrapper {
@@ -530,19 +409,6 @@ export default {
     height: 50px;
     max-height: 50px;
     margin: 50px;
-  }
-
-  ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: rgba(255,0,0,0.5);
-    opacity: 1; /* Firefox */
-  }
-
-  :-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color: rgba(255,0,0,0.5);
-  }
-
-  ::-ms-input-placeholder { /* Microsoft Edge */
-    color: rgba(255,0,0,0.5);
   }
 
   #mainPage {

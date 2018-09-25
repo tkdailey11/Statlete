@@ -1,6 +1,6 @@
 <template>
   <div id="GameView">
-   
+    <nav-component />
     <div class="TopBanner">
       <h2 style="float: left; margin: 30px 30px 0px 10px;">{{activeGameId}}</h2>
     </div>
