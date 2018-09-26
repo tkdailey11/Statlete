@@ -22,12 +22,18 @@
 </template>
 
 <script>
-  import firebase from 'firebase'
+  import firebase from 'firebase';
+  import { mapGetters, mapMutations } from 'vuex';
 
   export default {
     name: 'GamesList',
     props: {
       gameID: ''
+    },
+    computed: {
+      ...mapGetters({
+        selectedTeamSport: 'mainStore/selectedTeamSport'
+      })
     },
     methods: {
       minusClicked(obj) {
@@ -45,18 +51,35 @@
     mounted() {
       var self = this
       console.log("GAME ID: " + self.gameID);
-      var dbRef = firebase.database().ref('SoccerGames/' + self.gameID + '/MyTotals/Period1/');
-      if(dbRef){
-        dbRef.once('value', function(snapshot){
-          var keys = []
-          var obj = snapshot.val();
-          if(Object){
-            keys = Object.keys(obj)
-          }
-          console.log('KEYS: ');
-          console.log(keys);
-          self.dataTypes = keys;
-        })
+      if(self.selectedTeamSport === 'soccer') {
+        var dbRef = firebase.database().ref('SoccerGames/' + self.gameID + '/MyTotals/Period1/');
+        if(dbRef){
+          dbRef.once('value', function(snapshot){
+            var keys = []
+            var obj = snapshot.val();
+            if(Object){
+              keys = Object.keys(obj)
+            }
+            console.log('KEYS: ');
+            console.log(keys);
+            self.dataTypes = keys;
+          })
+        }
+      }
+      else {
+        var dbRef = firebase.database().ref('BasketballGames/' + self.gameID + '/MyTotals/Quarter1/');
+        if(dbRef){
+          dbRef.once('value', function(snapshot){
+            var keys = []
+            var obj = snapshot.val();
+            if(Object){
+              keys = Object.keys(obj)
+            }
+            console.log('KEYS: ');
+            console.log(keys);
+            self.dataTypes = keys;
+          })
+        }
       }
     }
   }

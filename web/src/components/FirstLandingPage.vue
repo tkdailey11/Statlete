@@ -1,8 +1,8 @@
 <template>
 <div class="FLP">
   <h1 style="margin: 75px; color: rgb(242,209,24);">Create Your First Sportfolio!</h1>
-    <tkd-wizardT>
-    </tkd-wizardT>
+    <team-wizard>
+    </team-wizard>
   </div>
 </template>
 

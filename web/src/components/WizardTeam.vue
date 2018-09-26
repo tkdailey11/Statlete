@@ -1,7 +1,7 @@
 <template>
   <div id="TeamWizard" class="teamWiz">
     <nav-component />
-    <h1 style="color: rgb(242,209,24); margin-bottom: 50px;">Create a New Team Sportfolio</h1>
+    <h1 style="color: rgb(242,209,24); margin: 50px 0px 50px 0px;">Create a New Team Sportfolio</h1>
     <tkd-wizardT>
     </tkd-wizardT>
   </div>
@@ -20,7 +20,6 @@ export default {
   },
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
       playerName: '',
       playerNumber: '',
       teamSteps: [

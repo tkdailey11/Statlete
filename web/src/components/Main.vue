@@ -44,9 +44,12 @@ export default {
       selectedTeamId: 'mainStore/selectedTeamId',
       selectedTeamName: 'mainStore/selectedTeamName',
       selectedTeamToken: 'mainStore/selectedTeamToken',
+      selectedTeamSport: 'mainStore/selectedTeamSport',
       currentUserEmail: 'mainStore/currentUserEmail',
       activeGameId: 'mainStore/activeGameId',
-      players: 'mainStore/players'
+      players: 'mainStore/players',
+      soccerStats: 'statStore/soccerStats',
+      basketballStats: 'statStore/basketballStats'
     })
   },
   data () {
@@ -76,7 +79,6 @@ export default {
   methods: {
     ...mapMutations({
       SET_LOGGED_IN_USER: 'mainStore/SET_LOGGED_IN_USER',
-      SET_SELECTED_TEAM: 'mainStore/SET_SELECTED_TEAM',
       SET_CURR_TEAM: 'mainStore/SET_CURR_TEAM',
       SET_ACTIVE_GAME_ID: 'mainStore/SET_ACTIVE_GAME_ID',
       SET_SELECTED_TEAM_ID: 'mainStore/SET_SELECTED_TEAM_ID',
@@ -162,167 +164,70 @@ export default {
     },
     addGame() {
       var gameID = this.selectedTeamId + '_' + Math.random().toString(36).substring(2,7);
+      var oppData = [];
+      var myData = [];
+      var isSoccer = this.selectedTeamSport === 'soccer'
+
+      if(isSoccer){
+        oppData = {
+            "Period1" : this.soccerStats,
+            "Period2" : this.soccerStats,
+            "Possession" : 0
+        };
+      }
+      else {
+        oppData = {
+          "Quarter1" : this.basketballStats,
+          "Quarter2" : this.basketballStats,
+          "Quarter3" : this.basketballStats,
+          "Quarter4" : this.basketballStats
+        };
+      }
+
+      if(isSoccer){
+        myData = {
+            "Period1" : this.soccerStats,
+            "Period2" : this.soccerStats,
+            "Possession" : 0
+        };
+      }
+      else {
+        myData = {
+          "Quarter1" : this.basketballStats,
+          "Quarter2" : this.basketballStats,
+          "Quarter3" : this.basketballStats,
+          "Quarter4" : this.basketballStats
+        };
+      }
+
       var data = {
-          "Date" : "4-21-2018",
-          "HalfLength" : 45,
-          "InProgress" : true,
-          "Live" : true,
-          "MyTotals" : {
-            "Period1" : {
-              "Assists" : {
-                "Total" : 0
-              },
-              "Corners" : {
-                "Total" : 0
-              },
-              "Crosses" : {
-                "Total" : 0
-              },
-              "Fouls" : {
-                "Total" : 0
-              },
-              "Goals" : {
-                "Total" : 0
-              },
-              "Offsides" : {
-                "Total" : 0
-              },
-              "Red Cards" : {
-                "Total" : 0
-              },
-              "Saves" : {
-                "Total" : 0
-              },
-              "Shots" : {
-                "Total" : 0
-              },
-              "Shots on Goal" : {
-                "Total" : 0
-              },
-              "Yellow Cards" : {
-                "Total" : 0
-              }
-            },
-            "Period2" : {
-              "Assists" : {
-                "Total" : 0
-              },
-              "Corners" : {
-                "Total" : 0
-              },
-              "Crosses" : {
-                "Total" : 0
-              },
-              "Fouls" : {
-                "Total" : 0
-              },
-              "Goals" : {
-                "Total" : 0
-              },
-              "Offsides" : {
-                "Total" : 0
-              },
-              "Red Cards" : {
-                "Total" : 0
-              },
-              "Saves" : {
-                "Total" : 0
-              },
-              "Shots" : {
-                "Total" : 0
-              },
-              "Shots on Goal" : {
-                "Total" : 0
-              },
-              "Yellow Cards" : {
-                "Total" : 0
-              }
-            },
-            "Possession" : 0
-          },
-          "Name" : gameID,
-          "OpponentsTotals" : {
-            "Period1" : {
-              "Assists" : {
-                "Total" : 0
-              },
-              "Corners" : {
-                "Total" : 0
-              },
-              "Crosses" : {
-                "Total" : 0
-              },
-              "Fouls" : {
-                "Total" : 0
-              },
-              "Goals" : {
-                "Total" : 0
-              },
-              "Offsides" : {
-                "Total" : 0
-              },
-              "Red Cards" : {
-                "Total" : 0
-              },
-              "Saves" : {
-                "Total" : 0
-              },
-              "Shots" : {
-                "Total" : 0
-              },
-              "Shots on Goal" : {
-                "Total" : 0
-              },
-              "Yellow Cards" : {
-                "Total" : 0
-              }
-            },
-            "Period2" : {
-              "Assists" : {
-                "Total" : 0
-              },
-              "Corners" : {
-                "Total" : 0
-              },
-              "Crosses" : {
-                "Total" : 0
-              },
-              "Fouls" : {
-                "Total" : 0
-              },
-              "Goals" : {
-                "Total" : 0
-              },
-              "Offsides" : {
-                "Total" : 0
-              },
-              "Red Cards" : {
-                "Total" : 0
-              },
-              "Saves" : {
-                "Total" : 0
-              },
-              "Shots" : {
-                "Total" : 0
-              },
-              "Shots on Goal" : {
-                "Total" : 0
-              },
-              "Yellow Cards" : {
-                "Total" : 0
-              }
-            },
-            "Possession" : 0
-          },
-          "Period" : 1,
-          "PeriodStartTime" : 1524338307
-        }
-      var ref = firebase.database().ref('SoccerGames').update({
-        [gameID] : data
-      })
-      var ref = firebase.database().ref('TeamSportfolios').child(this.selectedTeamId).child('Games').update({
-        [gameID] : 'game'
-      })
+        "Date" : "4-21-2018",
+        "HalfLength" : 45,
+        "InProgress" : true,
+        "Live" : true,
+        "MyTotals" : myData,
+        "Name" : gameID,
+        "OpponentsTotals" : oppData,
+        "Period" : 1,
+        "PeriodStartTime" : 1524338307
+      }
+
+      if(isSoccer) {
+        var ref = firebase.database().ref('SoccerGames').update({
+          [gameID] : data
+        })
+        var ref = firebase.database().ref('TeamSportfolios').child(this.selectedTeamId).child('Games').update({
+          [gameID] : 'soccer'
+        })
+      }
+      else {
+        var ref = firebase.database().ref('BasketballGames').update({
+          [gameID] : data
+        })
+        var ref = firebase.database().ref('TeamSportfolios').child(this.selectedTeamId).child('Games').update({
+          [gameID] : 'basketball'
+        })
+      }
     }
   }
 }

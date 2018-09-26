@@ -1,7 +1,8 @@
 <template>
   <div class="SBfield">
     <div class="fill">
-      <img @click="fieldClicked" src="../assets/images/soccerField.png" alt="" id="FieldIMG"/>
+      <img v-if="selectedTeamSport==='soccer'" @click="fieldClicked" src="../assets/images/soccerField.png" alt="" id="FieldIMG"/>
+      <img v-else @click="fieldClicked" src="../assets/images/basketballCourt.png" alt="" id="FieldIMG"/>      
       <div class="field_shot" v-for="shot in shotsList" :key="getRand() + shot.shotType">
         <img v-if="shot.shotType=='gcf'" src="../assets/images/Green_circle_filled.png" alt="" class="field_gcf" :style="[shot.style]"/>
         <img v-if="shot.shotType=='redx'" src="../assets/images/redX.png" alt="" class="field_redx" :style="[shot.style]"/>
@@ -30,7 +31,8 @@
     computed: {
       ...mapGetters({
         activeGameId: 'mainStore/activeGameId',
-        shotType: 'gameViewStore/shotType'
+        shotType: 'gameViewStore/shotType',
+        selectedTeamSport: 'mainStore/selectedTeamSport'
       })
     },
     methods: {

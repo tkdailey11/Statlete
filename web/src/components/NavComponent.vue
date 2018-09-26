@@ -53,7 +53,8 @@ export default {
       this.SET_SELECTED_TEAM({
         id: event.Id,
         name: event.Name,
-        token: event.Token
+        token: event.Token,
+        sport: event.Sport
       });
 
       this.getGamesTeam();
@@ -103,7 +104,6 @@ export default {
  .myNavComponent {
       transition: margin-left .5s;
       margin:0px;
-      min-height: 100%;
       z-index: 2;
   }
 

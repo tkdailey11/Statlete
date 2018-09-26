@@ -94,11 +94,13 @@
         var self = this;
         firebase.database().ref('TeamSportfolios').child(id).once('value', function(snapshot){
           var obj = snapshot.val();
+          console.log(obj)
           var name = obj.TeamName;
           var data = {
             Name: name,
             Id: id,
-            Token: obj.Token
+            Token: obj.Token,
+            Sport: obj.Sport
           }
           self.$emit('teamSelected', data);
           self.closeNav();

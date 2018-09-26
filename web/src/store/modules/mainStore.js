@@ -11,7 +11,8 @@ const state = {
   selectedTeam: {
     id: '',
     name: '',
-    token: ''
+    token: '',
+    sport: ''
   },
   players: []
 };
@@ -32,6 +33,9 @@ const getters = {
   selectedTeamToken: state => {
     return state.selectedTeam.token
   },
+  selectedTeamSport: state => {
+    return state.selectedTeam.sport
+  },
   teamID: state => {
     return state.currTeam.id
   },
@@ -40,9 +44,6 @@ const getters = {
   },
   teamToken: state => {
     return state.currTeam.token
-  },
-  selectedSport: state => {
-    return state.selectedSport
   },
   activeGameId: state => {
     return state.activeGameId
@@ -72,8 +73,8 @@ const mutations = {
   SET_CURR_TEAM_NAME: (state, payload) => {
     state.currTeam.name = payload
   },
-  SET_SELECTED_SPORT: (state, payload) => {
-    state.selectedSport = payload
+  SET_SELECTED_TEAM_SPORT: (state, payload) => {
+    state.selectedTeam.sport = payload
   },
   SET_ACTIVE_GAME_ID: (state, payload) => {
     state.activeGameId = payload

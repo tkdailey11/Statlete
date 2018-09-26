@@ -3,7 +3,9 @@ const state = {
   statString: '',
   currentPeriod: 'Period1',
   shotType: 'gcf',
-  shotsArr: []
+  shotsArr: [],
+  periodStartTime: 1537847778,
+  currGameTime: '0:00'
 };
 
 const getters = {
@@ -24,6 +26,12 @@ const getters = {
   },
   shotsArrLength: state => {
     return state.shotsArr.length;
+  },
+  periodStartTime: state => {
+    return state.periodStartTime;
+  },
+  currGameTime: state => {
+    return state.currGameTime;
   }
 };
 
@@ -48,6 +56,12 @@ const mutations = {
   },
   GV_REMOVE_SHOT: (state, payload) => {
     state.shotsArr.pop();
+  },
+  GV_SET_PERIOD_START_TIME: (state, payload) => {
+    state.periodStartTime = payload;
+  },
+  GV_SET_CURR_GAME_TIME: (state, payload) => {
+    state.currGameTime = payload;
   }
 };
 

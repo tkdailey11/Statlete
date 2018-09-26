@@ -70,13 +70,10 @@ import WizardP from '@/components/WizardP';
 Vue.component('tkd-wizardP', WizardP);
 
 import WizardT from '@/components/WizardT';
-Vue.component('tkd-wizardT', WizardT);
+Vue.component('team-wizard', WizardT);
 
 import WizardPlayer from '@/components/WizardPlayer';
 Vue.component('wizard-player', WizardPlayer);
-
-import WizardTeam from '@/components/WizardTeam';
-Vue.component('wizard-team', WizardTeam);
 
 import PlayerStatSelector from '@/components/PlayerStatSelector';
 Vue.component('player-stat-selector', PlayerStatSelector);

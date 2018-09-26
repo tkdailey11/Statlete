@@ -2,14 +2,15 @@
   <div id="GameView">
     <nav-component />
     <div class="TopBanner">
-      <h2 style="float: left; margin: 30px 30px 0px 10px;">{{activeGameId}}</h2>
+        <h1>{{activeGameId}}</h1>
+        <h1 class="TimeClock">{{currTime}}</h1>
     </div>
     <player-stat-selector style="float: left;"
                           :players="players"
                           @playerSelected="playerWasSelected">
     </player-stat-selector>
     <sb-data-entry id="sbde1"
-                   style="float: left;"
+                   style="float: left; margin-right: 150px;"
                    @StatChange="updateDB"
                    :gameID="activeGameId">
     </sb-data-entry>
@@ -28,6 +29,14 @@
 
   export default {
     name: 'GameView',
+    data () {
+      return {
+        currTime: '1:11'
+      }
+    },
+    mounted() {
+      var updateClockLoop = setInterval(this.updateTime, 1000);
+    },
     computed: {
       ...mapGetters({
         activeGameId: 'mainStore/activeGameId',
@@ -38,7 +47,9 @@
         currentPeriod: 'gameViewStore/currentPeriod',
         shotType: 'gameViewStore/shotType',
         shotsArr: 'gameViewStore/shotsArr',
-        shotsArrLength: 'gameViewStore/shotsArrLength'
+        shotsArrLength: 'gameViewStore/shotsArrLength',
+        periodStartTime: 'gameViewStore/periodStartTime',
+        currGameTime: 'gameViewStore/currGameTime'
       })
     },
     methods: {
@@ -49,7 +60,9 @@
         GV_SET_SHOT_TYPE: 'gameViewStore/GV_SET_SHOT_TYPE',
         GV_SET_SHOTS_ARR: 'gameViewStore/GV_SET_SHOTS_ARR',
         GV_APPEND_SHOT: 'gameViewStore/GV_APPEND_SHOT',
-        GV_REMOVE_SHOT: 'gameViewStore/GV_REMOVE_SHOT'
+        GV_REMOVE_SHOT: 'gameViewStore/GV_REMOVE_SHOT',
+        GV_SET_PERIOD_START_TIME: 'gameViewStore/GV_SET_PERIOD_START_TIME',
+        GV_SET_CURR_GAME_TIME: 'gameViewStore/GV_SET_CURR_GAME_TIME'
       }),
       playerWasSelected(event) {
         console.log(event);
@@ -66,6 +79,9 @@
         }
 
       },
+      updateTime(){
+        this.currTime = this.getTimeString(this.getTime());
+      },
       shotPlaced(event){
         var shotData = {
           style: event.style,
@@ -80,6 +96,33 @@
         if (this.shotsArrLength > 0) {
           this.GV_REMOVE_SHOT();
         }
+      },
+      getTimeString(time) {
+        var minutesString = time.minutes.toString();
+        if(time.minutes < 10){
+          minutesString = '0' + minutesString;
+        }
+
+        var secondsString = time.seconds.toString();
+        if(time.seconds < 10){
+          secondsString = '0' + secondsString;
+        }
+
+        return minutesString + ':' + secondsString;
+      },
+      getTime() {
+        var result = {
+          minutes: 0,
+          seconds: 0
+        }
+
+        var d = new Date();
+        var elapsedSeconds = Math.round(d.getTime() / 1000);
+        elapsedSeconds = elapsedSeconds - this.periodStartTime;
+        result.minutes = Math.floor(elapsedSeconds / 60);
+        result.seconds = elapsedSeconds % 60;
+
+        return result;
       }
     }
   }
@@ -95,10 +138,18 @@
   }
   .TopBanner {
     width: 100vw;
-    background-color: grey;
     min-height: 100px;
-    margin-bottom: -20px;
-    border: medium black solid;
+    color: rgb(224, 0, 16);
+    display: flex;
+  }
+
+  .TopBanner h1 {
+    /* float: left; */
+    min-height: 100px;
+    height: 100%;
+    text-align: center;
+    padding: 25px;
+    flex-grow: 2;
   }
   #sbde1{
     padding-left: 0px;
@@ -117,5 +168,12 @@
   }
   #fieldEntry {
     float: left;
+  }
+  .TopBanner .TimeClock{
+    min-width: 350px;
+    min-height: 100px;
+    height: 100%;
+    padding: 25px;
+    flex-grow: 1;
   }
 </style>
