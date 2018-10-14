@@ -5,19 +5,10 @@ const state = {
   shotsArr: [],
   periodStartTime: -1,
   currGameTime: '0:00',
-  inProgress: false,
-  gameLive: false,
-  currentPeriod: -1,
   periodLength: 40
 };
 
 const getters = {
-  inProgress: state => {
-    return state.inProgress;
-  },
-  gameLive: state => {
-    return state.gameLive;
-  },
   periodLength: state => {
     return state.periodLength;
   },
@@ -26,9 +17,6 @@ const getters = {
   },
   statString: state => {
     return state.statString;
-  },
-  currentPeriod: state => {
-    return state.currentPeriod;
   },
   shotType: state => {
     return state.shotType;
@@ -48,12 +36,6 @@ const getters = {
 };
 
 const mutations = {
-  GV_SET_IN_PROGRESS: (state, payload) => {
-    state.inProgress = payload;
-  },
-  GV_SET_GAME_LIVE: (state, payload) => {
-    state.gameLive = payload;
-  },
   GV_SET_PERIOD_LENGTH: (state, payload) => {
     state.periodLength = payload;
   },

@@ -1,19 +1,19 @@
 <template>
-  <div id="SBdataEntry">
+  <div id="SBdataEntry" :style="height">
     <div id="title">
       <h2 align="center" style="color: white;">Team/Player Stats</h2>
     </div>
-    <div id="dataTable">
+    <div id="dataTable" :style="tableHeight">
       <table width="100%">
         <tr v-for="obj in dataTypes">
-          <td class="minusButton" @click="minusClicked(obj)">
-            <img src="../assets/images/minusButton.png">
+          <td>
+            <img src="../assets/images/goal.png">
           </td>
           <td class="dataLabelCell" style="max-width: 120px; text-overflow:ellipsis;">
             <p class="dataLabel">{{obj}}</p>
           </td>
           <td class="plusButton" @click="plusClicked(obj)">
-            <img src="../assets/images/plusButton.png">
+            <img :id="obj.split(' ').join('') + '-button'" src="../assets/images/RedPlusButton.png" style="zoom: 5%;">
           </td>
         </tr>
       </table>
@@ -24,24 +24,36 @@
 <script>
   import firebase from 'firebase';
   import { mapGetters, mapMutations } from 'vuex';
+import { setTimeout } from 'timers';
 
   export default {
     name: 'GamesList',
     props: {
-      gameID: ''
+      gameID: '',
+      height: {
+        default: 'height: 500px;'
+      }
     },
     computed: {
       ...mapGetters({
         selectedTeamSport: 'mainStore/selectedTeamSport',
         selectedTeamId: 'mainStore/selectedTeamId'
-      })
+      }),
+      tableHeight() {
+        var height = parseInt(this.height.split(' ')[1].split('p')[0]);
+        var newHeight = height*0.85;
+        return 'height: ' + newHeight + 'px;';
+      }
     },
     methods: {
-      minusClicked(obj) {
-        this.$emit('StatChange', 'minus:' + obj)
-      },
       plusClicked(obj) {
         this.$emit('StatChange', 'plus:' + obj)
+        var id = '#' + obj.split(' ').join('') + '-button';
+        jQuery(id).css('opacity', '0.3');
+        setTimeout(() => {
+          jQuery(id).css('opacity', '1.0');
+        }, 150);
+        
       }
     },
     data() {
@@ -52,7 +64,7 @@
     mounted() {
       var self = this
       console.log("GAME ID: " + self.gameID);
-      if(self.selectedTeamSport === 'soccer') {
+      if(self.selectedTeamSport == 1) {
         var dbRef = firebase.database().ref('SoccerGames/' + self.selectedTeamId + '/' + self.gameID + '/MyTotals/Period1/');
         if(dbRef){
           dbRef.once('value', function(snapshot){
@@ -90,16 +102,14 @@
   #SBdataEntry {
     width: 310px;
     height: 500px;
-    background: white;
-    /*margin-left: 50px;*/
     border-width: 5px;
-    border-color: rgb(235,95,17);
+    border-color: black;
     border-style: solid;
     border-radius: 35px;
     position: relative;
-    /*margin: 50px 0px 50px 50px;*/
     box-shadow: 5px 5px 5px grey;
     padding-left: 100px;
+    
   }
 
   #title {
@@ -107,7 +117,7 @@
     height: 75px;
     background: white;
     border-radius: 35px 35px 0px 0px;
-    border-bottom-color: rgb(235,95,17);
+    border-bottom-color: black;
     border-bottom-width: medium;
     border-bottom-style: solid;
     background-color: white;
@@ -120,7 +130,7 @@
     bottom: 0;
     background-color: white;
     border-radius: 0px 0px 35px 35px;
-    border-top-color: rgb(235,95,17);
+    border-top-color: black;
     border-top-width: medium;
     border-top-style: solid;
     text-align: center;
@@ -132,19 +142,17 @@
 
   #dataTable {
     width: 300px;
-    max-height: 413px;
-    height: 413px;
     background-color: white;
     overflow: scroll;
     border-radius: 0px 0px 30px 30px;
   }
 
   table, th {
-    border: 1px solid rgb(235,95,17);
+    border: 1px solid black;
   }
 
   td {
-    border-bottom: 1px solid rgb(235,95,17);
+    border-bottom: 1px solid black;
     color: rgb(224,0,16);
   }
 
@@ -161,6 +169,7 @@
   }
   .dataLabelCell {
     overflow: hidden;
+    font-weight: bold;
   }
   .dataLabel {
     margin-top: 15px;

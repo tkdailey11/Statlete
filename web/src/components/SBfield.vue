@@ -1,7 +1,7 @@
 <template>
   <div class="SBfield">
     <div class="fill">
-      <img v-if="selectedTeamSport==='soccer'" @click="fieldClicked" src="../assets/images/soccerField.png" alt="" id="FieldIMG"/>
+      <img v-if="selectedTeamSport==1" @click="fieldClicked" src="../assets/images/soccerField.png" alt="" id="FieldIMG"/>
       <img v-else @click="fieldClicked" src="../assets/images/basketball-court.png" alt="" id="FieldIMG"/>      
       <div class="field_shot" v-for="shot in shotsList" :key="getRand() + shot.shotType">
         <img v-if="shot.shotType=='gcf'" src="../assets/images/RedFilledCircle.png" alt="" class="field_gcf" :style="[shot.style]"/>
@@ -150,12 +150,11 @@
     width: 600px;
     height: 500px;
     background: black;
-    margin-left: 50px;
     border-width: 5px;
     border-color: black;
     border-style: solid;
     border-radius: 35px;
-    margin: 50px;
+    margin-top: 25px;
     margin-bottom: 25px;
     box-shadow: 5px 5px 5px grey;
   }

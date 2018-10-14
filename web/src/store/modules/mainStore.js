@@ -2,18 +2,21 @@ const state = {
   loggedInUser: '',
   currentUserEmail: '',
   activeGameId: '',
-  selectedSport: 'basketball',
   selectedTeam: {
     id: '',
     name: '',
     token: '',
-    sport: ''
+    sport: 0
   },
   players: [],
+  playerList: {},
   gamesList: []
 };
 
 const getters = {
+  playerList: state => {
+    return state.playerList;
+  },
   gamesList: state => {
     return state.gamesList;
   },
@@ -44,6 +47,9 @@ const getters = {
 };
 
 const mutations = {
+  SET_PLAYER_LIST: (state, payload) => {
+    state.playerList = payload;
+  },
   SET_GAMES_LIST: (state, payload) => {
     state.gamesList = payload;
   },

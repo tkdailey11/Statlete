@@ -79,7 +79,8 @@ export default {
       SET_ACTIVE_GAME_ID: 'mainStore/SET_ACTIVE_GAME_ID',
       SET_SELECTED_TEAM_ID: 'mainStore/SET_SELECTED_TEAM_ID',
       SET_PLAYERS: 'mainStore/SET_PLAYERS',
-      SET_GAMES_LIST: 'mainStore/SET_GAMES_LIST'
+      SET_GAMES_LIST: 'mainStore/SET_GAMES_LIST',
+      SET_PLAYER_LIST: 'mainStore/SET_PLAYER_LIST'
     }),
     gameSelected: function(event) {
       this.SET_ACTIVE_GAME_ID(this.gamesList[event - 1]);
@@ -95,7 +96,6 @@ export default {
       console.log("View PLAYER INFO");
     },
     getGamesTeam() {
-      alert('GetGames')
       var email = this.currentUserEmail.replace('.', '');
       var self = this;
 
@@ -119,6 +119,9 @@ export default {
         var obj = snapshot.val();
         if(obj){
           self.SET_PLAYERS(obj);
+          console.log('*** Players: ')
+          console.log(obj)
+          console.log('*********')
         }
       });
     },
@@ -158,10 +161,16 @@ export default {
       })
     },
     addGame() {
-      var gameID = this.selectedTeamId + '_' + Math.random().toString(36).substring(2,7);
+      var gameCount = this.gamesList.length + 1;
+      console.log('*****' + this.gamesList.length);
+      var gameCountStr = gameCount + '';
+      if(gameCount < 10){
+        gameCountStr = '0' + gameCount;
+      }
+      var gameID = this.selectedTeamId + '-' + gameCountStr;
       var oppData = [];
       var myData = [];
-      var isSoccer = this.selectedTeamSport === 'soccer'
+      var isSoccer = this.selectedTeamSport == 1
 
       if(isSoccer){
         oppData = {
@@ -212,7 +221,6 @@ export default {
       }
 
       if(isSoccer) {
-        alert('SOCCER')
         var ref = firebase.database().ref('SoccerGames').child(this.selectedTeamId).update({
           [gameID] : data
         })
@@ -221,7 +229,6 @@ export default {
         })
       }
       else {
-        alert('BASKETBALL')
         var ref = firebase.database().ref('BasketballGames').update({
           [gameID] : data
         })

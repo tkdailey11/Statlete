@@ -89,6 +89,11 @@ Vue.use(VModal)
 import Vue2TouchEvents from 'vue2-touch-events'
 Vue.use(Vue2TouchEvents)
 
+import VuejsDialog from "vuejs-dialog"
+// include the default style
+import 'vuejs-dialog/dist/vuejs-dialog.min.css'
+Vue.use(VuejsDialog)
+
 import jQuery from 'jquery'
 global.jQuery = jQuery
 import popper from 'popper.js'

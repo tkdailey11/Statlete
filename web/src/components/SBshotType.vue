@@ -3,19 +3,19 @@
     <div id="gcfDiv">
       <img v-if="this.activeType=='gcf'" src="../assets/images/RedFilledCircle.png" class="GCF activeTypeClass" @click="gcfClicked" alt="Shot on Goal"/>
       <img v-else src="../assets/images/RedFilledCircle.png" class="GCF" @click="gcfClicked" alt="Shot on Goal"/>
-      <figcaption>Goal</figcaption>
+      <figcaption class="myCaption">Goal</figcaption>
     </div>
 
     <div id="ghollowDiv">
       <img v-if="this.activeType=='ghollow'" src="../assets/images/RedHollowCircleThick.png" class="GHollow activeTypeClass" @click="gHollowClicked"/>
       <img v-else src="../assets/images/RedHollowCircleThick.png" class="GHollow" @click="gHollowClicked"/>
-      <figcaption>Shot on Goal</figcaption>
+      <figcaption class="myCaption">Shot on Goal</figcaption>
     </div>
 
     <div id="redXDiv">
       <img v-if="this.activeType=='redx'" src="../assets/images/RedX.png" class="redX activeTypeClass" @click="redxClicked"/>
       <img v-else src="../assets/images/RedX.png" class="redX" @click="redxClicked"/>
-      <figcaption>Shot</figcaption>
+      <figcaption class="myCaption">Shot</figcaption>
     </div>
 
     <!--<div id="sbst-undo" @click="undoClicked"><h3 style="margin: 30px; color: orange;">UNDO</h3></div>-->
@@ -55,10 +55,9 @@
     width: 600px;
     height: 120px;
     background: white;
-    margin-left: 50px;
     border: 5px black solid;
     border-radius: 35px;
-    margin: 50px;
+    
     margin-top: 25px;
     box-shadow: 5px 5px 5px grey;
     display: flex;
@@ -92,5 +91,9 @@
   }
   .activeTypeClass {
     opacity: 0.4;
+  }
+  .myCaption {
+    font-weight: bold; 
+    margin-top: 10px;
   }
 </style>
