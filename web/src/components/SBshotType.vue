@@ -5,7 +5,6 @@
       <img v-else src="../assets/images/RedFilledCircle.png" class="GCF" @click="gcfClicked" alt="Shot on Goal"/>
       <figcaption class="myCaption">Goal</figcaption>
     </div>
-
     <div id="ghollowDiv">
       <img v-if="this.activeType=='ghollow'" src="../assets/images/RedHollowCircleThick.png" class="GHollow activeTypeClass" @click="gHollowClicked"/>
       <img v-else src="../assets/images/RedHollowCircleThick.png" class="GHollow" @click="gHollowClicked"/>
@@ -17,8 +16,6 @@
       <img v-else src="../assets/images/RedX.png" class="redX" @click="redxClicked"/>
       <figcaption class="myCaption">Shot</figcaption>
     </div>
-
-    <!--<div id="sbst-undo" @click="undoClicked"><h3 style="margin: 30px; color: orange;">UNDO</h3></div>-->
   </div>
 </template>
 
@@ -42,9 +39,6 @@
       gHollowClicked: function() {
         this.$emit('ShotTypeChanged', 'ghollow');
         this.activeType = 'ghollow';
-      },
-      undoClicked: function() {
-        this.$emit('SBSTUndo');
       }
     }
   }
@@ -52,8 +46,8 @@
 
 <style scoped>
   .SBshotType{
-    width: 600px;
-    height: 120px;
+    width: 120px;
+    height: 500px;
     background: white;
     border: 5px black solid;
     border-radius: 35px;
@@ -61,6 +55,7 @@
     margin-top: 25px;
     box-shadow: 5px 5px 5px grey;
     display: flex;
+    flex-direction: column;
   }
   #gcfDiv{
     flex-grow: 3;

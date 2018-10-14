@@ -12,7 +12,7 @@ export default {
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  /*font-family: 'Avenir', Helvetica, Arial, sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -89,5 +89,11 @@ margin: 0px;
 background: green;
 */
 }
+
+      @font-face {
+            font-family: 'MyWebFont';
+            src: url('./assets/fonts/AvenirNext-UltraLight.woff') format('woff'), /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+            url('./assets/fonts/AvenirNext-UltraLight.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+      }  
 
 </style>

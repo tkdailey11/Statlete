@@ -79,8 +79,7 @@ export default {
       SET_ACTIVE_GAME_ID: 'mainStore/SET_ACTIVE_GAME_ID',
       SET_SELECTED_TEAM_ID: 'mainStore/SET_SELECTED_TEAM_ID',
       SET_PLAYERS: 'mainStore/SET_PLAYERS',
-      SET_GAMES_LIST: 'mainStore/SET_GAMES_LIST',
-      SET_PLAYER_LIST: 'mainStore/SET_PLAYER_LIST'
+      SET_GAMES_LIST: 'mainStore/SET_GAMES_LIST'
     }),
     gameSelected: function(event) {
       this.SET_ACTIVE_GAME_ID(this.gamesList[event - 1]);

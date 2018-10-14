@@ -41,7 +41,7 @@ import { setTimeout } from 'timers';
       }),
       tableHeight() {
         var height = parseInt(this.height.split(' ')[1].split('p')[0]);
-        var newHeight = height*0.85;
+        var newHeight = height*0.826;
         return 'height: ' + newHeight + 'px;';
       }
     },

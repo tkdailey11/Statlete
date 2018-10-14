@@ -13,21 +13,44 @@
           <tr v-for="p in playerNumbers" :key="p + '-key'">
             <th style="width: 163px; min-width: 163px; border: thin solid black; border-right-width: 2px;">{{ p.replace('p', '#')}}</th>
             <td v-for="statType in statTypes" :key="p + '-' + statType">
-              <span v-if="statType.length == 7">
-                <p v-if="playerData[p][statType]" style="width: 80px; margin-right: 10px; margin-top: 10px;">{{playerData[p][statType]}}</p>
-                <p v-else style="width: 80px; margin-right: 10px; margin-top: 10px;">0</p>
-              </span>
-              <span v-if="statType.length == 8">
-                <p v-if="playerData[p][statType]" style="width: 90px; margin-right: 17px; margin-top: 10px;">{{playerData[p][statType]}}</p>
-                <p v-else style="width: 90px; margin-right: 17px; margin-top: 10px;">0</p>
-              </span>
               <span v-if="statType.length == 5">
                 <p v-if="playerData[p][statType]" style="width: 60px; margin-right: 8px; margin-top: 10px;">{{playerData[p][statType]}}</p>
                 <p v-else style="width: 60px; margin-right: 8px; margin-top: 10px;">0</p>
               </span>
-              <span v-if="statType.length == 11">
-                <p v-if="playerData[p][statType]" style="width: 125px; margin-right: 20px; margin-top: 10px;">{{playerData[p][statType]}}</p>
+              <span v-else-if="statType.length == 6">
+                <p v-if="playerData[p][statType]" style="width: 70px; margin-right: 10px; margin-top: 10px;">{{playerData[p][statType]}}</p>
+                <p v-else style="width: 80px; margin-right: 10px; margin-top: 10px;">0</p>
+              </span>
+              <span v-else-if="statType.length == 7">
+                <p v-if="playerData[p][statType]" style="width: 80px; margin-right: 10px; margin-top: 10px;">{{playerData[p][statType]}}</p>
+                <p v-else style="width: 80px; margin-right: 10px; margin-top: 10px;">0</p>
+              </span>
+              <span v-else-if="statType.length == 8">
+                <p v-if="playerData[p][statType]" style="width: 90px; margin-right: 17px; margin-top: 10px;">{{playerData[p][statType]}}</p>
+                <p v-else style="width: 90px; margin-right: 17px; margin-top: 10px;">0</p>
+              </span>
+              <span v-else-if="statType.length == 9">
+                <p v-if="playerData[p][statType]" style="width: 95px; margin-right: 17px; margin-top: 10px;">{{playerData[p][statType]}}</p>
+                <p v-else style="width: 90px; margin-right: 17px; margin-top: 10px;">0</p>
+              </span>
+              <span v-else-if="statType.length == 10">
+                <p v-if="playerData[p][statType]" style="width: 110px; margin-right: 20px; margin-top: 10px;">{{playerData[p][statType]}}</p>
                 <p v-else style="width: 125px; margin-right: 20px; margin-top: 10px;">0</p>
+              </span>
+              <span v-else-if="statType.length == 11">
+                <p v-if="playerData[p][statType]" style="width: 120px; margin-right: 20px; margin-top: 10px;">{{playerData[p][statType]}}</p>
+                <p v-else style="width: 125px; margin-right: 20px; margin-top: 10px;">0</p>
+              </span>
+              <span v-else-if="statType.length == 12">
+                <p v-if="playerData[p][statType]" style="width: 135px; margin-right: 20px; margin-top: 10px;">{{playerData[p][statType]}}</p>
+                <p v-else style="width: 125px; margin-right: 20px; margin-top: 10px;">0</p>
+              </span>
+              <span v-else-if="statType.length == 13">
+                <p v-if="playerData[p][statType]" style="width: 135px; margin-right: 20px; margin-top: 10px;">{{playerData[p][statType]}}</p>
+                <p v-else style="width: 125px; margin-right: 20px; margin-top: 10px;">0</p>
+              </span>
+              <span v-else>
+                <p style="width: 125px; margin-right: 20px; margin-top: 10px; background-color: green;">0</p>
               </span>
             </td>
           </tr>
@@ -49,7 +72,18 @@
     data() {
       return {
         gameData : {},
-        statTypes: {},
+        statTypes: ["Assists",
+                    "Corners",
+                    "Crosses",
+                    "Fouls",
+                    "Goals",
+                    "Minutes",
+                    "Offsides",
+                    "Red Cards",
+                    "Saves",
+                    "Shots",
+                    "Shots on Goal",
+                    "Yellow Cards"],
         playerData: {},
         loggedInUser: '',
         currentUserEmail: '',
@@ -74,24 +108,25 @@
         console.log(x);
       },
       getGameData: function() {
-        var self = this;
-        var gameDataRef = firebase.database().ref('/SoccerGames/' + self.selectedTeamId).child(self.activeGameId).child('Players');
-        console.log(gameDataRef)
-        gameDataRef.on('value', function(snapshot) {
-          self.playerData = snapshot.val();
-        });
+
       }
     },
-    mounted() {
+    created() {
       this.loggedInUser = firebase.auth().currentUser;
       this.currentUserEmail = this.loggedInUser.email;
-      this.getGameData();
-      var self = this;
-      var ref = firebase.database().ref('/SoccerGames/' + self.selectedTeamId).child(self.activeGameId).child('MyTotals').child('Period1');
-      ref.once('value', function(snap) {
-        self.statTypes = Object.keys(snap.val())
-      })
 
+      var self = this;
+      // var ref = firebase.database().ref('/SoccerGames/' + self.selectedTeamId).child(self.activeGameId).child('MyTotals').child('Period1');
+      // ref.once('value', function(snap) {
+      //   self.statTypes = Object.keys(snap.val())
+      // })
+      
+      var gameDataRef = firebase.database().ref('/SoccerGames/' + self.selectedTeamId).child(self.activeGameId).child('Players');
+      gameDataRef.on('value', function(snapshot) {
+        self.playerData = snapshot.val();
+      });
+    },
+    mounted() {
       document.getElementById("dataTable").addEventListener("scroll", scrollTableFunction);
       document.getElementById("headers").addEventListener("scroll", scrollHeaderFunction);
 
@@ -112,16 +147,13 @@
 
 <style scoped>
 .TeamStats {
-  height: 650px;
-  margin: 100px 0px 0px 100px;
-  min-width: 1090px;
-  max-width: 1500px;
+  height: 400px;
+  width: 1090px;
 }
 
 .SBdataEntry {
-  height: 650px;
-  min-width: 1090px;
-  max-width: 1500px;
+  height: 400px;
+  width: 1090px;
   background: white;
   border-width: 5px;
   border-color: black;

@@ -1,49 +1,49 @@
 <template>
   <div id="GameView">
     <nav-component />
-    <div id="EntryView">
-      <div class="TopBanner">
-          <h1 style="font-size: 400%; font-weight: bold;">{{selectedTeamName}}</h1>
-      </div>
-      <div class="leftDiv">
-        <player-stat-selector style="float: left;"
-                              :players="players"
-                              :height="'height: 600px;'"
-                              @playerSelected="playerWasSelected">
-        </player-stat-selector>
-        <sb-data-entry id="sbde1"
-                      style="float: left;"
-                      :height="'height: 600px;'"
-                      @StatChange="updateDB"
-                      :gameID="activeGameId">
-        </sb-data-entry>
-        <div class="possession">
-          <p class="possButton" @click="possButtonClicked('myTeam')">My Team</p>
-          <p class="possButton possButtonMid" @click="possButtonClicked('opponent')">Opponent</p>
-          <p class="possButton" @click="possButtonClicked('none')">No Possession</p>
-        </div>
-      </div>
-      <div id="fieldEntry">
+    <div class="TopBanner">
+        <h1 style="font-size: 400%; font-weight: bold;">{{selectedTeamName}}</h1>
         <div class="TimeClock" @click="clockClicked">
           <period-marker style="float: left; margin-left: 25%; margin-top: 25px;" :period="1" :filled="activePeriod >= 1"></period-marker>
           <h1 style="width: 100px; float: left; margin-top: 25px;">{{currTime}}</h1>
           <period-marker style="float: left; margin-top: 25px;" :period="2" :filled="activePeriod >= 2"></period-marker>
         </div>
-        <sb-field :shots="shotsArr"
+    </div>
+    <div id="EntryView">
+      <div id="entryDiv">
+        <player-stat-selector style="float: left;"
+                              :players="players"
+                              :height="'height: 500px;'"
+                              @playerSelected="playerWasSelected"></player-stat-selector>
+        <sb-data-entry id="sbde1"
+                      style="float: left;"
+                      :height="'height: 500px;'"
+                      @StatChange="updateDB"
+                      :gameID="activeGameId"></sb-data-entry>
+      </div>
+      <div id="fieldDiv">
+        <sb-field style="float: left;"
+                  :shots="shotsArr"
                   @ShotPlaced="shotPlaced">
         </sb-field>
-        <sb-shot-type @ShotTypeChanged="shotTypeChanged"
+        <sb-shot-type style="float: left; margin-left: 50px;"
+                      @ShotTypeChanged="shotTypeChanged"
                       @SBSTUndo="undoClicked">
         </sb-shot-type>
       </div>
-      <div id="toggleViewDiv" style="margin-right: 50px;" @click="toggleViewClicked">
-        <p style="line-height: 650px; font-weight: bold; font-size: 150%;">Stats</p>
+      <div id="statDiv">
+        <team-stats style="float: left; margin-left: 50px; margin-top: 65px;" />
       </div>
     </div>
-    <div id="StatView">
-      <team-stats style="float: left;" />
-      <div id="toggleViewDiv" style="margin: 100px;" @click="toggleStatsClicked">
-        <p style="line-height: 650px; font-weight: bold; font-size: 150%;">Entry</p>
+    <div id="toggleViewDiv">
+      <div id="entryMode" @click="toggleEntryClicked()" style="height: 150px; line-height: 150px;">
+        Entry
+      </div>
+      <div id="chartMode" @click="toggleChartClicked()" style="height: 200px; line-height: 200px; border-bottom: 5px solid black; border-top: 5px solid black;">
+        Shots
+      </div>
+      <div id="statMode" @click="toggleStatClicked()" style="height: 150px; line-height: 150px;">
+        Stats
       </div>
     </div>
   </div>
@@ -66,7 +66,8 @@
       }
     },
     mounted() {
-      jQuery("#StatView").hide()
+      jQuery("#statDiv").hide()
+      jQuery("#fieldDiv").hide()
       var ref = firebase.database().ref('/SoccerGames/').child(this.selectedTeamId).child(this.activeGameId);
       var self = this;
       ref.child('InProgress').on('value', function(snap){
@@ -123,16 +124,67 @@
         GV_SET_CURR_GAME_TIME: 'gameViewStore/GV_SET_CURR_GAME_TIME',
         GV_SET_PERIOD_LENGTH: 'gameViewStore/GV_SET_PERIOD_LENGTH'
       }),
+      toggleEntryClicked(){
+        var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
+        var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
+        var statDisplayed = jQuery('#statDiv').css('display') != 'none';
+
+        if(entryDisplayed){
+        }
+        else if(fieldDisplayed){
+          jQuery('#fieldDiv').slideUp(350)
+          jQuery('#entryDiv').slideDown(350)
+        }
+        else {
+          jQuery('#statDiv').slideUp(350)
+          jQuery('#entryDiv').slideDown(350)
+        }
+      },
+      toggleChartClicked(){
+        var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
+        var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
+        var statDisplayed = jQuery('#statDiv').css('display') != 'none';
+
+        if(fieldDisplayed){
+        }
+        else if(entryDisplayed){
+          jQuery('#entryDiv').slideUp(350)
+          jQuery('#fieldDiv').slideDown(350)
+        }
+        else {
+          jQuery('#statDiv').slideUp(350)
+          jQuery('#fieldDiv').slideDown(350)
+        }
+      },
+      toggleStatClicked(){
+        var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
+        var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
+        var statDisplayed = jQuery('#statDiv').css('display') != 'none';
+        
+        if(statDisplayed){
+        }
+        else if(entryDisplayed){
+          jQuery('#entryDiv').slideUp(350)
+          jQuery('#statDiv').slideDown(350)
+        }
+        else {
+          jQuery('#fieldDiv').slideUp(350)
+          jQuery('#statDiv').slideDown(350)
+        }
+      },
       toggleViewClicked(event){
-        jQuery('#EntryView').slideUp(500)
-        jQuery('#StatView').slideDown(500)
+        jQuery('#EntryView').slideUp(200)
+        jQuery('#StatView').slideDown(200)
       },
       toggleStatsClicked(event){
-        jQuery('#StatView').slideUp(500)
-        jQuery('#EntryView').slideDown(500)
+        jQuery('#StatView').slideUp(200)
+        jQuery('#EntryView').slideDown(200)
       },
       clockClicked(event){
-        if(this.activePeriod == -1){
+        if(this.currTime.toLowerCase() === "final"){
+          return;
+        }
+        else if(this.activePeriod == -1){
           var message = "Start Game?";
           var options = {
             okText: 'YES',
@@ -354,13 +406,13 @@
 <style scoped>
   #GameView {
     width: 100vw;
-    min-height: 100vh;
-    height: 100vh;
+    min-height: 103vh;
+    height: 100%;
     background-color: white;
     margin-top: 0px;
   }
   #EntryView{
-
+    
   }
   .TopBanner {
     width: 100vw;
@@ -372,9 +424,6 @@
   }
 
   .TopBanner h1 {
-    /* float: left; */
-    min-height: 100px;
-    height: 100%;
     text-align: center;
     flex-grow: 2;
   }
@@ -392,8 +441,10 @@
 
     box-shadow: 5px 5px 5px grey;
   }
-  #fieldEntry {
+  #fieldDiv {
     float: left;
+    margin-top: 50px;
+    margin-left: 50px;
   }
   .TimeClock{
     width: 600px;
@@ -401,47 +452,26 @@
     border: black 5px solid;
     border-radius: 25px;
     display: inline-block;
-  }
-
-  .leftDiv {
-    margin-left: 12%;
-    position: relative;
-    height: 800px;
-    width: 750px;
-    float: left;
     margin-right: 100px;
   }
 
-  .possession{
-    display: flex;
-    width: 670px;
-    height: 120px;
-    position: absolute;
-    bottom: 0;
-    border: 5px black solid;
-    border-radius: 35px;
-    box-shadow: 5px 5px 5px grey;
-    margin-left: 50px;
-  }
-  .possButton{
-    flex-grow: 3;
-    font-size: 150%;
-    height: 110px;
-    text-align: center;
-    line-height: 110px;
-    font-weight: bold;
+  #entryDiv {
+    margin-left: 0px;
+    float: left;
   }
 
-  .possButtonMid {
-    border-left: 5px black solid;
-    border-right: 5px black solid;
+  #statDiv {
+    margin-left: 0px;
+    float: left;
   }
 
   #toggleViewDiv {
-    height: 650px;
+    height: 500px;
     width: 100px;
     border: 5px black solid;
     border-radius: 35px;
     float: right;
+    margin-right: 100px;
+    margin-top: 65px;
   }
 </style>
