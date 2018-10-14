@@ -48,7 +48,6 @@ export default {
   methods: {
     ...mapMutations({
       SET_SELECTED_TEAM: 'mainStore/SET_SELECTED_TEAM',
-      SET_CURR_TEAM: 'mainStore/SET_CURR_TEAM',
       SET_SELECTED_SPORT: 'mainStore/SET_SELECTED_SPORT'
     }),
     logout: function() {
@@ -101,11 +100,6 @@ export default {
 
 
         this.SET_SELECTED_SPORT('basketball');
-        this.SET_CURR_TEAM({
-          id: '',
-          token: '',
-          name: ''
-        });
 
         this.teamID = ''
         this.teamName = ''
@@ -124,7 +118,8 @@ export default {
       this.SET_SELECTED_TEAM({
         id: event.Id,
         name: event.Name,
-        token: event.Token
+        token: event.Token,
+        sport: event.Sport
       });
 
       this.getGamesTeam();

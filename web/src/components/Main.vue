@@ -15,8 +15,7 @@
         <h1 style="color: rgb(224, 0, 16); margin: 25px 50px 50px 50px;">{{selectedTeamName}}</h1>
       </div>
       <div class="mainBody">
-        <games-list :games="gamesList"
-                    style="margin-top: 20px;"
+        <games-list style="margin-top: 20px;"
                     @gameSelected="gameSelected"
                     @AddGame="addGame">
         </games-list>
@@ -37,6 +36,7 @@
 <script>
 import firebase from 'firebase'
 import { mapGetters, mapMutations } from 'vuex';
+
 export default {
   name: 'Main',
   computed: {
@@ -49,15 +49,14 @@ export default {
       activeGameId: 'mainStore/activeGameId',
       players: 'mainStore/players',
       soccerStats: 'statStore/soccerStats',
-      basketballStats: 'statStore/basketballStats'
+      basketballStats: 'statStore/basketballStats',
+      gamesList: 'mainStore/gamesList'
     })
   },
   data () {
     return {
       sportfolios: [],
-      gamesList: [],
       teamName: '',
-      teamID: '',
       teamToken: ''
     }
   },
@@ -69,20 +68,18 @@ export default {
           niMsg.hide();
           return false;
     });
-    this.$nextTick(() => {
-        this.SET_LOGGED_IN_USER(firebase.auth().currentUser);
-        this.getGamesTeam();
-        this.getPlayers();
-        this.getSportfolios();
-    });
+    this.SET_LOGGED_IN_USER(firebase.auth().currentUser);
+    this.getGamesTeam();
+    this.getPlayers();
+    this.getSportfolios();
   },
   methods: {
     ...mapMutations({
       SET_LOGGED_IN_USER: 'mainStore/SET_LOGGED_IN_USER',
-      SET_CURR_TEAM: 'mainStore/SET_CURR_TEAM',
       SET_ACTIVE_GAME_ID: 'mainStore/SET_ACTIVE_GAME_ID',
       SET_SELECTED_TEAM_ID: 'mainStore/SET_SELECTED_TEAM_ID',
       SET_PLAYERS: 'mainStore/SET_PLAYERS',
+      SET_GAMES_LIST: 'mainStore/SET_GAMES_LIST'
     }),
     gameSelected: function(event) {
       this.SET_ACTIVE_GAME_ID(this.gamesList[event - 1]);
@@ -97,22 +94,20 @@ export default {
     viewPlayerInfo() {
       console.log("View PLAYER INFO");
     },
-    //<!-- CHANGE THIS -->
     getGamesTeam() {
-      var teamIDList = [];
+      alert('GetGames')
       var email = this.currentUserEmail.replace('.', '');
       var self = this;
 
       var keysList = [];
-      self.gamesList = [];
       var gamesListRef = firebase.database().ref('/TeamSportfolios/' + self.selectedTeamId + '/Games/');
       if (typeof gamesListRef !== 'undefined') {
         gamesListRef.on('value', function(snapshot) {
           var obj = snapshot.val();
           if (obj) {
-            self.gamesList = Object.keys(obj);
+            self.SET_GAMES_LIST(Object.keys(obj));
           }
-        });
+        })
       }
     },
     getPlayers() {
@@ -152,7 +147,7 @@ export default {
       sportfoliosListRef.on('value', function(snapshot) {
         var obj = snapshot.val();
         keysList = Object.keys(obj);
-        self.SET_SELECTED_TEAM_ID(keysList[0]);
+        //self.SET_SELECTED_TEAM_ID(keysList[0]);
         var sportfoliosRef = firebase.database().ref('/TeamSportfolios');
         self.sportfolios = [];
         keysList.forEach(function(key) {
@@ -199,9 +194,13 @@ export default {
           "Quarter4" : this.basketballStats
         };
       }
-
+      var d = new Date();
+      var dateStr = d.toJSON().substring(0,10);
+      // var startTime = Math.floor(Date.now() / 1000)
+      var startTime = -1;
+      
       var data = {
-        "Date" : "4-21-2018",
+        "Date" : dateStr,
         "HalfLength" : 45,
         "InProgress" : true,
         "Live" : true,
@@ -209,11 +208,12 @@ export default {
         "Name" : gameID,
         "OpponentsTotals" : oppData,
         "Period" : 1,
-        "PeriodStartTime" : 1524338307
+        "PeriodStartTime" : startTime
       }
 
       if(isSoccer) {
-        var ref = firebase.database().ref('SoccerGames').update({
+        alert('SOCCER')
+        var ref = firebase.database().ref('SoccerGames').child(this.selectedTeamId).update({
           [gameID] : data
         })
         var ref = firebase.database().ref('TeamSportfolios').child(this.selectedTeamId).child('Games').update({
@@ -221,6 +221,7 @@ export default {
         })
       }
       else {
+        alert('BASKETBALL')
         var ref = firebase.database().ref('BasketballGames').update({
           [gameID] : data
         })

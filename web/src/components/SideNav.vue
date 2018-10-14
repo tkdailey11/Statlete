@@ -112,11 +112,13 @@
           var obj = snapshot.val();
           var name = obj.Name;
           var id = obj.TeamID;
+          var sport = obj.Sport;
           var token = '';
           self.SET_SELECTED_TEAM({
             id,
             name,
-            token
+            token,
+            sport
           });
           self.closeNav();
           self.$router.push('/playerhome')

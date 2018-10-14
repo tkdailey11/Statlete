@@ -32,7 +32,8 @@
     },
     computed: {
       ...mapGetters({
-        selectedTeamSport: 'mainStore/selectedTeamSport'
+        selectedTeamSport: 'mainStore/selectedTeamSport',
+        selectedTeamId: 'mainStore/selectedTeamId'
       })
     },
     methods: {
@@ -52,7 +53,7 @@
       var self = this
       console.log("GAME ID: " + self.gameID);
       if(self.selectedTeamSport === 'soccer') {
-        var dbRef = firebase.database().ref('SoccerGames/' + self.gameID + '/MyTotals/Period1/');
+        var dbRef = firebase.database().ref('SoccerGames/' + self.selectedTeamId + '/' + self.gameID + '/MyTotals/Period1/');
         if(dbRef){
           dbRef.once('value', function(snapshot){
             var keys = []
@@ -67,7 +68,7 @@
         }
       }
       else {
-        var dbRef = firebase.database().ref('BasketballGames/' + self.gameID + '/MyTotals/Quarter1/');
+        var dbRef = firebase.database().ref('BasketballGames/' + self.selectedTeamId + '/' + self.gameID + '/MyTotals/Quarter1/');
         if(dbRef){
           dbRef.once('value', function(snapshot){
             var keys = []

@@ -125,7 +125,6 @@ export default {
     },
     ...mapMutations({
       SET_SELECTED_TEAM: 'mainStore/SET_SELECTED_TEAM',
-      SET_CURR_TEAM: 'mainStore/SET_CURR_TEAM',
       SET_SELECTED_SPORT: 'mainStore/SET_SELECTED_SPORT',
       PL_SET_ADD_GAME_ENABLED: 'playerStore/PL_SET_ADD_GAME_ENABLED'
     }),
@@ -228,7 +227,8 @@ export default {
                       self.SET_SELECTED_TEAM({
                         id: self.teamID,
                         token: self.teamToken,
-                        name: self.teamName
+                        name: self.teamName,
+                        sport: 'basketball'
                       });
 
                       self.teamID = ''
@@ -271,7 +271,8 @@ export default {
         self.SET_SELECTED_TEAM({
           id: self.teamID,
           token: self.teamToken,
-          name: self.teamName
+          name: self.teamName,
+          sport: 'basketball'
         });
 
         self.teamID = ''

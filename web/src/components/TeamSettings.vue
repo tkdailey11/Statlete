@@ -75,8 +75,6 @@ import { resolve } from 'url';
       ...mapMutations({
         SET_LOGGED_IN_USER: 'mainStore/SET_LOGGED_IN_USER',
         SET_SELECTED_TEAM: 'mainStore/SET_SELECTED_TEAM',
-        SET_CURR_TEAM: 'mainStore/SET_CURR_TEAM',
-        //SET_CURR_TEAM_NAME: 'mainStore/SET_CURR_TEAM_NAME',
         SET_SELECTED_SPORT: 'mainStore/SET_SELECTED_SPORT',
         SET_ACTIVE_GAME_ID: 'mainStore/SET_ACTIVE_GAME_ID',
         SET_SELECTED_TEAM_ID: 'mainStore/SET_SELECTED_TEAM_ID',
@@ -153,7 +151,8 @@ import { resolve } from 'url';
         this.SET_SELECTED_TEAM({
           id: event.Id,
           name: event.Name,
-          token: event.Token
+          token: event.Token,
+          sport: event.Sport
         });
 
         this.getGamesTeam();

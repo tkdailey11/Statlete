@@ -136,8 +136,6 @@ export default {
     ...mapMutations({
       SET_LOGGED_IN_USER: 'mainStore/SET_LOGGED_IN_USER',
       SET_SELECTED_TEAM: 'mainStore/SET_SELECTED_TEAM',
-      SET_CURR_TEAM: 'mainStore/SET_CURR_TEAM',
-      SET_SELECTED_SPORT: 'mainStore/SET_SELECTED_SPORT',
       SET_ACTIVE_GAME_ID: 'mainStore/SET_ACTIVE_GAME_ID',
       SET_SELECTED_TEAM_ID: 'mainStore/SET_SELECTED_TEAM_ID',
       SET_PLAYERS: 'mainStore/SET_PLAYERS',
@@ -220,17 +218,12 @@ export default {
       firebase.database().ref('Users/' + email + '/AdminTeams').update({
         [this.teamID] : " "
       });
-
-      this.SET_CURR_TEAM({
-        id: '',
-        token: '',
-        name: ''
-      });
-      this.SET_SELECTED_SPORT('basketball');
+      
       this.SET_SELECTED_TEAM({
         id: this.teamID,
         name: this.teamName,
-        token: this.teamToken
+        token: this.teamToken,
+        sport: this.selectedSport
       })
 
       this.teamID = ''
@@ -246,7 +239,8 @@ export default {
       this.SET_SELECTED_TEAM({
         id: event.Id,
         name: event.Name,
-        token: event.Token
+        token: event.Token,
+        sport: event.Sport
       });
 
       this.getGamesTeam();

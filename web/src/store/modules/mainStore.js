@@ -1,11 +1,6 @@
 const state = {
   loggedInUser: '',
   currentUserEmail: '',
-  currTeam: {
-    id: '',
-    name: '',
-    token: ''
-  },
   activeGameId: '',
   selectedSport: 'basketball',
   selectedTeam: {
@@ -14,10 +9,14 @@ const state = {
     token: '',
     sport: ''
   },
-  players: []
+  players: [],
+  gamesList: []
 };
 
 const getters = {
+  gamesList: state => {
+    return state.gamesList;
+  },
   loggedInUser: state => {
     return state.loggedInUser
   },
@@ -36,15 +35,6 @@ const getters = {
   selectedTeamSport: state => {
     return state.selectedTeam.sport
   },
-  teamID: state => {
-    return state.currTeam.id
-  },
-  teamName: state => {
-    return state.currTeam.name
-  },
-  teamToken: state => {
-    return state.currTeam.token
-  },
   activeGameId: state => {
     return state.activeGameId
   },
@@ -54,6 +44,12 @@ const getters = {
 };
 
 const mutations = {
+  SET_GAMES_LIST: (state, payload) => {
+    state.gamesList = payload;
+  },
+  APPEND_GAME: (state, payload) => {
+    state.games.push(payload);
+  },
   SET_LOGGED_IN_USER: (state, payload) => {
     state.loggedInUser = payload;
     state.currentUserEmail = state.loggedInUser.email
@@ -66,12 +62,6 @@ const mutations = {
   },
   SET_SELECTED_TEAM_TOKEN: (state, payload) => {
     state.selectedTeam.token = payload
-  },
-  SET_CURR_TEAM: (state, payload) => {
-    state.currTeam = payload
-  },
-  SET_CURR_TEAM_NAME: (state, payload) => {
-    state.currTeam.name = payload
   },
   SET_SELECTED_TEAM_SPORT: (state, payload) => {
     state.selectedTeam.sport = payload
