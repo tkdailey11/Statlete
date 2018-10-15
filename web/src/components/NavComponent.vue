@@ -18,13 +18,9 @@ export default {
   computed: {
     ...mapGetters({
       selectedTeamId: 'mainStore/selectedTeamId',
-      currentUserEmail: 'mainStore/currentUserEmail'
+      currentUserEmail: 'mainStore/currentUserEmail',
+      gamesList: 'mainStore/gamesList'
     })
-  },
-  data () {
-    return {
-      gamesList: []
-    }
   },
   mounted () {
       
@@ -32,8 +28,8 @@ export default {
   methods: {
     ...mapMutations({
       SET_SELECTED_TEAM: 'mainStore/SET_SELECTED_TEAM',
-      SET_CURR_TEAM: 'mainStore/SET_CURR_TEAM',
       SET_PLAYERS: 'mainStore/SET_PLAYERS',
+      SET_GAMES_LIST: 'mainStore/SET_GAMES_LIST'
     }),
     logout: function() {
       firebase.auth().signOut().then(() => {
@@ -49,11 +45,11 @@ export default {
       this.$router.push('/createteam')
     },
     teamSelected: function(event) {
-      console.log('Selected: ' + event.Id)
       this.SET_SELECTED_TEAM({
         id: event.Id,
         name: event.Name,
-        token: event.Token
+        token: event.Token,
+        sport: event.Sport
       });
 
       this.getGamesTeam();
@@ -64,22 +60,29 @@ export default {
     showPlayer: function() {
       this.$router.push('createplayer');
     },
-    //<!-- CHANGE THIS -->
     getGamesTeam() {
-      var teamIDList = [];
+      console.log('GetGamesSideNav')
       var email = this.currentUserEmail.replace('.', '');
       var self = this;
 
       var keysList = [];
-      self.gamesList = [];
       var gamesListRef = firebase.database().ref('/TeamSportfolios/' + self.selectedTeamId + '/Games/');
       if (typeof gamesListRef !== 'undefined') {
+        console.log('Got games')
         gamesListRef.on('value', function(snapshot) {
           var obj = snapshot.val();
           if (obj) {
-            self.gamesList = Object.keys(obj);
+            console.log('There were games')
+            console.log(obj)
+            self.SET_GAMES_LIST(Object.keys(obj));
+          }
+          else{
+            console.log('There weren\'t games')
           }
         });
+      }
+      else{
+        console.log('Didn\'t get games')
       }
     },
     getPlayers() {
@@ -103,7 +106,6 @@ export default {
  .myNavComponent {
       transition: margin-left .5s;
       margin:0px;
-      min-height: 100%;
       z-index: 2;
   }
 

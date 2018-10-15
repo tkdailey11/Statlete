@@ -1,7 +1,7 @@
 <template>
   <div id="TeamWizard" class="teamWiz">
     <nav-component />
-    <h1 style="color: rgb(242,209,24); margin-bottom: 50px;">Create a New Team Sportfolio</h1>
+    <h1 style="color: rgb(242,209,24); margin: 50px 0px 50px 0px;">Create a New Team Sportfolio</h1>
     <tkd-wizardT>
     </tkd-wizardT>
   </div>
@@ -20,7 +20,6 @@ export default {
   },
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
       playerName: '',
       playerNumber: '',
       teamSteps: [
@@ -48,7 +47,6 @@ export default {
   methods: {
     ...mapMutations({
       SET_SELECTED_TEAM: 'mainStore/SET_SELECTED_TEAM',
-      SET_CURR_TEAM: 'mainStore/SET_CURR_TEAM',
       SET_SELECTED_SPORT: 'mainStore/SET_SELECTED_SPORT'
     }),
     setPid() {
@@ -57,11 +55,6 @@ export default {
     nextClickedPlayer(currentPage) {
       if(currentPage==1){
         this.SET_SELECTED_SPORT('basketball');
-        this.SET_CURR_TEAM({
-          id: '',
-          token: '',
-          name: ''
-        })
       }
       return true; //return false if you want to prevent moving to next page
     },
@@ -105,16 +98,13 @@ export default {
         [this.teamID] : " "
       });
 
-      this.SET_CURR_TEAM({
-        id: '',
-        token: '',
-        name: ''
-      });
+
       this.SET_SELECTED_SPORT('basketball');
       this.SET_SELECTED_TEAM({
         id: this.teamID,
         name: this.teamName,
-        token: this.teamToken
+        token: this.teamToken,
+        sport: 'basketball'
       })
 
       this.teamID = ''

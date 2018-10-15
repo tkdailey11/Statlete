@@ -1,24 +1,40 @@
 <template>
   <div class="SBshotType">
-    <img v-if="this.activeType=='gcf'" src="../assets/images/Green_circle_filled.png" class="GCF activeTypeClass" @click="gcfClicked" alt="Shot on Goal"/>
-    <img v-else src="../assets/images/Green_circle_filled.png" class="GCF" @click="gcfClicked" alt="Shot on Goal"/>
-
-    <img v-if="this.activeType=='ghollow'" src="../assets/images/greenHollow.png" class="GHollow activeTypeClass" @click="gHollowClicked"/>
-    <img v-else src="../assets/images/greenHollow.png" class="GHollow" @click="gHollowClicked"/>
-
-    <img v-if="this.activeType=='redx'" src="../assets/images/redX.png" class="redX activeTypeClass" @click="redxClicked"/>
-    <img v-else src="../assets/images/redX.png" class="redX" @click="redxClicked"/>
-
-    <div id="sbst-undo" @click="undoClicked"><h3 style="margin: 30px; color: orange;">UNDO</h3></div>
+    <div id="gcfDiv">
+      <img v-if="this.activeType=='gcf'" src="../assets/images/RedFilledCircle.png" class="GCF activeTypeClass" @click="gcfClicked" alt="Shot on Goal"/>
+      <img v-else src="../assets/images/RedFilledCircle.png" class="GCF" @click="gcfClicked" alt="Shot on Goal"/>
+      <figcaption v-if="isSoccer" class="myCaption">Goal</figcaption>
+      <figcaption v-else class="myCaption">FG Made</figcaption>
+    </div>
+    <div id="ghollowDiv" v-if="isSoccer">
+      <img v-if="this.activeType=='ghollow'" src="../assets/images/RedHollowCircleThick.png" class="GHollow activeTypeClass" @click="gHollowClicked"/>
+      <img v-else src="../assets/images/RedHollowCircleThick.png" class="GHollow" @click="gHollowClicked"/>
+      <figcaption class="myCaption">Shot on Goal</figcaption>
+    </div>
+    <div id="redXDiv">
+      <img v-if="this.activeType=='redx'" src="../assets/images/RedX.png" class="redX activeTypeClass" @click="redxClicked"/>
+      <img v-else src="../assets/images/RedX.png" class="redX" @click="redxClicked"/>
+      <figcaption class="myCaption" v-if="isSoccer">Shot</figcaption>
+      <figcaption class="myCaption" v-else>FG Miss</figcaption>
+    </div>
   </div>
 </template>
 
 <script>
+  import { mapGetters } from 'vuex';
   export default {
     name: 'SBshotType',
     data() {
       return {
         activeType: 'gcf'
+      }
+    },
+    computed: {
+      ...mapGetters({
+        selectedTeamSport: 'mainStore/selectedTeamSport'
+      }),
+      isSoccer: function() {
+        return this.selectedTeamSport==1;
       }
     },
     methods: {
@@ -33,9 +49,6 @@
       gHollowClicked: function() {
         this.$emit('ShotTypeChanged', 'ghollow');
         this.activeType = 'ghollow';
-      },
-      undoClicked: function() {
-        this.$emit('SBSTUndo');
       }
     }
   }
@@ -43,33 +56,37 @@
 
 <style scoped>
   .SBshotType{
-    width: 600px;
-    height: 100px;
+    width: 120px;
+    height: 500px;
     background: white;
-    margin-left: 50px;
-    border: 5px orange solid;
+    border: 5px black solid;
     border-radius: 35px;
-    margin: 50px;
+    
     margin-top: 25px;
     box-shadow: 5px 5px 5px grey;
+    display: flex;
+    flex-direction: column;
+  }
+  #gcfDiv{
+    flex-grow: 3;
+  }
+  #ghollowDiv{
+    flex-grow: 3;
+  }
+  #redXDiv{
+    flex-grow: 3;
   }
   .GCF {
-    zoom: 25%;
-    margin-top: 60px;
-    margin-left: 300px;
-    float:left;
+    zoom: 8%;
+    margin-top: 150px;
   }
   .redX {
-    zoom: 25%;
-    margin-top: 60px;
-    margin-left: 300px;
-    float:left;
+    zoom: 8%;
+    margin-top: 150px;
   }
   .GHollow {
-    zoom: 25%;
-    margin-top: 60px;
-    margin-left: 300px;
-    float:left;
+    zoom: 8%;
+    margin-top: 150px;
   }
   #sbst-undo {
     border-left: 5px orange solid;
@@ -79,5 +96,9 @@
   }
   .activeTypeClass {
     opacity: 0.4;
+  }
+  .myCaption {
+    font-weight: bold; 
+    margin-top: 10px;
   }
 </style>

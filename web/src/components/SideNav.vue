@@ -94,11 +94,13 @@
         var self = this;
         firebase.database().ref('TeamSportfolios').child(id).once('value', function(snapshot){
           var obj = snapshot.val();
+          console.log(obj)
           var name = obj.TeamName;
           var data = {
             Name: name,
             Id: id,
-            Token: obj.Token
+            Token: obj.Token,
+            Sport: obj.Sport
           }
           self.$emit('teamSelected', data);
           self.closeNav();
@@ -110,11 +112,13 @@
           var obj = snapshot.val();
           var name = obj.Name;
           var id = obj.TeamID;
+          var sport = obj.Sport;
           var token = '';
           self.SET_SELECTED_TEAM({
             id,
             name,
-            token
+            token,
+            sport
           });
           self.closeNav();
           self.$router.push('/playerhome')

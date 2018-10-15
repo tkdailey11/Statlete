@@ -1,11 +1,11 @@
 <template>
   <div class="login">
-    <h1 style="color: white;">Statlete</h1>
+    <h1 style="color: rgb(224,0,16);">Statlete</h1>
     <input type="text" v-model="email" placeholder="Email"><br>
     <input type="password" v-model="password" placeholder="Password"><br>
     <button class="btn btn-outline-primary btn-social" @click="signIn">Sign In</button><br>
     <button class="btn btn-outline-primary btn-social" @click="signInGoogle">Google</button><br>
-    <p style="color: white;">Don't have an account? <router-link to="/sign-up" class="link">Click here to create one!</router-link></p>
+    <p style="color: rgb(224,0,16);">Don't have an account? <router-link to="/sign-up" class="link">Click here to create one!</router-link></p>
   </div>
 </template>
 
@@ -53,10 +53,10 @@
     margin-top: 40px;
   }
   .link {
-    color: rgb(242,209,24);
+    color: rgb(224,0,16);
   }
   .link:hover {
-    color: white;
+    color: rgb(242,209,24);
   }
   input {
     margin: 10px 0;
@@ -108,7 +108,7 @@
   }
 
   ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: white;
+    color: rgb(224,0,16);
     opacity: 1; /* Firefox */
 }
 </style>

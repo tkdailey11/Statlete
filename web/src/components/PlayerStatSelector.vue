@@ -1,7 +1,7 @@
 <template>
-  <div class="PlayerStatSelector">
+  <div class="PlayerStatSelector" :style="height">
     <div class="plTitle">
-      <h1 align="center">{{ title }}</h1>
+      <h1 align="center" style="font-weight: bold;">{{ title }}</h1>
       </div>
       <div class="playersTable">
         <table cellpadding="10" width="100%">
@@ -34,6 +34,9 @@
       },
       title: {
         default: 'Players'
+      },
+      height: {
+        default: 'height: 500px;'
       }
     },
     data() {
@@ -58,22 +61,21 @@
 <style scoped>
   .PlayerStatSelector {
     width: 310px;
-    height: 500px;
-    background: white;
+    background: rgb(255,255,255);
     border-width: 5px;
-    border-color: rgb(235,95,17);
+    border-color: black;
     border-style: solid;
-    border-radius: 40px;
+    border-radius: 40px; 
     position: relative;
     margin: 50px 0px 50px 50px;
-    box-shadow: 5px 5px 5px grey;
+    box-shadow: 1px 1px 1px 1px grey;
   }
 
   .plTitle {
     width: 100%;
     height: 75px;
     border-radius: 35px 35px 0px 0px;
-    border-bottom-color: rgb(235,95,17);
+    border-bottom-color: black;
     border-bottom-width: medium;
     border-bottom-style: solid;
     background-color: white;
@@ -86,7 +88,7 @@
     bottom: 0;
     /*background-color: white;*/
     border-radius: 0px 0px 35px 35px;
-    border-top-color: rgb(235,95,17);
+    border-top-color: black;
     border-top-width: medium;
     border-top-style: solid;
     text-align: center;
@@ -109,16 +111,17 @@
     overflow: scroll;
     margin-bottom: 0px;
     margin: 0px;
+    font-weight: bold;
+    font-size: 150%;
   }
 
   table, th {
-    border: 1px solid rgb(235,95,17);
+    border: 1px solid black;
   }
 
   td {
-    border-bottom: 1px solid rgb(235,95,17);
+    border-bottom: 1px solid black;
     color: rgb(224,0,16);
-    /*background-color: white;*/
   }
 
   tr {

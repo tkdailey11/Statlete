@@ -15,8 +15,7 @@
         <h1 style="color: rgb(224, 0, 16); margin: 25px 50px 50px 50px;">{{selectedTeamName}}</h1>
       </div>
       <div class="mainBody">
-        <games-list :games="gamesList"
-                    style="margin-top: 20px;"
+        <games-list style="margin-top: 20px;"
                     @gameSelected="gameSelected"
                     @AddGame="addGame">
         </games-list>
@@ -28,6 +27,7 @@
         <div class="button-wrapper">
           <button @click="editTeamSettings" class="btn btn-outline-primary myButton">Edit Team Settings</button>
           <button @click="viewTeamStats" class="btn btn-outline-primary myButton">View Team Stats</button>
+          <button @click="goToAnalysis" class="btn btn-outline-primary myButton">Go to Analysis Page</button>
         </div>
       </div>
     </div>
@@ -37,6 +37,7 @@
 <script>
 import firebase from 'firebase'
 import { mapGetters, mapMutations } from 'vuex';
+
 export default {
   name: 'Main',
   computed: {
@@ -44,17 +45,19 @@ export default {
       selectedTeamId: 'mainStore/selectedTeamId',
       selectedTeamName: 'mainStore/selectedTeamName',
       selectedTeamToken: 'mainStore/selectedTeamToken',
+      selectedTeamSport: 'mainStore/selectedTeamSport',
       currentUserEmail: 'mainStore/currentUserEmail',
       activeGameId: 'mainStore/activeGameId',
-      players: 'mainStore/players'
+      players: 'mainStore/players',
+      soccerStats: 'statStore/soccerStats',
+      basketballStats: 'statStore/basketballStats',
+      gamesList: 'mainStore/gamesList'
     })
   },
   data () {
     return {
       sportfolios: [],
-      gamesList: [],
       teamName: '',
-      teamID: '',
       teamToken: ''
     }
   },
@@ -66,22 +69,22 @@ export default {
           niMsg.hide();
           return false;
     });
-    this.$nextTick(() => {
-        this.SET_LOGGED_IN_USER(firebase.auth().currentUser);
-        this.getGamesTeam();
-        this.getPlayers();
-        this.getSportfolios();
-    });
+    this.SET_LOGGED_IN_USER(firebase.auth().currentUser);
+    this.getGamesTeam();
+    this.getPlayers();
+    this.getSportfolios();
   },
   methods: {
     ...mapMutations({
       SET_LOGGED_IN_USER: 'mainStore/SET_LOGGED_IN_USER',
-      SET_SELECTED_TEAM: 'mainStore/SET_SELECTED_TEAM',
-      SET_CURR_TEAM: 'mainStore/SET_CURR_TEAM',
       SET_ACTIVE_GAME_ID: 'mainStore/SET_ACTIVE_GAME_ID',
       SET_SELECTED_TEAM_ID: 'mainStore/SET_SELECTED_TEAM_ID',
       SET_PLAYERS: 'mainStore/SET_PLAYERS',
+      SET_GAMES_LIST: 'mainStore/SET_GAMES_LIST'
     }),
+    goToAnalysis: function(event) {
+      this.$router.push('/analysis');
+    },
     gameSelected: function(event) {
       this.SET_ACTIVE_GAME_ID(this.gamesList[event - 1]);
       this.$router.push('/gameview');
@@ -95,22 +98,19 @@ export default {
     viewPlayerInfo() {
       console.log("View PLAYER INFO");
     },
-    //<!-- CHANGE THIS -->
     getGamesTeam() {
-      var teamIDList = [];
       var email = this.currentUserEmail.replace('.', '');
       var self = this;
 
       var keysList = [];
-      self.gamesList = [];
       var gamesListRef = firebase.database().ref('/TeamSportfolios/' + self.selectedTeamId + '/Games/');
       if (typeof gamesListRef !== 'undefined') {
         gamesListRef.on('value', function(snapshot) {
           var obj = snapshot.val();
           if (obj) {
-            self.gamesList = Object.keys(obj);
+            self.SET_GAMES_LIST(Object.keys(obj));
           }
-        });
+        })
       }
     },
     getPlayers() {
@@ -122,6 +122,9 @@ export default {
         var obj = snapshot.val();
         if(obj){
           self.SET_PLAYERS(obj);
+          console.log('*** Players: ')
+          console.log(obj)
+          console.log('*********')
         }
       });
     },
@@ -150,7 +153,7 @@ export default {
       sportfoliosListRef.on('value', function(snapshot) {
         var obj = snapshot.val();
         keysList = Object.keys(obj);
-        self.SET_SELECTED_TEAM_ID(keysList[0]);
+        //self.SET_SELECTED_TEAM_ID(keysList[0]);
         var sportfoliosRef = firebase.database().ref('/TeamSportfolios');
         self.sportfolios = [];
         keysList.forEach(function(key) {
@@ -161,168 +164,81 @@ export default {
       })
     },
     addGame() {
-      var gameID = this.selectedTeamId + '_' + Math.random().toString(36).substring(2,7);
+      var gameCount = this.gamesList.length + 1;
+      console.log('*****' + this.gamesList.length);
+      var gameCountStr = gameCount + '';
+      if(gameCount < 10){
+        gameCountStr = '0' + gameCount;
+      }
+      var gameID = this.selectedTeamId + '-' + gameCountStr;
+      var oppData = [];
+      var myData = [];
+      var isSoccer = this.selectedTeamSport == 1
+
+      if(isSoccer){
+        oppData = {
+            "Period1" : this.soccerStats,
+            "Period2" : this.soccerStats,
+            "Possession" : 0
+        };
+      }
+      else {
+        oppData = {
+          "Quarter1" : this.basketballStats,
+          "Quarter2" : this.basketballStats,
+          "Quarter3" : this.basketballStats,
+          "Quarter4" : this.basketballStats
+        };
+      }
+
+      if(isSoccer){
+        myData = {
+            "Period1" : this.soccerStats,
+            "Period2" : this.soccerStats,
+            "Possession" : 0
+        };
+      }
+      else {
+        myData = {
+          "Quarter1" : this.basketballStats,
+          "Quarter2" : this.basketballStats,
+          "Quarter3" : this.basketballStats,
+          "Quarter4" : this.basketballStats
+        };
+      }
+      var d = new Date();
+      var dateStr = d.toJSON().substring(0,10);
+      // var startTime = Math.floor(Date.now() / 1000)
+      var startTime = -1;
+      
       var data = {
-          "Date" : "4-21-2018",
-          "HalfLength" : 45,
-          "InProgress" : true,
-          "Live" : true,
-          "MyTotals" : {
-            "Period1" : {
-              "Assists" : {
-                "Total" : 0
-              },
-              "Corners" : {
-                "Total" : 0
-              },
-              "Crosses" : {
-                "Total" : 0
-              },
-              "Fouls" : {
-                "Total" : 0
-              },
-              "Goals" : {
-                "Total" : 0
-              },
-              "Offsides" : {
-                "Total" : 0
-              },
-              "Red Cards" : {
-                "Total" : 0
-              },
-              "Saves" : {
-                "Total" : 0
-              },
-              "Shots" : {
-                "Total" : 0
-              },
-              "Shots on Goal" : {
-                "Total" : 0
-              },
-              "Yellow Cards" : {
-                "Total" : 0
-              }
-            },
-            "Period2" : {
-              "Assists" : {
-                "Total" : 0
-              },
-              "Corners" : {
-                "Total" : 0
-              },
-              "Crosses" : {
-                "Total" : 0
-              },
-              "Fouls" : {
-                "Total" : 0
-              },
-              "Goals" : {
-                "Total" : 0
-              },
-              "Offsides" : {
-                "Total" : 0
-              },
-              "Red Cards" : {
-                "Total" : 0
-              },
-              "Saves" : {
-                "Total" : 0
-              },
-              "Shots" : {
-                "Total" : 0
-              },
-              "Shots on Goal" : {
-                "Total" : 0
-              },
-              "Yellow Cards" : {
-                "Total" : 0
-              }
-            },
-            "Possession" : 0
-          },
-          "Name" : gameID,
-          "OpponentsTotals" : {
-            "Period1" : {
-              "Assists" : {
-                "Total" : 0
-              },
-              "Corners" : {
-                "Total" : 0
-              },
-              "Crosses" : {
-                "Total" : 0
-              },
-              "Fouls" : {
-                "Total" : 0
-              },
-              "Goals" : {
-                "Total" : 0
-              },
-              "Offsides" : {
-                "Total" : 0
-              },
-              "Red Cards" : {
-                "Total" : 0
-              },
-              "Saves" : {
-                "Total" : 0
-              },
-              "Shots" : {
-                "Total" : 0
-              },
-              "Shots on Goal" : {
-                "Total" : 0
-              },
-              "Yellow Cards" : {
-                "Total" : 0
-              }
-            },
-            "Period2" : {
-              "Assists" : {
-                "Total" : 0
-              },
-              "Corners" : {
-                "Total" : 0
-              },
-              "Crosses" : {
-                "Total" : 0
-              },
-              "Fouls" : {
-                "Total" : 0
-              },
-              "Goals" : {
-                "Total" : 0
-              },
-              "Offsides" : {
-                "Total" : 0
-              },
-              "Red Cards" : {
-                "Total" : 0
-              },
-              "Saves" : {
-                "Total" : 0
-              },
-              "Shots" : {
-                "Total" : 0
-              },
-              "Shots on Goal" : {
-                "Total" : 0
-              },
-              "Yellow Cards" : {
-                "Total" : 0
-              }
-            },
-            "Possession" : 0
-          },
-          "Period" : 1,
-          "PeriodStartTime" : 1524338307
-        }
-      var ref = firebase.database().ref('SoccerGames').update({
-        [gameID] : data
-      })
-      var ref = firebase.database().ref('TeamSportfolios').child(this.selectedTeamId).child('Games').update({
-        [gameID] : 'game'
-      })
+        "Date" : dateStr,
+        "HalfLength" : 45,
+        "InProgress" : true,
+        "Live" : true,
+        "MyTotals" : myData,
+        "Name" : gameID,
+        "OpponentsTotals" : oppData,
+        "Period" : 1,
+        "PeriodStartTime" : startTime
+      }
+
+      if(isSoccer) {
+        var ref = firebase.database().ref('SoccerGames').child(this.selectedTeamId).update({
+          [gameID] : data
+        })
+        var ref = firebase.database().ref('TeamSportfolios').child(this.selectedTeamId).child('Games').update({
+          [gameID] : 'soccer'
+        })
+      }
+      else {
+        var ref = firebase.database().ref('BasketballGames').update({
+          [gameID] : data
+        })
+        var ref = firebase.database().ref('TeamSportfolios').child(this.selectedTeamId).child('Games').update({
+          [gameID] : 'basketball'
+        })
+      }
     }
   }
 }

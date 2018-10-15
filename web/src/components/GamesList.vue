@@ -5,8 +5,8 @@
     </div>
     <div id="gamesTable">
       <table cellpadding="10" width="100%">
-        <tr v-for="idx in Object.keys(games).length" @click="trClicked(idx)" :key="'game-'+idx">
-          <td>{{ games[idx-1] }}</td>
+        <tr v-for="idx in gamesList.length" @click="trClicked(idx)" :key="'game-'+idx">
+          <td>{{ gamesList[idx-1] }}</td>
         </tr>
       </table>
     </div>
@@ -17,6 +17,9 @@
 </template>
 
 <script>
+  import firebase from 'firebase'
+  import { mapGetters, mapMutations } from 'vuex';
+
   export default {
     name: 'GamesList',
     props: {
@@ -30,6 +33,11 @@
           return true;
         }
       }
+    },
+    computed: {
+      ...mapGetters({
+        gamesList: 'mainStore/gamesList'
+      })
     },
     methods: {
       addGameClicked: function() {

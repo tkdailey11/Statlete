@@ -1,11 +1,12 @@
 <template>
   <div class="SBfield">
     <div class="fill">
-      <img @click="fieldClicked" src="../assets/images/soccerField.png" alt="" id="FieldIMG"/>
+      <img v-if="selectedTeamSport==1" @click="fieldClicked" src="../assets/images/soccerField.png" alt="" id="FieldIMG"/>
+      <img v-else @click="fieldClicked" src="../assets/images/basketball-court.png" alt="" id="FieldIMG"/>      
       <div class="field_shot" v-for="shot in shotsList" :key="getRand() + shot.shotType">
-        <img v-if="shot.shotType=='gcf'" src="../assets/images/Green_circle_filled.png" alt="" class="field_gcf" :style="[shot.style]"/>
-        <img v-if="shot.shotType=='redx'" src="../assets/images/redX.png" alt="" class="field_redx" :style="[shot.style]"/>
-        <img v-if="shot.shotType=='ghollow'" src="../assets/images/greenHollow.png" alt="" class="field_ghollow" :style="[shot.style]"/>
+        <img v-if="shot.shotType=='gcf'" src="../assets/images/RedFilledCircle.png" alt="" class="field_gcf" :style="[shot.style]"/>
+        <img v-if="shot.shotType=='redx'" src="../assets/images/RedX.png" alt="" class="field_redx" :style="[shot.style]"/>
+        <img v-if="shot.shotType=='ghollow'" src="../assets/images/RedHollowCircleThick.png" alt="" class="field_ghollow" :style="[shot.style]"/>
         <!--<img v-else src="../assets/images/redX.png" alt="" class="field_redx" style="left: 0px; top: 0px;"/>-->
       </div>
     </div>
@@ -30,7 +31,8 @@
     computed: {
       ...mapGetters({
         activeGameId: 'mainStore/activeGameId',
-        shotType: 'gameViewStore/shotType'
+        shotType: 'gameViewStore/shotType',
+        selectedTeamSport: 'mainStore/selectedTeamSport'
       })
     },
     methods: {
@@ -38,7 +40,7 @@
         return Math.random().toString(36).substring(2,7);
       },
       fieldClicked() {
-        //alert(this.fieldShotType);
+        
       },
       //StdX is from 0...1
       getStdXfromOrX(xVal){
@@ -147,13 +149,12 @@
   .SBfield {
     width: 600px;
     height: 500px;
-    background: orange;
-    margin-left: 50px;
+    background: black;
     border-width: 5px;
-    border-color: orange;
+    border-color: black;
     border-style: solid;
     border-radius: 35px;
-    margin: 50px;
+    margin-top: 25px;
     margin-bottom: 25px;
     box-shadow: 5px 5px 5px grey;
   }
@@ -169,7 +170,7 @@
       border-radius: 35px;
   }
   #FieldIMG {
-    border: 5px #fadc7f solid;
+    border: 5px white solid;
     width: 97%;
     height: 97%;
   }
@@ -184,7 +185,6 @@
     min-height: 20px;
     max-height: 20px;
     max-width: 20px;
-    border: 1px white solid;
   }
   .field_ghollow {
     position: absolute;
@@ -192,7 +192,6 @@
     min-height: 20px;
     max-height: 20px;
     max-width: 20px;
-    border: 1px white solid;
   }
   .field_redx {
     position: absolute;
@@ -200,6 +199,5 @@
     min-height: 20px;
     max-height: 20px;
     max-width: 20px;
-    border: 1px white solid;
   }
 </style>
