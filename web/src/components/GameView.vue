@@ -69,7 +69,14 @@
     mounted() {
       jQuery("#statDiv").hide()
       jQuery("#fieldDiv").hide()
-      var ref = firebase.database().ref('/SoccerGames/').child(this.selectedTeamId).child(this.activeGameId);
+      var ref = null;
+      if(this.selectedTeamSport == 0){
+        ref = firebase.database().ref('/SoccerGames/').child(this.selectedTeamId).child(this.activeGameId);
+      }
+      else{
+        ref = firebase.database().ref('/BasketballGames/').child(this.selectedTeamId).child(this.activeGameId);
+      }
+      
       var self = this;
       ref.child('InProgress').on('value', function(snap){
         if(self.inProgress){
@@ -85,17 +92,15 @@
       ref.child('Period').on('value', function(snap){
         self.activePeriod = snap.val()
       })
-      ref.once('value', function(snap) {
-        var val = snap.val();
-
-        self.GV_SET_PERIOD_LENGTH(val.HalfLength);
-        self.GV_SET_PERIOD_START_TIME(val.PeriodStartTime);
-      }).then(() => {
+      ref.child('PeriodLength').once('value', function(snap){
+        self.GV_SET_PERIOD_LENGTH(snap.val());
+      })
+      ref.child('PeriodStartTime').on('value', function(snap){
+        self.GV_SET_PERIOD_START_TIME(snap.val());
         if(self.inProgress){
           self.activeInterval = setInterval(self.updateTime, 1000);
         }
-        
-      });
+      })
     },
     computed: {
       ...mapGetters({
@@ -302,7 +307,6 @@
         }
         else{
           //handle clock clicks for basketball
-          alert('NOT SOCCER')
         }
       },
       playerWasSelected(event) {

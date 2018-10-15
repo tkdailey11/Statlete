@@ -13,41 +13,53 @@
           <tr v-for="p in playerNumbers" :key="p + '-key'">
             <th style="width: 163px; min-width: 163px; border: thin solid black; border-right-width: 2px;">{{ p.replace('p', '#')}}</th>
             <td v-for="statType in statTypes" :key="p + '-' + statType">
-              <span v-if="statType.length == 5">
-                <p v-if="playerData[p][statType]" style="width: 60px; margin-right: 8px; margin-top: 10px;">{{playerData[p][statType]}}</p>
+              <span v-if="statType.length == 2">
+                <p v-if="playerData && playerData[p] && playerData[p][statType]" style="width: 30px; margin-right: 20px; margin-top: 10px;">{{playerData[p][statType]}}</p>
+                <p v-else style="width: 60px; margin-right: 8px; margin-top: 10px;">0</p>
+              </span>
+              <span v-else-if="statType.length == 3">
+                <p v-if="playerData && playerData[p] && playerData[p][statType]" style="width: 40px; margin-right: 20px; margin-top: 10px;">{{playerData[p][statType]}}</p>
+                <p v-else style="width: 60px; margin-right: 8px; margin-top: 10px;">0</p>
+              </span>
+              <span v-else-if="statType.length == 4">
+                <p v-if="playerData && playerData[p] && playerData[p][statType]" style="width: 50px; margin-right: 20px; margin-top: 10px;">{{playerData[p][statType]}}</p>
+                <p v-else style="width: 60px; margin-right: 8px; margin-top: 10px;">0</p>
+              </span>
+              <span v-else-if="statType.length == 5">
+                <p v-if="playerData && playerData[p] && playerData[p][statType]" style="width: 60px; margin-right: 20px; margin-top: 10px;">{{playerData[p][statType]}}</p>
                 <p v-else style="width: 60px; margin-right: 8px; margin-top: 10px;">0</p>
               </span>
               <span v-else-if="statType.length == 6">
-                <p v-if="playerData[p][statType]" style="width: 70px; margin-right: 10px; margin-top: 10px;">{{playerData[p][statType]}}</p>
+                <p v-if="playerData && playerData[p] && playerData[p][statType]" style="width: 80px; margin-right: 20px; margin-top: 10px;">{{playerData[p][statType]}}</p>
                 <p v-else style="width: 80px; margin-right: 10px; margin-top: 10px;">0</p>
               </span>
               <span v-else-if="statType.length == 7">
-                <p v-if="playerData[p][statType]" style="width: 80px; margin-right: 10px; margin-top: 10px;">{{playerData[p][statType]}}</p>
+                <p v-if="playerData && playerData[p] && playerData[p][statType]" style="width: 80px; margin-right: 20px; margin-top: 10px;">{{playerData[p][statType]}}</p>
                 <p v-else style="width: 80px; margin-right: 10px; margin-top: 10px;">0</p>
               </span>
               <span v-else-if="statType.length == 8">
-                <p v-if="playerData[p][statType]" style="width: 90px; margin-right: 17px; margin-top: 10px;">{{playerData[p][statType]}}</p>
+                <p v-if="playerData && playerData[p] && playerData[p][statType]" style="width: 90px; margin-right: 20px; margin-top: 10px;">{{playerData[p][statType]}}</p>
                 <p v-else style="width: 90px; margin-right: 17px; margin-top: 10px;">0</p>
               </span>
               <span v-else-if="statType.length == 9">
-                <p v-if="playerData[p][statType]" style="width: 95px; margin-right: 17px; margin-top: 10px;">{{playerData[p][statType]}}</p>
+                <p v-if="playerData && playerData[p] && playerData[p][statType]" style="width: 90px; margin-right: 20px; margin-top: 10px;">{{playerData[p][statType]}}</p>
                 <p v-else style="width: 90px; margin-right: 17px; margin-top: 10px;">0</p>
               </span>
               <span v-else-if="statType.length == 10">
-                <p v-if="playerData[p][statType]" style="width: 110px; margin-right: 20px; margin-top: 10px;">{{playerData[p][statType]}}</p>
+                <p v-if="playerData && playerData[p] && playerData[p][statType]" style="width: 125px; margin-right: 20px; margin-top: 10px;">{{playerData[p][statType]}}</p>
                 <p v-else style="width: 125px; margin-right: 20px; margin-top: 10px;">0</p>
               </span>
               <span v-else-if="statType.length == 11">
-                <p v-if="playerData[p][statType]" style="width: 120px; margin-right: 20px; margin-top: 10px;">{{playerData[p][statType]}}</p>
+                <p v-if="playerData && playerData[p] && playerData[p][statType]" style="width: 125px; margin-right: 20px; margin-top: 10px;">{{playerData[p][statType]}}</p>
                 <p v-else style="width: 125px; margin-right: 20px; margin-top: 10px;">0</p>
               </span>
               <span v-else-if="statType.length == 12">
-                <p v-if="playerData[p][statType]" style="width: 135px; margin-right: 20px; margin-top: 10px;">{{playerData[p][statType]}}</p>
+                <p v-if="playerData && playerData[p] && playerData[p][statType]" style="width: 125px; margin-right: 20px; margin-top: 10px;">{{playerData[p][statType]}}</p>
                 <p v-else style="width: 125px; margin-right: 20px; margin-top: 10px;">0</p>
               </span>
               <span v-else-if="statType.length == 13">
-                <p v-if="playerData[p][statType]" style="width: 135px; margin-right: 20px; margin-top: 10px;">{{playerData[p][statType]}}</p>
-                <p v-else style="width: 125px; margin-right: 20px; margin-top: 10px;">0</p>
+                <p v-if="playerData && playerData[p] && playerData[p][statType]" style="width: 135px; margin-right: 20px; margin-top: 10px;">{{playerData[p][statType]}}</p>
+                <p v-else style="width: 135px; margin-right: 20px; margin-top: 10px;">0</p>
               </span>
               <span v-else>
                 <p style="width: 125px; margin-right: 20px; margin-top: 10px; background-color: green;">0</p>
@@ -93,7 +105,8 @@
        ...mapGetters({
         activeGameId: 'mainStore/activeGameId',
         players: 'mainStore/players',
-        selectedTeamId: 'mainStore/selectedTeamId'
+        selectedTeamId: 'mainStore/selectedTeamId',
+        selectedTeamSport: 'mainStore/selectedTeamSport'
       }),
       playerNumbers() {
         return Object.keys(this.players);
@@ -109,6 +122,9 @@
       },
       getGameData: function() {
 
+      },
+      isSoccer: function() {
+        return this.selectedTeamSport == 1;
       }
     },
     created() {
@@ -120,13 +136,36 @@
       // ref.once('value', function(snap) {
       //   self.statTypes = Object.keys(snap.val())
       // })
-      
-      var gameDataRef = firebase.database().ref('/SoccerGames/' + self.selectedTeamId).child(self.activeGameId).child('Players');
+      var gameDataRef = null;
+
+      if(this.selectedTeamSport == 1){
+        gameDataRef = firebase.database().ref('/SoccerGames/' + self.selectedTeamId).child(self.activeGameId).child('Players');
+      }
+      else {
+        this.statTypes = [
+          "AST",
+          "BLK",
+          "DREB",
+          "FG3A",
+          "FG3M",
+          "FGA",
+          "FGM",
+          "FTA",
+          "FTM",
+          "OREB",
+          "PF",
+          "STL",
+          "TOV"
+        ]
+        gameDataRef = firebase.database().ref('/BasketballGames/' + self.selectedTeamId).child(self.activeGameId).child('Players');
+      }
       gameDataRef.on('value', function(snapshot) {
         self.playerData = snapshot.val();
       });
+
     },
     mounted() {
+      console.log(this.statTypes)
       document.getElementById("dataTable").addEventListener("scroll", scrollTableFunction);
       document.getElementById("headers").addEventListener("scroll", scrollHeaderFunction);
 

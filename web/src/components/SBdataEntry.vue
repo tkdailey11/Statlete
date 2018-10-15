@@ -7,7 +7,8 @@
       <table width="100%">
         <tr v-for="obj in dataTypes">
           <td>
-            <img src="../assets/images/goal.png">
+            <img v-if="isSoccer" src="../assets/images/goal.png">
+            <img v-else src="../assets/images/basketball-hoop.png">
           </td>
           <td class="dataLabelCell" style="max-width: 120px; text-overflow:ellipsis;">
             <p class="dataLabel">{{obj}}</p>
@@ -43,6 +44,9 @@ import { setTimeout } from 'timers';
         var height = parseInt(this.height.split(' ')[1].split('p')[0]);
         var newHeight = height*0.826;
         return 'height: ' + newHeight + 'px;';
+      },
+      isSoccer() {
+        return this.selectedTeamSport == 1;
       }
     },
     methods: {
@@ -64,7 +68,8 @@ import { setTimeout } from 'timers';
     mounted() {
       var self = this
       console.log("GAME ID: " + self.gameID);
-      if(self.selectedTeamSport == 1) {
+      console.log("Sport: " + this.selectedTeamSport);
+      if(self.isSoccer) {
         var dbRef = firebase.database().ref('SoccerGames/' + self.selectedTeamId + '/' + self.gameID + '/MyTotals/Period1/');
         if(dbRef){
           dbRef.once('value', function(snapshot){
@@ -80,7 +85,7 @@ import { setTimeout } from 'timers';
         }
       }
       else {
-        var dbRef = firebase.database().ref('BasketballGames/' + self.selectedTeamId + '/' + self.gameID + '/MyTotals/Quarter1/');
+        var dbRef = firebase.database().ref('BasketballGames/' + self.selectedTeamId + '/' + self.gameID + '/MyTotals/Period1/');
         if(dbRef){
           dbRef.once('value', function(snapshot){
             var keys = []
