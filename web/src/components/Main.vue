@@ -27,6 +27,7 @@
         <div class="button-wrapper">
           <button @click="editTeamSettings" class="btn btn-outline-primary myButton">Edit Team Settings</button>
           <button @click="viewTeamStats" class="btn btn-outline-primary myButton">View Team Stats</button>
+          <button @click="goToAnalysis" class="btn btn-outline-primary myButton">Go to Analysis Page</button>
         </div>
       </div>
     </div>
@@ -81,6 +82,9 @@ export default {
       SET_PLAYERS: 'mainStore/SET_PLAYERS',
       SET_GAMES_LIST: 'mainStore/SET_GAMES_LIST'
     }),
+    goToAnalysis: function(event) {
+      this.$router.push('/analysis');
+    },
     gameSelected: function(event) {
       this.SET_ACTIVE_GAME_ID(this.gamesList[event - 1]);
       this.$router.push('/gameview');

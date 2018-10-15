@@ -8,6 +8,7 @@ import firebase from 'firebase'
 import { config } from './helpers/firebaseConfig'
 import VueFormWizard from 'vue-form-wizard'
 import VueGoodWizard from 'vue-good-wizard';
+require("firebase/functions");
 
 import SelectSport from '@/components/SelectSport';
 Vue.component('select-sport', SelectSport);
@@ -84,6 +85,16 @@ Vue.component('nav-component', NavComponent);
 import PeriodMarker from '@/components/PeriodMarker';
 Vue.component('period-marker', PeriodMarker);
 
+import AnalysisPage from '@/components/AnalysisPage';
+Vue.component('analysis-page', AnalysisPage)
+
+import MyBarChart from '@/components/MyBarChart';
+Vue.component('bar-chart', MyBarChart);
+
+import MyLineChart from '@/components/MyLineChart';
+Vue.component('line-chart', MyLineChart);
+
+
 import VModal from 'vue-js-modal'
 Vue.use(VModal)
 import Vue2TouchEvents from 'vue2-touch-events'
@@ -93,6 +104,9 @@ import VuejsDialog from "vuejs-dialog"
 // include the default style
 import 'vuejs-dialog/dist/vuejs-dialog.min.css'
 Vue.use(VuejsDialog)
+
+import dropdown from 'vue-dropdowns'
+Vue.component('dropdown', dropdown);
 
 import jQuery from 'jquery'
 global.jQuery = jQuery

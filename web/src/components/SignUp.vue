@@ -1,12 +1,12 @@
 <template>
   <div class="sign-up">
-    <h1 style="color: white;">Statlete</h1>
-    <h2 style="color: white;">Create Account</h2>
+    <h1 style="color: rgb(224,0,16);">Statlete</h1>
+    <h2 style="color: rgb(224,0,16);">Create Account</h2>
     <input type="text" v-model="email" placeholder="Email Address"><br>
     <input type="password" v-model="password" placeholder="Password"><br>
     <input type="password" v-model="passwordConfirm" placeholder="Confirm Password"><br>
     <button class="btn btn-outline-primary" @click="signUp">Sign Up</button>
-    <p style="color: white;">or go back to <router-link to="/login" style="color: rgb(242,209,24);">login</router-link>.</p>
+    <p style="color: rgb(224,0,16);">or go back to <router-link to="/login" class="link">login</router-link>.</p>
   </div>
 </template>
 
@@ -53,7 +53,7 @@
     outline: 0;
     background: transparent;
     border-bottom: 3px solid rgb(224,0,16);
-    color: white;
+    color: rgb(224,0,16);
   }
   button {
     margin-top: 20px;
@@ -79,6 +79,14 @@
     text-decoration: underline;
     cursor: pointer;
   }
+  
+    .link {
+    color: rgb(224,0,16);
+  }
+  .link:hover {
+    color: rgb(242,209,24);
+  }
+
   h1 {
     font-size: 60px;
   }
@@ -95,7 +103,7 @@
   }
 
   ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: white;
+    color: rgb(224,0,16);
     opacity: 1; /* Firefox */
 }
 </style>

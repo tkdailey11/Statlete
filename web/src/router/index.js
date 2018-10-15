@@ -14,6 +14,7 @@ import PlayerHome from '@/components/PlayerHome'
 import PlayerSettings from '@/components/PlayerSettings'
 import WizardPlayer from '@/components/WizardPlayer'
 import WizardT from '@/components/WizardT'
+import AnalysisPage from '@/components/AnalysisPage'
 
 
 Vue.use(Router)
@@ -114,6 +115,14 @@ let router = new Router({
       path: '/createteam',
       name: 'WizardT',
       component: WizardT,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/analysis',
+      name: 'AnalysisPage',
+      component: AnalysisPage,
       meta: {
         requiresAuth: true
       }

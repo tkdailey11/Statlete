@@ -172,14 +172,6 @@
           jQuery('#statDiv').slideDown(350)
         }
       },
-      toggleViewClicked(event){
-        jQuery('#EntryView').slideUp(200)
-        jQuery('#StatView').slideDown(200)
-      },
-      toggleStatsClicked(event){
-        jQuery('#StatView').slideUp(200)
-        jQuery('#EntryView').slideDown(200)
-      },
       clockClicked(event){
         if(this.currTime.toLowerCase() === "final"){
           return;
