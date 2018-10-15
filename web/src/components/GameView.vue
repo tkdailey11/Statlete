@@ -62,7 +62,8 @@
         activeInterval: null,
         shouldStartClock: false,
         inProgress: false,
-        gameLive: false
+        gameLive: false,
+        currentPlayer: ''
       }
     },
     mounted() {
@@ -103,6 +104,7 @@
         selectedTeamId: 'mainStore/selectedTeamId',
         selectedPlayer: 'gameViewStore/selectedPlayer',
         selectedTeamName: 'mainStore/selectedTeamName',
+        selectedTeamSport: 'mainStore/selectedTeamSport',
         statString: 'gameViewStore/statString',
         shotType: 'gameViewStore/shotType',
         shotsArr: 'gameViewStore/shotsArr',
@@ -110,7 +112,11 @@
         periodStartTime: 'gameViewStore/periodStartTime',
         currGameTime: 'gameViewStore/currGameTime',
         periodLength: 'gameViewStore/periodLength'
-      })
+      }),
+      isSoccer: function() {
+        //This shouldn't be !
+        this.selectedTeamSport == 1;
+      }
     },
     methods: {
       ...mapMutations({
@@ -173,139 +179,174 @@
         }
       },
       clockClicked(event){
-        if(this.currTime.toLowerCase() === "final"){
-          return;
-        }
-        else if(this.activePeriod == -1){
-          var message = "Start Game?";
-          var options = {
-            okText: 'YES',
-            cancelText: 'NO',
-            animation: 'bounce'
+        if(!this.isSoccer){
+          //This is really handling soccer
+          if(this.currTime.toLowerCase() === "final"){
+            return;
           }
-          var self = this;
-          self.$dialog.confirm(message, options).then(function() {
-            //YES
-            self.activePeriod = 1;
-            var ref = firebase.database().ref('/SoccerGames').child(self.selectedTeamId).child(self.activeGameId);
+          else if(this.activePeriod == -1){
+            var message = "Start Game?";
+            var options = {
+              okText: 'YES',
+              cancelText: 'NO',
+              animation: 'bounce'
+            }
+            var self = this;
+            self.$dialog.confirm(message, options).then(function() {
+              //YES
+              self.activePeriod = 1;
+              var ref = firebase.database().ref('/SoccerGames').child(self.selectedTeamId).child(self.activeGameId);
 
-            var result = {};
+              var result = {};
+              var d = new Date();
+              var elapsedSeconds = Math.round(d.getTime() / 1000);
+
+
+              ref.update({
+                Period: 1,
+                InProgress: true,
+                Live: true,
+                PeriodStartTime: elapsedSeconds
+              })
+
+              self.GV_SET_PERIOD_START_TIME(elapsedSeconds);
+              self.activeInterval = setInterval(self.updateTime, 1000);
+            }).catch(function() {
+              //NO
+            })
+          }
+          else if(this.activePeriod == 1){
+            if(this.inProgress){
+              var message = "End 1st Half?";
+              var options = {
+                okText: 'YES',
+                cancelText: 'NO',
+                animation: 'bounce'
+              }
+              var self = this;
+              self.$dialog.confirm(message, options).then(function() {
+                clearInterval(self.activeInterval);
+                self.currTime = '00:00';
+
+                var ref = firebase.database().ref('/SoccerGames').child(self.selectedTeamId).child(self.activeGameId);
+                ref.update({
+                  Period: 2,
+                  InProgress: false
+                })
+
+              }).catch(function() {
+
+              })
+              return;
+            }
+
+            var self = this;
+            self.activePeriod = 2
+            var ref = firebase.database().ref('/SoccerGames').child(self.selectedTeamId).child(self.activeGameId);
             var d = new Date();
             var elapsedSeconds = Math.round(d.getTime() / 1000);
 
-
             ref.update({
-              Period: 1,
+              Period: 2,
               InProgress: true,
-              Live: true,
               PeriodStartTime: elapsedSeconds
             })
 
             self.GV_SET_PERIOD_START_TIME(elapsedSeconds);
-            self.activeInterval = setInterval(self.updateTime, 1000);
-          }).catch(function() {
-            //NO
-          })
+            self.activeInterval= setInterval(self.updateTime, 1000);
+
+          }
+          else if(this.activePeriod == 2){
+            if(this.inProgress){
+              //end the game
+              var message = "End Game?";
+              var options = {
+                okText: 'YES',
+                cancelText: 'NO',
+                animation: 'bounce'
+              }
+              var self = this;
+              self.$dialog.confirm(message, options).then(function() {
+                clearInterval(self.activeInterval);
+                self.currTime = 'FINAL'
+                var ref = firebase.database().ref('/SoccerGames').child(self.selectedTeamId).child(self.activeGameId);
+                ref.update({
+                  InProgress: false,
+                  Live: false
+                })
+              })
+
+              return;
+            }
+            else{
+              var message = "Start 2nd Half?";
+              var options = {
+                okText: 'YES',
+                cancelText: 'NO',
+                animation: 'bounce'
+              }
+              var self = this;
+              self.$dialog.confirm(message, options).then(function() {
+                var ref = firebase.database().ref('/SoccerGames').child(self.selectedTeamId).child(self.activeGameId);
+                var d = new Date();
+                var elapsedSeconds = Math.round(d.getTime() / 1000);
+                ref.update({
+                  InProgress: true,
+                  PeriodStartTime: elapsedSeconds
+                })
+                self.GV_SET_PERIOD_START_TIME(elapsedSeconds);
+                self.activeInterval= setInterval(self.updateTime, 1000);
+              })
+            }
+          }
         }
-        else if(this.activePeriod == 1){
-          if(this.inProgress){
-            var message = "End 1st Half?";
-            var options = {
-              okText: 'YES',
-              cancelText: 'NO',
-              animation: 'bounce'
-            }
-            var self = this;
-            self.$dialog.confirm(message, options).then(function() {
-              clearInterval(self.activeInterval);
-              self.currTime = '00:00';
-
-              var ref = firebase.database().ref('/SoccerGames').child(self.selectedTeamId).child(self.activeGameId);
-              ref.update({
-                Period: 2,
-                InProgress: false
-              })
-
-            }).catch(function() {
-
-            })
-            return;
-          }
-
-          var self = this;
-          self.activePeriod = 2
-          var ref = firebase.database().ref('/SoccerGames').child(self.selectedTeamId).child(self.activeGameId);
-          var d = new Date();
-          var elapsedSeconds = Math.round(d.getTime() / 1000);
-
-          ref.update({
-            Period: 2,
-            InProgress: true,
-            PeriodStartTime: elapsedSeconds
-          })
-
-          self.GV_SET_PERIOD_START_TIME(elapsedSeconds);
-          self.activeInterval= setInterval(self.updateTime, 1000);
-
-        }
-        else if(this.activePeriod == 2){
-          if(this.inProgress){
-            //end the game
-            var message = "End Game?";
-            var options = {
-              okText: 'YES',
-              cancelText: 'NO',
-              animation: 'bounce'
-            }
-            var self = this;
-            self.$dialog.confirm(message, options).then(function() {
-              clearInterval(self.activeInterval);
-              self.currTime = 'FINAL'
-              var ref = firebase.database().ref('/SoccerGames').child(self.selectedTeamId).child(self.activeGameId);
-              ref.update({
-                InProgress: false,
-                Live: false
-              })
-            })
-
-            return;
-          }
-          else{
-            var message = "Start 2nd Half?";
-            var options = {
-              okText: 'YES',
-              cancelText: 'NO',
-              animation: 'bounce'
-            }
-            var self = this;
-            self.$dialog.confirm(message, options).then(function() {
-              var ref = firebase.database().ref('/SoccerGames').child(self.selectedTeamId).child(self.activeGameId);
-              var d = new Date();
-              var elapsedSeconds = Math.round(d.getTime() / 1000);
-              ref.update({
-                InProgress: true,
-                PeriodStartTime: elapsedSeconds
-              })
-              self.GV_SET_PERIOD_START_TIME(elapsedSeconds);
-              self.activeInterval= setInterval(self.updateTime, 1000);
-            })
-          }
+        else{
+          //handle clock clicks for basketball
+          alert('NOT SOCCER')
         }
       },
       playerWasSelected(event) {
-        //console.log(event);
+        this.currentPlayer = event
       },
       updateDB(event){
+        
         var self = this;
         var input = event.split(":");
-        if(input[0]==='minus'){
-          
+        console.log(this.activePeriod)
+        var period = 'Period' + this.activePeriod
+       
+        if(!this.isSoccer){
+          var dbRefGame = firebase.database().ref('SoccerGames/').child(self.selectedTeamId).child(self.activeGameId)
+          var dbRef = dbRefGame.child('MyTotals').child(period).child(input[1]);
+          dbRef.child('Total').once('value', function(snapshot){
+            var tot = snapshot.val() + 1;
+            var player = self.currentPlayer;
+            var time = self.currTime;
+            var minutes = parseInt(time.split(':')[0]) + ((self.activePeriod - 1) * self.periodLength);
+            if(minutes > 10) {
+              time = minutes+':'+time.split(':')[1]
+            }
+            else {
+              time = '0'+minutes+':'+time.split(':')[1]
+            }
+            dbRef.update({
+              Total : tot,
+              [time] : player
+            })
+          })
+
+          var refPlayer = dbRefGame.child('Players').child(self.currentPlayer);
+          refPlayer.child(input[1]).once('value', function(snapshot){
+            var tot = snapshot.val() + 1;
+            var key = input[1];
+            refPlayer.update({
+              [key]: tot
+            })
+          })
         }
         else{
-          var dbRef = firebase.database().ref('SoccerGames/').child(self.selectedTeamId).child(self.activeGameId).child(self.activePeriod)
-          dbRef = dbRef.child(input[1])
+          
         }
-
       },
       updateTime(){
         var minutes = parseInt(this.currTime.split(':')[0]);
