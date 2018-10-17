@@ -119,8 +119,7 @@
         periodLength: 'gameViewStore/periodLength'
       }),
       isSoccer: function() {
-        //This shouldn't be !
-        this.selectedTeamSport == 1;
+        return this.selectedTeamSport == 1;
       }
     },
     methods: {
@@ -184,7 +183,7 @@
         }
       },
       clockClicked(event){
-        if(!this.isSoccer){
+        if(this.isSoccer){
           //This is really handling soccer
           if(this.currTime.toLowerCase() === "final"){
             return;
@@ -316,40 +315,79 @@
         
         var self = this;
         var input = event.split(":");
-        console.log(this.activePeriod)
-        var period = 'Period' + this.activePeriod
+        var statPeriod = this.activePeriod;
+        if(!(statPeriod && statPeriod >= 1)){
+          statPeriod = 1
+        }
+        var period = 'Period' + statPeriod
        
-        if(!this.isSoccer){
+        if(this.isSoccer){
           var dbRefGame = firebase.database().ref('SoccerGames/').child(self.selectedTeamId).child(self.activeGameId)
+          
+          var player = self.currentPlayer;
+          if(player.startsWith('p')){
+            var refPlayer = dbRefGame.child('Players').child(player);
+            refPlayer.child(input[1]).once('value', function(snapshot){
+              var tot = snapshot.val() + 1;
+              var key = input[1];
+              refPlayer.update({
+                [key]: tot
+              })
+            })
+          }
           var dbRef = dbRefGame.child('MyTotals').child(period).child(input[1]);
           dbRef.child('Total').once('value', function(snapshot){
             var tot = snapshot.val() + 1;
-            var player = self.currentPlayer;
             var time = self.currTime;
-            var minutes = parseInt(time.split(':')[0]) + ((self.activePeriod - 1) * self.periodLength);
+            var minutes = parseInt(time.split(':')[0]) + ((statPeriod - 1) * self.periodLength);
             if(minutes > 10) {
               time = minutes+':'+time.split(':')[1]
             }
             else {
               time = '0'+minutes+':'+time.split(':')[1]
             }
+            if(player.length == 0){
+              player = ' ';
+            }
             dbRef.update({
               Total : tot,
               [time] : player
             })
           })
-
-          var refPlayer = dbRefGame.child('Players').child(self.currentPlayer);
-          refPlayer.child(input[1]).once('value', function(snapshot){
-            var tot = snapshot.val() + 1;
-            var key = input[1];
-            refPlayer.update({
-              [key]: tot
-            })
-          })
         }
         else{
+          var dbRefGame = firebase.database().ref('BasketballGames/').child(self.selectedTeamId).child(self.activeGameId)
           
+          var player = self.currentPlayer;
+          if(player.startsWith('p')){
+            var refPlayer = dbRefGame.child('Players').child(player);
+            refPlayer.child(input[1]).once('value', function(snapshot){
+              var tot = snapshot.val() + 1;
+              var key = input[1];
+              refPlayer.update({
+                [key]: tot
+              })
+            })
+          }
+          var dbRef = dbRefGame.child('MyTotals').child(period).child(input[1]);
+          dbRef.child('Total').once('value', function(snapshot){
+            var tot = snapshot.val() + 1;
+            var time = self.currTime;
+            var minutes = parseInt(time.split(':')[0]) + ((statPeriod - 1) * self.periodLength);
+            if(minutes > 10) {
+              time = minutes+':'+time.split(':')[1]
+            }
+            else {
+              time = '0'+minutes+':'+time.split(':')[1]
+            }
+            if(player.length == 0){
+              player = ' ';
+            }
+            dbRef.update({
+              Total : tot,
+              [time] : player
+            })
+          })
         }
       },
       updateTime(){

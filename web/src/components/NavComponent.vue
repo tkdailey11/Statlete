@@ -29,11 +29,16 @@ export default {
     ...mapMutations({
       SET_SELECTED_TEAM: 'mainStore/SET_SELECTED_TEAM',
       SET_PLAYERS: 'mainStore/SET_PLAYERS',
-      SET_GAMES_LIST: 'mainStore/SET_GAMES_LIST'
+      SET_GAMES_LIST: 'mainStore/SET_GAMES_LIST',
+      CLEAR_STATE: 'mainStore/CLEAR_STATE',
+      GV_CLEAR_STATE: 'gameViewStore/GV_CLEAR_STATE'
     }),
     logout: function() {
       firebase.auth().signOut().then(() => {
+        this.CLEAR_STATE();
+        this.GV_CLEAR_STATE();
         this.$router.replace('login')
+        
       })
     },
     openNav: function() {
@@ -45,11 +50,19 @@ export default {
       this.$router.push('/createteam')
     },
     teamSelected: function(event) {
+      var sport = event.Sport;
+      if(sport.toString().toLowerCase() === 'soccer'){
+        sport = 1;
+      }
+      else if(sport.toString().toLowerCase() === 'basketball') {
+        sport = 0;
+      }
+      
       this.SET_SELECTED_TEAM({
         id: event.Id,
         name: event.Name,
         token: event.Token,
-        sport: event.Sport
+        sport: sport
       });
 
       this.getGamesTeam();

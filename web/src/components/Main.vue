@@ -70,6 +70,9 @@ export default {
           return false;
     });
     this.SET_LOGGED_IN_USER(firebase.auth().currentUser);
+    console.log('^^^^^^^^^^^^')
+    console.log('ID:' + this.selectedTeamId + ';');
+    console.log('^^^^^^^^^^^^')
     this.getGamesTeam();
     this.getPlayers();
     this.getSportfolios();

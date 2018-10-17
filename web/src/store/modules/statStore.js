@@ -83,6 +83,12 @@ const state = {
     },
     basketballStats: state => {
       return state.basketballStats;
+    },
+    soccerStatsArr: state => {
+      return Object.keys(state.soccerStats);
+    },
+    basketballStatsArr: state => {
+      return Object.keys(state.basketballStats);
     }
   };
   

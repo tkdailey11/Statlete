@@ -80,6 +80,20 @@ const mutations = {
   },
   APPEND_PLAYER: (state, payload) => {
     state.players.push(payload)
+  },
+  CLEAR_STATE: (state, payload) => {
+    state.loggedInUser = '';
+    state.currentUserEmail = '';
+    state.activeGameId = '';
+    state.selectedTeam = {
+      id: '',
+      name: '',
+      token: '',
+      sport: 0
+    };
+    state.players = [];
+    state.playerList = {};
+    state.gamesList = [];
   }
 };
 

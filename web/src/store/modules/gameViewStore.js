@@ -5,7 +5,7 @@ const state = {
   shotsArr: [],
   periodStartTime: -1,
   currGameTime: '0:00',
-  periodLength: 40
+  periodLength: 45
 };
 
 const getters = {
@@ -65,6 +65,15 @@ const mutations = {
   },
   GV_SET_CURR_GAME_TIME: (state, payload) => {
     state.currGameTime = payload;
+  },
+  GV_CLEAR_STATE: (state, payload) => {
+    state.selectedPlayer = '';
+    state.statString = '';
+    state.shotType = 'gcf';
+    state.shotsArr = [];
+    state.periodStartTime = -1;
+    state.currGameTime = '0:00';
+    state.periodLength = 45;
   }
 };
 
