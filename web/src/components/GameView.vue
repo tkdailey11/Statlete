@@ -80,6 +80,9 @@
       var self = this;
       ref.child('Live').on('value', function(snap){
         self.gameLive = snap.val()
+        if(!self.gameLive){
+          self.currTime = 'FINAL'
+        }
       })
       ref.child('Period').on('value', function(snap){
         self.activePeriod = snap.val()
@@ -407,7 +410,7 @@
         }
         if(!this.inProgress){
           clearInterval(this.activeInterval);
-          this.currTime = '0:00'
+          this.currTime = '00:00'
           return;
         }
         var minutes = parseInt(this.currTime.split(':')[0]);
@@ -420,10 +423,6 @@
         else {
           clearInterval(this.activeInterval);
           this.currTime = this.periodLength + ':00+';
-          var ref = firebase.database().ref('SoccerGames/').child(this.selectedTeamId).child(this.activeGameId);
-          ref.update({
-            InProgress: false
-          });
         }
         
       },
