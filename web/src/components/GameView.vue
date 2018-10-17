@@ -70,21 +70,16 @@
       jQuery("#statDiv").hide()
       jQuery("#fieldDiv").hide()
       var ref = null;
-      if(this.selectedTeamSport == 0){
+      
+      if(this.isSoccer){
         ref = firebase.database().ref('/SoccerGames/').child(this.selectedTeamId).child(this.activeGameId);
       }
       else{
         ref = firebase.database().ref('/BasketballGames/').child(this.selectedTeamId).child(this.activeGameId);
       }
-      
       var self = this;
       ref.child('InProgress').on('value', function(snap){
-        if(self.inProgress){
-          clearInterval(self.activeInterval)
-
-        }
         self.inProgress = snap.val()
-
       })
       ref.child('Live').on('value', function(snap){
         self.gameLive = snap.val()
@@ -92,11 +87,14 @@
       ref.child('Period').on('value', function(snap){
         self.activePeriod = snap.val()
       })
-      ref.child('PeriodLength').once('value', function(snap){
+      ref.child('HalfLength').once('value', function(snap){
         self.GV_SET_PERIOD_LENGTH(snap.val());
       })
       ref.child('PeriodStartTime').on('value', function(snap){
         self.GV_SET_PERIOD_START_TIME(snap.val());
+        if(self.activeInterval){
+          clearInterval(self.activeInterval)
+        }
         if(self.inProgress){
           self.activeInterval = setInterval(self.updateTime, 1000);
         }
@@ -184,11 +182,10 @@
       },
       clockClicked(event){
         if(this.isSoccer){
-          //This is really handling soccer
           if(this.currTime.toLowerCase() === "final"){
             return;
           }
-          else if(this.activePeriod == -1){
+          else if(this.activePeriod == 1 && !this.inProgress){
             var message = "Start Game?";
             var options = {
               okText: 'YES',
@@ -198,18 +195,14 @@
             var self = this;
             self.$dialog.confirm(message, options).then(function() {
               //YES
-              self.activePeriod = 1;
               var ref = firebase.database().ref('/SoccerGames').child(self.selectedTeamId).child(self.activeGameId);
 
               var result = {};
               var d = new Date();
               var elapsedSeconds = Math.round(d.getTime() / 1000);
 
-
               ref.update({
-                Period: 1,
                 InProgress: true,
-                Live: true,
                 PeriodStartTime: elapsedSeconds
               })
 
@@ -219,8 +212,7 @@
               //NO
             })
           }
-          else if(this.activePeriod == 1){
-            if(this.inProgress){
+          else if(this.activePeriod == 1 && this.inProgress){
               var message = "End 1st Half?";
               var options = {
                 okText: 'YES',
@@ -241,24 +233,6 @@
               }).catch(function() {
 
               })
-              return;
-            }
-
-            var self = this;
-            self.activePeriod = 2
-            var ref = firebase.database().ref('/SoccerGames').child(self.selectedTeamId).child(self.activeGameId);
-            var d = new Date();
-            var elapsedSeconds = Math.round(d.getTime() / 1000);
-
-            ref.update({
-              Period: 2,
-              InProgress: true,
-              PeriodStartTime: elapsedSeconds
-            })
-
-            self.GV_SET_PERIOD_START_TIME(elapsedSeconds);
-            self.activeInterval= setInterval(self.updateTime, 1000);
-
           }
           else if(this.activePeriod == 2){
             if(this.inProgress){
@@ -273,14 +247,39 @@
               self.$dialog.confirm(message, options).then(function() {
                 clearInterval(self.activeInterval);
                 self.currTime = 'FINAL'
-                var ref = firebase.database().ref('/SoccerGames').child(self.selectedTeamId).child(self.activeGameId);
-                ref.update({
-                  InProgress: false,
-                  Live: false
+                var ref = firebase.database().ref('/SoccerGames').child(self.selectedTeamId).child(self.activeGameId)
+
+                ref.child('MyTotals').once('value', function(snapshot){
+                  var val = snapshot.val();
+                  var score = val.Period1.Goals.Total;
+                  score += val.Period2.Goals.Total;
+
+                  ref.child('OpponentsTotals').once('value', function(snapshot2){
+                    var val2 = snapshot2.val();
+                    var score2 = val2.Period1.Goals.Total;
+                    score2 += val2.Period2.Goals.Total;
+
+                    var result = '';
+                    if(score == score2){
+                      result = 'T'
+                    }
+                    else if(score > score2){
+                      result = 'W'
+                    }
+                    else{
+                      result = 'L'
+                    }
+
+                    ref.update({
+                      InProgress: false,
+                      Live: false,
+                      Period: -1,
+                      Result: result
+                    })
+
+                  })
                 })
               })
-
-              return;
             }
             else{
               var message = "Start 2nd Half?";
@@ -312,7 +311,6 @@
         this.currentPlayer = event
       },
       updateDB(event){
-        
         var self = this;
         var input = event.split(":");
         var statPeriod = this.activePeriod;
@@ -391,13 +389,25 @@
         }
       },
       updateTime(){
-        var minutes = parseInt(this.currTime.split(':')[0]);
-        if (this.inProgress && minutes < this.periodLength) {
-          this.currTime = this.getTimeString(this.getTime());
+        if(!this.currTime){
+          return;
         }
-        else if (minutes == this.periodLength && this.shouldStartClock){
+        if(!this.gameLive){
+          clearInterval(this.activeInterval);
+          this.currTime = 'FINAL';
+          return;
+        }
+        if(!this.inProgress){
+          clearInterval(this.activeInterval);
+          this.currTime = '0:00'
+          return;
+        }
+        var minutes = parseInt(this.currTime.split(':')[0]);
+        if(isNaN(minutes)){
+          return;
+        }
+        if (minutes < this.periodLength) {
           this.currTime = this.getTimeString(this.getTime());
-          this.shouldStartClock = false;
         }
         else {
           clearInterval(this.activeInterval);
@@ -406,15 +416,6 @@
           ref.update({
             InProgress: false
           });
-
-          if(this.activePeriod == 1) {
-            this.shouldStartClock = true;
-          }
-          else{
-            ref.update({
-              Live: false
-            })
-          }
         }
         
       },
