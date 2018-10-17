@@ -78,9 +78,6 @@
         ref = firebase.database().ref('/BasketballGames/').child(this.selectedTeamId).child(this.activeGameId);
       }
       var self = this;
-      ref.child('InProgress').on('value', function(snap){
-        self.inProgress = snap.val()
-      })
       ref.child('Live').on('value', function(snap){
         self.gameLive = snap.val()
       })
@@ -92,12 +89,15 @@
       })
       ref.child('PeriodStartTime').on('value', function(snap){
         self.GV_SET_PERIOD_START_TIME(snap.val());
-        if(self.activeInterval){
-          clearInterval(self.activeInterval)
-        }
-        if(self.inProgress){
-          self.activeInterval = setInterval(self.updateTime, 1000);
-        }
+        ref.child('InProgress').on('value', function(snap){
+          self.inProgress = snap.val()
+          if(self.activeInterval){
+            clearInterval(self.activeInterval)
+          }
+          if(self.inProgress){
+            self.activeInterval = setInterval(self.updateTime, 1000);
+          }
+        })
       })
     },
     computed: {
@@ -333,7 +333,15 @@
               })
             })
           }
-          var dbRef = dbRefGame.child('MyTotals').child(period).child(input[1]);
+          var dbRef = null;
+          if(player === 'otherTeam'){
+            dbRef = dbRefGame.child('OpponentsTotals').child(period).child(input[1]);
+            player = ' ';
+          }
+          else{
+            dbRef = dbRefGame.child('MyTotals').child(period).child(input[1]);
+          }
+          
           dbRef.child('Total').once('value', function(snapshot){
             var tot = snapshot.val() + 1;
             var time = self.currTime;
