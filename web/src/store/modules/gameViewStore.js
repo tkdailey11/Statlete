@@ -5,7 +5,8 @@ const state = {
   shotsArr: [],
   periodStartTime: -1,
   currGameTime: '0:00',
-  periodLength: 45
+  periodLength: 45,
+  numberOfPeriods: 2
 };
 
 const getters = {
@@ -32,6 +33,9 @@ const getters = {
   },
   currGameTime: state => {
     return state.currGameTime;
+  },
+  numberOfPeriods: state => {
+    return state.numberOfPeriods;
   }
 };
 
@@ -74,6 +78,10 @@ const mutations = {
     state.periodStartTime = -1;
     state.currGameTime = '0:00';
     state.periodLength = 45;
+    state.numberOfPeriods = 2;
+  },
+  GV_SET_NUM_PERIODS: (state, payload) => {
+    state.numberOfPeriods = payload;
   }
 };
 

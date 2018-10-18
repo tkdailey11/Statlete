@@ -3,15 +3,18 @@
     <nav-component />
     <div class="TopBanner">
         <h1 style="font-size: 400%; font-weight: bold;">{{selectedTeamName}}</h1>
-        <div class="TimeClock" @click="clockClicked">
+        <div class="TimeClock">
           <div id="myTeamScore" style="float: left; border-right: solid black 5px; height: 100%; padding: 5px;">
             <h2 style="margin: 5px;">My Team</h2>
             <h2>{{ myScore }}</h2>
           </div>
           <div>
-            <period-marker style="float: left; margin-top: 25px;" :period="1" :filled="activePeriod >= 1"></period-marker>
-            <h1 style="width: 100px; float: left; margin-top: 25px;">{{currTime}}</h1>
-            <period-marker style="float: left; margin-top: 25px;" :period="2" :filled="activePeriod >= 2"></period-marker>
+            <period-marker style="float: left; margin-top: 25px;" :period="1" :filled="activePeriod == 1"></period-marker>
+            <period-marker v-if="numberOfPeriods == 4" style="float: left; margin-top: 25px;" :period="2" :filled="activePeriod == 2"></period-marker>
+            <h1 style="width: 100px; float: left; margin-top: 25px;" @click="clockClicked">{{currTime}}</h1>
+            <period-marker v-if="numberOfPeriods == 4" style="float: left; margin-top: 25px;" :period="3" :filled="activePeriod == 3"></period-marker>
+            <period-marker v-if="numberOfPeriods == 4" style="float: left; margin-top: 25px;" :period="4" :filled="activePeriod == 4"></period-marker>
+            <period-marker v-else style="float: left; margin-top: 25px;" :period="2" :filled="activePeriod == 2"></period-marker>
           </div>
           <div id="opponentScore" style="float: right; border-left: solid black 5px; height: 100%; padding: 5px;">
             <h2 style="margin: 5px;">Opponent</h2>
@@ -83,14 +86,26 @@
       jQuery("#statDiv").hide()
       jQuery("#fieldDiv").hide()
       var ref = null;
-      
+      var self = this;
+
       if(this.isSoccer){
         ref = firebase.database().ref('/SoccerGames/').child(this.selectedTeamId).child(this.activeGameId);
+        ref.child('HalfLength').once('value', function(snap){
+          self.GV_SET_PERIOD_LENGTH(snap.val());
+        })
       }
       else{
         ref = firebase.database().ref('/BasketballGames/').child(this.selectedTeamId).child(this.activeGameId);
+        ref.child('NumberOfPeriods').once('value', function(snap){
+          if(snap.val()){
+            self.GV_SET_NUM_PERIODS(snap.val());
+          }
+        })
+        ref.child('PeriodLength').once('value', function(snap){
+          self.GV_SET_PERIOD_LENGTH(snap.val());
+        })
       }
-      var self = this;
+      
       ref.child('Live').on('value', function(snap){
         self.gameLive = snap.val()
         if(!self.gameLive){
@@ -100,9 +115,7 @@
       ref.child('Period').on('value', function(snap){
         self.activePeriod = snap.val()
       })
-      ref.child('HalfLength').once('value', function(snap){
-        self.GV_SET_PERIOD_LENGTH(snap.val());
-      })
+      
       ref.child('PeriodStartTime').on('value', function(snap){
         self.GV_SET_PERIOD_START_TIME(snap.val());
         ref.child('InProgress').on('value', function(snap){
@@ -143,7 +156,8 @@
         shotsArrLength: 'gameViewStore/shotsArrLength',
         periodStartTime: 'gameViewStore/periodStartTime',
         currGameTime: 'gameViewStore/currGameTime',
-        periodLength: 'gameViewStore/periodLength'
+        periodLength: 'gameViewStore/periodLength',
+        numberOfPeriods: 'gameViewStore/numberOfPeriods'
       }),
       isSoccer: function() {
         return this.selectedTeamSport == 1;
@@ -159,7 +173,8 @@
         GV_REMOVE_SHOT: 'gameViewStore/GV_REMOVE_SHOT',
         GV_SET_PERIOD_START_TIME: 'gameViewStore/GV_SET_PERIOD_START_TIME',
         GV_SET_CURR_GAME_TIME: 'gameViewStore/GV_SET_CURR_GAME_TIME',
-        GV_SET_PERIOD_LENGTH: 'gameViewStore/GV_SET_PERIOD_LENGTH'
+        GV_SET_PERIOD_LENGTH: 'gameViewStore/GV_SET_PERIOD_LENGTH',
+        GV_SET_NUM_PERIODS: 'gameViewStore/GV_SET_NUM_PERIODS'
       }),
       toggleEntryClicked(){
         var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';

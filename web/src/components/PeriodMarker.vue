@@ -27,7 +27,7 @@ export default {
 <style scoped>
 .PeriodMarker {
     float: left;
-    width: 5vw;
+    width: 3vw;
 }
     .labelImg {
         width: 25%;
