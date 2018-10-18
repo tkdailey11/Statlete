@@ -1,70 +1,40 @@
 <template>
   <div class="TeamStats">
-    <div class="SBdataEntry">
-      <div class="title">
-        <div id="headerBuffer">
-        </div>
-        <div id="headers">
-          <h5 align="center" v-for="statType in statTypes" :key="'h5-' + statType">{{ statType }}</h5>
-        </div>
-      </div>
-      <div id="dataTable">
-        <table>
-          <tr v-for="p in playerNumbers" :key="p + '-key'">
-            <th style="width: 163px; min-width: 163px; border: thin solid black; border-right-width: 2px;">{{ p.replace('p', '#')}}</th>
-            <td v-for="statType in statTypes" :key="p + '-' + statType">
-              <span v-if="statType.length == 5">
-                <p v-if="playerData[p][statType]" style="width: 60px; margin-right: 8px; margin-top: 10px;">{{playerData[p][statType]}}</p>
-                <p v-else style="width: 60px; margin-right: 8px; margin-top: 10px;">0</p>
-              </span>
-              <span v-else-if="statType.length == 6">
-                <p v-if="playerData[p][statType]" style="width: 70px; margin-right: 10px; margin-top: 10px;">{{playerData[p][statType]}}</p>
-                <p v-else style="width: 80px; margin-right: 10px; margin-top: 10px;">0</p>
-              </span>
-              <span v-else-if="statType.length == 7">
-                <p v-if="playerData[p][statType]" style="width: 80px; margin-right: 10px; margin-top: 10px;">{{playerData[p][statType]}}</p>
-                <p v-else style="width: 80px; margin-right: 10px; margin-top: 10px;">0</p>
-              </span>
-              <span v-else-if="statType.length == 8">
-                <p v-if="playerData[p][statType]" style="width: 90px; margin-right: 17px; margin-top: 10px;">{{playerData[p][statType]}}</p>
-                <p v-else style="width: 90px; margin-right: 17px; margin-top: 10px;">0</p>
-              </span>
-              <span v-else-if="statType.length == 9">
-                <p v-if="playerData[p][statType]" style="width: 95px; margin-right: 17px; margin-top: 10px;">{{playerData[p][statType]}}</p>
-                <p v-else style="width: 90px; margin-right: 17px; margin-top: 10px;">0</p>
-              </span>
-              <span v-else-if="statType.length == 10">
-                <p v-if="playerData[p][statType]" style="width: 110px; margin-right: 20px; margin-top: 10px;">{{playerData[p][statType]}}</p>
-                <p v-else style="width: 125px; margin-right: 20px; margin-top: 10px;">0</p>
-              </span>
-              <span v-else-if="statType.length == 11">
-                <p v-if="playerData[p][statType]" style="width: 120px; margin-right: 20px; margin-top: 10px;">{{playerData[p][statType]}}</p>
-                <p v-else style="width: 125px; margin-right: 20px; margin-top: 10px;">0</p>
-              </span>
-              <span v-else-if="statType.length == 12">
-                <p v-if="playerData[p][statType]" style="width: 135px; margin-right: 20px; margin-top: 10px;">{{playerData[p][statType]}}</p>
-                <p v-else style="width: 125px; margin-right: 20px; margin-top: 10px;">0</p>
-              </span>
-              <span v-else-if="statType.length == 13">
-                <p v-if="playerData[p][statType]" style="width: 135px; margin-right: 20px; margin-top: 10px;">{{playerData[p][statType]}}</p>
-                <p v-else style="width: 125px; margin-right: 20px; margin-top: 10px;">0</p>
-              </span>
-              <span v-else>
-                <p style="width: 125px; margin-right: 20px; margin-top: 10px; background-color: green;">0</p>
-              </span>
-            </td>
-          </tr>
-        </table>
-      </div>
-    </div>
-
-
+    <vue-scrolling-table
+							:scroll-horizontal="scrollHorizontal"
+							:scroll-vertical="scrollVertical"
+							:sync-header-scroll="syncHeaderScroll"
+							:sync-footer-scroll="false"
+							:include-footer="false"
+							:dead-area-color="deadAreaColor"
+							:class="{ freezeFirstColumn:freezeFirstColumn }"
+              style="border: medium solid black;
+                     border-radius: 5px;">
+      <template slot="thead">
+        <tr>
+          <th style="border-right: medium solid black; border-bottom: medium solid black;"></th>
+          <th v-for="stat in statTypes" 
+              :key="stat + '-hd'"
+              style="border-bottom: medium solid black;">
+              {{ stat }}
+          </th>
+        </tr>
+      </template>
+      <template slot="tbody">
+        <tr v-for="p in playerNumbers" :key="p + '-key'">
+          <th style="border-right: medium solid black;">{{ p.replace('p', '#')}}</th>
+          <td v-for="statType in statTypes" :key="p + '-' + statType">
+            <p v-if="playerData && playerData[p] && playerData[p][statType]">{{playerData[p][statType]}}</p>
+            <p v-else>0</p>
+          </td>
+        </tr>
+      </template>
+    </vue-scrolling-table>
   </div>
 </template>
 
 <script>
   import firebase from 'firebase'
-  import VueScrollingTable from "vue-scrolling-table"
   import { mapGetters, mapMutations } from 'vuex';
 
   export default {
@@ -87,13 +57,21 @@
         playerData: {},
         loggedInUser: '',
         currentUserEmail: '',
+        scrollVertical: true,
+        scrollHorizontal: true,
+        syncHeaderScroll: true,
+        deadAreaColor: "#DDDDDD",
+        maxRows: 100,
+        freezeFirstColumn: true
+
       }
     },
     computed: {
        ...mapGetters({
         activeGameId: 'mainStore/activeGameId',
         players: 'mainStore/players',
-        selectedTeamId: 'mainStore/selectedTeamId'
+        selectedTeamId: 'mainStore/selectedTeamId',
+        selectedTeamSport: 'mainStore/selectedTeamSport'
       }),
       playerNumbers() {
         return Object.keys(this.players);
@@ -109,6 +87,9 @@
       },
       getGameData: function() {
 
+      },
+      isSoccer: function() {
+        return this.selectedTeamSport == 1;
       }
     },
     created() {
@@ -120,118 +101,80 @@
       // ref.once('value', function(snap) {
       //   self.statTypes = Object.keys(snap.val())
       // })
-      
-      var gameDataRef = firebase.database().ref('/SoccerGames/' + self.selectedTeamId).child(self.activeGameId).child('Players');
+      var gameDataRef = null;
+
+      if(this.selectedTeamSport == 1){
+        gameDataRef = firebase.database().ref('/SoccerGames/' + self.selectedTeamId).child(self.activeGameId).child('Players');
+      }
+      else {
+        this.statTypes = [
+          "AST",
+          "BLK",
+          "DREB",
+          "FG3A",
+          "FG3M",
+          "FGA",
+          "FGM",
+          "FTA",
+          "FTM",
+          "OREB",
+          "PF",
+          "STL",
+          "TOV"
+        ]
+        gameDataRef = firebase.database().ref('/BasketballGames/' + self.selectedTeamId).child(self.activeGameId).child('Players');
+      }
       gameDataRef.on('value', function(snapshot) {
         self.playerData = snapshot.val();
       });
+
     },
     mounted() {
-      document.getElementById("dataTable").addEventListener("scroll", scrollTableFunction);
-      document.getElementById("headers").addEventListener("scroll", scrollHeaderFunction);
 
-      function scrollTableFunction() {
-        var tabl = document.getElementById("dataTable");
-        var headr = document.getElementById("headers");
-        headr.scrollLeft = tabl.scrollLeft;
-      }
-
-      function scrollHeaderFunction() {
-        var tabl = document.getElementById("dataTable");
-        var headr = document.getElementById("headers");
-        tabl.scrollLeft = headr.scrollLeft;
-      }
     }
   }
 </script>
 
 <style scoped>
-.TeamStats {
-  height: 400px;
-  width: 1090px;
-}
+  .TeamStats {
+    height: 400px;
+    width: 1090px;
+  }
+  th, td {
+    color: black;
+  }
 
-.SBdataEntry {
-  height: 400px;
-  width: 1090px;
-  background: white;
-  border-width: 5px;
-  border-color: black;
-  border-style: solid;
-  border-radius: 15px;
-  /* Margin was at 10% */
-  margin-bottom: 50px;
-  box-shadow: 5px 5px 5px grey;
-}
-
-.title {
-  height: 10%;
-  background: white;
-  border-radius: 15px 15px 0px 0px;
-  border-bottom-color: black;
-  border-bottom-width: medium;
-  border-bottom-style: solid;
-  background-color: white;
-
-  width: 100%;
-}
-#headerBuffer{
-  border-right: 2px solid black;
-  float: left;
-  width: 164px;
-  height: 100%;
-}
-#headers{
-  overflow: hidden;
-  max-height: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  border-radius: 0px 10px 0px 0px;
-  overflow-x: scroll;
-}
-
-#dataTable {
-  max-height: 90%;
-  height: 650px;
-  background-color: white;
-  overflow-y: scroll;
-  border-radius: 0px 0px 15px 15px;
-}
-
-table, th {
-  border: 1px solid black;
-  color: rgb(224,0,16);
-}
-
-td {
-  border-bottom: 1px solid black;
-  color: rgb(224,0,16);
-}
-
-h5 {
-  line-height: 50px;
-  height: 50px;
-  color: rgb(224,0,16);
-  padding-left: 11px;
-  padding-right: 11px;
-}
-img {
-  zoom: 50%;
-}
-.dataLabelCell {
-  overflow: hidden;
-}
-.dataLabel {
-  margin-top: 5%;
-  font-size: 25px;
-  line-height: 50px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: center;
-  vertical-align: middle;
-}
-th:first-child{
-}
+  table.scrolling .w2 {
+    width: 20em;
+    min-width: 20em;
+    max-width: 20em;
+  }
+  table.scrolling tfoot tr th {
+    width: 130em;
+    min-width: 130em;
+    max-width: 130em;
+  }
+  table.freezeFirstColumn thead tr,
+  table.freezeFirstColumn tbody tr {
+    display: block;
+    width: min-content;
+  }
+  table.freezeFirstColumn thead td:first-child,
+  table.freezeFirstColumn tbody td:first-child,
+  table.freezeFirstColumn thead th:first-child,
+  table.freezeFirstColumn tbody th:first-child {
+    position: sticky;
+    position: -webkit-sticky;
+    left: 0;
+  }
+  
+  .box {
+    clear: both;
+    padding: 0;
+    min-height: 300px;
+    height: 40vh;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+  }
 </style>

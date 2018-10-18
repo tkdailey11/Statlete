@@ -3,10 +3,23 @@
     <nav-component />
     <div class="TopBanner">
         <h1 style="font-size: 400%; font-weight: bold;">{{selectedTeamName}}</h1>
-        <div class="TimeClock" @click="clockClicked">
-          <period-marker style="float: left; margin-left: 25%; margin-top: 25px;" :period="1" :filled="activePeriod >= 1"></period-marker>
-          <h1 style="width: 100px; float: left; margin-top: 25px;">{{currTime}}</h1>
-          <period-marker style="float: left; margin-top: 25px;" :period="2" :filled="activePeriod >= 2"></period-marker>
+        <div class="TimeClock">
+          <div id="myTeamScore" style="float: left; border-right: solid black 5px; height: 100%; padding: 5px;">
+            <h2 style="margin: 5px;">My Team</h2>
+            <h2>{{ myScore }}</h2>
+          </div>
+          <div>
+            <period-marker style="float: left; margin-top: 25px;" :period="1" :filled="activePeriod == 1"></period-marker>
+            <period-marker v-if="numberOfPeriods == 4" style="float: left; margin-top: 25px;" :period="2" :filled="activePeriod == 2"></period-marker>
+            <h1 style="width: 100px; float: left; margin-top: 25px;" @click="clockClicked">{{currTime}}</h1>
+            <period-marker v-if="numberOfPeriods == 4" style="float: left; margin-top: 25px;" :period="3" :filled="activePeriod == 3"></period-marker>
+            <period-marker v-if="numberOfPeriods == 4" style="float: left; margin-top: 25px;" :period="4" :filled="activePeriod == 4"></period-marker>
+            <period-marker v-else style="float: left; margin-top: 25px;" :period="2" :filled="activePeriod == 2"></period-marker>
+          </div>
+          <div id="opponentScore" style="float: right; border-left: solid black 5px; height: 100%; padding: 5px;">
+            <h2 style="margin: 5px;">Opponent</h2>
+            <h2>{{ oppScore }}</h2>
+          </div>
         </div>
     </div>
     <div id="EntryView">
@@ -18,6 +31,7 @@
         <sb-data-entry id="sbde1"
                       style="float: left;"
                       :height="'height: 500px;'"
+                      :isActive="gameLive"
                       @StatChange="updateDB"
                       :gameID="activeGameId"></sb-data-entry>
       </div>
@@ -63,39 +77,70 @@
         shouldStartClock: false,
         inProgress: false,
         gameLive: false,
-        currentPlayer: ''
+        currentPlayer: '',
+        myScore: 0,
+        oppScore: 0
       }
     },
     mounted() {
       jQuery("#statDiv").hide()
       jQuery("#fieldDiv").hide()
-      var ref = firebase.database().ref('/SoccerGames/').child(this.selectedTeamId).child(this.activeGameId);
+      var ref = null;
       var self = this;
-      ref.child('InProgress').on('value', function(snap){
-        if(self.inProgress){
-          clearInterval(self.activeInterval)
 
-        }
-        self.inProgress = snap.val()
-
-      })
+      if(this.isSoccer){
+        ref = firebase.database().ref('/SoccerGames/').child(this.selectedTeamId).child(this.activeGameId);
+        ref.child('HalfLength').once('value', function(snap){
+          self.GV_SET_PERIOD_LENGTH(snap.val());
+        })
+      }
+      else{
+        ref = firebase.database().ref('/BasketballGames/').child(this.selectedTeamId).child(this.activeGameId);
+        ref.child('NumberOfPeriods').once('value', function(snap){
+          if(snap.val()){
+            self.GV_SET_NUM_PERIODS(snap.val());
+          }
+        })
+        ref.child('PeriodLength').once('value', function(snap){
+          self.GV_SET_PERIOD_LENGTH(snap.val());
+        })
+      }
+      
       ref.child('Live').on('value', function(snap){
         self.gameLive = snap.val()
+        if(!self.gameLive){
+          self.currTime = 'FINAL'
+        }
       })
       ref.child('Period').on('value', function(snap){
         self.activePeriod = snap.val()
       })
-      ref.once('value', function(snap) {
-        var val = snap.val();
+      
+      ref.child('PeriodStartTime').on('value', function(snap){
+        self.GV_SET_PERIOD_START_TIME(snap.val());
+        ref.child('InProgress').on('value', function(snap){
+          self.inProgress = snap.val()
+          if(self.activeInterval){
+            clearInterval(self.activeInterval)
+          }
+          if(self.inProgress){
+            self.activeInterval = setInterval(self.updateTime, 1000);
+          }
+        })
+      })
 
-        self.GV_SET_PERIOD_LENGTH(val.HalfLength);
-        self.GV_SET_PERIOD_START_TIME(val.PeriodStartTime);
-      }).then(() => {
-        if(self.inProgress){
-          self.activeInterval = setInterval(self.updateTime, 1000);
-        }
-        
-      });
+      ref.child('MyTotals').on('value', function(snapshot){
+        var val = snapshot.val();
+        var score = val.Period1.Goals.Total;
+        score += val.Period2.Goals.Total;
+        self.myScore = score;
+      })
+      ref.child('OpponentsTotals').once('value', function(snapshot2){
+        var val2 = snapshot2.val();
+        var score2 = val2.Period1.Goals.Total;
+        score2 += val2.Period2.Goals.Total;
+        self.oppScore = score2;
+      })
     },
     computed: {
       ...mapGetters({
@@ -111,11 +156,11 @@
         shotsArrLength: 'gameViewStore/shotsArrLength',
         periodStartTime: 'gameViewStore/periodStartTime',
         currGameTime: 'gameViewStore/currGameTime',
-        periodLength: 'gameViewStore/periodLength'
+        periodLength: 'gameViewStore/periodLength',
+        numberOfPeriods: 'gameViewStore/numberOfPeriods'
       }),
       isSoccer: function() {
-        //This shouldn't be !
-        this.selectedTeamSport == 1;
+        return this.selectedTeamSport == 1;
       }
     },
     methods: {
@@ -128,7 +173,8 @@
         GV_REMOVE_SHOT: 'gameViewStore/GV_REMOVE_SHOT',
         GV_SET_PERIOD_START_TIME: 'gameViewStore/GV_SET_PERIOD_START_TIME',
         GV_SET_CURR_GAME_TIME: 'gameViewStore/GV_SET_CURR_GAME_TIME',
-        GV_SET_PERIOD_LENGTH: 'gameViewStore/GV_SET_PERIOD_LENGTH'
+        GV_SET_PERIOD_LENGTH: 'gameViewStore/GV_SET_PERIOD_LENGTH',
+        GV_SET_NUM_PERIODS: 'gameViewStore/GV_SET_NUM_PERIODS'
       }),
       toggleEntryClicked(){
         var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
@@ -179,12 +225,11 @@
         }
       },
       clockClicked(event){
-        if(!this.isSoccer){
-          //This is really handling soccer
+        if(this.isSoccer){
           if(this.currTime.toLowerCase() === "final"){
             return;
           }
-          else if(this.activePeriod == -1){
+          else if(this.activePeriod == 1 && !this.inProgress){
             var message = "Start Game?";
             var options = {
               okText: 'YES',
@@ -194,18 +239,14 @@
             var self = this;
             self.$dialog.confirm(message, options).then(function() {
               //YES
-              self.activePeriod = 1;
               var ref = firebase.database().ref('/SoccerGames').child(self.selectedTeamId).child(self.activeGameId);
 
               var result = {};
               var d = new Date();
               var elapsedSeconds = Math.round(d.getTime() / 1000);
 
-
               ref.update({
-                Period: 1,
                 InProgress: true,
-                Live: true,
                 PeriodStartTime: elapsedSeconds
               })
 
@@ -215,8 +256,7 @@
               //NO
             })
           }
-          else if(this.activePeriod == 1){
-            if(this.inProgress){
+          else if(this.activePeriod == 1 && this.inProgress){
               var message = "End 1st Half?";
               var options = {
                 okText: 'YES',
@@ -237,24 +277,6 @@
               }).catch(function() {
 
               })
-              return;
-            }
-
-            var self = this;
-            self.activePeriod = 2
-            var ref = firebase.database().ref('/SoccerGames').child(self.selectedTeamId).child(self.activeGameId);
-            var d = new Date();
-            var elapsedSeconds = Math.round(d.getTime() / 1000);
-
-            ref.update({
-              Period: 2,
-              InProgress: true,
-              PeriodStartTime: elapsedSeconds
-            })
-
-            self.GV_SET_PERIOD_START_TIME(elapsedSeconds);
-            self.activeInterval= setInterval(self.updateTime, 1000);
-
           }
           else if(this.activePeriod == 2){
             if(this.inProgress){
@@ -269,14 +291,39 @@
               self.$dialog.confirm(message, options).then(function() {
                 clearInterval(self.activeInterval);
                 self.currTime = 'FINAL'
-                var ref = firebase.database().ref('/SoccerGames').child(self.selectedTeamId).child(self.activeGameId);
-                ref.update({
-                  InProgress: false,
-                  Live: false
+                var ref = firebase.database().ref('/SoccerGames').child(self.selectedTeamId).child(self.activeGameId)
+
+                ref.child('MyTotals').once('value', function(snapshot){
+                  var val = snapshot.val();
+                  var score = val.Period1.Goals.Total;
+                  score += val.Period2.Goals.Total;
+
+                  ref.child('OpponentsTotals').once('value', function(snapshot2){
+                    var val2 = snapshot2.val();
+                    var score2 = val2.Period1.Goals.Total;
+                    score2 += val2.Period2.Goals.Total;
+
+                    var result = '';
+                    if(score == score2){
+                      result = 'T'
+                    }
+                    else if(score > score2){
+                      result = 'W'
+                    }
+                    else{
+                      result = 'L'
+                    }
+
+                    ref.update({
+                      InProgress: false,
+                      Live: false,
+                      Period: -1,
+                      Result: result
+                    })
+
+                  })
                 })
               })
-
-              return;
             }
             else{
               var message = "Start 2nd Half?";
@@ -302,77 +349,121 @@
         }
         else{
           //handle clock clicks for basketball
-          alert('NOT SOCCER')
         }
       },
       playerWasSelected(event) {
         this.currentPlayer = event
       },
       updateDB(event){
-        
         var self = this;
         var input = event.split(":");
-        console.log(this.activePeriod)
-        var period = 'Period' + this.activePeriod
+        var statPeriod = this.activePeriod;
+        if(!(statPeriod && statPeriod >= 1)){
+          statPeriod = 1
+        }
+        var period = 'Period' + statPeriod
        
-        if(!this.isSoccer){
+        if(this.isSoccer){
           var dbRefGame = firebase.database().ref('SoccerGames/').child(self.selectedTeamId).child(self.activeGameId)
-          var dbRef = dbRefGame.child('MyTotals').child(period).child(input[1]);
+          
+          var player = self.currentPlayer;
+          if(player.startsWith('p')){
+            var refPlayer = dbRefGame.child('Players').child(player);
+            refPlayer.child(input[1]).once('value', function(snapshot){
+              var tot = snapshot.val() + 1;
+              var key = input[1];
+              refPlayer.update({
+                [key]: tot
+              })
+            })
+          }
+          var dbRef = null;
+          if(player === 'otherTeam'){
+            dbRef = dbRefGame.child('OpponentsTotals').child(period).child(input[1]);
+            player = ' ';
+          }
+          else{
+            dbRef = dbRefGame.child('MyTotals').child(period).child(input[1]);
+          }
+          
           dbRef.child('Total').once('value', function(snapshot){
             var tot = snapshot.val() + 1;
-            var player = self.currentPlayer;
             var time = self.currTime;
-            var minutes = parseInt(time.split(':')[0]) + ((self.activePeriod - 1) * self.periodLength);
+            var minutes = parseInt(time.split(':')[0]) + ((statPeriod - 1) * self.periodLength);
             if(minutes > 10) {
               time = minutes+':'+time.split(':')[1]
             }
             else {
               time = '0'+minutes+':'+time.split(':')[1]
             }
+            if(player.length == 0){
+              player = ' ';
+            }
             dbRef.update({
               Total : tot,
               [time] : player
             })
           })
-
-          var refPlayer = dbRefGame.child('Players').child(self.currentPlayer);
-          refPlayer.child(input[1]).once('value', function(snapshot){
+        }
+        else{
+          var dbRefGame = firebase.database().ref('BasketballGames/').child(self.selectedTeamId).child(self.activeGameId)
+          
+          var player = self.currentPlayer;
+          if(player.startsWith('p')){
+            var refPlayer = dbRefGame.child('Players').child(player);
+            refPlayer.child(input[1]).once('value', function(snapshot){
+              var tot = snapshot.val() + 1;
+              var key = input[1];
+              refPlayer.update({
+                [key]: tot
+              })
+            })
+          }
+          var dbRef = dbRefGame.child('MyTotals').child(period).child(input[1]);
+          dbRef.child('Total').once('value', function(snapshot){
             var tot = snapshot.val() + 1;
-            var key = input[1];
-            refPlayer.update({
-              [key]: tot
+            var time = self.currTime;
+            var minutes = parseInt(time.split(':')[0]) + ((statPeriod - 1) * self.periodLength);
+            if(minutes > 10) {
+              time = minutes+':'+time.split(':')[1]
+            }
+            else {
+              time = '0'+minutes+':'+time.split(':')[1]
+            }
+            if(player.length == 0){
+              player = ' ';
+            }
+            dbRef.update({
+              Total : tot,
+              [time] : player
             })
           })
         }
-        else{
-          
-        }
       },
       updateTime(){
-        var minutes = parseInt(this.currTime.split(':')[0]);
-        if (this.inProgress && minutes < this.periodLength) {
-          this.currTime = this.getTimeString(this.getTime());
+        if(!this.currTime){
+          return;
         }
-        else if (minutes == this.periodLength && this.shouldStartClock){
+        if(!this.gameLive){
+          clearInterval(this.activeInterval);
+          this.currTime = 'FINAL';
+          return;
+        }
+        if(!this.inProgress){
+          clearInterval(this.activeInterval);
+          this.currTime = '00:00'
+          return;
+        }
+        var minutes = parseInt(this.currTime.split(':')[0]);
+        if(isNaN(minutes)){
+          return;
+        }
+        if (minutes < this.periodLength) {
           this.currTime = this.getTimeString(this.getTime());
-          this.shouldStartClock = false;
         }
         else {
           clearInterval(this.activeInterval);
           this.currTime = this.periodLength + ':00+';
-          var ref = firebase.database().ref('SoccerGames/').child(this.selectedTeamId).child(this.activeGameId);
-          ref.update({
-            InProgress: false
-          });
-
-          if(this.activePeriod == 1) {
-            this.shouldStartClock = true;
-          }
-          else{
-            ref.update({
-              Live: false
-            })
-          }
         }
         
       },
@@ -461,7 +552,7 @@
     flex-grow: 2;
   }
   #sbde1{
-    width: 310px;
+    width: 500px;
     height: 500px;
     background: white;
     margin: 50px;

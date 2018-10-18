@@ -66,7 +66,7 @@
     outline: 0;
     background: transparent;
     border-bottom: 3px solid rgb(224,0,16);
-    color: white;
+    color: rgb(224,0,16);
   }
   button {
     margin-top: 20px;

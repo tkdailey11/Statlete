@@ -184,10 +184,10 @@ export default {
       }
       else {
         oppData = {
-          "Quarter1" : this.basketballStats,
-          "Quarter2" : this.basketballStats,
-          "Quarter3" : this.basketballStats,
-          "Quarter4" : this.basketballStats
+          "Period1" : this.basketballStats,
+          "Period2" : this.basketballStats,
+          "Period3" : this.basketballStats,
+          "Period4" : this.basketballStats
         };
       }
 
@@ -200,10 +200,10 @@ export default {
       }
       else {
         myData = {
-          "Quarter1" : this.basketballStats,
-          "Quarter2" : this.basketballStats,
-          "Quarter3" : this.basketballStats,
-          "Quarter4" : this.basketballStats
+          "Period1" : this.basketballStats,
+          "Period2" : this.basketballStats,
+          "Period3" : this.basketballStats,
+          "Period4" : this.basketballStats
         };
       }
       var d = new Date();
@@ -232,7 +232,8 @@ export default {
         })
       }
       else {
-        var ref = firebase.database().ref('BasketballGames').update({
+        data['NumberOfPeriods'] = 4;
+        var ref = firebase.database().ref('BasketballGames').child(this.selectedTeamId).update({
           [gameID] : data
         })
         var ref = firebase.database().ref('TeamSportfolios').child(this.selectedTeamId).child('Games').update({

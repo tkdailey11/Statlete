@@ -35,19 +35,7 @@ import { setTimeout } from 'timers';
 export default {
     data() {
         return {
-            statTypes: ["none",
-                    "Assists",
-                    "Corners",
-                    "Crosses",
-                    "Fouls",
-                    "Goals",
-                    "Minutes",
-                    "Offsides",
-                    "Red Cards",
-                    "Saves",
-                    "Shots",
-                    "Shots on Goal",
-                    "Yellow Cards"],
+            statTypes: ["none"],
             firstSelectedStat: '',
             secondSelectedStat: '',
             analysisResult: '',
@@ -57,12 +45,25 @@ export default {
     },
     computed: {
         ...mapGetters({
-            selectedTeamId: 'mainStore/selectedTeamId'
-        })
+            selectedTeamId: 'mainStore/selectedTeamId',
+            selectedTeamSport: 'mainStore/selectedTeamSport',
+            soccerStatsArr: 'statStore/soccerStatsArr',
+            basketballStatsArr: 'statStore/basketballStatsArr'
+        }),
+        isSoccer: function() {
+            return this.selectedTeamSport == 1;
+        }
     },
     mounted(){
         jQuery('#resultBar').hide();
         jQuery('#resultLine').hide();
+        if(this.isSoccer){
+            this.statTypes = this.statTypes.concat(this.soccerStatsArr)
+        }
+        else {
+            this.statTypes = this.statTypes.concat(this.basketballStatsArr)
+        }
+        
     },
     methods: {
         submitResponse: function() {
@@ -74,7 +75,14 @@ export default {
                 }
                 else if(firstOption === 'none'){
                     //process second stat
-                    var oneVarReq = firebase.functions().httpsCallable('getSingleStatSoccer');
+                    var oneVarReq = null;
+                    if(this.isSoccer){
+                        oneVarReq = firebase.functions().httpsCallable('getSingleStatSoccer');
+                    }
+                    else {
+                        oneVarReq = firebase.functions().httpsCallable('getSingleStatBasketball');
+                    }
+                    
                     var self = this;
                     oneVarReq({
                         Stat: secondOption,
@@ -86,7 +94,13 @@ export default {
                 }
                 else{
                     //process first stat
-                    var oneVarReq = firebase.functions().httpsCallable('getSingleStatSoccer');
+                    var oneVarReq = null;
+                    if(this.isSoccer){
+                        oneVarReq = firebase.functions().httpsCallable('getSingleStatSoccer');
+                    }
+                    else {
+                        oneVarReq = firebase.functions().httpsCallable('getSingleStatBasketball');
+                    }
                     var self = this;
                     oneVarReq({
                         Stat: firstOption,
@@ -98,7 +112,13 @@ export default {
                 }
             }
             else {
-                var twoVarReq = firebase.functions().httpsCallable('getTwoStatsSoccer');
+                var twoVarReq = null;
+                    if(this.isSoccer){
+                        twoVarReq = firebase.functions().httpsCallable('getTwoStatsSoccer');
+                    }
+                    else {
+                        twoVarReq = firebase.functions().httpsCallable('getTwoStatsBasketball');
+                    }
                 var self = this;
                 twoVarReq({
                     Stat1: firstOption,
@@ -112,6 +132,7 @@ export default {
         },
         processTwoStatResponse: function(res, first, second) {
             var arr = Object.values(res.Games);
+            console.log(res);
             var dataStat1 = [];
             var dataStat2 = [];
             arr.forEach(function(item) {
@@ -135,6 +156,7 @@ export default {
         },
         processOneStatResponse: function(res, stat) {
             var arr = Object.values(res.Games);
+            console.log(res);
             var dataStat = [];
             arr.forEach(function(item) {
                 dataStat.push(item.Stat);

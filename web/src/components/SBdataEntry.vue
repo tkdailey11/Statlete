@@ -7,7 +7,8 @@
       <table width="100%">
         <tr v-for="obj in dataTypes">
           <td>
-            <img src="../assets/images/goal.png">
+            <img v-if="isSoccer" src="../assets/images/goal.png">
+            <img v-else src="../assets/images/basketball-hoop.png">
           </td>
           <td class="dataLabelCell" style="max-width: 120px; text-overflow:ellipsis;">
             <p class="dataLabel">{{obj}}</p>
@@ -32,7 +33,8 @@ import { setTimeout } from 'timers';
       gameID: '',
       height: {
         default: 'height: 500px;'
-      }
+      },
+      isActive: true
     },
     computed: {
       ...mapGetters({
@@ -43,17 +45,21 @@ import { setTimeout } from 'timers';
         var height = parseInt(this.height.split(' ')[1].split('p')[0]);
         var newHeight = height*0.826;
         return 'height: ' + newHeight + 'px;';
+      },
+      isSoccer() {
+        return this.selectedTeamSport == 1;
       }
     },
     methods: {
       plusClicked(obj) {
-        this.$emit('StatChange', 'plus:' + obj)
-        var id = '#' + obj.split(' ').join('') + '-button';
-        jQuery(id).css('opacity', '0.3');
-        setTimeout(() => {
-          jQuery(id).css('opacity', '1.0');
-        }, 150);
-        
+        if(this.isActive){
+          this.$emit('StatChange', 'plus:' + obj)
+          var id = '#' + obj.split(' ').join('') + '-button';
+          jQuery(id).css('opacity', '0.3');
+          setTimeout(() => {
+            jQuery(id).css('opacity', '1.0');
+          }, 150);
+        }
       }
     },
     data() {
@@ -64,7 +70,8 @@ import { setTimeout } from 'timers';
     mounted() {
       var self = this
       console.log("GAME ID: " + self.gameID);
-      if(self.selectedTeamSport == 1) {
+      console.log("Sport: " + this.selectedTeamSport);
+      if(self.isSoccer) {
         var dbRef = firebase.database().ref('SoccerGames/' + self.selectedTeamId + '/' + self.gameID + '/MyTotals/Period1/');
         if(dbRef){
           dbRef.once('value', function(snapshot){
@@ -80,7 +87,7 @@ import { setTimeout } from 'timers';
         }
       }
       else {
-        var dbRef = firebase.database().ref('BasketballGames/' + self.selectedTeamId + '/' + self.gameID + '/MyTotals/Quarter1/');
+        var dbRef = firebase.database().ref('BasketballGames/' + self.selectedTeamId + '/' + self.gameID + '/MyTotals/Period1/');
         if(dbRef){
           dbRef.once('value', function(snapshot){
             var keys = []
@@ -100,7 +107,7 @@ import { setTimeout } from 'timers';
 
 <style scoped>
   #SBdataEntry {
-    width: 310px;
+    width: 500px;
     height: 500px;
     border-width: 5px;
     border-color: black;
@@ -109,22 +116,19 @@ import { setTimeout } from 'timers';
     position: relative;
     box-shadow: 5px 5px 5px grey;
     padding-left: 100px;
-    
   }
 
   #title {
-    width: 300px;
+    width: 490px;
     height: 75px;
-    background: white;
     border-radius: 35px 35px 0px 0px;
     border-bottom-color: black;
     border-bottom-width: medium;
     border-bottom-style: solid;
-    background-color: white;
   }
 
   #dataFooter {
-    width: 300px;
+    width: 490px;
     height: 75px;
     position: absolute;
     bottom: 0;
@@ -141,8 +145,7 @@ import { setTimeout } from 'timers';
   }
 
   #dataTable {
-    width: 300px;
-    background-color: white;
+    width: 490px;
     overflow: scroll;
     border-radius: 0px 0px 30px 30px;
   }
