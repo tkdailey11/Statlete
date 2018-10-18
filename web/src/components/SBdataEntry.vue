@@ -33,7 +33,8 @@ import { setTimeout } from 'timers';
       gameID: '',
       height: {
         default: 'height: 500px;'
-      }
+      },
+      isActive: true
     },
     computed: {
       ...mapGetters({
@@ -51,13 +52,14 @@ import { setTimeout } from 'timers';
     },
     methods: {
       plusClicked(obj) {
-        this.$emit('StatChange', 'plus:' + obj)
-        var id = '#' + obj.split(' ').join('') + '-button';
-        jQuery(id).css('opacity', '0.3');
-        setTimeout(() => {
-          jQuery(id).css('opacity', '1.0');
-        }, 150);
-        
+        if(this.isActive){
+          this.$emit('StatChange', 'plus:' + obj)
+          var id = '#' + obj.split(' ').join('') + '-button';
+          jQuery(id).css('opacity', '0.3');
+          setTimeout(() => {
+            jQuery(id).css('opacity', '1.0');
+          }, 150);
+        }
       }
     },
     data() {
@@ -105,7 +107,7 @@ import { setTimeout } from 'timers';
 
 <style scoped>
   #SBdataEntry {
-    width: 310px;
+    width: 500px;
     height: 500px;
     border-width: 5px;
     border-color: black;
@@ -114,22 +116,19 @@ import { setTimeout } from 'timers';
     position: relative;
     box-shadow: 5px 5px 5px grey;
     padding-left: 100px;
-    
   }
 
   #title {
-    width: 300px;
+    width: 490px;
     height: 75px;
-    background: white;
     border-radius: 35px 35px 0px 0px;
     border-bottom-color: black;
     border-bottom-width: medium;
     border-bottom-style: solid;
-    background-color: white;
   }
 
   #dataFooter {
-    width: 300px;
+    width: 490px;
     height: 75px;
     position: absolute;
     bottom: 0;
@@ -146,8 +145,7 @@ import { setTimeout } from 'timers';
   }
 
   #dataTable {
-    width: 300px;
-    background-color: white;
+    width: 490px;
     overflow: scroll;
     border-radius: 0px 0px 30px 30px;
   }

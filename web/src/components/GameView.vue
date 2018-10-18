@@ -4,9 +4,19 @@
     <div class="TopBanner">
         <h1 style="font-size: 400%; font-weight: bold;">{{selectedTeamName}}</h1>
         <div class="TimeClock" @click="clockClicked">
-          <period-marker style="float: left; margin-left: 25%; margin-top: 25px;" :period="1" :filled="activePeriod >= 1"></period-marker>
-          <h1 style="width: 100px; float: left; margin-top: 25px;">{{currTime}}</h1>
-          <period-marker style="float: left; margin-top: 25px;" :period="2" :filled="activePeriod >= 2"></period-marker>
+          <div id="myTeamScore" style="float: left; border-right: solid black 5px; height: 100%; padding: 5px;">
+            <h2 style="margin: 5px;">My Team</h2>
+            <h2>{{ myScore }}</h2>
+          </div>
+          <div>
+            <period-marker style="float: left; margin-top: 25px;" :period="1" :filled="activePeriod >= 1"></period-marker>
+            <h1 style="width: 100px; float: left; margin-top: 25px;">{{currTime}}</h1>
+            <period-marker style="float: left; margin-top: 25px;" :period="2" :filled="activePeriod >= 2"></period-marker>
+          </div>
+          <div id="opponentScore" style="float: right; border-left: solid black 5px; height: 100%; padding: 5px;">
+            <h2 style="margin: 5px;">Opponent</h2>
+            <h2>{{ oppScore }}</h2>
+          </div>
         </div>
     </div>
     <div id="EntryView">
@@ -18,6 +28,7 @@
         <sb-data-entry id="sbde1"
                       style="float: left;"
                       :height="'height: 500px;'"
+                      :isActive="gameLive"
                       @StatChange="updateDB"
                       :gameID="activeGameId"></sb-data-entry>
       </div>
@@ -63,7 +74,9 @@
         shouldStartClock: false,
         inProgress: false,
         gameLive: false,
-        currentPlayer: ''
+        currentPlayer: '',
+        myScore: 0,
+        oppScore: 0
       }
     },
     mounted() {
@@ -101,6 +114,19 @@
             self.activeInterval = setInterval(self.updateTime, 1000);
           }
         })
+      })
+
+      ref.child('MyTotals').on('value', function(snapshot){
+        var val = snapshot.val();
+        var score = val.Period1.Goals.Total;
+        score += val.Period2.Goals.Total;
+        self.myScore = score;
+      })
+      ref.child('OpponentsTotals').once('value', function(snapshot2){
+        var val2 = snapshot2.val();
+        var score2 = val2.Period1.Goals.Total;
+        score2 += val2.Period2.Goals.Total;
+        self.oppScore = score2;
       })
     },
     computed: {
@@ -511,7 +537,7 @@
     flex-grow: 2;
   }
   #sbde1{
-    width: 310px;
+    width: 500px;
     height: 500px;
     background: white;
     margin: 50px;

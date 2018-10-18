@@ -8,6 +8,8 @@ import firebase from 'firebase'
 import { config } from './helpers/firebaseConfig'
 import VueFormWizard from 'vue-form-wizard'
 import VueGoodWizard from 'vue-good-wizard';
+import VueScrollingTable from 'vue-scrolling-table';
+Vue.component('vue-scrolling-table', VueScrollingTable);
 require("firebase/functions");
 
 import SelectSport from '@/components/SelectSport';
