@@ -15,6 +15,8 @@ import PlayerSettings from '@/components/PlayerSettings'
 import WizardPlayer from '@/components/WizardPlayer'
 import WizardT from '@/components/WizardT'
 import AnalysisPage from '@/components/AnalysisPage'
+import AboutPage from '@/components/AboutPage'
+import FAQPage from '@/components/FAQPage'
 
 
 Vue.use(Router)
@@ -38,6 +40,16 @@ let router = new Router({
       path: '/sign-up',
       name: 'SignUp',
       component: SignUp
+    },
+    {
+      path: '/about',
+      name: 'AboutPage',
+      component: AboutPage
+    },
+    {
+      path: '/faq',
+      name: 'FAQPage',
+      component: FAQPage
     },
     {
       path: '/main',

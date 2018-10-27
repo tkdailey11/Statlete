@@ -174,6 +174,7 @@ export default {
       var oppData = [];
       var myData = [];
       var isSoccer = this.selectedTeamSport == 1
+      var periodLength = 45;
 
       if(isSoccer){
         oppData = {
@@ -199,6 +200,7 @@ export default {
         };
       }
       else {
+        periodLength = 12;
         myData = {
           "Period1" : this.basketballStats,
           "Period2" : this.basketballStats,
@@ -208,22 +210,20 @@ export default {
       }
       var d = new Date();
       var dateStr = d.toJSON().substring(0,10);
-      // var startTime = Math.floor(Date.now() / 1000)
-      var startTime = -1;
       
       var data = {
         "Date" : dateStr,
-        "HalfLength" : 45,
-        "InProgress" : true,
+        "InProgress" : false,
         "Live" : true,
         "MyTotals" : myData,
         "Name" : gameID,
         "OpponentsTotals" : oppData,
         "Period" : 1,
-        "PeriodStartTime" : startTime
+        "PeriodStartTime" : -1
       }
 
       if(isSoccer) {
+        data['HalfLength'] = periodLength;
         var ref = firebase.database().ref('SoccerGames').child(this.selectedTeamId).update({
           [gameID] : data
         })
@@ -232,6 +232,7 @@ export default {
         })
       }
       else {
+        data['PeriodLength'] = periodLength;
         data['NumberOfPeriods'] = 4;
         var ref = firebase.database().ref('BasketballGames').child(this.selectedTeamId).update({
           [gameID] : data

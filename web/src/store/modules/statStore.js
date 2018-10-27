@@ -47,10 +47,10 @@ const state = {
       "OREB" : {
         "Total" : 0
       },
-      "FGA" : {
+      "FG2A" : {
         "Total" : 0
       },
-      "FGM" : {
+      "FG2M" : {
         "Total" : 0
       },
       "FG3A" : {

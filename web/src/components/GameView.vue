@@ -103,6 +103,7 @@
         })
         ref.child('PeriodLength').once('value', function(snap){
           self.GV_SET_PERIOD_LENGTH(snap.val());
+          self.currTime = snap.val() + ':00';
         })
       }
       
@@ -131,15 +132,11 @@
 
       ref.child('MyTotals').on('value', function(snapshot){
         var val = snapshot.val();
-        var score = val.Period1.Goals.Total;
-        score += val.Period2.Goals.Total;
-        self.myScore = score;
+        self.myScore = self.computeScore(val);
       })
-      ref.child('OpponentsTotals').once('value', function(snapshot2){
+      ref.child('OpponentsTotals').on('value', function(snapshot2){
         var val2 = snapshot2.val();
-        var score2 = val2.Period1.Goals.Total;
-        score2 += val2.Period2.Goals.Total;
-        self.oppScore = score2;
+        self.oppScore = self.computeScore(val2);
       })
     },
     computed: {
@@ -176,6 +173,34 @@
         GV_SET_PERIOD_LENGTH: 'gameViewStore/GV_SET_PERIOD_LENGTH',
         GV_SET_NUM_PERIODS: 'gameViewStore/GV_SET_NUM_PERIODS'
       }),
+      computeScore(val){
+        var score = 0;
+        if(this.isSoccer){
+          score += val.Period1.Goals.Total;
+          score += val.Period2.Goals.Total;
+        }
+        else {
+          console.log()
+          score += val.Period1.FTM.Total;
+          score += (2 * val.Period1.FG2M.Total);
+          score += (3 * val.Period1.FG3M.Total);
+
+          score += val.Period2.FTM.Total;
+          score += (2 * val.Period2.FG2M.Total);
+          score += (3 * val.Period2.FG3M.Total);
+
+          if(this.numberOfPeriods == 4){
+            score += val.Period3.FTM.Total;
+            score += (2 * val.Period3.FG2M.Total);
+            score += (3 * val.Period3.FG3M.Total);
+
+            score += val.Period4.FTM.Total;
+            score += (2 * val.Period4.FG2M.Total);
+            score += (3 * val.Period4.FG3M.Total);
+          }
+        }
+        return score;
+      },
       toggleEntryClicked(){
         var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
         var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
@@ -225,130 +250,130 @@
         }
       },
       clockClicked(event){
-        if(this.isSoccer){
-          if(this.currTime.toLowerCase() === "final"){
-            return;
+        if(this.currTime.toLowerCase() === "final"){
+          return;
+        }
+        //Start a Period
+        else if(!this.inProgress){
+          var d = new Date();
+          var elapsedSeconds = Math.round(d.getTime() / 1000);
+          var message = "Start Game?";
+          var gameData = {
+            InProgress: true,
+            PeriodStartTime: elapsedSeconds
           }
-          else if(this.activePeriod == 1 && !this.inProgress){
-            var message = "Start Game?";
-            var options = {
-              okText: 'YES',
-              cancelText: 'NO',
-              animation: 'bounce'
-            }
-            var self = this;
-            self.$dialog.confirm(message, options).then(function() {
-              //YES
-              var ref = firebase.database().ref('/SoccerGames').child(self.selectedTeamId).child(self.activeGameId);
-
-              var result = {};
-              var d = new Date();
-              var elapsedSeconds = Math.round(d.getTime() / 1000);
-
-              ref.update({
-                InProgress: true,
-                PeriodStartTime: elapsedSeconds
-              })
-
-              self.GV_SET_PERIOD_START_TIME(elapsedSeconds);
-              self.activeInterval = setInterval(self.updateTime, 1000);
-            }).catch(function() {
-              //NO
-            })
-          }
-          else if(this.activePeriod == 1 && this.inProgress){
-              var message = "End 1st Half?";
-              var options = {
-                okText: 'YES',
-                cancelText: 'NO',
-                animation: 'bounce'
-              }
-              var self = this;
-              self.$dialog.confirm(message, options).then(function() {
-                clearInterval(self.activeInterval);
-                self.currTime = '00:00';
-
-                var ref = firebase.database().ref('/SoccerGames').child(self.selectedTeamId).child(self.activeGameId);
-                ref.update({
-                  Period: 2,
-                  InProgress: false
-                })
-
-              }).catch(function() {
-
-              })
-          }
-          else if(this.activePeriod == 2){
-            if(this.inProgress){
-              //end the game
-              var message = "End Game?";
-              var options = {
-                okText: 'YES',
-                cancelText: 'NO',
-                animation: 'bounce'
-              }
-              var self = this;
-              self.$dialog.confirm(message, options).then(function() {
-                clearInterval(self.activeInterval);
-                self.currTime = 'FINAL'
-                var ref = firebase.database().ref('/SoccerGames').child(self.selectedTeamId).child(self.activeGameId)
-
-                ref.child('MyTotals').once('value', function(snapshot){
-                  var val = snapshot.val();
-                  var score = val.Period1.Goals.Total;
-                  score += val.Period2.Goals.Total;
-
-                  ref.child('OpponentsTotals').once('value', function(snapshot2){
-                    var val2 = snapshot2.val();
-                    var score2 = val2.Period1.Goals.Total;
-                    score2 += val2.Period2.Goals.Total;
-
-                    var result = '';
-                    if(score == score2){
-                      result = 'T'
-                    }
-                    else if(score > score2){
-                      result = 'W'
-                    }
-                    else{
-                      result = 'L'
-                    }
-
-                    ref.update({
-                      InProgress: false,
-                      Live: false,
-                      Period: -1,
-                      Result: result
-                    })
-
-                  })
-                })
-              })
+          if(this.activePeriod == 2){
+            if(this.numberOfPeriods == 4){
+              message = "Start 2nd Quarter?";
             }
             else{
-              var message = "Start 2nd Half?";
-              var options = {
-                okText: 'YES',
-                cancelText: 'NO',
-                animation: 'bounce'
-              }
-              var self = this;
-              self.$dialog.confirm(message, options).then(function() {
-                var ref = firebase.database().ref('/SoccerGames').child(self.selectedTeamId).child(self.activeGameId);
-                var d = new Date();
-                var elapsedSeconds = Math.round(d.getTime() / 1000);
-                ref.update({
-                  InProgress: true,
-                  PeriodStartTime: elapsedSeconds
-                })
-                self.GV_SET_PERIOD_START_TIME(elapsedSeconds);
-                self.activeInterval= setInterval(self.updateTime, 1000);
-              })
+              message = "Start 2nd Half?";
             }
           }
+          else if (this.activePeriod == 3){
+            message = "Start 2nd Half?";
+          }
+          else if (this.activePeriod == 4){
+            message = "Start 4th Quarter?";
+          }
+
+          var options = {
+            okText: 'YES',
+            cancelText: 'NO',
+            animation: 'bounce'
+          }
+          var self = this;
+          self.$dialog.confirm(message, options).then(function() {
+            //YES
+            var dbRoot = '/BasketballGames';
+            if(self.isSoccer){
+              dbRoot = '/SoccerGames'
+            }
+            var ref = firebase.database().ref(dbRoot).child(self.selectedTeamId).child(self.activeGameId);
+
+            var result = {};
+            var d = new Date();
+            var elapsedSeconds = Math.round(d.getTime() / 1000);
+
+            ref.update(gameData)
+
+            self.GV_SET_PERIOD_START_TIME(elapsedSeconds);
+            self.activeInterval = setInterval(self.updateTime, 1000);
+          }).catch(function() {
+            //NO
+          })
         }
-        else{
-          //handle clock clicks for basketball
+        //End Game
+        else if(this.activePeriod == this.numberOfPeriods){
+          //end the game
+          var message = "End Game?";
+          var options = {
+            okText: 'YES',
+            cancelText: 'NO',
+            animation: 'bounce'
+          }
+          var self = this;
+          self.$dialog.confirm(message, options).then(function() {
+            clearInterval(self.activeInterval);
+            self.currTime = 'FINAL'
+            var dbRoot = '/BasketballGames';
+            if(self.isSoccer){
+              dbRoot = '/SoccerGames';
+            }
+            var ref = firebase.database().ref(dbRoot).child(self.selectedTeamId).child(self.activeGameId);
+            var result = '';
+            if(self.myScore == self.oppScore){
+              result = 'T'
+            }
+            else if(self.myScore > self.oppScore){
+              result = 'W'
+            }
+            else{
+              result = 'L'
+            }
+
+            ref.update({
+              InProgress: false,
+              Live: false,
+              Period: -1,
+              Result: result
+            })
+          })
+        }
+        //End a Period
+        else {
+          var message = "End 1st Half?";
+          if(this.numberOfPeriods == 4){
+            if(this.activePeriod == 1){
+              message = "End 1st Quarter?";
+            }
+            else if(this.activePeriod == 3){
+              message = "End 3rd Quarter?";
+            }
+          }
+          var options = {
+            okText: 'YES',
+            cancelText: 'NO',
+            animation: 'bounce'
+          }
+          var self = this;
+          self.$dialog.confirm(message, options).then(function() {
+            clearInterval(self.activeInterval);
+            self.currTime = '00:00';
+            var dbRoot = '/BasketballGames';
+            if(self.isSoccer){
+              dbRoot = '/SoccerGames';
+            }
+            var prd = self.activePeriod + 1;
+            var ref = firebase.database().ref(dbRoot).child(self.selectedTeamId).child(self.activeGameId);
+            ref.update({
+              Period: prd,
+              InProgress: false
+            })
+
+          }).catch(function() {
+
+          })
         }
       },
       playerWasSelected(event) {
@@ -419,7 +444,14 @@
               })
             })
           }
-          var dbRef = dbRefGame.child('MyTotals').child(period).child(input[1]);
+          var dbRef = null;
+          if(player === 'otherTeam'){
+            dbRef = dbRefGame.child('OpponentsTotals').child(period).child(input[1]);
+            player = ' ';
+          }
+          else{
+            dbRef = dbRefGame.child('MyTotals').child(period).child(input[1]);
+          }
           dbRef.child('Total').once('value', function(snapshot){
             var tot = snapshot.val() + 1;
             var time = self.currTime;

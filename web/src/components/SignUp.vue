@@ -7,6 +7,12 @@
     <input type="password" v-model="passwordConfirm" placeholder="Confirm Password"><br>
     <button class="btn btn-outline-primary" @click="signUp">Sign Up</button>
     <p style="color: rgb(224,0,16);">or go back to <router-link to="/login" class="link">login</router-link>.</p>
+    <footer class="navbar fixed-bottom myNav">
+        <div><router-link to="/login" class="link">Login</router-link></div>
+        <div>Signup</div>
+        <div><router-link to="/about" class="link">About</router-link></div>
+        <div><router-link to="/faq" class="link">FAQ</router-link></div>
+    </footer>
   </div>
 </template>
 
@@ -42,8 +48,19 @@
 </script>
 
 <style scoped>
-  .signUp {
+  .sign-up {
     margin-top: 40px;
+    color: rgb(224,0,16);
+  }
+  .myNav{
+        background-color: white;
+    color: rgb(224,0,16);
+    padding-left: 25vw;
+    padding-right: 25vw;
+    padding-bottom: 25px;
+    padding-top: 25px;
+    border-top: 1px solid rgb(224,0,16);
+    margin-top: 25px;
   }
   input {
     margin: 10px 0;

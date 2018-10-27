@@ -6,6 +6,12 @@
     <button class="btn btn-outline-primary btn-social" @click="signIn">Sign In</button><br>
     <button class="btn btn-outline-primary btn-social" @click="signInGoogle">Google</button><br>
     <p style="color: rgb(224,0,16);">Don't have an account? <router-link to="/sign-up" class="link">Click here to create one!</router-link></p>
+    <footer class="navbar fixed-bottom myNav">
+        <div>Login</div>
+        <div><router-link to="/sign-up" class="link">Signup</router-link></div>
+        <div><router-link to="/about" class="link">About</router-link></div>
+        <div><router-link to="/faq" class="link">FAQ</router-link></div>
+    </footer>
   </div>
 </template>
 
@@ -21,6 +27,12 @@
       }
     },
     methods: {
+      aboutClicked: function(){
+        this.$router.push('/about')
+      },
+      signupClicked: function(){
+        this.$router.push('/sign-up')
+      },
       signIn: function() {
         firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
           (user) => {
@@ -94,6 +106,16 @@
   }
   h1 {
     font-size: 60px;
+  }
+  .myNav{
+        background-color: white;
+    color: rgb(224,0,16);
+    padding-left: 25vw;
+    padding-right: 25vw;
+    padding-bottom: 25px;
+    padding-top: 25px;
+    border-top: 1px solid rgb(224,0,16);
+    margin-top: 25px;
   }
   input:-webkit-autofill {
       -webkit-box-shadow:0 0 0 50px white inset; /* Change the color to your own background color */
