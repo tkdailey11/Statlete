@@ -1,6 +1,7 @@
 <template>
   <div class="main">
     <new-player @newPlayerAdded="hideModal" />
+    <new-game @gameAdded="hideGameModal"/>
     <nav-component />
 
     <div id="notImplementedAlert" class="alert alert-primary alert-dismissible fade show" role="alert">
@@ -17,11 +18,11 @@
       <div class="mainBody">
         <games-list style="margin-top: 20px;"
                     @gameSelected="gameSelected"
-                    @AddGame="addGame">
+                    @AddGame="showModal('new-game')">
         </games-list>
         <players-list style="margin-top: 20px;"
                       @playerSelected="viewPlayerInfo"
-                      @addPlayerClicked="showModal"
+                      @addPlayerClicked="showModal('new-player')"
                       :players="players">
         </players-list>
         <div class="button-wrapper">
@@ -128,8 +129,11 @@ export default {
         }
       });
     },
-    showModal () {
-      this.$modal.show('new-player');
+    showModal (name) {
+      this.$modal.show(name);
+    },
+    hideGameModal (event) {
+
     },
     hideModal (event) {
       var id = this.selectedTeamId;

@@ -54,6 +54,9 @@ Vue.component('side-nav', SideNav);
 import NewPlayer from '@/components/NewPlayer';
 Vue.component('new-player', NewPlayer);
 
+import NewGame from '@/components/NewGame';
+Vue.component('new-game', NewGame);
+
 import SBdataEntry from '@/components/SBdataEntry';
 Vue.component('sb-data-entry', SBdataEntry);
 
@@ -107,6 +110,10 @@ import VuejsDialog from "vuejs-dialog"
 import 'vuejs-dialog/dist/vuejs-dialog.min.css'
 Vue.use(VuejsDialog)
 
+import GroupButton from 'vue-libs-radio-group';
+Vue.component('group-button', GroupButton);
+
+
 import dropdown from 'vue-dropdowns'
 Vue.component('dropdown', dropdown);
 
@@ -127,6 +134,12 @@ Vue.use(VueGoodWizard)
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
 Vue.component('icon', Icon)
+
+import ToggleButton from 'vue-js-toggle-button'
+Vue.use(ToggleButton)
+
+import vSelect from 'vue-select'
+Vue.component('v-select', vSelect)
 
 let app;
 firebase.initializeApp(config);
