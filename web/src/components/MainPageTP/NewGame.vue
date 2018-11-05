@@ -5,18 +5,24 @@
                 <div class="partition-title">Add Game</div>
                 <div class="partition-form">
                     <form>
-                        <label>Opponent:</label>
-                        <input id="opponent" type="text" placeholder="Opponent" style="margin: 20px; width: 70%" v-model="oppName">
-                        <br>
-                        <!-- <v-select style="margin: 20px; width: 70%" :options="periodLengths"></v-select> -->
-                        <!-- <group-button :options="states" v-model="currentState" /> -->
-                        
-                        <div style="margin-left: 25%;">
+                        <!-- <label>Opponent:</label>
+                        <input id="opponent" type="text" placeholder="Opponent" style="margin: 20px; width: 70%" v-model="oppName"> -->
+                         <!-- <div style="font-size: 12px;">
+                            <scroll-picker-group class="flex">
+                                <scroll-picker :options="periodLengths" @input="change" />
+                                <scroll-picker :options="periodLengths" @input="change" />
+                                <scroll-picker :options="periodLengths" @input="change" />
+                            </scroll-picker-group>
+                          </div> -->
+                          <div id="appWheel" style="width: 100px; height: 100px; margin: 10px auto 0 auto">
+                            <wheel-count-number :text="text"></wheel-count-number>
+                          </div>
+                        <!-- <div style="margin-left: 25%;">
                             <toggle-button :color="'#e00010'" v-model="scEnabled" /><label class="sceLabel">Shot Chart Enabled</label>
                         </div>
                         <div style="margin-left: 25%;">
                             <toggle-button :color="'#e00010'" v-model="teamCode" /><label class="sceLabel">Viewable with Team Code</label>
-                        </div>
+                        </div> -->
                     </form>
                     <button class="large-btn github-btn" style="width: 90%; margin-left: 20px;" @click="submit">SUBMIT</button>
                 </div>
@@ -25,7 +31,8 @@
     </modal>
 </template>
 <script>
-const MODAL_WIDTH = 450
+const MODAL_WIDTH = 450;
+
 
 export default {
   name: 'NewGame',
@@ -36,8 +43,9 @@ export default {
       scEnabled: false,
       teamCode: false,
       currentState: 'all',
-      states: {active: 'Show Active', inactive: 'Show Inactive', all: 'Show All'},
-      periodLengths: [45, 40, 35, 30, 25, 20, 1]
+      periodLengths: ['45', '40', '35', '30', '25', '20', '1'],
+      selected: 1,
+      text: '998'
     }
   },
   created () {
@@ -48,6 +56,9 @@ export default {
   methods: {
     submit() {
         alert(this.oppName + ' ' + this.scEnabled + ' ' + this.teamCode)
+    },
+    change(value) {
+      console.log('*** ' + value + ' ***')
     }
   }
 }
@@ -62,6 +73,7 @@ $bright_red: rgb(224, 0, 16);
   width: 450px;
   height: 50vh;
   border-radius: 10px;
+  color: $bright_red;
 
   .partition {
     width: 100%;
@@ -112,6 +124,13 @@ $bright_red: rgb(224, 0, 16);
   }
   .sceLabel {
       width: 75%;
+  }
+
+  .myInput {
+    color: $bright_red;
+  }
+  .myNumButton {
+    background-color: $bright_red;
   }
 
 </style>

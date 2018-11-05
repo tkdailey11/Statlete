@@ -1,22 +1,24 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
-import Login from '@/components/Login'
-import SignUp from '@/components/SignUp'
 import firebase from 'firebase'
-import Main from '@/components/Main'
-import FLP from '@/components/FirstLandingPage'
-import GameView from '@/components/GameView'
-import TeamSettings from '@/components/TeamSettings'
-import TeamStats from '@/components/TeamStats'
-import PlayerDetailView from '@/components/PlayerDetailView'
-import PlayerHome from '@/components/PlayerHome'
-import PlayerSettings from '@/components/PlayerSettings'
-import WizardPlayer from '@/components/WizardPlayer'
-import WizardT from '@/components/WizardT'
-import AnalysisPage from '@/components/AnalysisPage'
-import AboutPage from '@/components/AboutPage'
-import FAQPage from '@/components/FAQPage'
+
+
+
+import Login from '@/components/Router/Login'
+import SignUp from '@/components/Router/SignUp'
+import Main from '@/components/Router/Main'
+import FLP from '@/components/Router/FirstLandingPage'
+import GameView from '@/components/Game/GameView'
+import TeamSettings from '@/components/Router/TeamSettings'
+import TeamStats from '@/components/Game/TeamStats'
+import PlayerDetailView from '@/components/Router/PlayerDetailView'
+import PlayerHome from '@/components/Router/PlayerHome'
+import PlayerSettings from '@/components/Router/PlayerSettings'
+import WizardPlayer from '@/components/Wizards/WizardPlayer'
+import WizardT from '@/components/Wizards/WizardT'
+import AnalysisPage from '@/components/Router/AnalysisPage'
+import AboutPage from '@/components/Router/AboutPage'
+import FAQPage from '@/components/Router/FAQPage'
 
 
 Vue.use(Router)
