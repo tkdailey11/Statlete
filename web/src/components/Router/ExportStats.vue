@@ -29,6 +29,7 @@ export default {
             gamesList: 'mainStore/gamesList',
             selectedTeamId: 'mainStore/selectedTeamId',
             players: 'mainStore/players',
+            selectedTeamName: 'mainStore/selectedTeamName',
             selectedTeamSport: 'mainStore/selectedTeamSport'
         }),
         playersList: function() {
@@ -88,7 +89,11 @@ export default {
             Promise.all(promisesList).then(function(vals){
                 var doc = new jsPDF();
                 var singlePlayerLength = 75;
-                var topOffset = 10
+                var topOffset = 15
+                doc.setFontSize(25)
+                doc.setFontStyle('bold')
+                doc.text(self.selectedTeamName, 10, topOffset)
+                topOffset += 10
                 dataPointsArr.forEach(function(el, idx){
                     doc.setFontSize(12)
                     doc.setFontStyle('bold')
@@ -119,7 +124,7 @@ export default {
                     var myLength = topOffset + (Object.keys(dataPointsArr).length * singlePlayerLength);
                     if(myLength > 1000){
                         doc.addPage()
-                        topOffset = 10
+                        topOffset = 15
                     }
                    
                 });
