@@ -1,0 +1,326 @@
+$bright_red: rgb(224, 0, 16);
+$transparent_red: rgba(224, 0, 16, 0.5);
+
+.TopBanner {
+    color: $bright_red;
+}
+
+.pss_plFooter {
+    color: $bright_red;
+}
+.pss_plFooter:hover {
+    background-color: $transparent_red;
+    color: white;
+}
+
+.pssTD {
+    color: $bright_red;
+}
+
+.pssH1 {
+    color: $bright_red;
+}
+
+.sbdeTD {
+    color: $bright_red;
+}
+
+.gl_title {
+    border-bottom-color: $bright_red;
+}
+
+.glFooter {
+    color: $bright_red;
+    border-top-color: $bright_red;
+}
+
+.glFooter:hover {
+    background-color: $transparent_red;
+    color: white;
+}
+
+.glTD {
+    border-bottom-color: $bright_red;
+    color: $bright_red;
+}
+
+.glTR:hover .glTD {
+    background-color: $transparent_red;
+    color: white;
+}
+
+.gl_table {
+    border-color: $bright_red;
+}
+
+.glH1 {
+    color: $bright_red;
+}
+
+.GamesList {
+    border-color: $bright_red;
+}
+
+.ng_box {
+    color: $bright_red;
+
+    .partition_title {
+        color: $bright_red;
+    }
+}
+
+.ng_input {
+    color: $bright_red;
+    border-bottom-color: $bright_red;
+}
+
+.ng_label {
+    color: $bright_red;
+}
+
+.np_box {
+    color: $bright_red;
+}
+
+.np_github-btn {
+    border-color: $bright_red;
+    background-color: $bright_red;
+    color: white;
+}
+
+.np_github-btn:hover {
+    background-color: $transparent_red;
+}
+
+.PlayersList {
+    border-color: $bright_red;
+}
+
+.plTitle {
+    border-bottom-color: $bright_red;
+}
+
+.plFooter {
+    border-top-color: $bright_red;
+    color: $bright_red;
+}
+
+.plFooter:hover {
+    background-color: $transparent_red;
+    color: white;
+}
+
+.pl_table {
+    border-color: $bright_red;
+}
+
+.plTR:hover td{
+    background-color: $transparent_red;
+    color: white;
+}
+
+.plTD {
+    border-bottom-color: $bright_red;
+    color: $bright_red;
+}
+
+.plH1 {
+    color: $bright_red;
+}
+
+.sidenav {
+    background: $bright_red;
+}
+
+#mySidenav {
+    background: $bright_red;
+}
+
+.AboutPage {
+    color: $bright_red;
+}
+
+.myBottomNav {
+    background: white;
+    color: $bright_red;
+    border-top-color: $bright_red;
+    
+}
+
+.AnalysisPage {
+    color: $bright_red;
+}
+.ap_link {
+    color: $bright_red;
+}
+
+.ap_link:hover {
+    color: $transparent_red;
+}
+
+.analysis_button {
+    color: white;
+    background-color: $bright_red;
+    border-color: $bright_red;
+}
+
+.analysis_button:hover {
+    background-color: $transparent_red;
+}
+
+.FLP_H1 {
+    color: $bright_red;
+}
+
+.loginH1 {
+    color: $bright_red;
+}
+
+.loginPtag {
+    color: $bright_red;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: $bright_red;
+    opacity: 1; /* Firefox */
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: $bright_red;
+  }
+
+::-ms-input-placeholder { /* Microsoft Edge */
+color: $bright_red;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow:0 0 0 50px white inset; /* Change the color to your own background color */
+    -webkit-text-fill-color: $bright_red;
+    border-radius: 5px;
+    border-color: $bright_red !important;
+}
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 50px white inset;
+    -webkit-text-fill-color: $bright_red;
+    border-radius: 5px;
+    border-color: $bright_red;
+}
+.login_button {
+    color: white;
+    background-color: $bright_red;
+    border-color: $bright_red;
+}
+.login_button:hover {
+    background-color: $transparent_red;
+}
+
+.login_input {
+    color: $bright_red;
+    border-color: $bright_red;
+}
+
+.main_button {
+    color: white;
+    background-color: $bright_red;
+    border-color: $bright_red;
+}
+.main_button:hover {
+    background-color: $transparent_red;
+}
+
+.mainH1 {
+    color: $bright_red;
+}
+
+.phH1 {
+    color: $bright_red;
+}
+
+.ps_button {
+    color: white;
+    background-color: $bright_red;
+    border-color: $bright_red;
+}
+.ps_button:hover {
+    background-color: $transparent_red;
+}
+
+.ps_input {
+    color: $bright_red;
+}
+
+.psH1 {
+    color: $bright_red;
+}
+
+.psLabel {
+    color: $bright_red;
+}
+
+.ts_button {
+    color: white;
+    background-color: $bright_red;
+    border-color: $bright_red;
+}
+
+.ts_button:hover {
+    background-color: $transparent_red;
+}
+
+.numberBox {
+    color: $bright_red;
+    border-bottom-color: $bright_red;
+}
+
+.nameBox1 {
+    border-bottom-color: $bright_red;
+}
+
+.psb_td {
+    color: $bright_red;
+}
+
+.psb_button {
+    color: white;
+    background-color: $bright_red;
+    border-color: $bright_red;
+}
+
+.psb_button:hover {
+    background-color: $transparent_red;
+}
+
+#playerSelectionBox {
+    border-color: $bright_red;
+}
+
+.ss_selectedButton {
+    background: $bright_red;
+    color: white;
+}
+
+.sportButton {
+    color: $bright_red;
+    background-color: white;
+    border-color: $bright_red;
+}
+
+.selectSportDialog {
+    border-color: $bright_red;
+}
+
+.wizardP {
+    color: $bright_red;
+}
+.wizard__step__indicator {
+    background-color: $bright_red;
+    border-color: $bright_red;
+}
+.wizard__step.active .wizard__step__indicator {
+    background-color: white;
+}
+.wizard__step.active:not(:first-child) .wizard__step__line {
+    background-color: $bright_red;
+}
+// .wizard__step__label {
+
+// }

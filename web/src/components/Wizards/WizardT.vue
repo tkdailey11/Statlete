@@ -150,14 +150,6 @@ export default {
         this.$emit('SetDefaultPid')
       }
     },
-    openNav: function() {
-      setTimeout(function(){
-        document.getElementById("mySidenav").style.width = "250px";
-      }, 90);
-    },
-    closeNav: function() {
-      document.getElementById("mySidenav").style.width = "0";
-    },
     getPlayers() {
       var id = this.selectedTeamId;
       var self = this;
@@ -278,9 +270,7 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
-/* Utilities
-*******************************/
+<style scoped>
 
 .pull-left{
   float:  left !important;
@@ -296,8 +286,7 @@ export default {
   clear: both;
 }
 
-/* Header Steps
-*******************************/
+
 .wizardT {
   position: relative;
   width:  100%;
@@ -358,7 +347,7 @@ export default {
 }
 
 .wizard__step.active:not(:first-child) .wizard__step__line{
-  background-color: rgb(242,209,24); /* green */
+  background-color: rgb(242,209,24);
 }
 
 .wizard__step__label{
@@ -366,8 +355,6 @@ export default {
   font-weight: bold;
 }
 
-/* Wizard body
-*******************************/
 .wizard__body{
   margin-top:  30px;
   min-height:  400px;
@@ -402,8 +389,6 @@ export default {
   transition: left 0.3s;
 }
 
-/* Wizard body
-*******************************/
 .wizard__body__actions{
   position:  absolute;
   bottom:  0px;
@@ -536,19 +521,6 @@ button:hover {
 
 #sportSelectorPlayer {
   margin-top: 10px;
-}
-
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: rgba(255,0,0,0.5);
-  opacity: 1; /* Firefox */
-}
-
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color: rgba(255,0,0,0.5);
-}
-
-::-ms-input-placeholder { /* Microsoft Edge */
-  color: rgba(255,0,0,0.5);
 }
 
 input {

@@ -1,12 +1,12 @@
 <template>
   <div class="SBfield">
     <div class="fill">
-      <img v-if="selectedTeamSport==1" @click="fieldClicked" src="../assets/images/soccerField.png" alt="" id="FieldIMG"/>
-      <img v-else @click="fieldClicked" src="../assets/images/basketball-court.png" alt="" id="FieldIMG"/>      
+      <img v-if="selectedTeamSport==1" @click="fieldClicked" src="../../assets/images/soccerField.png" alt="" id="FieldIMG"/>
+      <img v-else @click="fieldClicked" src="../../assets/images/basketball-court.png" alt="" id="FieldIMG"/>      
       <div class="field_shot" v-for="shot in shotsList" :key="getRand() + shot.shotType">
-        <img v-if="shot.shotType=='gcf'" src="../assets/images/RedFilledCircle.png" alt="" class="field_gcf" :style="[shot.style]"/>
-        <img v-if="shot.shotType=='redx'" src="../assets/images/RedX.png" alt="" class="field_redx" :style="[shot.style]"/>
-        <img v-if="shot.shotType=='ghollow'" src="../assets/images/RedHollowCircleThick.png" alt="" class="field_ghollow" :style="[shot.style]"/>
+        <img v-if="shot.shotType=='gcf'" src="../../assets/images/RedFilledCircle.png" alt="" class="field_gcf" :style="[shot.style]"/>
+        <img v-if="shot.shotType=='redx'" src="../../assets/images/RedX.png" alt="" class="field_redx" :style="[shot.style]"/>
+        <img v-if="shot.shotType=='ghollow'" src="../../assets/images/RedHollowCircleThick.png" alt="" class="field_ghollow" :style="[shot.style]"/>
         <!--<img v-else src="../assets/images/redX.png" alt="" class="field_redx" style="left: 0px; top: 0px;"/>-->
       </div>
     </div>

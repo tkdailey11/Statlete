@@ -6,15 +6,15 @@
     <div id="dataTable" :style="tableHeight">
       <table width="100%">
         <tr v-for="obj in dataTypes">
-          <td>
-            <img v-if="isSoccer" src="../assets/images/goal.png">
-            <img v-else src="../assets/images/basketball-hoop.png">
+          <td class="sbdeTD">
+            <img v-if="isSoccer" src="../../assets/images/goal.png">
+            <img v-else src="../../assets/images/basketball-hoop.png">
           </td>
-          <td class="dataLabelCell" style="max-width: 120px; text-overflow:ellipsis;">
+          <td class="dataLabelCell sbdeTD" style="max-width: 120px; text-overflow:ellipsis;">
             <p class="dataLabel">{{obj}}</p>
           </td>
-          <td class="plusButton" @click="plusClicked(obj)">
-            <img :id="obj.split(' ').join('') + '-button'" src="../assets/images/RedPlusButton.png" style="zoom: 5%;">
+          <td class="plusButton sbdeTD" @click="plusClicked(obj)">
+            <img :id="obj.split(' ').join('') + '-button'" src="../../assets/images/RedPlusButton.png" style="zoom: 5%;">
           </td>
         </tr>
       </table>
@@ -127,7 +127,7 @@ import { setTimeout } from 'timers';
     border-bottom-style: solid;
   }
 
-  #dataFooter {
+  /* #dataFooter {
     width: 490px;
     height: 75px;
     position: absolute;
@@ -142,7 +142,7 @@ import { setTimeout } from 'timers';
     line-height: 75px;
     font-size: 25px;
     color: rgb(224,0,16);
-  }
+  } */
 
   #dataTable {
     width: 490px;
@@ -154,11 +154,11 @@ import { setTimeout } from 'timers';
     border: 1px solid black;
   }
 
-  td {
+  .sbdeTD {
     border-bottom: 1px solid black;
-    color: rgb(224,0,16);
   }
 
+/*TODO: Is color overwritten here by the "style" tag above? If so is white the right color?*/
   h2 {
     line-height: 75px;
     height: 75px;

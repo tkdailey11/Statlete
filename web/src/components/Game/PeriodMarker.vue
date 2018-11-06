@@ -1,7 +1,7 @@
 <template>
     <div class="PeriodMarker">
-        <img class="labelImg" v-if="this.filled" src="../assets/images/RedFilledCircle.png">
-        <img class="labelImg" v-else src="../assets/images/RedHollowCircleThick.png">
+        <img class="labelImg" v-if="this.filled" src="../../assets/images/RedFilledCircle.png">
+        <img class="labelImg" v-else src="../../assets/images/RedHollowCircleThick.png">
         <h2>{{period}}</h2>
     </div>
 </template>

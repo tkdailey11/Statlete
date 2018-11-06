@@ -1,6 +1,6 @@
 <template>
 <modal name="new-player" transition="pop-out" :width="modalWidth" :height="300">
-  <div class="box">
+  <div class="np_box">
       <div class="partition" id="partition-register">
         <div class="partition-title">ADD PLAYER</div>
         <div class="partition-form">
@@ -15,7 +15,7 @@
           </form>
 
 
-          <button class="large-btn github-btn" style="width: 90%; margin-left: 20px;" @click="submit">SUBMIT</button>
+          <button class="np_github-btn" style="width: 90%; margin-left: 20px;" @click="submit">SUBMIT</button>
         </div>
       </div>
   </div>
@@ -56,7 +56,7 @@ export default {
 $background_color: #404142;
 $github_color: #DBA226;
 
-.box {
+.np_box {
   background: white;
   overflow: hidden;
   width: 450px;
@@ -64,7 +64,6 @@ $github_color: #DBA226;
   border-radius: 2px;
   box-sizing: border-box;
   box-shadow: 0 0 40px black;
-  color: #8b8c8d;
   font-size: 0;
 
 
@@ -106,7 +105,6 @@ $github_color: #DBA226;
   }
 
   button {
-    background: white;
     border-radius: 4px;
     box-sizing: border-box;
     padding: 10px;
@@ -115,29 +113,11 @@ $github_color: #DBA226;
     font-weight: 400;
     min-width: 140px;
     margin-top: 8px;
-    color: #8b8c8d;
     cursor: pointer;
-    border: 1px solid #DDDEDF;
     text-transform: uppercase;
     transition: 0.1s all;
     font-size: 10px;
     outline: none;
-    &:hover {
-      border-color: mix(#DDDEDF, black, 90%);
-      color: mix(#8b8c8d, black, 80%);
-    }
-  }
-
-  .large-btn {
-    width: 100%;
-    background: white;
-
-    span {
-      font-weight: 600;
-    }
-    &:hover {
-      color: white !important;
-    }
   }
 
   .button-set {
@@ -147,15 +127,6 @@ $github_color: #DBA226;
   #register-btn,
   #signin-btn {
     margin-left: 8px;
-  }
-
-  .github-btn {
-    border-color: $github_color;
-    color: $github_color;
-    &:hover {
-      border-color: $github_color;
-      background: $github_color;
-    }
   }
 
   .autocomplete-fix {

@@ -1,9 +1,12 @@
 <template>
   <div class="selectSportDialog">
     <div class="buttonGroup">
-      <button id="basketball" :class="{selectedButton: basketballSelected, sportButton: '!basketballSelected'}" @click="selectSport('basketball')">Basketball</button>
-      <button id="football" :class="{selectedButton: footballSelected, sportButton: '!footballSelected'}" @click="selectSport('football')">Football</button>
-      <button id="soccer" :class="{selectedButton: soccerSelected, sportButton: '!soccerSelected'}" @click="selectSport('soccer')">Soccer</button>
+      <button id="basketball" v-if="basketballSelected" class="ss_selectedButton">Basketball</button>
+      <button id="basketball" v-else class="sportButton" @click="selectSport('basketball')">Basketball</button>
+      <button id="football" v-if="footballSelected" class="ss_selectedButton">Football</button>
+      <button id="football" v-else class="sportButton" @click="selectSport('football')">Football</button>
+      <button id="soccer" v-if="soccerSelected" class="ss_selectedButton">Soccer</button>
+      <button id="soccer" v-else class="sportButton" @click="selectSport('soccer')">Soccer</button>
     </div>
   </div>
 </template>
@@ -51,16 +54,11 @@
 
 <style scoped>
   .selectSportDialog {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #2c3e50;
     margin-top: 60px;
     width: 206px;
     height: 93px;
     border-width: 3px;
-    border-color: rgb(224,0,16);
     border-style: solid;
     border-radius: 19px;
   }
@@ -79,15 +77,10 @@
     display: block;
   }
   .sportButton {
-    background-color: white;
-    color: rgb(224,0,16);
     width: 200px;
     border-style: solid;
-    border-color: rgb(224,0,16);
   }
-  .selectedButton {
-    background-color: rgb(224,0,16);
+  .ss_selectedButton {
     width: 200px;
-    color: rgb(242,209,24);
   }
 </style>

@@ -1,19 +1,19 @@
 <template>
   <div class="SBshotType">
     <div id="gcfDiv">
-      <img v-if="this.activeType=='gcf'" src="../assets/images/RedFilledCircle.png" class="GCF activeTypeClass" @click="gcfClicked" alt="Shot on Goal"/>
-      <img v-else src="../assets/images/RedFilledCircle.png" class="GCF" @click="gcfClicked" alt="Shot on Goal"/>
+      <img v-if="this.activeType=='gcf'" src="../../assets/images/RedFilledCircle.png" class="GCF activeTypeClass" @click="gcfClicked" alt="Shot on Goal"/>
+      <img v-else src="../../assets/images/RedFilledCircle.png" class="GCF" @click="gcfClicked" alt="Shot on Goal"/>
       <figcaption v-if="isSoccer" class="myCaption">Goal</figcaption>
       <figcaption v-else class="myCaption">FG Made</figcaption>
     </div>
     <div id="ghollowDiv" v-if="isSoccer">
-      <img v-if="this.activeType=='ghollow'" src="../assets/images/RedHollowCircleThick.png" class="GHollow activeTypeClass" @click="gHollowClicked"/>
-      <img v-else src="../assets/images/RedHollowCircleThick.png" class="GHollow" @click="gHollowClicked"/>
+      <img v-if="this.activeType=='ghollow'" src="../../assets/images/RedHollowCircleThick.png" class="GHollow activeTypeClass" @click="gHollowClicked"/>
+      <img v-else src="../../assets/images/RedHollowCircleThick.png" class="GHollow" @click="gHollowClicked"/>
       <figcaption class="myCaption">Shot on Goal</figcaption>
     </div>
     <div id="redXDiv">
-      <img v-if="this.activeType=='redx'" src="../assets/images/RedX.png" class="redX activeTypeClass" @click="redxClicked"/>
-      <img v-else src="../assets/images/RedX.png" class="redX" @click="redxClicked"/>
+      <img v-if="this.activeType=='redx'" src="../../assets/images/RedX.png" class="redX activeTypeClass" @click="redxClicked"/>
+      <img v-else src="../../assets/images/RedX.png" class="redX" @click="redxClicked"/>
       <figcaption class="myCaption" v-if="isSoccer">Shot</figcaption>
       <figcaption class="myCaption" v-else>FG Miss</figcaption>
     </div>

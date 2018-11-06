@@ -1,16 +1,7 @@
 <template>
   <div id="WizardPlayer" style="padding-top=100px min-height: 100vh;">
-    <statlete-navbar @shouldOpenNav="openNav"
-                     @shouldLogout="logout"
-                     @GoBackClicked="goHome"
-                     style="background: transparent;"></statlete-navbar>
-
-    <side-nav id="mySidenav"
-              @showPlayer="closeNav"
-              @showTeam="showTeam"
-              @teamSelected="teamSelected">
-    </side-nav>
-    <h1 style="color: rgb(242,209,24); margin-bottom: 50px;">Create a New Player Sportfolio</h1>
+    <nav-component />
+    <h1 style="color: rgb(242,209,24); margin-bottom: 50px; margin-top: 5%;">Create a New Player Sportfolio</h1>
     <tkd-wizardP>
     </tkd-wizardP>
   </div>
@@ -54,14 +45,6 @@ export default {
       firebase.auth().signOut().then(() => {
         this.$router.replace('login')
       })
-    },
-    openNav: function() {
-      setTimeout(function(){
-        document.getElementById("mySidenav").style.width = "250px";
-      }, 90);
-    },
-    closeNav: function() {
-      document.getElementById("mySidenav").style.width = "0";
     },
     backClickedPlayer(currentPage) {
       if(currentPage == 0){

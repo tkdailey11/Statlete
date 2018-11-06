@@ -19,6 +19,7 @@ import WizardT from '@/components/Wizards/WizardT'
 import AnalysisPage from '@/components/Router/AnalysisPage'
 import AboutPage from '@/components/Router/AboutPage'
 import FAQPage from '@/components/Router/FAQPage'
+import ExportStats from '@/components/Router/ExportStats'
 
 
 Vue.use(Router)
@@ -137,6 +138,14 @@ let router = new Router({
       path: '/analysis',
       name: 'AnalysisPage',
       component: AnalysisPage,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/exportstats',
+      name: 'ExportStats',
+      component: ExportStats,
       meta: {
         requiresAuth: true
       }

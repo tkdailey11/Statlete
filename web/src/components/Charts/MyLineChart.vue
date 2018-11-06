@@ -1,15 +1,4 @@
 <script>
-// import { Line, mixins } from 'vue-chartjs'
-// export default {
-//     extends: Line,
-//     mixins: [mixins.reactiveData, mixins.reactiveProp],
-//     mounted() {
-//         this.renderChart({
-//             labels: this.chartData.labels,
-//             datasets: this.chartData.datasets
-//         }, {responsive: true, maintainAspectRatio: false});
-//     }
-// }
 import { Line } from 'vue-chartjs'
 
 export default {

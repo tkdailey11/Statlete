@@ -2,7 +2,7 @@
   <div class="PlayerEntryBox">
     <input class="numberBox" type="text" @blur="sendData" v-model="pnum" placeholder="#">
     <input class="nameBox1" type="text" @blur="sendData" v-model="pname" placeholder="" v-if="pnum===''">
-    <input class="nameBox2" type="text" @blur="sendData" v-model="pname" placeholder="Player Name (Optional)" v-else>
+    <input class="nameBox1" type="text" @blur="sendData" v-model="pname" placeholder="Player Name (Optional)" v-else>
   </div>
 </template>
 
@@ -87,24 +87,10 @@
     float: left;
     padding: 0px;
     display: inline-block;
-    background-color: white;
     border: none;
     margin-bottom: 10px;
-    border-bottom: 2px rgb(252,102,0) solid;
-    color: rgb(252,102,0);
-  }
-
-  ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: rgba(255,0,0,0.5);
-    opacity: 1; /* Firefox */
-  }
-
-  :-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color: rgba(255,0,0,0.5);
-  }
-
-  ::-ms-input-placeholder { /* Microsoft Edge */
-    color: rgba(255,0,0,0.5);
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
   }
 
   .nameBox1 {
@@ -113,17 +99,10 @@
     display: inline-block;
     border: none;
     margin-bottom: 10px;
-    border-bottom: 2px rgb(252,102,0) solid;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
   }
-  .nameBox2 {
-    width: 75%;
-    padding: 0px;
-    display: inline-block;
-    border: none;
-    margin-bottom: 10px;
-    border-bottom: 2px rgb(252,102,0) solid;
-    color: rgb(252,102,0);
-  }
+
   input {
     padding: 0px;
     outline: 0;

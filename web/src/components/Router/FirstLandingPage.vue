@@ -1,6 +1,6 @@
 <template>
 <div class="FLP">
-  <h1 style="margin: 75px; color: rgb(242,209,24);">Create Your First Sportfolio!</h1>
+  <h1 class="FLP_H1">Create Your First Sportfolio!</h1>
     <team-wizard>
     </team-wizard>
   </div>
@@ -147,8 +147,11 @@ export default {
 </script>
 
 <style scoped>
-.FLP {
-  width: inherit;
-  height: inherit;
-}
+  .FLP {
+    width: inherit;
+    height: inherit;
+  }
+  .FLP_H1 {
+    margin: 75px;
+  }
 </style>

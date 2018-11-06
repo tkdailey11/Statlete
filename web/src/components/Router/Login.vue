@@ -1,16 +1,16 @@
 <template>
   <div class="login">
-    <h1 style="color: rgb(224,0,16);">Statlete</h1>
-    <input type="text" v-model="email" placeholder="Email"><br>
-    <input type="password" v-model="password" placeholder="Password"><br>
-    <button class="btn btn-outline-primary btn-social" @click="signIn">Sign In</button><br>
-    <button class="btn btn-outline-primary btn-social" @click="signInGoogle">Google</button><br>
-    <p style="color: rgb(224,0,16);">Don't have an account? <router-link to="/sign-up" class="link">Click here to create one!</router-link></p>
-    <footer class="navbar fixed-bottom myNav">
+    <h1 class="loginH1">Statlete</h1>
+    <input class="login_input" type="text" v-model="email" placeholder="Email"><br>
+    <input class="login_input" type="password" v-model="password" placeholder="Password"><br>
+    <button class="btn btn-outline-primary btn-social login_button" @click="signIn">Sign In</button><br>
+    <button class="btn btn-outline-primary btn-social login_button" @click="signInGoogle">Google</button><br>
+    <p class="loginPtag">Don't have an account? <router-link to="/sign-up" class="link">Click here to create one!</router-link></p>
+    <footer class="navbar fixed-bottom myBottomNav">
         <div>Login</div>
-        <div><router-link to="/sign-up" class="link">Signup</router-link></div>
-        <div><router-link to="/about" class="link">About</router-link></div>
-        <div><router-link to="/faq" class="link">FAQ</router-link></div>
+        <div><router-link to="/sign-up" class="ap_link">Signup</router-link></div>
+        <div><router-link to="/about" class="ap_link">About</router-link></div>
+        <div><router-link to="/faq" class="ap_link">FAQ</router-link></div>
     </footer>
   </div>
 </template>
@@ -64,36 +64,20 @@
   .login {
     margin-top: 40px;
   }
-  .link {
-    color: rgb(224,0,16);
-  }
-  .link:hover {
-    color: rgb(242,209,24);
-  }
-  input {
+
+  .login_input {
     margin: 10px 0;
     width: 30%;
     padding: 15px;
     border: 0;
     outline: 0;
-    background: transparent;
-    border-bottom: 3px solid rgb(224,0,16);
-    color: rgb(224,0,16);
+    border-bottom-width: 3px;
+    border-bottom-style: solid;
   }
-  button {
+  .login_button {
     margin-top: 20px;
     width: 10%;
     cursor: pointer;
-    color: white;
-    background-color: rgb(224,0,16);
-    border-color: rgb(224,0,16);
-    color: white;
-  }
-
-  button:hover {
-    background-color: white;
-    border-color: rgb(224,0,16);
-    color: rgb(224,0,16);
   }
 
   p {
@@ -107,30 +91,13 @@
   h1 {
     font-size: 60px;
   }
-  .myNav{
-        background-color: white;
-    color: rgb(224,0,16);
+  .myBottomNav{
     padding-left: 25vw;
     padding-right: 25vw;
     padding-bottom: 25px;
     padding-top: 25px;
-    border-top: 1px solid rgb(224,0,16);
+    border-top-style: solid;
+    border-top-width: 3px;
     margin-top: 25px;
   }
-  input:-webkit-autofill {
-      -webkit-box-shadow:0 0 0 50px white inset; /* Change the color to your own background color */
-      -webkit-text-fill-color: rgb(224,0,16);
-      border-radius: 5px;
-  }
-
-  input:-webkit-autofill:focus {
-      -webkit-box-shadow: /*your box-shadow*/,0 0 0 50px white inset;
-      -webkit-text-fill-color: rgb(224,0,16);
-      border-radius: 5px;
-  }
-
-  ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: rgb(224,0,16);
-    opacity: 1; /* Firefox */
-}
 </style>

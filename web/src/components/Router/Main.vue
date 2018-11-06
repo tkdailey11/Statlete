@@ -13,7 +13,7 @@
 
     <div id="mainPage">
       <div class="mainHeader">
-        <h1 style="color: rgb(224, 0, 16); margin: 25px 50px 50px 50px;">{{selectedTeamName}}</h1>
+        <h1 class="mainH1">{{selectedTeamName}}</h1>
       </div>
       <div class="mainBody">
         <games-list style="margin-top: 20px;"
@@ -26,9 +26,10 @@
                       :players="players">
         </players-list>
         <div class="button-wrapper">
-          <button @click="editTeamSettings" class="btn btn-outline-primary myButton">Edit Team Settings</button>
-          <button @click="viewTeamStats" class="btn btn-outline-primary myButton">View Team Stats</button>
-          <button @click="goToAnalysis" class="btn btn-outline-primary myButton">Go to Analysis Page</button>
+          <button @click="editTeamSettings" class="btn btn-outline-primary main_button">Edit Team Settings</button>
+          <button @click="viewTeamStats" class="btn btn-outline-primary main_button">View Team Stats</button>
+          <button @click="goToAnalysis" class="btn btn-outline-primary main_button">Go to Analysis Page</button>
+          <button @click="goToPdf" class="btn btn-outline-primary main_button">Export Stats to PDF</button>
         </div>
       </div>
     </div>
@@ -86,6 +87,9 @@ export default {
     goToAnalysis: function(event) {
       this.$router.push('/analysis');
     },
+    goToPdf: function(event) {
+      this.$router.push('/exportstats')
+    },
     gameSelected: function(event) {
       this.SET_ACTIVE_GAME_ID(this.gamesList[event - 1]);
       this.$router.push('/gameview');
@@ -94,7 +98,7 @@ export default {
       this.$router.push('/teamsettings');
     },
     viewTeamStats() {
-      console.log("VIEW TEAM STATS");
+      this.$router.push('/teamstats')
     },
     viewPlayerInfo() {
       console.log("View PLAYER INFO");
@@ -263,12 +267,7 @@ export default {
   li {
     display: inline-block;
     margin: 0 10px;
-  }
-  a {
-    color: #42b983;
-  }
-
-  
+  }  
 
   /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
   .main {
@@ -276,20 +275,13 @@ export default {
       margin:0px;
       min-height: 100%;
   }
-  button {
+  .main_button {
     margin-top: 20px;
     cursor: pointer;
-    color: white;
-    background-color: rgb(255,158,0);
-    border-color: rgb(224,0,16);
-    color: rgb(224,0,16);
+    height: 50px;
+    max-height: 50px;
+    margin: 50px;
   }
-  button:hover {
-    background-color: rgb(242,209,24);
-    border-color: rgb(224,0,16);
-    color: rgb(180, 41, 102);
-  }
-
 
   .mainHeader {
     width: 100%;
@@ -325,16 +317,13 @@ export default {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    background-color: white;
-  }
-  .myButton {
-    height: 50px;
-    max-height: 50px;
-    margin: 50px;
   }
 
   #mainPage {
     min-height: 100vh;
-    background-color: white;
+  }
+
+  .mainH1 {
+    margin: 25px 50px 50px 50px;
   }
 </style>

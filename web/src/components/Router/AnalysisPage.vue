@@ -1,15 +1,15 @@
 <template>
-    <div id="AnalysisPage">
+    <div class="AnalysisPage">
         <nav-component />
-        <label for="firstDropdown" style="color: red;">First Stat:</label>
+        <label for="firstDropdown">First Stat:</label>
         <select id="firstDropdown">
             <option v-for="type in statTypes" :key="'fd-' + type">{{type}}</option>
         </select>
-        <label for="secondDropdown" style="color: red;">Second Stat:</label>
+        <label for="secondDropdown">Second Stat:</label>
         <select id="secondDropdown">
             <option v-for="type in statTypes" :key="'sd-' + type">{{type}}</option>
         </select>
-        <button @click="submitResponse" class="btn btn-outline-primary myButton">Ask Statlete</button>
+        <button @click="submitResponse" class="btn btn-outline-primary analysis_button">Ask Statlete</button>
         <!--<button @click="saveChart" class="btn btn-outline-primary myButton">Save</button>-->
         <br>
         <br>
@@ -202,23 +202,8 @@ export default {
 </script>
 
 <style scoped>
-    #AnalysisPage {
-        
-    }
-    button {
-        margin-top: 20px;
+    .analysis_button {
         cursor: pointer;
-        color: white;
-        background-color: rgb(255,158,0);
-        border-color: rgb(224,0,16);
-        color: rgb(224,0,16);
-    }
-    button:hover {
-        background-color: rgb(242,209,24);
-        border-color: rgb(224,0,16);
-        color: rgb(180, 41, 102);
-    }
-    .myButton {
         height: 50px;
         max-height: 50px;
         margin: 50px;

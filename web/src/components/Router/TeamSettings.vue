@@ -1,23 +1,15 @@
 <template>
   <div id="TeamSettings">
-    <statlete-navbar @shouldOpenNav="openNav"
-                     @shouldLogout="logout"
-                     style="background-color: rgb(224, 0, 16);"></statlete-navbar>
-
-    <side-nav id="mySidenav"
-              @showPlayer="showPlayer"
-              @showTeam="showTeam"
-              @teamSelected="teamSelected">
-    </side-nav>
+    <nav-component />
 
     <div class="TextFieldContainer">
       <div class="TextField" align="left">
         <input class="MyText" id="teamIDtext" type="text" :placeholder="id" :value="selectedTeamId">
-        <button class="btn btn-default navbar-btn myButton" @click="submitTeamID">Submit</button>
+        <button class="btn btn-default navbar-btn ts_button" @click="submitTeamID">Submit</button>
       </div>
       <div class="TextField" align="left">
         <input class="MyText" id="teamTokenID" type="text" :placeholder="tok" :value="selectedTeamToken">
-        <button class="btn btn-default navbar-btn myButton" @click="submitToken">Submit</button>
+        <button class="btn btn-default navbar-btn ts_button" @click="submitToken">Submit</button>
       </div>
     </div>
     <div class="ListContainer">
@@ -136,11 +128,6 @@ import { resolve } from 'url';
           this.$router.replace('login')
         })
       },
-      openNav: function() {
-        setTimeout(function(){
-          document.getElementById("mySidenav").style.width = "250px";
-        }, 90);
-      },
       showPlayer: function() {
         this.$router.push('/createplayer');
       },
@@ -197,7 +184,6 @@ import { resolve } from 'url';
     width: 100%;
     height: 100%;
     min-height: 100vh;
-    background-color: white;
   }
   input {
     margin: 10px 0;
@@ -208,19 +194,12 @@ import { resolve } from 'url';
     background: transparent;
     border-bottom: 3px solid rgb(109,8,8);
   }
-  .myButton {
-    margin-top: 10px;
-    margin-left: 20px;
-  }
-  .myButton:hover {
-    background-color: rgba(250, 220, 127, 0.9);
-  }
 
   .TextFieldContainer {
     float: left;
     display: block;
     min-width: 1000px;
-    margin:-20px 50px 50px 35px;
+    margin:50px 50px 50px 35px;
   }
   .TextField {
     color: white;
@@ -231,19 +210,10 @@ import { resolve } from 'url';
   }
   .ListContainer {
     min-width: 1000px;
-    background-color: blue;
+    margin-top: 50px;
   }
-  button {
-    margin-top: 20px;
+  .ts_button {
+    margin: 20px;
     cursor: pointer;
-    color: white;
-    background-color: rgb(255,158,0);
-    border-color: rgb(224,0,16);
-    color: rgb(224,0,16);
-  }
-  button:hover {
-    background-color: rgb(242,209,24);
-    border-color: rgb(224,0,16);
-    color: rgb(180, 41, 102);
   }
 </style>

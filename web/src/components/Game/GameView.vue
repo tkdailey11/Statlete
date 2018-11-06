@@ -573,7 +573,6 @@
   .TopBanner {
     width: 100vw;
     min-height: 100px;
-    color: rgb(224, 0, 16);
     display: flex;
     margin-top: 25px;
     margin-bottom: -20px;

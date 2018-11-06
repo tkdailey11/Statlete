@@ -1,35 +1,38 @@
 <template>
   <div class="TeamStats">
-    <vue-scrolling-table
-							:scroll-horizontal="scrollHorizontal"
-							:scroll-vertical="scrollVertical"
-							:sync-header-scroll="syncHeaderScroll"
-							:sync-footer-scroll="false"
-							:include-footer="false"
-							:dead-area-color="deadAreaColor"
-							:class="{ freezeFirstColumn:freezeFirstColumn }"
-              style="border: medium solid black;
-                     border-radius: 5px;">
-      <template slot="thead">
-        <tr>
-          <th style="border-right: medium solid black; border-bottom: medium solid black;"></th>
-          <th v-for="stat in statTypes" 
-              :key="stat + '-hd'"
-              style="border-bottom: medium solid black;">
-              {{ stat }}
-          </th>
-        </tr>
-      </template>
-      <template slot="tbody">
-        <tr v-for="p in playerNumbers" :key="p + '-key'">
-          <th style="border-right: medium solid black;">{{ p.replace('p', '#')}}</th>
-          <td v-for="statType in statTypes" :key="p + '-' + statType">
-            <p v-if="playerData && playerData[p] && playerData[p][statType]">{{playerData[p][statType]}}</p>
-            <p v-else>0</p>
-          </td>
-        </tr>
-      </template>
-    </vue-scrolling-table>
+    <nav-component />
+    <div id="teamstats_main">
+      <vue-scrolling-table
+                :scroll-horizontal="scrollHorizontal"
+                :scroll-vertical="scrollVertical"
+                :sync-header-scroll="syncHeaderScroll"
+                :sync-footer-scroll="false"
+                :include-footer="false"
+                :dead-area-color="deadAreaColor"
+                :class="{ freezeFirstColumn:freezeFirstColumn }"
+                style="border: medium solid black;
+                      border-radius: 5px;">
+        <template slot="thead">
+          <tr>
+            <th style="border-right: medium solid black; border-bottom: medium solid black;"></th>
+            <th v-for="stat in statTypes" 
+                :key="stat + '-hd'"
+                style="border-bottom: medium solid black;">
+                {{ stat }}
+            </th>
+          </tr>
+        </template>
+        <template slot="tbody">
+          <tr v-for="p in playerNumbers" :key="p + '-key'">
+            <th style="border-right: medium solid black;">{{ p.replace('p', '#')}}</th>
+            <td v-for="statType in statTypes" :key="p + '-' + statType">
+              <p v-if="playerData && playerData[p] && playerData[p][statType]">{{playerData[p][statType]}}</p>
+              <p v-else>0</p>
+            </td>
+          </tr>
+        </template>
+      </vue-scrolling-table>
+    </div>
   </div>
 </template>
 
@@ -136,9 +139,15 @@
 </script>
 
 <style scoped>
-  .TeamStats {
+  #teamstats_main {
     height: 400px;
     width: 1090px;
+    margin-top: 10%;
+    margin-left: 15%;
+    margin-right: 15%;
+  }
+  .TeamStats {
+    
   }
   th, td {
     color: black;

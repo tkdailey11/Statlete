@@ -1,53 +1,45 @@
 <template>
   <div id="PlayerSettings">
-    <statlete-navbar @shouldOpenNav="openNav"
-                     @shouldLogout="logout"
-                     style="background-color: rgb(224, 0, 16);"></statlete-navbar>
-
-    <side-nav id="mySidenav"
-              @showPlayer="showPlayer"
-              @showTeam="showTeam"
-              @teamSelected="teamSelected">
-    </side-nav>
+    <nav-component />
     
-    <h1 style="margin: 75px; color: rgb(224, 0, 16);">Player Settings Page</h1>
+    <h1 class="psH1">Player Settings Page</h1>
     <table align="center">
         <tr>
             <td>
                 <div class="TextField" align="left">
-                    <label style="color: black;">Player Name:</label>
+                    <label class="psLabel">Player Name:</label>
                 </div>
             </td>
             <td>
                 <div class="TextField" align="left">
                     <input class="MyText" id="playerName" type="text" :placeholder="tok" :value="selectedTeamName">
-                    <button class="btn btn-default navbar-btn myButton" @click="submitPlayerName">Submit</button>
+                    <button class="btn btn-default navbar-btn ps_button" @click="submitPlayerName">Submit</button>
                 </div>
             </td>
         </tr>
         <tr id="idTR">
             <td>
                 <div class="TextField" align="left">
-                    <label style="color: black;">Team ID:</label>
+                    <label class="psLabel">Team ID:</label>
                 </div>
             </td>
             <td>
                 <div class="TextField" align="left">
                     <input disabled="true" class="MyText" id="teamIDtext" type="text" :placeholder="id" :value="selectedTeamId">
-                    <button disabled="true" class="btn btn-default navbar-btn myButton" @click="submitTeamID">Submit</button>
+                    <button disabled="true" class="btn btn-default navbar-btn ps_button" @click="submitTeamID">Submit</button>
                 </div>
             </td>
         </tr>
         <tr id="tokTR">
             <td>
                 <div class="TextField" align="left">
-                    <label style="color: black;">Team Token:</label>
+                    <label class="psLabel">Team Token:</label>
                 </div>
             </td>
             <td>
                 <div class="TextField" align="left">
                     <input disabled="true" class="MyText" id="teamTokenID" type="text" :placeholder="tok" :value="selectedTeamToken">
-                    <button disabled="true" class="btn btn-default navbar-btn myButton" @click="submitToken">Submit</button>
+                    <button disabled="true" class="btn btn-default navbar-btn ps_button" @click="submitToken">Submit</button>
                 </div>
             </td>
         </tr>
@@ -77,7 +69,7 @@ import { resolve } from 'url';
       }
     },
     mounted(){
-        jQuery("#idTR").find("MyText,myButton").attr("disabled", true);
+        jQuery("#idTR").find("MyText,ps_button").attr("disabled", true);
     },
     computed: {
       ...mapGetters({
@@ -163,11 +155,6 @@ import { resolve } from 'url';
           this.$router.replace('login')
         })
       },
-      openNav: function() {
-        setTimeout(function(){
-          document.getElementById("mySidenav").style.width = "250px";
-        }, 90);
-      },
       showPlayer: function() {
         this.$router.push('/createplayer');
       },
@@ -224,23 +211,15 @@ import { resolve } from 'url';
     width: 100%;
     height: 100%;
     min-height: 100vh;
-    background-color: white;
   }
-  input {
+  .ps_input {
     margin: 10px 0;
     width: 30%;
     padding: 15px;
     border: 0;
     outline: 0;
-    background: transparent;
-    border-bottom: 3px solid rgb(109,8,8);
-  }
-  .myButton {
-    margin-top: 10px;
-    margin-left: 20px;
-  }
-  .myButton:hover {
-    background-color: rgba(250, 220, 127, 0.9);
+    border-bottom-width: 3px;
+    border-bottom-style: solid;
   }
 
   .TextFieldContainer {
@@ -256,27 +235,19 @@ import { resolve } from 'url';
     margin:-20px 50px 50px 35px;
   }
   .TextField {
-    color: white;
     margin: 20px;
   }
   .MyText {
     min-width: 46vw;
   }
-  .ListContainer {
-    min-width: 1000px;
-    background-color: blue;
-  }
-  button {
+
+  .ps_button {
     margin-top: 20px;
     cursor: pointer;
-    color: white;
-    background-color: rgb(255,158,0);
-    border-color: rgb(224,0,16);
-    color: rgb(224,0,16);
+    margin-left: 20px;
   }
-  button:hover {
-    background-color: rgb(242,209,24);
-    border-color: rgb(224,0,16);
-    color: rgb(180, 41, 102);
+
+  .psH1 {
+    margin: 75px;
   }
 </style>

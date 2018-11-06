@@ -53,28 +53,22 @@ Vue.component('vue-scrolling-table', VueScrollingTable);
 
 
 //Not in use
-import PlayerHome from '@/components/PlayerHome';
+import PlayerHome from '@/components/Router/PlayerHome';
 Vue.component('player-home', PlayerHome);
-import PlayerSettings from '@/components/PlayerSettings';
+import PlayerSettings from '@/components/Router/PlayerSettings';
 Vue.component('player-settings', PlayerSettings);
-import PlayerDetailView from '@/components/PlayerDetailView';
+import PlayerDetailView from '@/components/Router/PlayerDetailView';
 Vue.component('player-detail-view', PlayerDetailView);
-import TeamSettings from '@/components/TeamSettings';
+import TeamSettings from '@/components/Router/TeamSettings';
 Vue.component('team-settings', TeamSettings);
-import FLP from '@/components/FirstLandingPage';
+import FLP from '@/components/Router/FirstLandingPage';
 Vue.component('landing-page', FLP);
-import AnalysisPage from '@/components/AnalysisPage';
+import AnalysisPage from '@/components/Router/AnalysisPage';
 Vue.component('analysis-page', AnalysisPage)
 
 
 
 //Wizards
-import VueFormWizard from 'vue-form-wizard'
-Vue.use(VueFormWizard)
-import VueGoodWizard from 'vue-good-wizard';
-Vue.use(VueGoodWizard)
-import Wizard from '@/components/Wizards/Wizard';
-Vue.component('tkd-wizard', Wizard);
 import WizardP from '@/components/Wizards/WizardP';
 Vue.component('tkd-wizardP', WizardP);
 import WizardT from '@/components/Wizards/WizardT';
@@ -85,7 +79,7 @@ import PlayerSelectionBox from '@/components/Wizards/PlayerSelectionBox';
 Vue.component('player-selection-box', PlayerSelectionBox);
 import PlayerEntryBox from '@/components/Wizards/PlayerEntryBox';
 Vue.component('player-entry-box', PlayerEntryBox);
-import SelectSport from '@/components/SelectSport';
+import SelectSport from '@/components/Wizards/SelectSport';
 Vue.component('select-sport', SelectSport);
 
 
@@ -125,6 +119,8 @@ import VueScrollPicker from 'vue-scroll-picker'
 Vue.use(VueScrollPicker)
 import WheelNumber from 'vue-wheel-number'
 Vue.use(WheelNumber)
+import Multiselect from 'vue-multiselect'
+Vue.component('multiselect', Multiselect)
 
 
 
@@ -132,8 +128,8 @@ Vue.use(WheelNumber)
 import 'vuejs-dialog/dist/vuejs-dialog.min.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import './assets/stylesheets/bootstrap-social.css'
-import 'vue-form-wizard/dist/vue-form-wizard.min.css'
-
+import './assets/stylesheets/master_colors.scss'
+import 'vue-multiselect/dist/vue-multiselect.min.css'
 
 
 Vue.config.productionTip = false

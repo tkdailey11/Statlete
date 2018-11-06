@@ -1,16 +1,16 @@
 <template>
-  <div id="GamesList">
-    <div id="title">
-      <h1 align="center">Games</h1>
+  <div class="GamesList">
+    <div class="gl_title">
+      <h1 class="glH1" align="center">Games</h1>
     </div>
     <div id="gamesTable">
-      <table cellpadding="10" width="100%">
-        <tr v-for="idx in gamesList.length" @click="trClicked(idx)" :key="'game-'+idx">
-          <td>{{ gamesList[idx-1] }}</td>
+      <table class="gl_table" cellpadding="10" width="100%">
+        <tr class="glTR" v-for="idx in gamesList.length" @click="trClicked(idx)" :key="'game-'+idx">
+          <td class="glTD">{{ gamesList[idx-1] }}</td>
         </tr>
       </table>
     </div>
-    <div id="glFooter" v-if="addGameEnabled" @click="addGameClicked">
+    <div class="glFooter" v-if="addGameEnabled" @click="addGameClicked">
       Add New Game
     </div>
   </div>
@@ -53,51 +53,44 @@
 </script>
 
 <style scoped>
-  #GamesList {
+  .GamesList {
     width: 310px;
     height: 500px;
     background: white;
     margin-left: 50px;
     border-width: 5px;
-    border-color: rgb(235,95,17);
     border-style: solid;
     border-radius: 40px;
     position: relative;
     box-shadow: 5px 5px 5px grey;
   }
 
-  #title {
+  .gl_title {
     width: 300px;
     height: 75px;
     background: white;
     border-radius: 35px 35px 0px 0px;
-    border-bottom-color: rgb(235,95,17);
     border-bottom-width: medium;
     border-bottom-style: solid;
     background-color: white;
   }
 
-  #glFooter {
+  .glFooter {
     width: 300px;
     height: 75px;
     position: absolute;
     bottom: 0;
-    background-color: white;
     border-radius: 0px 0px 35px 35px;
-    border-top-color: rgb(235,95,17);
     border-top-width: medium;
     border-top-style: solid;
     text-align: center;
     vertical-align: middle;
     line-height: 75px;
     font-size: 25px;
-    color: rgb(224,0,16);
   }
 
-  #glFooter:hover {
-    background-color: rgba(235,95,17,0.7);
+  .glFooter:hover {
     cursor: pointer;
-    color: white;
   }
 
   #gamesTable {
@@ -108,25 +101,23 @@
     overflow: scroll;
   }
 
-  tr:hover td {
-    background-color: rgba(235,95,17,0.7);
+  .glTR:hover .glTD {
     cursor: pointer;
-    color: white;
   }
 
-  table, th, td {
-    border: 1px solid rgb(235,95,17);
+  .gl_table {
+    border-width: 1px;
+    border-style: solid;
   }
 
-  td {
-    border-bottom: 1px solid rgb(235,95,17);
-    color: rgb(224,0,16);
+  .glTD {
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
     background-color: white;
   }
 
-  h1 {
+  .glH1 {
     line-height: 75px;
     height: 75px;
-    color: rgb(224,0,16);
   }
 </style>

@@ -1,22 +1,22 @@
 <template>
   <div class="PlayerStatSelector" :style="height">
     <div class="plTitle">
-      <h1 align="center" style="font-weight: bold;">{{ title }}</h1>
+      <h1 class="pssH1" align="center">{{ title }}</h1>
       </div>
       <div class="playersTable">
         <table cellpadding="10" width="100%">
           <tr v-for="key in Object.keys(players)" @click="trClicked(key)">
-            <td v-if="key === selectedPlayer" style="background-color: rgba(235,95,17,0.7); color: white;">{{ key.replace('p', '#') }}</td>
-            <td v-else>{{ key.replace('p', '#') }}</td>
-            <td v-if="key === selectedPlayer" style="text-align:left; background-color: rgba(235,95,17,0.7); color: white;">{{players[key].trim()}}</td>
-            <td v-else style="text-align:left;">{{players[key].trim()}}</td>
+            <td class="pssTD" v-if="key === selectedPlayer" style="background-color: rgba(235,95,17,0.7); color: white;">{{ key.replace('p', '#') }}</td>
+            <td class="pssTD" v-else>{{ key.replace('p', '#') }}</td>
+            <td class="pssTD" v-if="key === selectedPlayer" style="text-align:left; background-color: rgba(235,95,17,0.7); color: white;">{{players[key].trim()}}</td>
+            <td class="pssTD" v-else style="text-align:left;">{{players[key].trim()}}</td>
           </tr>
         </table>
       </div>
-      <div class="plFooter" @click="trClicked('otherTeam')" v-if="selectedPlayer === 'otherTeam'" style="background-color: rgba(235,95,17,0.7); color: white;">
+      <div class="pss_plFooter" @click="trClicked('otherTeam')" v-if="selectedPlayer === 'otherTeam'" style="background-color: rgba(235,95,17,0.7); color: white;">
         Opponent
       </div>
-      <div class="plFooter" @click="trClicked('otherTeam')" v-else>
+      <div class="pss_plFooter" @click="trClicked('otherTeam')" v-else>
         Opponent
       </div>
     </div>
@@ -81,7 +81,7 @@
     background-color: white;
   }
 
-  .plFooter {
+  .pss_plFooter {
     width: 300px;
     height: 75px;
     position: absolute;
@@ -95,12 +95,9 @@
     vertical-align: middle;
     line-height: 75px;
     font-size: 25px;
-    color: rgb(224,0,16);
   }
-  .plFooter:hover {
-    background-color: rgba(235,95,17,0.7);
+  .pss_plFooter:hover {
     cursor: pointer;
-    color: white;
   }
 
   .playersTable {
@@ -119,9 +116,8 @@
     border: 1px solid black;
   }
 
-  td {
+  .pssTD {
     border-bottom: 1px solid black;
-    color: rgb(224,0,16);
   }
 
   tr {
@@ -134,9 +130,9 @@
     color: white;
   }
 
-  h1 {
+  .pssH1 {
     line-height: 75px;
     height: 75px;
-    color: rgb(224,0,16);
+    font-weight: bold;
   }
 </style>

@@ -1,12 +1,12 @@
 <template>
     <modal name="new-game" transition="pop-out" :width="modalWidth" :height="'50%'">
-        <div class="box">
+        <div class="ng_box">
             <div class="partition" id="partition-register">
                 <div class="partition-title">Add Game</div>
                 <div class="partition-form">
                     <form>
                         <!-- <label>Opponent:</label>
-                        <input id="opponent" type="text" placeholder="Opponent" style="margin: 20px; width: 70%" v-model="oppName"> -->
+                        <input class="ng_input" id="opponent" type="text" placeholder="Opponent" style="margin: 20px; width: 70%" v-model="oppName"> -->
                          <!-- <div style="font-size: 12px;">
                             <scroll-picker-group class="flex">
                                 <scroll-picker :options="periodLengths" @input="change" />
@@ -66,14 +66,12 @@ export default {
 <style lang="scss">
 $background_color: #404142;
 $github_color: #DBA226;
-$bright_red: rgb(224, 0, 16);
 
-.box {
+.ng_box {
   background: white;
   width: 450px;
   height: 50vh;
   border-radius: 10px;
-  color: $bright_red;
 
   .partition {
     width: 100%;
@@ -87,7 +85,6 @@ $bright_red: rgb(224, 0, 16);
       letter-spacing: 1px;
       font-size: 20px;
       font-weight: 300;
-      color: $bright_red;
     }
 
     .partition-form {
@@ -108,29 +105,23 @@ $bright_red: rgb(224, 0, 16);
   opacity: 0;
   transform: translateY(24px);
 }
- input {
-    margin: 25px;
-    border: 0;
-    outline: 0;
-    background: transparent;
-    border-bottom: 3px solid $bright_red;
-    color: $bright_red;
-  }
 
-  label {
-      color: $bright_red;
-      width: 20%;
-      font-size: 15px;
-  }
-  .sceLabel {
-      width: 75%;
-  }
+.ng_input {
+  margin: 25px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom-width: 3px;
+  border-bottom-style: solid;
+}
 
-  .myInput {
-    color: $bright_red;
-  }
-  .myNumButton {
-    background-color: $bright_red;
-  }
+.ng_label {
+    width: 20%;
+    font-size: 15px;
+}
+
+.sceLabel {
+    width: 75%;
+}
 
 </style>

@@ -133,14 +133,6 @@ export default {
         this.$router.replace('login')
       })
     },
-    openNav: function() {
-      setTimeout(function(){
-        document.getElementById("mySidenav").style.width = "250px";
-      }, 90);
-    },
-    closeNav: function() {
-      document.getElementById("mySidenav").style.width = "0";
-    },
     backClickedPlayer(currentPage) {
       if(currentPage == 0){
         return false; //return false if you want to prevent moving to previous page
@@ -306,9 +298,7 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
-/* Utilities
-*******************************/
+<style scoped>
 
 .pull-left{
   float:  left !important;
@@ -324,12 +314,9 @@ export default {
   clear: both;
 }
 
-/* Header Steps
-*******************************/
 .wizardP {
   position: relative;
   width:  100%;
-  color: rgb(252,102,0);
 }
 
 .wizard__steps{
@@ -363,7 +350,6 @@ export default {
   left:  -50%;
   bottom:  12px;
   height:  3px;
-  background-color: white;
 }
 
 .wizard__step__indicator{
@@ -371,9 +357,9 @@ export default {
   display:  block;
   width:  16px;
   height:  16px;
-  background-color: rgb(224,0,16);
   border-radius: 50%;
-  border: 3px solid #fff;
+  border-width: 3px;
+  border-style: solid;
   position:  absolute;
   left:  50%;
   margin-left:  -10px;
@@ -381,28 +367,19 @@ export default {
   z-index: 1;
 }
 
-.wizard__step.active .wizard__step__indicator{
-  background-color: rgb(242,209,24);
-}
-
-.wizard__step.active:not(:first-child) .wizard__step__line{
-  background-color: rgb(242,209,24); /* green */
-}
-
 .wizard__step__label{
-  color: rgb(242,209,24);
   font-weight: bold;
 }
 
 /* Wizard body
 *******************************/
 .wizard__body{
-  margin-top:  30px;
+  margin-top:  25px;
   min-height:  400px;
   margin-left:  50px;
   margin-right:  50px;
   border:  3px solid white;
-  background-color: white;
+  background-color: green;
   position: relative;
   border-radius: 5px;
   padding-bottom: 50px;
@@ -417,10 +394,10 @@ export default {
   display: block;
   width:  30px;
   height:  30px;
-  border:  1px solid white;
+  border:  1px solid green;
   top:  85px; /* height of step + body margin -15 */
   border-top-right-radius: 5px;
-  background-color: #fff;
+  background-color: green;
   border-left: none;
   border-bottom:  none;
   transform: rotate(-45deg);
@@ -552,19 +529,6 @@ button:hover {
 
 #sportSelectorPlayer {
   margin-top: 10px;
-}
-
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: rgba(255,0,0,0.5);
-  opacity: 1; /* Firefox */
-}
-
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color: rgba(255,0,0,0.5);
-}
-
-::-ms-input-placeholder { /* Microsoft Edge */
-  color: rgba(255,0,0,0.5);
 }
 
 input {

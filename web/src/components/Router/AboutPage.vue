@@ -22,14 +22,15 @@
             <li style="font-weight: bold;">Web Interface</li>
             <p>In addition to the abilities provided by the mobile application, the web interface will also allow users to access detailed analysis and graphical data visualizations.</p>
         </ul>
-        <p style="color: white;">test</p>
+        <!--TODO: Should the color of the following be white or transparent? it was white originally -->
+        <p style="color: transparent;">test</p>
 
 
-        <footer class="navbar fixed-bottom myNav">
-            <div><router-link to="/login" class="link">Login</router-link></div>
-            <div><router-link to="/sign-up" class="link">Signup</router-link></div>
+        <footer class="navbar fixed-bottom myBottomNav">
+            <div><router-link to="/login" class="ap_link">Login</router-link></div>
+            <div><router-link to="/sign-up" class="ap_link">Signup</router-link></div>
             <div>About</div>
-            <div><router-link to="/faq" class="link">FAQ</router-link></div>
+            <div><router-link to="/faq" class="ap_link">FAQ</router-link></div>
         </footer>
     </div>
 </template>
@@ -41,25 +42,16 @@ export default {
 </script>
 
 <style scoped>
-.AboutPage {
-    color: rgb(224,0,16);
-}
-  .myNav{
-    background-color: white;
-    color: rgb(224,0,16);
+  .myBottomNav{
     padding-left: 25vw;
     padding-right: 25vw;
     padding-bottom: 25px;
     padding-top: 25px;
-    border-top: 1px solid rgb(224,0,16);
+    border-top-style: solid;
+    border-top-width: 3px;
     margin-top: 25px;
   }
-  .link {
-    color: rgb(224,0,16);
-  }
-  .link:hover {
-    color: rgb(242,209,24);
-  }
+
   .myP {
       text-align: left;
       margin-left: 5%;

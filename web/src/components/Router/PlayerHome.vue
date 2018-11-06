@@ -1,18 +1,9 @@
 <template>
   <div class="playerHome">
-    <statlete-navbar v-if="!(viewMode==='isCreatingTeam' || viewMode==='isCreatingPlayer')"
-                     @shouldOpenNav="openNav"
-                     @shouldLogout="logout"
-                     style="background-color: rgb(224, 0, 16);"></statlete-navbar>
-
-    <side-nav id="mySidenav"
-              @showPlayer="showPlayer"
-              @showTeam="showTeam"
-              @teamSelected="teamSelected">
-    </side-nav>
+    <nav-component />
 
     <div class="mainHeader">
-      <h1 style="color: rgb(224, 0, 16); margin: 25px 50px 50px 50px;">{{selectedTeamName}} - {{theTeamName}}</h1>
+      <h1 class="phH1">{{selectedTeamName}} - {{theTeamName}}</h1>
     </div>
     <div class="mainBody">
       <games-list :games="gamesList"
@@ -22,8 +13,8 @@
                   :addGameEnabled="addGameEnabled">
       </games-list>
       <div class="button-wrapper">
-        <button @click="editMySettings" class="btn btn-outline-primary myButton">Edit My Settings</button>
-        <button @click="viewMyStats" class="btn btn-outline-primary myButton">View My Stats</button>
+        <button @click="editMySettings" class="btn btn-outline-primary ph_button">Edit My Settings</button>
+        <button @click="viewMyStats" class="btn btn-outline-primary ph_button">View My Stats</button>
       </div>
     </div>
   </div>
@@ -124,11 +115,6 @@ export default {
       this.SET_ACTIVE_GAME_ID(this.gamesList[event - 1]);
       //this.viewMode='isInGameView';
       this.$router.push('/gameview');
-    },
-    openNav: function() {
-      setTimeout(function(){
-        document.getElementById("mySidenav").style.width = "250px";
-      }, 90);
     },
     logout: function() {
       firebase.auth().signOut().then(() => {
@@ -407,54 +393,12 @@ export default {
     display: inline-block;
     margin: 0 10px;
   }
-  a {
-    color: #42b983;
-  }
-
-  /* The side navigation menu */
-  .sidenav {
-      height: 100%; /* 100% Full-height */
-      width: 0; /* 0 width - change this with JavaScript */
-      position: fixed; /* Stay in place */
-      z-index: 1; /* Stay on top */
-      top: 0; /* Stay at the top */
-      left: 0;
-      background-color: #111; /* Black*/
-      overflow-x: hidden; /* Disable horizontal scroll */
-      padding-top: 60px; /* Place content 60px from the top */
-      transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
-  }
-
-  /* The navigation menu links */
-  .sidenav a {
-      padding: 8px 8px 8px 32px;
-      text-decoration: none;
-      font-size: 25px;
-      color: #818181;
-      display: block;
-      transition: 0.3s;
-  }
-
-  /* When you mouse over the navigation links, change their color */
-  .sidenav a:hover {
-      color: #f1f1f1;
-  }
-
-  /* Position and style the close button (top right corner) */
-  .sidenav .closebtn {
-      position: absolute;
-      top: 0;
-      right: 25px;
-      font-size: 36px;
-      margin-left: 50px;
-  }
 
   /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
   .playerHome {
       transition: margin-left .5s;
       margin:0px;
       min-height: 100%;
-      background-color: white;
       height: 100vh
   }
 
@@ -468,19 +412,14 @@ export default {
     width: 210px;
     height: 97px;
   }
-  button {
+  .ph_button {
     margin-top: 20px;
     cursor: pointer;
-    color: white;
-    background-color: rgb(255,158,0);
-    border-color: rgb(224,0,16);
-    color: rgb(224,0,16);
+    height: 50px;
+    max-height: 50px;
+    margin: 50px;
   }
-  button:hover {
-    background-color: rgb(242,209,24);
-    border-color: rgb(224,0,16);
-    color: rgb(180, 41, 102);
-  }
+
 
 
   .mainHeader {
@@ -531,37 +470,13 @@ export default {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    background-color: white;
-  }
-
-  .myButton {
-    height: 50px;
-    max-height: 50px;
-    margin: 50px;
-  }
-
-  ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: rgba(255,0,0,0.5);
-    opacity: 1; /* Firefox */
-  }
-
-  :-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color: rgba(255,0,0,0.5);
-  }
-
-  ::-ms-input-placeholder { /* Microsoft Edge */
-    color: rgba(255,0,0,0.5);
   }
 
   #mainPage {
     min-height: 100vh;
-    background-color: white;
   }
 
-  #leftList {
-
-  }
-  #rightList {
-
+  .phH1 {
+    margin: 25px 50px 50px 50px;
   }
 </style>

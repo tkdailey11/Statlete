@@ -12,6 +12,5 @@
 <style scoped>
   #PlayerDetailView {
     width: 100%;
-    background-color: pink;
   }
 </style>
