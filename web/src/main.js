@@ -94,6 +94,17 @@ Vue.component('bar-chart', MyBarChart);
 import MyLineChart from '@/components/MyLineChart';
 Vue.component('line-chart', MyLineChart);
 
+import FootballGame from '@/components/FootballGame';
+Vue.component('football-game', FootballGame);
+
+import FootballOffense from '@/components/FootballOffense';
+Vue.component('football-offense', FootballOffense);
+
+import FootballDefense from '@/components/FootballDefense';
+Vue.component('football-defense', FootballDefense);
+
+import FootballSpecial from '@/components/FootballSpecial';
+Vue.component('football-special', FootballSpecial);
 
 import VModal from 'vue-js-modal'
 Vue.use(VModal)

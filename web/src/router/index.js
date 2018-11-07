@@ -15,6 +15,7 @@ import PlayerSettings from '@/components/PlayerSettings'
 import WizardPlayer from '@/components/WizardPlayer'
 import WizardT from '@/components/WizardT'
 import AnalysisPage from '@/components/AnalysisPage'
+import FootballGame from '@/components/FootballGame'
 
 
 Vue.use(Router)
@@ -123,6 +124,14 @@ let router = new Router({
       path: '/analysis',
       name: 'AnalysisPage',
       component: AnalysisPage,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/football',
+      name: 'FootballGame',
+      component: FootballGame,
       meta: {
         requiresAuth: true
       }
