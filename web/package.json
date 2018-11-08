@@ -43,6 +43,7 @@
     "vue-router": "^3.0.1",
     "vue-scroll-picker": "^0.1.4",
     "vue-scrolling-table": "^0.2.0",
+    "vue-segmented-control": "^1.0.0",
     "vue-select": "^2.5.1",
     "vue-sticky-js": "0.0.4",
     "vue-table-component": "^1.9.1",
@@ -121,7 +122,7 @@
     "vue-template-compiler": "^2.5.17",
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
-    "webpack-dev-server": "^2.9.1",
+    "webpack-dev-server": "^3.1.10",
     "webpack-merge": "^4.1.0"
   },
   "engines": {

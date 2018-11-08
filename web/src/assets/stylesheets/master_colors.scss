@@ -1,5 +1,6 @@
 $bright_red: rgb(224, 0, 16);
 $transparent_red: rgba(224, 0, 16, 0.5);
+$light_gray: rgb(240,240,240);
 
 .TopBanner {
     color: $bright_red;
@@ -69,6 +70,12 @@ $transparent_red: rgba(224, 0, 16, 0.5);
     }
 }
 
+.ng_button {
+    color: white;
+    background-color: $bright_red;
+    border-color: $bright_red;
+}
+
 .ng_input {
     color: $bright_red;
     border-bottom-color: $bright_red;
@@ -133,7 +140,8 @@ $transparent_red: rgba(224, 0, 16, 0.5);
 }
 
 #mySidenav {
-    background: $bright_red;
+    background: $light_gray;
+    border-right: solid 3px $bright_red;
 }
 
 .AboutPage {
@@ -230,6 +238,21 @@ input:-webkit-autofill:focus {
 .mainH1 {
     color: $bright_red;
 }
+#app {
+    background-color: $light_gray;
+}
+
+.sn_title{
+    border-bottom-color: white;
+    background-color: $bright_red;
+}
+.sn_tr:hover td {
+    background-color: $transparent_red;
+}
+
+.dataTable {
+    background-color: $bright_red;
+}
 
 .phH1 {
     color: $bright_red;
@@ -286,6 +309,16 @@ input:-webkit-autofill:focus {
 }
 
 .psb_button:hover {
+    background-color: $transparent_red;
+}
+
+.clockPause {
+    color: white;
+    background-color: $bright_red;
+    border-color: $bright_red;
+}
+
+.clockPause:hover {
     background-color: $transparent_red;
 }
 

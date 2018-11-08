@@ -3,24 +3,11 @@
     <nav-component />
     <div class="TopBanner">
         <h1 style="font-size: 400%; font-weight: bold;">{{selectedTeamName}}</h1>
-        <div class="TimeClock">
-          <div id="myTeamScore" style="float: left; border-right: solid black 5px; height: 100%; padding: 5px;">
-            <h2 style="margin: 5px;">My Team</h2>
-            <h2>{{ myScore }}</h2>
-          </div>
-          <div>
-            <period-marker style="float: left; margin-top: 25px;" :period="1" :filled="activePeriod == 1"></period-marker>
-            <period-marker v-if="numberOfPeriods == 4" style="float: left; margin-top: 25px;" :period="2" :filled="activePeriod == 2"></period-marker>
-            <h1 style="width: 100px; float: left; margin-top: 25px;" @click="clockClicked">{{currTime}}</h1>
-            <period-marker v-if="numberOfPeriods == 4" style="float: left; margin-top: 25px;" :period="3" :filled="activePeriod == 3"></period-marker>
-            <period-marker v-if="numberOfPeriods == 4" style="float: left; margin-top: 25px;" :period="4" :filled="activePeriod == 4"></period-marker>
-            <period-marker v-else style="float: left; margin-top: 25px;" :period="2" :filled="activePeriod == 2"></period-marker>
-          </div>
-          <div id="opponentScore" style="float: right; border-left: solid black 5px; height: 100%; padding: 5px;">
-            <h2 style="margin: 5px;">Opponent</h2>
-            <h2>{{ oppScore }}</h2>
-          </div>
-        </div>
+        <time-clock @ClockClicked="clockClicked"
+                    :time="currTime"
+                    :activePeriod="activePeriod"
+                    @PauseClicked="pauseClicked">
+        </time-clock>
     </div>
     <div id="EntryView">
       <div id="entryDiv">
@@ -154,7 +141,8 @@
         periodStartTime: 'gameViewStore/periodStartTime',
         currGameTime: 'gameViewStore/currGameTime',
         periodLength: 'gameViewStore/periodLength',
-        numberOfPeriods: 'gameViewStore/numberOfPeriods'
+        numberOfPeriods: 'gameViewStore/numberOfPeriods',
+        timeRemainingInPeriod: 'gameViewStore/timeRemainingInPeriod'
       }),
       isSoccer: function() {
         return this.selectedTeamSport == 1;
@@ -171,34 +159,38 @@
         GV_SET_PERIOD_START_TIME: 'gameViewStore/GV_SET_PERIOD_START_TIME',
         GV_SET_CURR_GAME_TIME: 'gameViewStore/GV_SET_CURR_GAME_TIME',
         GV_SET_PERIOD_LENGTH: 'gameViewStore/GV_SET_PERIOD_LENGTH',
-        GV_SET_NUM_PERIODS: 'gameViewStore/GV_SET_NUM_PERIODS'
+        GV_SET_NUM_PERIODS: 'gameViewStore/GV_SET_NUM_PERIODS',
+        GV_SET_TIME_REMAINING: 'gameViewStore/GV_SET_TIME_REMAINING'
       }),
+      pauseClicked(){
+        alert('PAUSE')
+      },
       computeScore(val){
         var score = 0;
-        if(this.isSoccer){
-          score += val.Period1.Goals.Total;
-          score += val.Period2.Goals.Total;
-        }
-        else {
-          console.log()
-          score += val.Period1.FTM.Total;
-          score += (2 * val.Period1.FG2M.Total);
-          score += (3 * val.Period1.FG3M.Total);
+        // if(this.isSoccer){
+        //   score += val.Period1.Goals.Total;
+        //   score += val.Period2.Goals.Total;
+        // }
+        // else {
+        //   console.log()
+        //   score += val.Period1.FTM.Total;
+        //   score += (2 * val.Period1.FG2M.Total);
+        //   score += (3 * val.Period1.FG3M.Total);
 
-          score += val.Period2.FTM.Total;
-          score += (2 * val.Period2.FG2M.Total);
-          score += (3 * val.Period2.FG3M.Total);
+        //   score += val.Period2.FTM.Total;
+        //   score += (2 * val.Period2.FG2M.Total);
+        //   score += (3 * val.Period2.FG3M.Total);
 
-          if(this.numberOfPeriods == 4){
-            score += val.Period3.FTM.Total;
-            score += (2 * val.Period3.FG2M.Total);
-            score += (3 * val.Period3.FG3M.Total);
+        //   if(this.numberOfPeriods == 4){
+        //     score += val.Period3.FTM.Total;
+        //     score += (2 * val.Period3.FG2M.Total);
+        //     score += (3 * val.Period3.FG3M.Total);
 
-            score += val.Period4.FTM.Total;
-            score += (2 * val.Period4.FG2M.Total);
-            score += (3 * val.Period4.FG3M.Total);
-          }
-        }
+        //     score += val.Period4.FTM.Total;
+        //     score += (2 * val.Period4.FG2M.Total);
+        //     score += (3 * val.Period4.FG3M.Total);
+        //   }
+        // }
         return score;
       },
       toggleEntryClicked(){
@@ -554,6 +546,19 @@
           default:
             alert('3');
         }
+      },
+      secondsToMinutesString(seconds){
+        if(seconds <= 0){
+          return '00:00';
+        }
+        var min = Math.floor(seconds/60);
+        min = min.toString();
+        min = min.padStart(2, '0');
+        var sec = seconds%60;
+        sec = sec.toString();
+        sec = sec.padStart(2, '0');
+
+        return min + ':' + sec;
       }
     }
   }
@@ -600,14 +605,6 @@
     float: left;
     margin-top: 50px;
     margin-left: 50px;
-  }
-  .TimeClock{
-    width: 600px;
-    height: 120px;
-    border: black 5px solid;
-    border-radius: 25px;
-    display: inline-block;
-    margin-right: 100px;
   }
 
   #entryDiv {

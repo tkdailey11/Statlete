@@ -60,7 +60,7 @@ export default {
       
       this.SET_SELECTED_TEAM({
         id: event.Id,
-        name: event.Name,
+        name: event.Name.split('|')[0],
         token: event.Token,
         sport: sport
       });

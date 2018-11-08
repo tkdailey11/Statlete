@@ -1,6 +1,7 @@
 <template>
     <div id="SideNav" class="sidenav">
-      <a href="javascript:void(0)" class="closebtn" @click="closeNav">&times;</a>
+      <div style="height: 50px; width: 100%; background-color: blue;" />
+      <!-- <a href="javascript:void(0)" class="closebtn" @click="closeNav">&times;</a> -->
       <div style="margin-bottom: 40px;">
         <img src="../../assets/images/testUser.png" width="100px" height="100px">
         <h4 style="margin-top: 10px; color: white;">{{currentUserEmail}}</h4>
@@ -8,15 +9,15 @@
 
       <!--Team Sportfolios -->
       <div class="SBdataEntry">
-        <div class="title">
+        <div class="sn_title">
           <h5 align="center">Team Sportfolios</h5>
         </div>
         <div class="dataTable">
           <table width="100%">
-            <tr v-for="t in teamSportfolios" @click="selectedTeam(t)">
+            <tr class="sn_tr" v-for="t in teamSportfolios" @click="selectedTeam(t)">
               <td>{{ t }}</td>
             </tr>
-            <tr>
+            <tr class="sn_tr">
               <td @click="$emit('showTeam'); closeNav();">+ New Team Sportfolio</td>
             </tr>
           </table>
@@ -26,15 +27,15 @@
 
       <!--Player Sportfolios -->
       <div class="SBdataEntry">
-        <div class="title">
+        <div class="sn_title">
           <h5 align="center">Player Sportfolios</h5>
         </div>
         <div class="dataTable">
           <table width="100%">
-            <tr v-for="p in playerSportfolios" @click="selectedPlayer(p)">
+            <tr class="sn_tr" v-for="p in playerSportfolios" @click="selectedPlayer(p)">
               <td>{{ p }}</td>
             </tr>
-            <tr>
+            <tr class="sn_tr">
               <td @click="$emit('showPlayer'); closeNav();">+ New Player Sportfolio</td>
             </tr>
           </table>
@@ -147,13 +148,11 @@
       top: 0;
       left: 0;
       overflow-x: hidden; /* Disable horizontal scroll */
-      padding-top: 60px;
       transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
   }
 
   /* The navigation menu links */
   .sidenav a {
-      padding: 8px 8px 8px 32px;
       text-decoration: none;
       font-size: 25px;
       
@@ -193,22 +192,18 @@
     margin-bottom: 50px;
   }
 
-  .title {
+  .sn_title {
     width: 190px;
     height: 50px;
-    background: white;
     border-radius: 35px 35px 0px 0px;
-    border-bottom-color: white;
     border-bottom-width: medium;
     border-bottom-style: solid;
-    background-color: rgb(252,102,0);
   }
 
   .dataTable {
     width: 190px;
     max-height: 189px;
     height: 189px;
-    background-color: rgb(252,102,0);
     overflow: scroll;
     border-radius: 0px 0px 30px 30px;
   }
@@ -247,15 +242,15 @@
     vertical-align: middle;
   }
 
-  tr:hover td {
-    background-color: rgba(255,165,0, 0.7);
+  .sn_tr:hover td {
+    background-color: rgba(0, 224, 67, 0.404);
     cursor: pointer;
   }
 
 
   /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-  @media screen and (max-height: 450px) {
+  /* @media screen and (max-height: 450px) {
       .sidenav {padding-top: 15px;}
       .sidenav a {font-size: 18px;}
-  }
+  } */
 </style>

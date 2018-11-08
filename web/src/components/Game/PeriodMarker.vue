@@ -25,10 +25,10 @@ export default {
 </script>
 
 <style scoped>
-.PeriodMarker {
-    float: left;
-    width: 3vw;
-}
+    .PeriodMarker {
+        width: 40px;
+
+    }
     .labelImg {
         width: 25%;
         height: 25%;

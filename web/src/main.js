@@ -47,8 +47,9 @@ import PlayerStatSelector from '@/components/Game/PlayerStatSelector';
 Vue.component('player-stat-selector', PlayerStatSelector);
 import TeamStats from '@/components/Game/TeamStats';
 Vue.component('team-stats', TeamStats);
-import VueScrollingTable from 'vue-scrolling-table';
-Vue.component('vue-scrolling-table', VueScrollingTable);
+import TimeClock from '@/components/Game/TimeClock';
+Vue.component('time-clock', TimeClock);
+
 
 
 
@@ -121,6 +122,8 @@ import WheelNumber from 'vue-wheel-number'
 Vue.use(WheelNumber)
 import Multiselect from 'vue-multiselect'
 Vue.component('multiselect', Multiselect)
+import VueScrollingTable from 'vue-scrolling-table';
+Vue.component('vue-scrolling-table', VueScrollingTable);
 
 
 

@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <new-player @newPlayerAdded="hideModal" />
-    <new-game @gameAdded="hideGameModal"/>
+    <new-game @NewGame="hideGameModal"/>
     <nav-component />
 
     <div id="notImplementedAlert" class="alert alert-primary alert-dismissible fade show" role="alert">
@@ -18,7 +18,7 @@
       <div class="mainBody">
         <games-list style="margin-top: 20px;"
                     @gameSelected="gameSelected"
-                    @AddGame="showModal('new-game')">
+                    @AddGame="addGameClicked">
         </games-list>
         <players-list style="margin-top: 20px;"
                       @playerSelected="viewPlayerInfo"
@@ -84,6 +84,9 @@ export default {
       SET_PLAYERS: 'mainStore/SET_PLAYERS',
       SET_GAMES_LIST: 'mainStore/SET_GAMES_LIST'
     }),
+    addGameClicked: function() {
+      this.showModal('new-game');
+    },
     goToAnalysis: function(event) {
       this.$router.push('/analysis');
     },
@@ -137,7 +140,10 @@ export default {
       this.$modal.show(name);
     },
     hideGameModal (event) {
-
+      console.log("NEW GAME: ")
+      console.log(event)
+      console.log('----------')
+      this.$modal.hide('new-game')
     },
     hideModal (event) {
       var id = this.selectedTeamId;

@@ -54,15 +54,15 @@
 
 <style scoped>
   .GamesList {
-    width: 310px;
+    width: 304px;
     height: 500px;
     background: white;
     margin-left: 50px;
-    border-width: 5px;
-    border-style: solid;
-    border-radius: 40px;
+     border-width: 2px;
+    border-style: solid; 
+    border-radius: 20px; 
     position: relative;
-    box-shadow: 5px 5px 5px grey;
+    box-shadow: 1px 1px 1px grey;
   }
 
   .gl_title {
@@ -70,7 +70,7 @@
     height: 75px;
     background: white;
     border-radius: 35px 35px 0px 0px;
-    border-bottom-width: medium;
+    border-bottom-width: 2px;
     border-bottom-style: solid;
     background-color: white;
   }
@@ -81,7 +81,7 @@
     position: absolute;
     bottom: 0;
     border-radius: 0px 0px 35px 35px;
-    border-top-width: medium;
+    border-top-width: 2px;
     border-top-style: solid;
     text-align: center;
     vertical-align: middle;
@@ -106,13 +106,13 @@
   }
 
   .gl_table {
-    border-width: 1px;
-    border-style: solid;
+    /* border-width: 1px;
+    border-style: solid; */
   }
 
   .glTD {
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
+    /* border-bottom-style: solid;
+    border-bottom-width: 1px; */
     background-color: white;
   }
 

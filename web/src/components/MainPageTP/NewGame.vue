@@ -4,37 +4,57 @@
             <div class="partition" id="partition-register">
                 <div class="partition-title">Add Game</div>
                 <div class="partition-form">
-                    <form>
-                        <!-- <label>Opponent:</label>
-                        <input class="ng_input" id="opponent" type="text" placeholder="Opponent" style="margin: 20px; width: 70%" v-model="oppName"> -->
-                         <!-- <div style="font-size: 12px;">
-                            <scroll-picker-group class="flex">
-                                <scroll-picker :options="periodLengths" @input="change" />
-                                <scroll-picker :options="periodLengths" @input="change" />
-                                <scroll-picker :options="periodLengths" @input="change" />
-                            </scroll-picker-group>
-                          </div> -->
-                          <div id="appWheel" style="width: 100px; height: 100px; margin: 10px auto 0 auto">
-                            <wheel-count-number :text="text"></wheel-count-number>
-                          </div>
-                        <!-- <div style="margin-left: 25%;">
-                            <toggle-button :color="'#e00010'" v-model="scEnabled" /><label class="sceLabel">Shot Chart Enabled</label>
-                        </div>
-                        <div style="margin-left: 25%;">
-                            <toggle-button :color="'#e00010'" v-model="teamCode" /><label class="sceLabel">Viewable with Team Code</label>
-                        </div> -->
-                    </form>
-                    <button class="large-btn github-btn" style="width: 90%; margin-left: 20px;" @click="submit">SUBMIT</button>
-                </div>
+                  <form>
+                    <div>
+                      <label>Opponent:</label>
+                      <input class="ng_input" id="opponent" type="text" placeholder="Opponent" style="margin: 20px; width: 70%" v-model="oppName">
+                    </div>
+                    <div>
+                      <label style="float: left; margin-right: 9%;">Period Length:</label>
+                      <multiselect v-model="selectedPeriodLength"
+                                  :options="periodLengths"
+                                  :multiple="false"
+                                  :close-on-select="true"
+                                  placeholder="45"
+                                  class="es_multiselect">
+                      </multiselect>
+                    </div>
+                    <div>
+                      <label style="float: left; margin-right: 9%;">Number of Periods:</label>
+                      <segmented-control
+                          :options="options"
+                          label="label"
+                          value="value"
+                          color="#fff"
+                          active-color="#e00010"
+                          :multiple="false"
+                          @select="onSelect"
+                          class="ng_sc"
+                      />
+                    </div>
+                    <div>
+                      <label class="sceLabel">Shot Chart Enabled:</label>
+                      <toggle-button :color="'#e00010'" v-model="scEnabled" />
+                    </div>
+                    <div>
+                      <label class="sceLabel">Viewable with Team Code:</label>
+                      <toggle-button :color="'#e00010'" v-model="teamCode" />
+                    </div>
+                  </form>
+                <button class="btn ng_button" style="width: 90%; margin-left: 20px;" @click="submit">SUBMIT</button>
+              </div>
             </div>
         </div>
     </modal>
 </template>
 <script>
 const MODAL_WIDTH = 450;
-
+import SegmentedControl from 'vue-segmented-control'
 
 export default {
+  components: {
+        SegmentedControl
+  },
   name: 'NewGame',
   data () {
     return {
@@ -42,10 +62,14 @@ export default {
       oppName: '',
       scEnabled: false,
       teamCode: false,
-      currentState: 'all',
       periodLengths: ['45', '40', '35', '30', '25', '20', '1'],
-      selected: 1,
-      text: '998'
+      selectedPeriodLength: 45,
+      periodType: '',
+      options: [
+                { label: 'Halves', value: 2 },
+                { label: 'Quarters', value: 4 }
+      ],
+      numPeriods: 2
     }
   },
   created () {
@@ -55,10 +79,19 @@ export default {
   },
   methods: {
     submit() {
-        alert(this.oppName + ' ' + this.scEnabled + ' ' + this.teamCode)
+        this.$emit('NewGame', {
+          Opponent: this.oppName,
+          SCEnabled: this.scEnabled,
+          TeamCode: this.teamCode,
+          PeriodLength: parseInt(this.selectedPeriodLength),
+          NumPeriods: this.numPeriods
+        })
     },
     change(value) {
       console.log('*** ' + value + ' ***')
+    },
+    onSelect(selectedOption){
+      this.numPeriods = selectedOption[0].value;
     }
   }
 }
@@ -72,6 +105,7 @@ $github_color: #DBA226;
   width: 450px;
   height: 50vh;
   border-radius: 10px;
+  overflow-y: scroll;
 
   .partition {
     width: 100%;
@@ -111,7 +145,7 @@ $github_color: #DBA226;
   border: 0;
   outline: 0;
   background: transparent;
-  border-bottom-width: 3px;
+  border-bottom-width: 1px;
   border-bottom-style: solid;
 }
 
@@ -122,6 +156,16 @@ $github_color: #DBA226;
 
 .sceLabel {
     width: 75%;
+}
+.es_multiselect {
+  width: 60%;
+  margin-bottom: 15px;
+  margin-top: -5px;
+  float: left;
+}
+.ng_sc {
+  float: left;
+  height: 32px;
 }
 
 </style>
