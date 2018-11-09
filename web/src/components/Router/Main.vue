@@ -18,7 +18,8 @@
       <div class="mainBody">
         <games-list style="margin-top: 20px;"
                     @gameSelected="gameSelected"
-                    @AddGame="addGameClicked">
+                    @AddGame="addGameClicked"
+                    @NewGame="addGame(ngData)">
         </games-list>
         <players-list style="margin-top: 20px;"
                       @playerSelected="viewPlayerInfo"
@@ -177,9 +178,8 @@ export default {
         })
       })
     },
-    addGame() {
+    addGame(ngData) {
       var gameCount = this.gamesList.length + 1;
-      console.log('*****' + this.gamesList.length);
       var gameCountStr = gameCount + '';
       if(gameCount < 10){
         gameCountStr = '0' + gameCount;
@@ -188,7 +188,9 @@ export default {
       var oppData = [];
       var myData = [];
       var isSoccer = this.selectedTeamSport == 1
-      var periodLength = 45;
+      var periodLength = ngData.PeriodLength;
+
+      // SCEnabled: this.scEnabled,
 
       if(isSoccer){
         oppData = {
@@ -198,13 +200,23 @@ export default {
         };
       }
       else {
-        oppData = {
-          "Period1" : this.basketballStats,
-          "Period2" : this.basketballStats,
-          "Period3" : this.basketballStats,
-          "Period4" : this.basketballStats
-        };
+        if(ngData.NumPeriods == 2){
+          oppData = {
+            "Period1" : this.basketballStats,
+            "Period2" : this.basketballStats
+          };
+        }
+        else{
+          oppData = {
+            "Period1" : this.basketballStats,
+            "Period2" : this.basketballStats,
+            "Period3" : this.basketballStats,
+            "Period4" : this.basketballStats
+          };
+        }
+        
       }
+      
 
       if(isSoccer){
         myData = {
@@ -214,13 +226,21 @@ export default {
         };
       }
       else {
-        periodLength = 12;
-        myData = {
-          "Period1" : this.basketballStats,
-          "Period2" : this.basketballStats,
-          "Period3" : this.basketballStats,
-          "Period4" : this.basketballStats
-        };
+        if(ngData.NumPeriods == 2){
+          myData = {
+            "Period1" : this.basketballStats,
+            "Period2" : this.basketballStats
+          };
+        }
+        else {
+          myData = {
+            "Period1" : this.basketballStats,
+            "Period2" : this.basketballStats,
+            "Period3" : this.basketballStats,
+            "Period4" : this.basketballStats
+          };
+        }
+        
       }
       var d = new Date();
       var dateStr = d.toJSON().substring(0,10);
@@ -233,7 +253,10 @@ export default {
         "Name" : gameID,
         "OpponentsTotals" : oppData,
         "Period" : 1,
-        "PeriodStartTime" : -1
+        "PeriodStartTime" : -1,
+        "ViewableWithTeamCode" : ngData.TeamCode,
+        "OpposingTeamName" : ngData.Opponent,
+        "ShotChartEnabled" : ngData.ShotChartEnabled
       }
 
       if(isSoccer) {
@@ -247,7 +270,9 @@ export default {
       }
       else {
         data['PeriodLength'] = periodLength;
-        data['NumberOfPeriods'] = 4;
+        data['NumberOfPeriods'] = ngData.NumPeriods;
+        data['TimeClockStarted'] = " "
+        data['TimeRemainingInPeriod'] = periodLength * 60
         var ref = firebase.database().ref('BasketballGames').child(this.selectedTeamId).update({
           [gameID] : data
         })
