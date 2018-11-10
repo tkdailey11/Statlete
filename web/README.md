@@ -2,6 +2,10 @@
 
 > Statlete Web Interface
 
+##Node Version
+ > Tested with Node v9.5.0, npm v5.6.0
+ > (Node >= 10 is breaking!)
+
 ## Build Setup
 
 ``` bash
@@ -32,9 +36,6 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 
 ##Deployment:
-###Tested with Node v9.5.0, npm v5.6.0
-(Node >= 10 is breaking!)
-
 
 $ npm run build
 $ firebase deploy
