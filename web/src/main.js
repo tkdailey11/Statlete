@@ -128,12 +128,11 @@ Vue.component('vue-scrolling-table', VueScrollingTable);
 
 
 //Stylesheets
-import 'vuejs-dialog/dist/vuejs-dialog.min.css'
-import 'bootstrap/dist/css/bootstrap.css'
+import './assets/stylesheets/vuejs-dialog.min.css'
+import './assets/stylesheets/bootstrap.min.css'
 import './assets/stylesheets/bootstrap-social.css'
+import './assets/stylesheets/vue-multiselect.min.css'
 import './assets/stylesheets/master_colors.scss'
-import 'vue-multiselect/dist/vue-multiselect.min.css'
-
 
 Vue.config.productionTip = false
 
