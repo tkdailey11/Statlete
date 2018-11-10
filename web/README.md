@@ -2,7 +2,7 @@
 
 > Statlete Web Interface
 
-##Node Version
+## Node Version
  > Tested with Node v9.5.0, npm v5.6.0
  > (Node >= 10 is breaking!)
 
@@ -35,7 +35,7 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 
 
-##Deployment:
+## Deployment:
 
 $ npm run build
 $ firebase deploy
