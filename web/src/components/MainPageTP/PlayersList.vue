@@ -12,7 +12,7 @@
       </table>
     </div>
     <div class="plFooter" @click="$emit('addPlayerClicked')" v-if="addPlayerEnabled">
-      Add New Player
+      <h3 class="plH1" align="center">Add New Player</h3>
     </div>
     <div class="plFooter" v-else>
     </div>
@@ -46,60 +46,46 @@
 
 <style scoped>
   .PlayersList {
-    width: 310px;
     height: 500px;
     margin-left: 50px;
-    border-width: 5px;
-    border-style: solid;
-    border-radius: 40px;
+    border-width: 2px;
+    border-style: solid; 
+    border-radius: 20px; 
     position: relative;
-    box-shadow: 5px 5px 5px grey;
   }
 
   .plTitle {
     width: 100%;
     height: 75px;
-    border-radius: 35px 35px 0px 0px;
+    border-radius: 20px 20px 0px 0px;
     border-bottom-width: medium;
     border-bottom-style: solid;
-    background-color: white;
   }
 
   .plFooter {
-    width: 300px;
+    width: 100%;
     height: 75px;
     position: absolute;
     bottom: 0;
-    border-radius: 0px 0px 35px 35px;
+    border-radius: 0px 0px 20px 20px;
     border-top-width: medium;
     border-top-style: solid;
     text-align: center;
     vertical-align: middle;
     line-height: 75px;
-    font-size: 25px;
+    overflow-x: hidden;
   }
   .plFooter:hover {
     cursor: pointer;
   }
 
   #playersTable {
-    width: 300px;
+    width: inherit;
     max-height: 350px;
-    height: 350px;
-    background-color: white;
+    height: 344px;
     overflow: scroll;
     margin-bottom: 0px;
     margin: 0px;
-  }
-
-  .pl_table {
-    border-width: 1px;
-    border-style: solid;
-  }
-
-  .plTD {
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
   }
 
   tr {
@@ -113,5 +99,10 @@
   .plH1 {
     line-height: 75px;
     height: 75px;
+  }
+
+  .plTD {
+    font-size: 20px;
+    overflow-x: hidden;
   }
 </style>

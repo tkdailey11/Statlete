@@ -11,7 +11,7 @@
       </table>
     </div>
     <div class="glFooter" v-if="addGameEnabled" @click="addGameClicked">
-      Add New Game
+      <h3 class="glH1" align="center">Add New Game</h3>
     </div>
   </div>
 </template>
@@ -54,39 +54,32 @@
 
 <style scoped>
   .GamesList {
-    width: 304px;
     height: 500px;
-    background: white;
-    margin-left: 50px;
-     border-width: 2px;
+    border-width: 2px;
     border-style: solid; 
     border-radius: 20px; 
     position: relative;
-    box-shadow: 1px 1px 1px grey;
   }
 
   .gl_title {
-    width: 300px;
     height: 75px;
-    background: white;
-    border-radius: 35px 35px 0px 0px;
+    border-radius: 20px 20px 0px 0px;
     border-bottom-width: 2px;
     border-bottom-style: solid;
-    background-color: white;
   }
 
   .glFooter {
-    width: 300px;
+    width: 100%;
     height: 75px;
     position: absolute;
     bottom: 0;
-    border-radius: 0px 0px 35px 35px;
+    border-radius: 0px 0px 20px 20px;
     border-top-width: 2px;
     border-top-style: solid;
     text-align: center;
     vertical-align: middle;
     line-height: 75px;
-    font-size: 25px;
+    overflow-x: hidden;
   }
 
   .glFooter:hover {
@@ -94,10 +87,8 @@
   }
 
   #gamesTable {
-    width: 300px;
-    max-height: 350px;
-    height: 350px;
-    background-color: white;
+    width: inherit;
+    height: 344px;
     overflow: scroll;
   }
 
@@ -110,14 +101,13 @@
     border-style: solid; */
   }
 
-  .glTD {
-    /* border-bottom-style: solid;
-    border-bottom-width: 1px; */
-    background-color: white;
-  }
-
   .glH1 {
     line-height: 75px;
     height: 75px;
+  }
+
+  .glTD {
+    font-size: 20px;
+    overflow-x: hidden;
   }
 </style>

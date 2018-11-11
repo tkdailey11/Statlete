@@ -41,7 +41,7 @@
                       <toggle-button :color="'#e00010'" v-model="teamCode" />
                     </div>
                   </form>
-                <button class="btn ng_button" style="width: 90%; margin-left: 20px;" @click="submit">SUBMIT</button>
+                <!-- <button class="btn ng_button" style="width: 90%; margin-left: 20px;" @click="submit">SUBMIT</button> -->
               </div>
             </div>
         </div>

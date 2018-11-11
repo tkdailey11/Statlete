@@ -74,6 +74,21 @@ const state = {
       "TOV" : {
         "Total" : 0
       }
+    },
+    basketballPlayerStats: {
+      "AST"  : 0,
+      "BLK"  : 0,
+      "DREB" : 0,
+      "OREB" : 0,
+      "FG2A" : 0,
+      "FG2M" : 0,
+      "FG3A" : 0,
+      "FG3M" : 0,
+      "FTA"  : 0,
+      "FTM"  : 0,
+      "PF"   : 0,
+      "STL"  : 0,
+      "TOV"  : 0
     }
   };
   
@@ -89,6 +104,9 @@ const state = {
     },
     basketballStatsArr: state => {
       return Object.keys(state.basketballStats);
+    },
+    basketballPlayerStats: state => {
+      return state.basketballPlayerStats;
     }
   };
   

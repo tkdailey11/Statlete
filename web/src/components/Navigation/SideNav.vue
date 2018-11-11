@@ -1,32 +1,31 @@
 <template>
     <div id="SideNav" class="sidenav">
-      <div style="height: 50px; width: 100%; background-color: blue;" />
-      <!-- <a href="javascript:void(0)" class="closebtn" @click="closeNav">&times;</a> -->
-      <div style="margin-bottom: 40px;">
-        <img src="../../assets/images/testUser.png" width="100px" height="100px">
-        <h4 style="margin-top: 10px; color: white;">{{currentUserEmail}}</h4>
+      <div class="sn_info">
+        <a href="javascript:void(0)" class="closebtn" @click="closeNav">&times;</a>
+        <img src="../../assets/images/testUser.png" width="200px" height="200px">
+        <h4 class="snH4">{{currentUserName}}</h4>
       </div>
 
       <!--Team Sportfolios -->
-      <div class="SBdataEntry">
+      <div class="sn_ts SBdataEntry">
         <div class="sn_title">
           <h5 align="center">Team Sportfolios</h5>
         </div>
         <div class="dataTable">
           <table width="100%">
             <tr class="sn_tr" v-for="t in teamSportfolios" @click="selectedTeam(t)">
-              <td>{{ t }}</td>
-            </tr>
-            <tr class="sn_tr">
-              <td @click="$emit('showTeam'); closeNav();">+ New Team Sportfolio</td>
+              <td class="snTD">{{ t }}</td>
             </tr>
           </table>
+        </div>
+        <div class="sn_footer">
+              <h6 class="snH6" align="center" @click="$emit('showTeam'); closeNav();">New Team Sportfolio</h6>
         </div>
       </div>
       <!--End of Team Sportfolios -->
 
       <!--Player Sportfolios -->
-      <div class="SBdataEntry">
+      <div class="sn_ps SBdataEntry">
         <div class="sn_title">
           <h5 align="center">Player Sportfolios</h5>
         </div>
@@ -35,10 +34,10 @@
             <tr class="sn_tr" v-for="p in playerSportfolios" @click="selectedPlayer(p)">
               <td>{{ p }}</td>
             </tr>
-            <tr class="sn_tr">
-              <td @click="$emit('showPlayer'); closeNav();">+ New Player Sportfolio</td>
-            </tr>
           </table>
+        </div>
+        <div class="sn_footer">
+              <h6 class="snH6" align="center" @click="$emit('showPlayer'); closeNav();">New Player Sportfolio</h6>
         </div>
       </div>
       <!--End of Player Sportfolios -->
@@ -55,10 +54,14 @@
     data() {
       return {
         loggedInUser: '',
-        currentUserEmail: '',
         teamSportfolios: [],
         playerSportfolios: []
       }
+    },
+    computed: {
+      ...mapGetters({
+        currentUserName: 'mainStore/currentUserName'
+      })
     },
     methods: {
       ...mapMutations({
@@ -141,12 +144,7 @@
 <style scoped>
   /* The side navigation menu */
   .sidenav {
-      height: 100vh;
-      width: 0;
-      position: fixed; 
       z-index: 1; /* Stay on top */
-      top: 0;
-      left: 0;
       overflow-x: hidden; /* Disable horizontal scroll */
       transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
   }
@@ -182,39 +180,30 @@
   .SBdataEntry {
     width: 200px;
     height: 250px;
-    background: white;
-    border-width: 5px;
-    border-color: white;
+    border-width: 3px;
     border-style: solid;
-    border-radius: 35px;
+    border-radius: 25px;
     position: relative;
     margin: 10%;
     margin-bottom: 50px;
   }
 
   .sn_title {
-    width: 190px;
+    width: 194px;
     height: 50px;
-    border-radius: 35px 35px 0px 0px;
-    border-bottom-width: medium;
+    border-radius: 20px 20px 0px 0px;
+    border-bottom-width: 2px;
     border-bottom-style: solid;
   }
 
   .dataTable {
-    width: 190px;
-    max-height: 189px;
-    height: 189px;
+    width: 194px;
+    height: 146px;
     overflow: scroll;
-    border-radius: 0px 0px 30px 30px;
   }
 
-  table, th {
-    border: 1px solid white;
-  }
-
-  td {
-    border-bottom: 1px solid white;
-    color: white;
+  .snTD {
+    padding: 5px;
   }
 
   h5 {
@@ -243,14 +232,40 @@
   }
 
   .sn_tr:hover td {
-    background-color: rgba(0, 224, 67, 0.404);
     cursor: pointer;
   }
 
+  .snH6 {
+    overflow-x: hidden;
+    line-height: 50px;
+    height: 50px;
+  }
+
+  .snH4 {
+    margin-top: 20px;
+  }
+
+  .sn_info {
+    margin-bottom: 40px;
+  }
+
+  .sn_footer {
+    width: 100%;
+    height: 50px;
+    position: absolute;
+    bottom: 0;
+    border-radius: 0px 0px 20px 20px;
+    border-top-width: 2px;
+    border-top-style: solid;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 50px;
+    overflow-x: hidden;
+  }
 
   /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-  /* @media screen and (max-height: 450px) {
+  @media screen and (max-height: 450px) {
       .sidenav {padding-top: 15px;}
       .sidenav a {font-size: 18px;}
-  } */
+  }
 </style>

@@ -1,6 +1,8 @@
 $bright_red: rgb(224, 0, 16);
 $transparent_red: rgba(224, 0, 16, 0.5);
 $light_gray: rgb(240,240,240);
+$dark_bgrd: rgb(43, 42, 41);
+$dark_fgrd: rgb(85, 85, 85);
 
 .TopBanner {
     color: $bright_red;
@@ -24,42 +26,6 @@ $light_gray: rgb(240,240,240);
 
 .sbdeTD {
     color: $bright_red;
-}
-
-.gl_title {
-    border-bottom-color: $bright_red;
-}
-
-.glFooter {
-    color: $bright_red;
-    border-top-color: $bright_red;
-}
-
-.glFooter:hover {
-    background-color: $transparent_red;
-    color: white;
-}
-
-.glTD {
-    border-bottom-color: $bright_red;
-    color: $bright_red;
-}
-
-.glTR:hover .glTD {
-    background-color: $transparent_red;
-    color: white;
-}
-
-.gl_table {
-    border-color: $bright_red;
-}
-
-.glH1 {
-    color: $bright_red;
-}
-
-.GamesList {
-    border-color: $bright_red;
 }
 
 .ng_box {
@@ -99,22 +65,60 @@ $light_gray: rgb(240,240,240);
     background-color: $transparent_red;
 }
 
+.gl_title {
+    border-bottom-color: $bright_red;
+    background-color: $dark_fgrd;
+}
+
+.glFooter {
+    color: $light_gray;
+    border-top-color: $bright_red;
+}
+
+.glFooter:hover {
+    background-color: $transparent_red;
+}
+
+.glTD {
+    color: $light_gray;
+    background-color: $dark_fgrd;
+}
+
+.glTR:hover .glTD {
+    background-color: $transparent_red;
+}
+
+.gl_table {
+    border-color: $bright_red;
+}
+
+.glH1 {
+    color: $light_gray;
+    
+}
+
+.GamesList {
+    border-color: $bright_red;
+    background-color: $dark_fgrd;
+}
+
 .PlayersList {
     border-color: $bright_red;
+    background-color: $dark_fgrd;
 }
 
 .plTitle {
     border-bottom-color: $bright_red;
+    background-color: $dark_fgrd;
 }
 
 .plFooter {
     border-top-color: $bright_red;
-    color: $bright_red;
+    color: $light_gray;
 }
 
 .plFooter:hover {
     background-color: $transparent_red;
-    color: white;
 }
 
 .pl_table {
@@ -123,16 +127,15 @@ $light_gray: rgb(240,240,240);
 
 .plTR:hover td{
     background-color: $transparent_red;
-    color: white;
 }
 
 .plTD {
-    border-bottom-color: $bright_red;
-    color: $bright_red;
+    color: $light_gray;
+    background-color: $dark_fgrd;
 }
 
 .plH1 {
-    color: $bright_red;
+    color: $light_gray;
 }
 
 .sidenav {
@@ -140,7 +143,7 @@ $light_gray: rgb(240,240,240);
 }
 
 #mySidenav {
-    background: $light_gray;
+    background: $dark_bgrd;
     border-right: solid 3px $bright_red;
 }
 
@@ -227,8 +230,8 @@ input:-webkit-autofill:focus {
 }
 
 .main_button {
-    color: white;
-    background-color: $bright_red;
+    color: $light_gray;
+    background-color: $dark_fgrd;
     border-color: $bright_red;
 }
 .main_button:hover {
@@ -236,22 +239,23 @@ input:-webkit-autofill:focus {
 }
 
 .mainH1 {
-    color: $bright_red;
+    color: $light_gray;
+    text-shadow: 2px 2px $bright_red;
 }
 #app {
-    background-color: $light_gray;
+    background-color: $dark_bgrd;
 }
 
 .sn_title{
-    border-bottom-color: white;
-    background-color: $bright_red;
+    border-bottom-color: $bright_red;
+    background-color: $dark_fgrd;
 }
 .sn_tr:hover td {
     background-color: $transparent_red;
 }
 
 .dataTable {
-    background-color: $bright_red;
+    background-color: $dark_fgrd;
 }
 
 .phH1 {
@@ -357,3 +361,68 @@ input:-webkit-autofill:focus {
 // .wizard__step__label {
 
 // }
+
+#toggleViewDiv {
+    border-color: $bright_red;
+}
+
+#entryMode {
+    background-color: $dark_fgrd;
+    color: $light_gray;
+}
+
+#entryMode:hover {
+    background-color: $transparent_red;
+}
+
+#chartMode {
+    background-color: $dark_fgrd;
+    color: $light_gray;
+    border-color: $bright_red;
+}
+
+#chartMode:hover {
+    background-color: $transparent_red;
+}
+
+#statMode {
+    background-color: $dark_fgrd;
+    color: $light_gray;
+}
+
+#statMode:hover {
+    background-color: $transparent_red;
+}
+
+.modal-body {
+    background-color: $light_gray;
+}
+
+.ng_hidden {
+    color: $light_gray;
+}
+
+.snH6, .snH4 {
+    color: $light_gray;
+}
+
+.snTD {
+    color: $light_gray;
+}
+
+.SBdataEntry {
+    border-color: $bright_red;
+}
+
+.sn_tr:hover td {
+    background: $transparent_red;
+}
+
+.sn_footer {
+    border-color: $bright_red;
+    background: $dark_fgrd;
+}
+
+.sn_footer:hover {
+    background: $transparent_red;
+}

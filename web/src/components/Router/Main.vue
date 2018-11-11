@@ -1,31 +1,35 @@
 <template>
   <div class="main">
     <new-player @newPlayerAdded="hideModal" />
-    <new-game @NewGame="hideGameModal"/>
+    <!-- <new-game @NewGame="hideGameModal"/> -->
+    <ngmodal
+      v-show="isModalVisible"
+      @close="closeNGModal()"
+    />
     <nav-component />
-
-    <div id="notImplementedAlert" class="alert alert-primary alert-dismissible fade show" role="alert">
-      <p>This functionality has not yet been implemented. Please check back soon!</p>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="margin: 7px; background-color: transparent;">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
 
     <div id="mainPage">
       <div class="mainHeader">
         <h1 class="mainH1">{{selectedTeamName}}</h1>
       </div>
       <div class="mainBody">
-        <games-list style="margin-top: 20px;"
-                    @gameSelected="gameSelected"
-                    @AddGame="addGameClicked"
-                    @NewGame="addGame(ngData)">
-        </games-list>
-        <players-list style="margin-top: 20px;"
-                      @playerSelected="viewPlayerInfo"
-                      @addPlayerClicked="showModal('new-player')"
-                      :players="players">
-        </players-list>
+        <div class="list-wrapper">
+          <!-- <games-list class="mbgl"
+                      @gameSelected="gameSelected"
+                      @AddGame="addGameClicked"
+                      @NewGame="addGame(ngData)">
+          </games-list> -->
+          <games-list class="mbgl"
+                      @gameSelected="gameSelected"
+                      @AddGame="showNGModal"
+                      @NewGame="addGame(ngData)">
+          </games-list>
+          <players-list class="mbpl"
+                        @playerSelected="viewPlayerInfo"
+                        @addPlayerClicked="showModal('new-player')"
+                        :players="players">
+          </players-list>
+        </div>
         <div class="button-wrapper">
           <button @click="editTeamSettings" class="btn btn-outline-primary main_button">Edit Team Settings</button>
           <button @click="viewTeamStats" class="btn btn-outline-primary main_button">View Team Stats</button>
@@ -38,11 +42,16 @@
 </template>
 
 <script>
-import firebase from 'firebase'
+import firebase from 'firebase';
 import { mapGetters, mapMutations } from 'vuex';
+import NewGame from '../MainPageTP/NewGame.vue';
+import ngmodal from '../NewGameModal.vue';
 
 export default {
   name: 'Main',
+  components: {
+    ngmodal,
+  },
   computed: {
     ...mapGetters({
       selectedTeamId: 'mainStore/selectedTeamId',
@@ -54,6 +63,7 @@ export default {
       players: 'mainStore/players',
       soccerStats: 'statStore/soccerStats',
       basketballStats: 'statStore/basketballStats',
+      basketballPlayerStats: 'statStore/basketballPlayerStats',
       gamesList: 'mainStore/gamesList'
     })
   },
@@ -61,18 +71,16 @@ export default {
     return {
       sportfolios: [],
       teamName: '',
-      teamToken: ''
+      teamToken: '',
+      isModalVisible: false
     }
   },
   mounted () {
-    jQuery("#notImplementedAlert").hide();
-    var niMsg = jQuery("#notImplementedAlert");
-
-    niMsg.on("close.bs.alert", function () {
-          niMsg.hide();
-          return false;
-    });
     this.SET_LOGGED_IN_USER(firebase.auth().currentUser);
+    var self = this;
+    firebase.database().ref('/Users').child(firebase.auth().currentUser.email.replace('.', '')).child('Name').once('value', function(snapshot){
+      self.SET_CURRENT_USER_NAME(snapshot.val())
+    })
     this.getGamesTeam();
     this.getPlayers();
     this.getSportfolios();
@@ -83,10 +91,24 @@ export default {
       SET_ACTIVE_GAME_ID: 'mainStore/SET_ACTIVE_GAME_ID',
       SET_SELECTED_TEAM_ID: 'mainStore/SET_SELECTED_TEAM_ID',
       SET_PLAYERS: 'mainStore/SET_PLAYERS',
-      SET_GAMES_LIST: 'mainStore/SET_GAMES_LIST'
+      SET_GAMES_LIST: 'mainStore/SET_GAMES_LIST',
+      SET_CURRENT_USER_NAME: 'mainStore/SET_CURRENT_USER_NAME'
     }),
+    showNGModal() {
+      this.isModalVisible = true;
+    },
+    closeNGModal() {
+      this.isModalVisible = false;
+    },
     addGameClicked: function() {
-      this.showModal('new-game');
+      //this.showModal('new-game');
+      
+ 
+      this.$modal.show(NewGame, {
+        text: 'This text is passed as a property'
+      }, {
+        draggable: true
+      })
     },
     goToAnalysis: function(event) {
       this.$router.push('/analysis');
@@ -138,12 +160,22 @@ export default {
       });
     },
     showModal (name) {
-      this.$modal.show(name);
+      this.$modal.show(name, {
+        title: 'Alert!',
+        text: 'You are too awesome',
+        buttons: [
+          {
+            title: 'Submit',       // Button title
+            default: true,    // Will be triggered by default if 'Enter' pressed.
+            handler: () => {
+              alert('Submit clicked')
+            } // Button click handler
+          }
+        ]
+      });
     },
     hideGameModal (event) {
-      console.log("NEW GAME: ")
-      console.log(event)
-      console.log('----------')
+      this.addGame(event)
       this.$modal.hide('new-game')
     },
     hideModal (event) {
@@ -179,6 +211,8 @@ export default {
       })
     },
     addGame(ngData) {
+      console.log('New Game:')
+      console.log(ngData)
       var gameCount = this.gamesList.length + 1;
       var gameCountStr = gameCount + '';
       if(gameCount < 10){
@@ -188,6 +222,7 @@ export default {
       var oppData = [];
       var myData = [];
       var isSoccer = this.selectedTeamSport == 1
+      var isBball = this.selectedTeamSport == 0
       var periodLength = ngData.PeriodLength;
 
       // SCEnabled: this.scEnabled,
@@ -250,17 +285,24 @@ export default {
         "InProgress" : false,
         "Live" : true,
         "MyTotals" : myData,
-        "Name" : gameID,
         "OpponentsTotals" : oppData,
         "Period" : 1,
-        "PeriodStartTime" : -1,
         "ViewableWithTeamCode" : ngData.TeamCode,
         "OpposingTeamName" : ngData.Opponent,
-        "ShotChartEnabled" : ngData.ShotChartEnabled
+        "ShotChartEnabled" : ngData.SCEnabled
+      }
+
+      if(isBball){
+        var playerData = {}
+        Object.keys(this.players).forEach((player) => {
+          playerData[player] = this.basketballPlayerStats
+        })
+        data['Players'] = playerData
       }
 
       if(isSoccer) {
         data['HalfLength'] = periodLength;
+        data['PeriodStartTime'] = -1;
         var ref = firebase.database().ref('SoccerGames').child(this.selectedTeamId).update({
           [gameID] : data
         })
@@ -273,6 +315,7 @@ export default {
         data['NumberOfPeriods'] = ngData.NumPeriods;
         data['TimeClockStarted'] = " "
         data['TimeRemainingInPeriod'] = periodLength * 60
+        data['Shots'] = " "
         var ref = firebase.database().ref('BasketballGames').child(this.selectedTeamId).update({
           [gameID] : data
         })
@@ -307,11 +350,12 @@ export default {
       min-height: 100%;
   }
   .main_button {
-    margin-top: 20px;
     cursor: pointer;
     height: 50px;
     max-height: 50px;
-    margin: 50px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    width: 175px;
   }
 
   .mainHeader {
@@ -327,12 +371,23 @@ export default {
   }
 
   .button-wrapper {
-    float: right;
-    white-space: nowrap;
-    margin-top: 18px;
+    flex-basis: 33%;
+    padding: 15px;
+  }
+
+  .list-wrapper {
+    flex-basis: 67%;
+    padding: 25px;
     display: flex;
-    flex-wrap: wrap;
-    margin-left: 75px;
+    justify-content: space-evenly;
+  }
+
+  .mbgl{
+    flex-basis: 50%;
+  }
+
+  .mbpl{
+    flex-basis: 50%;
   }
 
   .mainHeader h1 {
@@ -341,13 +396,13 @@ export default {
     max-height: 100px;
     white-space: nowrap;
     text-align: left;
-    margin-left: 15px;
   }
 
   .mainBody {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    align-items: stretch;
   }
 
   #mainPage {

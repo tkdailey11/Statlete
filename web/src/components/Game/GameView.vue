@@ -37,13 +37,13 @@
       </div>
     </div>
     <div id="toggleViewDiv">
-      <div id="entryMode" @click="toggleEntryClicked()" style="height: 150px; line-height: 150px;">
+      <div id="entryMode" @click="toggleEntryClicked()">
         Entry
       </div>
-      <div id="chartMode" @click="toggleChartClicked()" style="height: 200px; line-height: 200px; border-bottom: 5px solid black; border-top: 5px solid black;">
+      <div id="chartMode" @click="toggleChartClicked()">
         Shots
       </div>
-      <div id="statMode" @click="toggleStatClicked()" style="height: 150px; line-height: 150px;">
+      <div id="statMode" @click="toggleStatClicked()">
         Stats
       </div>
     </div>
@@ -569,7 +569,6 @@
     width: 100vw;
     min-height: 103vh;
     height: 100%;
-    background-color: white;
     margin-top: 0px;
   }
   #EntryView{
@@ -590,16 +589,12 @@
   #sbde1{
     width: 500px;
     height: 500px;
-    background: white;
     margin: 50px;
     margin-right: 0px;
     border-width: 5px;
-    border-color: black;
     border-style: solid;
     border-radius: 35px;
     position: relative;
-
-    box-shadow: 5px 5px 5px grey;
   }
   #fieldDiv {
     float: left;
@@ -620,10 +615,34 @@
   #toggleViewDiv {
     height: 500px;
     width: 100px;
-    border: 5px black solid;
-    border-radius: 35px;
+    border-width: 3px;
+    border-style: solid;
+    border-radius: 20px;
     float: right;
     margin-right: 100px;
     margin-top: 65px;
+  }
+
+  #entryMode {
+    height: 147px; 
+    line-height: 147px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+  }
+
+  #chartMode {
+    height: 200px; 
+    line-height: 200px;
+    border-top-style: solid;
+    border-top-width: 3px;
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+  }
+
+  #statMode {
+    height: 147px; 
+    line-height: 147px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
   }
 </style>
