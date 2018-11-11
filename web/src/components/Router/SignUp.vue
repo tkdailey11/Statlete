@@ -49,8 +49,7 @@
 
 <style scoped>
   .sign-up {
-    margin-top: 40px;
-    color: rgb(224,0,16);
+    height: 100vh;
   }
   .myBottomNav{
     padding-left: 25vw;
@@ -63,7 +62,7 @@
   }
   input {
     margin: 10px 0;
-    width: 30%;
+    width: 50%;
     padding: 15px;
     border: 0;
     outline: 0;

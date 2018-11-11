@@ -1,6 +1,7 @@
 $bright_red: rgb(224, 0, 16);
 $transparent_red: rgba(224, 0, 16, 0.5);
 $light_gray: rgb(240,240,240);
+$transparent_light_gray: rgba(240,240,240, 0.5);
 $dark_bgrd: rgb(43, 42, 41);
 $dark_fgrd: rgb(85, 85, 85);
 
@@ -8,20 +9,12 @@ $dark_fgrd: rgb(85, 85, 85);
     color: $bright_red;
 }
 
-.pss_plFooter {
+.pss_plFooter, .pssTD, .pssH1 {
     color: $bright_red;
 }
 .pss_plFooter:hover {
     background-color: $transparent_red;
     color: white;
-}
-
-.pssTD {
-    color: $bright_red;
-}
-
-.pssH1 {
-    color: $bright_red;
 }
 
 .sbdeTD {
@@ -34,12 +27,6 @@ $dark_fgrd: rgb(85, 85, 85);
     .partition_title {
         color: $bright_red;
     }
-}
-
-.ng_button {
-    color: white;
-    background-color: $bright_red;
-    border-color: $bright_red;
 }
 
 .ng_input {
@@ -97,12 +84,7 @@ $dark_fgrd: rgb(85, 85, 85);
     
 }
 
-.GamesList {
-    border-color: $bright_red;
-    background-color: $dark_fgrd;
-}
-
-.PlayersList {
+.GamesList, .PlayersList {
     border-color: $bright_red;
     background-color: $dark_fgrd;
 }
@@ -158,10 +140,7 @@ $dark_fgrd: rgb(85, 85, 85);
     
 }
 
-.AnalysisPage {
-    color: $bright_red;
-}
-.ap_link {
+.AnalysisPage, .ap_link {
     color: $bright_red;
 }
 
@@ -169,73 +148,43 @@ $dark_fgrd: rgb(85, 85, 85);
     color: $transparent_red;
 }
 
-.analysis_button {
-    color: white;
-    background-color: $bright_red;
-    border-color: $bright_red;
-}
-
-.analysis_button:hover {
-    background-color: $transparent_red;
-}
-
-.FLP_H1 {
-    color: $bright_red;
-}
-
-.loginH1 {
-    color: $bright_red;
-}
-
-.loginPtag {
-    color: $bright_red;
-}
-
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: $bright_red;
-    opacity: 1; /* Firefox */
-}
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color: $bright_red;
-  }
-
-::-ms-input-placeholder { /* Microsoft Edge */
-color: $bright_red;
-}
-
-input:-webkit-autofill {
-    -webkit-box-shadow:0 0 0 50px white inset; /* Change the color to your own background color */
-    -webkit-text-fill-color: $bright_red;
-    border-radius: 5px;
-    border-color: $bright_red !important;
-}
-input:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0 50px white inset;
-    -webkit-text-fill-color: $bright_red;
-    border-radius: 5px;
-    border-color: $bright_red;
-}
-.login_button {
-    color: white;
-    background-color: $bright_red;
-    border-color: $bright_red;
-}
-.login_button:hover {
-    background-color: $transparent_red;
-}
-
-.login_input {
-    color: $bright_red;
-    border-color: $bright_red;
-}
-
-.main_button {
+.analysis_button, .login_button, .main_button, .ps_button, .ts_button, .psb_button, .ng_button {
     color: $light_gray;
     background-color: $dark_fgrd;
     border-color: $bright_red;
 }
-.main_button:hover {
+
+.analysis_button:hover, .login_button:hover, .main_button:hover, .ps_button:hover, .ts_button:hover, .psb_button:hover, .ng_button:hover {
     background-color: $transparent_red;
+}
+
+.FLP_H1, .loginH1, .loginPtag{
+    color: $bright_red;
+}
+
+::placeholder, :-ms-input-placeholder, ::-ms-input-placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: $transparent_light_gray;
+    opacity: 1; /* Firefox */
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow:0 0 0 50px $dark_fgrd inset; /* Change the color to your own background color */
+    -webkit-text-fill-color: $light_gray;
+    border-radius: 5px;
+    border-color: $bright_red !important;
+}
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 50px $dark_fgrd inset;
+    -webkit-text-fill-color: $light_gray;
+    border-radius: 5px;
+    border-color: $bright_red !important;
+}
+
+.login_input {
+    color: $light_gray;
+    border-color: $bright_red !important;
+    background: $dark_fgrd;
+    border-radius: 5px;
 }
 
 .mainH1 {
@@ -262,15 +211,6 @@ input:-webkit-autofill:focus {
     color: $bright_red;
 }
 
-.ps_button {
-    color: white;
-    background-color: $bright_red;
-    border-color: $bright_red;
-}
-.ps_button:hover {
-    background-color: $transparent_red;
-}
-
 .ps_input {
     color: $bright_red;
 }
@@ -281,16 +221,6 @@ input:-webkit-autofill:focus {
 
 .psLabel {
     color: $bright_red;
-}
-
-.ts_button {
-    color: white;
-    background-color: $bright_red;
-    border-color: $bright_red;
-}
-
-.ts_button:hover {
-    background-color: $transparent_red;
 }
 
 .numberBox {
@@ -304,16 +234,6 @@ input:-webkit-autofill:focus {
 
 .psb_td {
     color: $bright_red;
-}
-
-.psb_button {
-    color: white;
-    background-color: $bright_red;
-    border-color: $bright_red;
-}
-
-.psb_button:hover {
-    background-color: $transparent_red;
 }
 
 .clockPause {
@@ -425,4 +345,15 @@ input:-webkit-autofill:focus {
 
 .sn_footer:hover {
     background: $transparent_red;
+}
+
+.about_p {
+    background: $dark_fgrd;
+    color: $light_gray;
+    border-color: $bright_red;
+}
+
+.about_header{
+    color: $light_gray;
+    text-shadow: 2px 2px $bright_red;
 }

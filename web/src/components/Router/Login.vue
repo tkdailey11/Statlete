@@ -62,12 +62,12 @@
 
 <style scoped>
   .login {
-    margin-top: 40px;
+    height: 100vh;
   }
 
   .login_input {
     margin: 10px 0;
-    width: 30%;
+    width: 50%;
     padding: 15px;
     border: 0;
     outline: 0;
@@ -76,7 +76,7 @@
   }
   .login_button {
     margin-top: 20px;
-    width: 10%;
+    width: 30%;
     cursor: pointer;
   }
 

@@ -1,7 +1,6 @@
 <template>
   <div class="main">
     <new-player @newPlayerAdded="hideModal" />
-    <!-- <new-game @NewGame="hideGameModal"/> -->
     <ngmodal
       v-show="isModalVisible"
       @close="closeNGModal()"
@@ -14,11 +13,6 @@
       </div>
       <div class="mainBody">
         <div class="list-wrapper">
-          <!-- <games-list class="mbgl"
-                      @gameSelected="gameSelected"
-                      @AddGame="addGameClicked"
-                      @NewGame="addGame(ngData)">
-          </games-list> -->
           <games-list class="mbgl"
                       @gameSelected="gameSelected"
                       @AddGame="showNGModal"
