@@ -57,6 +57,10 @@ export default {
       else if(sport.toString().toLowerCase() === 'basketball') {
         sport = 0;
       }
+      else if(sport.toString().toLowerCase() === 'football') {
+        sport = 2;
+      }
+
       
       this.SET_SELECTED_TEAM({
         id: event.Id,
