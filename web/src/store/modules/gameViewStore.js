@@ -5,7 +5,9 @@ const state = {
   shotsArr: [],
   periodStartTime: -1,
   currGameTime: '0:00',
-  periodLength: 45
+  periodLength: 45,
+  numberOfPeriods: 2,
+  timeRemainingInPeriod: 0
 };
 
 const getters = {
@@ -32,6 +34,12 @@ const getters = {
   },
   currGameTime: state => {
     return state.currGameTime;
+  },
+  numberOfPeriods: state => {
+    return state.numberOfPeriods;
+  },
+  timeRemainingInPeriod: state => {
+    return state.timeRemainingInPeriod;
   }
 };
 
@@ -74,6 +82,14 @@ const mutations = {
     state.periodStartTime = -1;
     state.currGameTime = '0:00';
     state.periodLength = 45;
+    state.numberOfPeriods = 2;
+    state.timeRemainingInPeriod = 0;
+  },
+  GV_SET_NUM_PERIODS: (state, payload) => {
+    state.numberOfPeriods = payload;
+  },
+  GV_SET_TIME_REMAINING: (state, payload) => {
+    state.timeRemainingInPeriod = payload;
   }
 };
 

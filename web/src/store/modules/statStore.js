@@ -47,10 +47,10 @@ const state = {
       "OREB" : {
         "Total" : 0
       },
-      "FGA" : {
+      "FG2A" : {
         "Total" : 0
       },
-      "FGM" : {
+      "FG2M" : {
         "Total" : 0
       },
       "FG3A" : {
@@ -74,6 +74,21 @@ const state = {
       "TOV" : {
         "Total" : 0
       }
+    },
+    basketballPlayerStats: {
+      "AST"  : 0,
+      "BLK"  : 0,
+      "DREB" : 0,
+      "OREB" : 0,
+      "FG2A" : 0,
+      "FG2M" : 0,
+      "FG3A" : 0,
+      "FG3M" : 0,
+      "FTA"  : 0,
+      "FTM"  : 0,
+      "PF"   : 0,
+      "STL"  : 0,
+      "TOV"  : 0
     },
     footballOffenseStats: {
       "INT" : {
@@ -171,6 +186,9 @@ const state = {
     },
     basketballStatsArr: state => {
       return Object.keys(state.basketballStats);
+    },
+    basketballPlayerStats: state => {
+      return state.basketballPlayerStats;
     }
   };
   

@@ -1,6 +1,7 @@
 const state = {
   loggedInUser: '',
   currentUserEmail: '',
+  currentUserName: '',
   activeGameId: '',
   selectedTeam: {
     id: '',
@@ -14,6 +15,9 @@ const state = {
 };
 
 const getters = {
+  currentUserName: state => {
+    return state.currentUserName;
+  },
   playerList: state => {
     return state.playerList;
   },
@@ -47,6 +51,9 @@ const getters = {
 };
 
 const mutations = {
+  SET_CURRENT_USER_NAME: (state, payload) => {
+    state.currentUserName = payload;
+  },
   SET_PLAYER_LIST: (state, payload) => {
     state.playerList = payload;
   },
@@ -84,6 +91,7 @@ const mutations = {
   CLEAR_STATE: (state, payload) => {
     state.loggedInUser = '';
     state.currentUserEmail = '';
+    state.currentUserName = '';
     state.activeGameId = '';
     state.selectedTeam = {
       id: '',
