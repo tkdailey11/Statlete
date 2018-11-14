@@ -149,6 +149,14 @@ let router = new Router({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: '/football',
+      name: 'FootballGame',
+      component: FootballGame,
+      meta: {
+        requiresAuth: true
+      }
     }
   ]
 })
