@@ -27,48 +27,54 @@
                   <tr><th>Run</th></tr>
                   <tr>
                     <td>Ran to the: </td>
-                    <td>Left <input type="radio" name="playSide" v-model="left"></td>
-                    <td>Middle <input type="radio" name="playSide" v-model="middle" checked></td>
-                    <td>Right <input type="radio" name="playSide" v-model="right"></td>
+                    <td>Left <input type="radio" value="left" v-model="pickedRunSide"></td>
+                    <td>Middle <input type="radio" value="middle" v-model="pickedRunSide"></td>
+                    <td>Right <input type="radio" value="right" v-model="pickedRunSide"></td>
                   </tr>       
                     <tr>
                         <td> Run by Player: </td>
-                        <td><input align="right" type="text" maxlength="2" size="3" name="playerNumber">
+                        <td><input align="right" type="text" maxlength="2" size="3" v-model="runPlayerNumber">
                         </td></tr>
                         <tr>
-                            <td>Yards: </td><td><input align="right" type="text" maxlength="3" size="3" v-model="yards"></td></tr>
-                            <tr><td>Touchdown </td><td><input type="checkbox" v-model="touchdown"></td></tr>
-                            <tr><td>Fumble:</td><td><input type="checkbox" v-model="turnoverType" value="fumble"></td></tr>
+                            <td>Yards: </td><td><input align="right" type="text" maxlength="3" size="3" v-model="runYards"></td></tr>
+                            <tr><td>Touchdown </td><td><input type="checkbox" v-model="runTouchdown" value="td"></td></tr>
+                            <tr><td>Fumble:</td><td><input type="checkbox" v-model="runFumble" value="fumble"></td></tr>
                   </table>
                     <button class="button" @click="runConfirm">Confirm</button>
                 </div>
+
+
             <div id="passForm">
                 <table align="center">
                   <tr><th>Pass</th></tr>
                   <tr>
                     <td>Threw to the: </td>
-                      <td>Left <input type="radio" name="playSide" v-model="left"></td>
-                      <td>Middle <input type="radio" name="playSide" v-model="middle" checked></td>
-                      <td>Right <input type="radio" name="playSide" v-model="right"></td>
+                      <td>Left <input type="radio" value="left" v-model="pickedPassSide"></td>
+                      <td>Middle <input type="radio" value="middle" v-model="pickedPassSide"></td>
+                      <td>Right <input type="radio" value="right" v-model="pickedPassSide"></td>
                   </tr>
                     <tr><td>Pass by Player: </td>
                     <td><input type="text" maxlength="2" size="3" v-model="passPlayerNumber">
                     </td></tr>
-                    <tr><td>Completion: </td><td><input type="checkbox" v-model="completePass">
+                    <tr><td>Completion: </td><td><input type="checkbox" v-model="passCompletion">
                     </td></tr>
-                    <tr><td>Catch by Player: </td><td><input type="text" maxlength="2" size="3" v-model="catchPlayerNumber">
+                    <tr><td>Catch by Player: </td><td><input type="text" maxlength="2" size="3" v-model="passCatchPlayerNum">
                     </td></tr>
-                    <tr><td>Yards: </td><td><input type="text" maxlength="3" size="3" v-model="yards">
+                    <tr><td>Yards: </td><td><input type="text" maxlength="3" size="3" v-model="passYards">
                     </td></tr>
-                    <tr><td>Touchdown </td><td><input type="checkbox" v-model="touchdown"></td></tr>
-                    <tr><td>QB Sack</td><td><input align="right" type="checkbox" v-model="sack"></td>
+                    <tr><td>Touchdown </td><td><input type="checkbox" v-model="passTouchdown"></td></tr>
+                    <tr><td>QB Sack</td><td><input align="right" type="checkbox" v-model="passSack"></td>
                     <tr><td>Turnover</td><td><input type="checkbox" v-if="activeTurnover === 'false'" @click="offenseTurnover">
                     <input type="checkbox" v-else @click="offenseTurnoverHide"></td></tr></table>
                     <div id="turnoverForm">
-                <table align="center"><tr><td>Fumble:</td><td><input type="radio" name="turnoverType" v-model="fumble" checked>
-                </td></tr><tr><td>Interception:</td><td>
-                  <input type="radio" name="turnoverType" v-model="interception"></td></tr>
-                  <tr><td>Turnover By: </td><td><input type="text" v-model="turnoverNumber" maxlength="2" size="2"></td></tr>
+                <table align="center">
+                  <tr><td>Fumble:</td><td><input type="radio" value="fumble" v-model="passTurnover" checked>
+                </td></tr>
+                <tr>
+                    <td>Interception:</td>
+                    <td><input type="radio" value="interception" v-model="passTurnover"></td>
+                  </tr>
+                  <tr><td>Turnover By: </td><td><input type="text" v-model="passTurnoverBy" maxlength="2" size="2"></td></tr>
                   </table>
             </div>
                     <button class="button" @click="passConfirm">Confirm</button>
@@ -76,23 +82,26 @@
 
             <div id="penaltyForm">
                       <table align="center"><tr><td>Penalty: </td><td>
-                        <select v-model="fouls" size="1">
-                          <option value="falseStart">False Start</option>
-                          <option value="defensiveInterference">Defensive Pass Interference</option>
-                          <option value="offside">Offside</option>
-                          <option value="defensiveHolding">Defensive Holding</option>
-                          <option value="offensiveHolding">Offensive Holding</option>
-                          <option value="delayGame">Delay of Game</option>
-                          <option value="personalFoul">Personal Foul</option>
+                        <select v-model="penaltyType" size="1">
+                          <option value="falseStart">False Start Offense</option>
+                          <option value="offensiveHolding">Holding Offense</option>
+                          <option value="delayGame">Delay of Game Offense</option>
+                          <option value="personalFoul">Personal Foul Offense</option>
                         </select>
                       </td></tr><tr><td>Yards: </td><td>
-                        <input type="text" size="2" maxlength="2" v-model="yards"></td></tr>
+                        <input type="text" size="2" maxlength="2" v-model="penaltyYards"></td></tr>
                         <tr><td>Down: </td><td>
-                        <input type="text" size="2" maxlength="1" v-model="down"></td></tr>                        
-                        <tr><td>Spot of Ball</td><td><input type="text" size="2" maxlength="2" v-model="spot">
-                        </td></tr>
+                        <input type="text" size="2" maxlength="1" v-model="penaltyDown"></td></tr>        
                         </table>
                         <button class="button" @click="penaltyConfirm">Confirm</button>
+            </div>
+
+
+
+            <div id="tracker">
+              <p>Ball on the {{driveSpotBall}}</p>
+              <p>Yards to go: {{driveYardsLeft}}</p>
+              <p>Down {{driveDowns}} </p>
             </div>
 
             
@@ -105,13 +114,57 @@
 
 
 <script>
+import firebase from 'firebase'
+import { mapGetters, mapMutations } from 'vuex'
+
 export default {
   data() {
     return {
       activeTurnover: "false",
       activeRunTurnover: "false",
+
+      // Tracker
+      driveDowns: 1,
+      driveYardsLeft: 10,
+      driveSpotBall: 50,
+      driveMyHalf: true,
+
+      //Spot Ball
+      ballLocation: 20,
+      myHalf: "true",
+
+      //Runs
+      pickedRunSide: "middle",
+      runPlayerNumber: "",
+      runYards: "",
+      runTouchdown: "",
+      runFumble: "",
+
+      //Passes
+      pickedPassSide: "middle",
       passPlayerNumber: '',
+      passCompletion: '',
+      passCatchPlayerNum: '',
+      passYards: '',
+      passTouchdown: '',
+      passSack: '',
+      passFumble: '',
+      passInterception: '',
+      passTurnover: '',
+      passTurnoverBy: '',
+      
+      //Penalty
+      penaltyType: 'falseStart',
+      penaltyYards: '',
+      penaltyDown: '',
     };
+  },
+
+  computed: {
+    ...mapGetters({
+      selectedTeamId: 'mainStore/selectedTeamId',
+      activeGameId: 'mainStore/activeGameId'
+    })
   },
 
   methods: {
@@ -123,6 +176,18 @@ export default {
       jQuery("#getOffPosition").hide();
       jQuery("#offenseButtons").show();
       this.activeButton = 'offense';
+      //Send input to Database
+
+      // Set Tracker
+      this.driveSpotBall = this.ballLocation;
+      this.driveMyHalf = this.myHalf;
+
+      console.log(typeof(this.driveSpotBall));
+      console.log(typeof(this.ballLocation));
+
+      //Reset Values
+      this.ballLocation = 20;
+      this.myHalf = "true";
     },
 
     offenseRun: function() {
@@ -161,18 +226,146 @@ export default {
       jQuery("#runForm").hide();
       jQuery("#turnoverForm").hide();
       jQuery("#offenseButtons").show();
+
+      //Database Stuff
+      alert(this.runTouchdown)
+      //Tracker
+      if(this.runYards >= this.driveYardsLeft)
+      {
+        this.driveDowns = 1;
+        this.driveYardsLeft = 10;
+      }
+      else
+      {
+        this.driveYardsLeft = parseInt(this.driveYardsLeft) - parseInt(this.runYards);
+        this.driveDowns++;
+      }
+      if(this.driveMyHalf)
+      {
+        //this.driveSpotBall += this.runYards;
+        this.driveSpotBall = parseInt(this.driveSpotBall) + parseInt(this.runYards);
+        if(this.driveSpotBall > 50)
+        {
+          var temp = this.driveSpotBall - 50;
+          this.driveSpotBall = 50 - temp;
+          this.driveMyHalf = false;
+        }
+      }
+      else
+      {
+        this.driveSpotBall -= this.runYards;
+      }
+      // Database
+      // var ref =firebase.database().ref("FootballGames/Example/Example-01/Totals/Period1/Offense")
+      var self = this
+      var ref =firebase.database().ref("FootballGames".child(self.selectedTeamId).child(self.activeGameId))
+      ref.child("RushCarries").once("value", function(snapshot){
+        var numCarries = snapshot.val()
+        var playerNum = "p" + self.runPlayerNumber
+        var total = numCarries.Total + 1
+        var player = numCarries[playerNum]
+        if(player == null)
+        {
+          player = 1
+        }
+        else{
+          player++
+        }
+        ref.child("RushCarries").update({
+          "Total": total,
+          [playerNum]: player
+        })
+      }).then(()=>{
+        ref.child("RushYds").once("value", function(shot){
+          var rushYds = shot.val()
+          var playerNum = "p" + self.runPlayerNumber
+          var total = rushYds.Total + parseInt(self.runYards)
+          var player = rushYds[playerNum]
+          if(player == null)
+          {
+            player = parseInt(self.runYards)
+          }
+          else{
+            player += parseInt(self.runYards)
+          }
+          ref.child("RushYds").update({
+            "Total": total,
+            [playerNum]: player
+          })
+        }).then(()=>{
+          if(self.runTouchdown)
+          {
+            ref.child("RushTD").once("value", function(points){
+              var rushTD = points.val()
+              var playerNum = "p" + self.runPlayerNumber
+              var total = rushTD.Total + 1
+              var player = rushTD[playerNum]
+              if(player == null)
+              {
+                player = 1
+              }
+              else{
+                player++
+              }
+              ref.child("RushTD").update({
+                "Total": total,
+                [playerNum]: player
+              })
+            })
+          }
+          
+        })
+        
+        .then(()=>{
+          self.pickedRunSide = "middle";
+          self.runPlayerNumber = "";
+          self.runYards = "";
+          self.runTouchdown = "";
+          self.runFumble = "";
+        })
+
+        // Reset Values
+      // self.pickedRunSide = "middle";
+      // self.runPlayerNumber = ""; used
+      // self.runYards = ""; used
+      // self.runTouchdown = "";
+      // self.runFumble = "";
+      })
+
+
+      
     },
     passConfirm: function() {
       jQuery("#passForm").hide();
-
       jQuery("#turnoverForm").hide();
       jQuery("#offenseButtons").show();
+
+      //database stuff
+
+      // Reset values
+      this.pickedPassSide = "middle";
       this.passPlayerNumber = '';
+      this.passCompletion = '';
+      this.passCatchPlayerNum = '';
+      this.passYards = '';
+      this.passTouchdown = '';
+      this.passSack = '';
+      this.passFumble = '';
+      this.passInterception = '';
+      this.passTurnover = '';
+      this.passTurnoverBy = '';
     },
     penaltyConfirm: function() {
       jQuery("#penaltyForm").hide();
       jQuery("#turnoverForm").hide();
       jQuery("#offenseButtons").show();
+
+      //Database stuff
+
+      // Reset Values
+      this.penaltyType = 'falseStart';
+      this.penaltyYards = '';
+      this.penaltyDown = '';
     }
   },
   // When page is refreshed this happens

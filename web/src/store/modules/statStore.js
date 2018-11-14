@@ -74,6 +74,88 @@ const state = {
       "TOV" : {
         "Total" : 0
       }
+    },
+    footballOffenseStats: {
+      "INT" : {
+        "Total" : 0
+      },
+      "PassAtt" : {
+        "Total" : 0
+      },
+      "PassComp" : {
+        "Total" : 0
+      },
+      "PassTD" : {
+        "Total" : 0
+      },
+      "PassYds" : {
+        "Total" : 0
+      },
+      "RecTD" : {
+        "Total" : 0
+      },
+      "RecYds" : {
+        "Total" : 0
+      },
+      "Receptions" : {
+        "Total" : 0
+      },
+      "RushCarries" : {
+        "Total" : 0
+      },
+      "RushTD" : {
+        "Total" : 0
+      },
+      "RushYds" : {
+        "Total" : 0
+      }
+    },
+    footballDefenseStats: {
+      "FumbleForced" : {
+        "Total" : 0
+      },
+      "FumbleRec" : {
+        "Total" : 0,
+      },
+      "INT" : {
+        "Total" : 0
+      },
+      "Sacks" : {
+        "Total" : 0
+      },
+      "TackleForLoss" : {
+        "Total" : 0
+      },
+      "Tackles" : {
+        "Total" : 0
+      },
+      "TotalPassTD" : 0,
+      "TotalPassYds" : 0,
+      "TotalRushTD" : 0,
+      "TotalRushYds" : 0
+    },
+    footballSpecialStats: {
+      "FG" : {
+        "TotalAtt" : 0,
+        "TotalMade" : 0
+      },
+      "KickRet" : {
+        "TotalRets" : 0,
+        "TotalYds" : 0
+      },
+      "Punt" : {
+        "RetYds" : 0,
+        "Total" : 0
+      },
+      "PuntRet" : {
+        "TotalRets" : 0,
+        "TotalTD" : 0,
+        "TotalYds" : 0
+      },
+      "XP" : {
+        "TotalAtt" : 0,
+        "TotalMade" : 0
+      }
     }
   };
   

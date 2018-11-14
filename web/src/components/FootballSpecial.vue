@@ -20,11 +20,11 @@
                 </tr>
                 <tr>
                     <td>Kicker: </td>
-                    <td><input align="right" type="text" size="3" maxlength="2" name="kicker"></td>
+                    <td><input align="right" type="text" size="3" maxlength="2" v-model="punterNum"></td>
                 </tr>
                 <tr>
                     <td>Kick Yards:</td>
-                    <td><input align="right" type="text" size="3" maxlength="3" name="kickYards"></td>
+                    <td><input align="right" type="text" size="3" maxlength="3" v-model="puntYards"></td>
                 </tr>
                 <!-- <tr>
                     <td>Turnover</td>
@@ -52,10 +52,10 @@
                     <th>Punt Return</th>
                 </tr>
                 <tr>
-                    <td>Kick Returner: </td><td><input type="text" size="3" maxlength="3" name="returner"></td>
+                    <td>Kick Returner: </td><td><input type="text" size="3" maxlength="3" v-model="puntRetNum"></td>
                 </tr>
                 <tr>
-                    <td>Return Yards: </td><td><input type="text" size="3" maxlength="3" name="retYards"></td>
+                    <td>Return Yards: </td><td><input type="text" size="3" maxlength="3" v-model="puntRetYards"></td>
                 </tr>
                 <!-- <tr>
                     <td>Turnover</td>
@@ -92,16 +92,16 @@
                 </tr>
                 <tr>
                     <td>Extra Point</td>
-                    <td><input type="checkbox" name="xp" checked></td>
+                    <td><input type="checkbox" v-model="extraPoint" checked></td>
                 </tr>
                 <tr>
-                    <td>Attempt Yards: </td><td><input type="text" name="kickDistance" maxlength="2" size="3"></td>
+                    <td>Attempt Yards: </td><td><input type="text" v-model="fieldGoalYards" maxlength="2" size="3"></td>
                 </tr>
                 <tr>
-                    <td>Attempt Made</td> <td><input type="checkbox" name="fgMade"></td>
+                    <td>Attempt Made</td> <td><input type="checkbox" v-model="fieldGoalMake"></td>
                 </tr>
                 <tr>
-                    <td>Block</td><td><input type="checkbox" name="turnoverType" value="block"></td>
+                    <td>Block</td><td><input type="checkbox" v-model="fieldGoalBlock"></td>
                 </tr>
                 </table>
             <button class="button" @click="fgConfirm">Confirm</button> 
@@ -114,10 +114,10 @@
                 </tr>
                 <tr>
                     <td>Extra Point</td>
-                    <td><input type="checkbox" name="xp" checked></td>
+                    <td><input type="checkbox" v-model="extraPointDef" checked></td>
                 </tr>
                 <tr>
-                    <td>Attempt Made</td> <td><input type="checkbox" name="fgMade"></td>
+                    <td>Attempt Made</td> <td><input type="checkbox" v-model="fieldGoalDefMade"></td>
                 </tr>
                 <!-- <tr>
                     <td>Turnover</td>
@@ -143,19 +143,15 @@
                 <tr>
                     <th>KickOff</th>
                 </tr>
-                <tr>
-                    <td>Offensive Yards: </td>
-                    <td><input alilgn="right" type="text" maxlength="3" size="3" name="yards"></td>
-                </tr>
-                <tr><td>Touchdown </td><td><input type="checkbox" name="touchdown"></td></tr>
+                <tr><td>Touchdown </td><td><input type="checkbox" v-model="kickoffTouchdown"></td></tr>
                 <tr><td>Turnover</td><td><input type="checkbox" v-if="activeKickoffTurnover === 'false'" @click="kickoffTurnover">
                 <input type="checkbox" v-else @click="kickoffTurnoverHide"></td></tr>
                 </table>
 
             <div id="turnoverKickoffForm">
                 <table align="center">
-                    <tr><td>Fumble:</td><td><input type="checkbox" name="turnoverType" value="fumble" checked></td></tr>
-                    <tr><td>Recovered By: </td><td><input type="text" name="recoverNumber" maxlength="2" size="2"></td></tr>
+                    <tr><td>Fumble:</td><td><input type="checkbox" v-model="kickoffFumble"></td></tr>
+                    <tr><td>Recovered By: </td><td><input type="text" v-model="kickoffRecoveredNum" maxlength="2" size="2"></td></tr>
                   </table>
             </div>
             <button class="button" @click="kickoffConfirm">Confirm</button>
@@ -168,14 +164,14 @@
                 </tr>
                 <tr>
                     <td>Kick Returner: </td>
-                    <td><input type="text" maxlength="2" size="3" name="returner"></td>
+                    <td><input type="text" maxlength="2" size="3" v-model="kickoffRetNum"></td>
                 </tr>
                 <tr>
                     <td>Return Yards: </td>
-                    <td><input alilgn="right" type="text" maxlength="3" size="3" name="yards"></td>
+                    <td><input alilgn="right" type="text" maxlength="3" size="3" v-model="kickoffRetYards"></td>
                 </tr>
-                <tr><td>Touchdown </td><td><input type="checkbox" name="touchdown"></td></tr>
-                <tr><td>Fumble:</td><td><input type="checkbox" name="turnoverType" value="fumble"></td></tr>
+                <tr><td>Touchdown </td><td><input type="checkbox" v-model="kickoffRetTouchdown"></td></tr>
+                <tr><td>Fumble:</td><td><input type="checkbox" v-model="kickoffRetFumble"></td></tr>
                 </table>
 
             <button class="button" @click="kickoffReturnConfirm">Confirm</button>
@@ -192,7 +188,38 @@ export default {
       activeFgTurnover: "false",
       activeFgDefTurnover: "false",
       activeKickoffTurnover: "false",
-      activeKickoffRetTurnover: "false"
+      activeKickoffRetTurnover: "false",
+
+      //Punt
+      punterNum: '',
+      puntYards: '',
+
+      // Punt Ret
+      puntRetNum: '',
+      puntRetYards: '',
+
+      //FG
+      extraPoint: '',
+      fieldGoalYards: '',
+      fieldGoalMake: '',
+      fieldGoalBlock: '',
+
+      // FG Def
+      extraPointDef: '',
+      fieldGoalDefMade: '',
+
+      //Kickoff
+      kickoffGainedYards: '',
+      kickoffTouchdown: '',
+      kickoffFumble: '',
+      kickoffRecoveredNum: '',
+
+      // Kickoff Ret
+      kickoffRetNum: '',
+      kickoffRetYards: '',
+      kickoffRetTouchdown: '',
+      kickoffRetFumble: '',
+
     };
   },
 
@@ -204,6 +231,9 @@ export default {
     puntConfirm: function() {
         jQuery("#puntForm").hide();
         jQuery("#specialButtons").show();
+         
+        this.punterNum = '';
+        this.puntYards = '';
     },
     puntReturn: function() {
         jQuery("#puntRetForm").show();
@@ -212,6 +242,9 @@ export default {
     puntRetConfirm: function() {
         jQuery("#puntRetForm").hide();
         jQuery("#specialButtons").show();
+
+        this.puntRetNum = '';
+        this.puntRetYards = '';
     },
     fieldGoal: function() {
         jQuery("#specialButtons").hide();
@@ -220,6 +253,11 @@ export default {
     fgConfirm: function() {
         jQuery("#specialButtons").show();
         jQuery("#fg").hide();
+
+      this.extraPoint = '';
+      this.fieldGoalYards = '';
+      this.fieldGoalMake = '';
+      this.fieldGoalBlock = '';
     },
      fieldGoalDef: function() {
         jQuery("#specialButtons").hide();
@@ -227,7 +265,11 @@ export default {
     },
     fgDefConfirm: function() {
         jQuery("#fgDef").hide();
-        jQuery("#specialButtons").show();
+        jQuery("#specialButtons").show();   
+      // FG Def
+        this.extraPointDef = '';
+        this.fieldGoalDefMade = '';
+
     },
     kickoff: function() {
         jQuery("#kickOff").show();
@@ -236,6 +278,11 @@ export default {
     kickoffConfirm: function() {
         jQuery("#specialButtons").show();
         jQuery("#kickOff").hide();
+        //Kickoff
+        this.kickoffGainedYards = '';
+        this.kickoffTouchdown = '';
+        this.kickoffFumble = '';
+        this.kickoffRecoveredNum = '';
     },
     kickoffReturn: function() {
         jQuery("#kickOffRet").show();
@@ -244,6 +291,11 @@ export default {
     kickoffReturnConfirm: function() {
         jQuery("#kickOffRet").hide();
         jQuery("#specialButtons").show();
+
+        this.kickoffRetNum = '';
+        this.kickoffRetYards = '';
+        this.kickoffRetTouchdown = '';
+        this.kickoffRetFumble = '';
     },
     puntTurnover: function() {
       jQuery("#turnoverPuntForm").show();
