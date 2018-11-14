@@ -20,7 +20,7 @@ import AnalysisPage from '@/components/Router/AnalysisPage'
 import AboutPage from '@/components/Router/AboutPage'
 import FAQPage from '@/components/Router/FAQPage'
 import ExportStats from '@/components/Router/ExportStats'
-
+import FootballGame from '@/components/FootballGame'
 
 Vue.use(Router)
 
