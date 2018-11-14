@@ -9,6 +9,9 @@
                     @PauseClicked="pauseClicked">
         </time-clock>
     </div>
+    <div id="narrow_screen">
+      <h1 style="color: white;">Screen is too narrow for the shot chart</h1>
+    </div>
     <div id="EntryView">
       <div id="entryDiv">
         <player-stat-selector style="float: left;"
@@ -72,6 +75,7 @@
     mounted() {
       jQuery("#statDiv").hide()
       jQuery("#fieldDiv").hide()
+      jQuery("#narrow_screen").hide()
       var ref = null;
       var self = this;
 
@@ -197,7 +201,10 @@
         var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
         var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
         var statDisplayed = jQuery('#statDiv').css('display') != 'none';
-
+        var narrowDisplayed = jQuery('#narrow_screen').css('display') != 'none';
+        if(narrowDisplayed){
+          jQuery('#narrow_screen').slideUp(350)
+        }
         if(entryDisplayed){
         }
         else if(fieldDisplayed){
@@ -213,23 +220,40 @@
         var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
         var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
         var statDisplayed = jQuery('#statDiv').css('display') != 'none';
-
+        var narrowDisplayed = jQuery('#narrow_screen').css('display') != 'none';
+        if(narrowDisplayed){
+          jQuery('#narrow_screen').slideUp(350)
+        }
+        var width = jQuery(window).width()
         if(fieldDisplayed){
         }
         else if(entryDisplayed){
           jQuery('#entryDiv').slideUp(350)
-          jQuery('#fieldDiv').slideDown(350)
+          if(width > 450){
+            jQuery('#fieldDiv').slideDown(350)
+          }
+          else{
+            jQuery('#narrow_screen').slideDown(350)
+          }
         }
         else {
           jQuery('#statDiv').slideUp(350)
-          jQuery('#fieldDiv').slideDown(350)
+          if(width > 450){
+            jQuery('#fieldDiv').slideDown(350)
+          }
+          else{
+            jQuery('#narrow_screen').slideDown(350)
+          }
         }
       },
       toggleStatClicked(){
         var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
         var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
         var statDisplayed = jQuery('#statDiv').css('display') != 'none';
-        
+        var narrowDisplayed = jQuery('#narrow_screen').css('display') != 'none';
+        if(narrowDisplayed){
+          jQuery('#narrow_screen').slideUp(350)
+        }
         if(statDisplayed){
         }
         else if(entryDisplayed){

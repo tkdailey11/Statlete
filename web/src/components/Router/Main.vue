@@ -1,34 +1,37 @@
 <template>
   <div class="main">
-    <new-player @newPlayerAdded="hideModal" />
-    <ngmodal
-      v-show="isModalVisible"
-      @close="closeNGModal()"
-    />
-    <nav-component />
-
-    <div id="mainPage">
-      <div class="mainHeader">
-        <h1 class="mainH1">{{selectedTeamName}}</h1>
-      </div>
-      <div class="mainBody">
-        <div class="list-wrapper">
-          <games-list class="mbgl"
-                      @gameSelected="gameSelected"
-                      @AddGame="showNGModal"
-                      @NewGame="addGame(ngData)">
-          </games-list>
-          <players-list class="mbpl"
-                        @playerSelected="viewPlayerInfo"
-                        @addPlayerClicked="showModal('new-player')"
-                        :players="players">
-          </players-list>
+    <div class="main_Nav">
+      <new-player @newPlayerAdded="hideModal" />
+      <ngmodal
+        v-show="isModalVisible"
+        @close="closeNGModal()"
+      />
+      <nav-component />
+    </div>
+    <div class="main_Other">
+      <div id="mainPage">
+        <div class="mainHeader">
+          <h1 class="mainH1">{{selectedTeamName}}</h1>
         </div>
-        <div class="button-wrapper">
-          <button @click="editTeamSettings" class="btn btn-outline-primary main_button">Edit Team Settings</button>
-          <button @click="viewTeamStats" class="btn btn-outline-primary main_button">View Team Stats</button>
-          <button @click="goToAnalysis" class="btn btn-outline-primary main_button">Go to Analysis Page</button>
-          <button @click="goToPdf" class="btn btn-outline-primary main_button">Export Stats to PDF</button>
+        <div class="mainBody">
+          <div class="list-wrapper">
+            <games-list class="mbgl"
+                        @gameSelected="gameSelected"
+                        @AddGame="showNGModal"
+                        @NewGame="addGame(ngData)">
+            </games-list>
+            <players-list class="mbpl"
+                          @playerSelected="viewPlayerInfo"
+                          @addPlayerClicked="showModal('new-player')"
+                          :players="players">
+            </players-list>
+          </div>
+          <div class="button-wrapper">
+            <button @click="editTeamSettings" class="btn btn-outline-primary main_button">Edit Team Settings</button>
+            <button @click="viewTeamStats" class="btn btn-outline-primary main_button">View Team Stats</button>
+            <button @click="goToAnalysis" class="btn btn-outline-primary main_button">Go to Analysis Page</button>
+            <button @click="goToPdf" class="btn btn-outline-primary main_button">Export Stats to PDF</button>
+          </div>
         </div>
       </div>
     </div>
@@ -66,7 +69,8 @@ export default {
       sportfolios: [],
       teamName: '',
       teamToken: '',
-      isModalVisible: false
+      isModalVisible: false,
+      darkModeEnabled: true
     }
   },
   mounted () {
@@ -78,6 +82,9 @@ export default {
     this.getGamesTeam();
     this.getPlayers();
     this.getSportfolios();
+    firebase.database().ref('/Users').child(firebase.auth().currentUser.email.replace('.', '')).child('DarkModeEnabled').once('value', function(snap){
+      self.darkModeEnabled = (snap.val() == 1)
+    })
   },
   methods: {
     ...mapMutations({
@@ -86,8 +93,20 @@ export default {
       SET_SELECTED_TEAM_ID: 'mainStore/SET_SELECTED_TEAM_ID',
       SET_PLAYERS: 'mainStore/SET_PLAYERS',
       SET_GAMES_LIST: 'mainStore/SET_GAMES_LIST',
-      SET_CURRENT_USER_NAME: 'mainStore/SET_CURRENT_USER_NAME'
+      SET_CURRENT_USER_NAME: 'mainStore/SET_CURRENT_USER_NAME',
+      SET_DARK_MODE: 'mainStore/SET_DARK_MODE'
     }),
+    themeChanged(){
+      this.SET_DARK_MODE(this.darkModeEnabled)
+      var self = this;
+      var value = 0;
+      if(this.darkModeEnabled){
+        value = 1;
+      }
+      firebase.database().ref('/Users').child(self.currentUserEmail.replace('.', '')).update({
+        'DarkModeEnabled': value
+      })
+    },
     showNGModal() {
       this.isModalVisible = true;
     },
@@ -340,8 +359,8 @@ export default {
   /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
   .main {
       transition: margin-left .5s;
-      margin:0px;
-      min-height: 100%;
+      margin: 0px;
+      min-height: 100vh;
   }
   .main_button {
     cursor: pointer;
@@ -366,22 +385,24 @@ export default {
 
   .button-wrapper {
     flex-basis: 33%;
-    padding: 15px;
+    padding: 30px 15px 15px 20px;
   }
 
   .list-wrapper {
     flex-basis: 67%;
     padding: 25px;
     display: flex;
-    justify-content: space-evenly;
   }
 
   .mbgl{
     flex-basis: 50%;
+    min-width: 200px;
+    margin-right: 30px;
   }
 
   .mbpl{
     flex-basis: 50%;
+    min-width: 200px;
   }
 
   .mainHeader h1 {
@@ -400,10 +421,50 @@ export default {
   }
 
   #mainPage {
-    min-height: 100vh;
+    overflow-y: scroll;
   }
 
   .mainH1 {
     margin: 25px 50px 50px 50px;
   }
+
+  .main-toggle {
+    float: right;
+    margin: 50px;
+  }
+
+  @media screen and (max-width: 450px) {
+    
+    .mainBody {
+      display: block;
+    }
+    .list-wrapper {
+      display: block;
+    }
+
+    .button-wrapper {
+      display: block;
+      padding: 0px;
+      margin-left: 105px;
+    }
+
+    .mbgl{
+      width: 80%;
+      margin-left: 3%;
+      margin-bottom: 5%;
+    }
+
+    .mbpl{
+      width: 80%;
+      margin-left: 3%;
+      margin-bottom: 5%;
+    }
+
+    .main_button {
+      margin-bottom: 45px;
+      width: 175px;
+      display: block;
+    }
+  }
+
 </style>

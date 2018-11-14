@@ -132,9 +132,14 @@ import './assets/stylesheets/vuejs-dialog.min.css'
 import './assets/stylesheets/bootstrap.min.css'
 import './assets/stylesheets/bootstrap-social.css'
 import './assets/stylesheets/vue-multiselect.min.css'
-import './assets/stylesheets/master_colors.scss'
+//import './assets/stylesheets/master_colors_light.scss'
+//import './assets/stylesheets/master_colors_dark.scss'
 
 Vue.config.productionTip = false
+
+function reload(){
+  location.reload();
+}
 
 let app;
 firebase.initializeApp(config);
@@ -147,6 +152,14 @@ firebase.auth().onAuthStateChanged(function(user) {
       store,
       components: { App },
       template: '<App/>'
+    })
+    firebase.database().ref('/Users').child(user.email.replace('.', '')).child('DarkModeEnabled').on('value', function(snapshot){
+      if(snapshot.val() == 0){
+        require('./assets/stylesheets/master_colors_light.scss')
+      }
+      else{
+        require('./assets/stylesheets/master_colors_dark.scss')
+      }
     })
   }
 });

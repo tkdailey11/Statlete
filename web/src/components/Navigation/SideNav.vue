@@ -1,8 +1,9 @@
 <template>
     <div id="SideNav" class="sidenav">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <div class="sn_info">
         <a href="javascript:void(0)" class="closebtn" @click="closeNav">&times;</a>
-        <img src="../../assets/images/testUser.png" width="200px" height="200px">
+        <img src="../../assets/images/testUser.png" class="profileImg">
         <h4 class="snH4">{{currentUserName}}</h4>
       </div>
 
@@ -263,9 +264,78 @@
     overflow-x: hidden;
   }
 
+  .profileImg {
+    max-width: 100%;
+    margin-top: 5%;
+  }
+
   /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-  @media screen and (max-height: 450px) {
-      .sidenav {padding-top: 15px;}
-      .sidenav a {font-size: 18px;}
+  @media screen and (max-width: 450px) {
+      .sidenav {
+        padding-top: 15px;
+      }
+  }
+
+  /* iPhone 5/SE */
+  @media screen and (max-width: 320px) and (min-width: 320px) and (min-height: 568px) and (max-height: 568px)  {
+    .sidenav {
+      height: 248vh;
+    }
+  }
+
+  /* iPhone 6/7/8 */
+  @media screen and (max-width: 375px) and (min-width: 375px) and (min-height: 667px) and (max-height: 667px) {
+    .sidenav {
+      height: 212vh;
+    }
+  }
+
+  /* iPhone 6/7/8 Plus */
+  @media screen and (max-width: 414px) and (min-width: 414px) and (min-height: 736px) and (max-height: 736px)  {
+    .sidenav {
+      height: 192.7vh;
+    }
+  }
+
+  /* iPhone X */
+  @media screen and (max-width: 375px) and (min-width: 375px) and (min-height: 812px) and (max-height: 812px)  {
+    .sidenav {
+      height: 174.3vh;
+    }
+  }
+
+  /* iPad Pro */
+  @media screen and (max-width: 1024px) and (min-width: 1024px) and (min-height: 1366px) and (max-height: 1366px)  {
+    .sidenav {
+      height: 221vh;
+    }
+  }
+
+  /* iPad */
+  @media screen and (max-width: 768px) and (min-width: 768px) and (min-height: 1024px) and (max-height: 1024px)  {
+    .sidenav {
+      height: 221vh;
+    }
+  }
+
+  /* Pixel 2 */
+  @media screen and (max-width: 411px) and (min-width: 411px) and (min-height: 731px) and (max-height: 731px)  {
+    .sidenav {
+      height: 194vh;
+    }
+  }
+
+  /* Pixel 2XL */
+  @media screen and (max-width: 411px) and (min-width: 411px) and (min-height: 823px) and (max-height: 823px)  {
+    .sidenav {
+      height: 172vh;
+    }
+  }
+
+  /* Galaxy S5 */
+  @media screen and (max-width: 360px) and (min-width: 360px) and (min-height: 640px) and (max-height: 640px)  {
+    .sidenav {
+      height: 221vh;
+    }
   }
 </style>

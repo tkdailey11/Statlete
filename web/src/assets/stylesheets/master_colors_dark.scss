@@ -121,7 +121,7 @@ $dark_fgrd: rgb(85, 85, 85);
 }
 
 .sidenav {
-    background: $bright_red;
+    background: $dark_bgrd;
 }
 
 #mySidenav {
@@ -357,3 +357,7 @@ input:-webkit-autofill:focus {
     color: $light_gray;
     text-shadow: 2px 2px $bright_red;
 }
+
+.mt_label {
+    color: $light_gray;
+  }

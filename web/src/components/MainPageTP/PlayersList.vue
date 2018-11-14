@@ -46,8 +46,7 @@
 
 <style scoped>
   .PlayersList {
-    height: 500px;
-    margin-left: 50px;
+    height: inherit;
     border-width: 2px;
     border-style: solid; 
     border-radius: 20px; 
@@ -55,41 +54,35 @@
   }
 
   .plTitle {
-    width: 100%;
-    height: 75px;
+    height: 15%;
     border-radius: 20px 20px 0px 0px;
-    border-bottom-width: medium;
+    border-bottom-width: 2px;
     border-bottom-style: solid;
   }
 
   .plFooter {
     width: 100%;
-    height: 75px;
+    height: 15%;
     position: absolute;
     bottom: 0;
     border-radius: 0px 0px 20px 20px;
-    border-top-width: medium;
+    border-top-width: 2px;
     border-top-style: solid;
-    text-align: center;
-    vertical-align: middle;
-    line-height: 75px;
-    overflow-x: hidden;
+    overflow: hidden;
+    padding-top: 2.5%;
   }
   .plFooter:hover {
     cursor: pointer;
   }
 
   #playersTable {
-    width: inherit;
-    max-height: 350px;
-    height: 344px;
+    width: 100%;
+    height: 60%;
     overflow: scroll;
-    margin-bottom: 0px;
-    margin: 0px;
   }
 
   tr {
-    width: 500px;
+    width: 100%;
   }
 
   .plTR:hover td{
@@ -97,12 +90,20 @@
   }
 
   .plH1 {
-    line-height: 75px;
-    height: 75px;
+    line-height: 160%;
+    height: 160%;
+    overflow-x: hidden;
   }
 
   .plTD {
-    font-size: 20px;
+    width: 50%;
     overflow-x: hidden;
+  }
+
+    @media screen and (max-width: 450px) {
+    .PlayersList {
+      height: 400px;
+      width: 300px;
+    }
   }
 </style>

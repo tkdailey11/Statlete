@@ -124,7 +124,6 @@ export default {
 
   /* The side navigation menu */
   .sidenav {
-      height: 100%; /* 100% Full-height */
       width: 0; /* 0 width - change this with JavaScript */
       position: fixed; /* Stay in place */
       z-index: 2; /* Stay on top */

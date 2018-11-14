@@ -54,15 +54,16 @@
 
 <style scoped>
   .GamesList {
-    height: 500px;
+    height: inherit;
     border-width: 2px;
     border-style: solid; 
     border-radius: 20px; 
     position: relative;
+    min-height: 500px;
   }
 
   .gl_title {
-    height: 75px;
+    height: 15%;
     border-radius: 20px 20px 0px 0px;
     border-bottom-width: 2px;
     border-bottom-style: solid;
@@ -70,16 +71,14 @@
 
   .glFooter {
     width: 100%;
-    height: 75px;
+    height: 15%;
     position: absolute;
     bottom: 0;
     border-radius: 0px 0px 20px 20px;
     border-top-width: 2px;
     border-top-style: solid;
-    text-align: center;
-    vertical-align: middle;
-    line-height: 75px;
-    overflow-x: hidden;
+    padding-top: 2.5%;
+    overflow: hidden;
   }
 
   .glFooter:hover {
@@ -87,8 +86,8 @@
   }
 
   #gamesTable {
-    width: inherit;
-    height: 344px;
+    width: 100%;
+    height: 60%;
     overflow: scroll;
   }
 
@@ -96,18 +95,30 @@
     cursor: pointer;
   }
 
+  .glTR {
+    width: 100%;
+  }
+
   .gl_table {
-    /* border-width: 1px;
-    border-style: solid; */
+    width: 100%;
   }
 
   .glH1 {
-    line-height: 75px;
-    height: 75px;
+    line-height: 160%;
+    height: 160%;
+    overflow-x: hidden;
   }
 
   .glTD {
-    font-size: 20px;
+    width: 100%;
     overflow-x: hidden;
+  }
+
+  @media screen and (max-width: 450px) {
+    .GamesList {
+      min-height: 400px;
+      height: 400px;
+      width: 300px;
+    }
   }
 </style>
