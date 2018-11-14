@@ -87,7 +87,7 @@
 
   #gamesTable {
     width: 100%;
-    height: 60%;
+    height: 70%;
     overflow: scroll;
   }
 
@@ -101,6 +101,7 @@
 
   .gl_table {
     width: 100%;
+    background: blue;
   }
 
   .glH1 {
