@@ -1,6 +1,10 @@
-# statlete
+# Statlete
 
-> A Vue.js project
+> Statlete Web Interface
+
+## Node Version
+ > Tested with Node v9.5.0, npm v5.6.0
+ > (Node >= 10 is breaking!)
 
 ## Build Setup
 
@@ -31,7 +35,7 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 
 
-To deploy:
+## Deployment:
 
 $ npm run build
 $ firebase deploy

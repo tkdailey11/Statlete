@@ -1,0 +1,284 @@
+.TopBanner {
+    color: #e00010;
+  }
+  .pss_plFooter, .pssTD, .pssH1 {
+    color: #e00010;
+  }
+  .pss_plFooter:hover {
+    background-color: rgba(224, 0, 16, 0.5);
+    color: white;
+  }
+  .sbdeTD {
+    color: #e00010;
+  }
+  .ng_box {
+    color: #e00010;
+  }
+  .ng_box .partition_title {
+    color: #e00010;
+  }
+  .ng_input {
+    color: #e00010;
+    border-bottom-color: #e00010;
+  }
+  .ng_label {
+    color: #e00010;
+  }
+  .np_box {
+    color: #e00010;
+  }
+  .np_github-btn {
+    border-color: #e00010;
+    background-color: #e00010;
+    color: white;
+  }
+  .np_github-btn:hover {
+    background-color: rgba(224, 0, 16, 0.5);
+  }
+  .gl_title {
+    border-bottom-color: #e00010;
+    background-color: #555;
+  }
+  .glFooter {
+    color: #f0f0f0;
+    border-top-color: #e00010;
+  }
+  .glFooter:hover {
+    background-color: rgba(224, 0, 16, 0.5);
+  }
+  .glTD {
+    color: #f0f0f0;
+    background-color: #555;
+  }
+  .glTR:hover .glTD {
+    background-color: rgba(224, 0, 16, 0.5);
+  }
+  .gl_table {
+    border-color: #e00010;
+  }
+  .glH1 {
+    color: #f0f0f0;
+  }
+  .GamesList, .PlayersList {
+    border-color: #e00010;
+    background-color: #555;
+  }
+  .plTitle {
+    border-bottom-color: #e00010;
+    background-color: #555;
+  }
+  .plFooter {
+    border-top-color: #e00010;
+    color: #f0f0f0;
+  }
+  .plFooter:hover {
+    background-color: rgba(224, 0, 16, 0.5);
+  }
+  .pl_table {
+    border-color: #e00010;
+  }
+  .plTR:hover td {
+    background-color: rgba(224, 0, 16, 0.5);
+  }
+  .plTD {
+    color: #f0f0f0;
+    background-color: #555;
+  }
+  .plH1 {
+    color: #f0f0f0;
+  }
+  .sidenav {
+    background: #e00010;
+  }
+  #mySidenav {
+    background: #2b2a29;
+    border-right: solid 3px #e00010;
+  }
+  .AboutPage {
+    color: #e00010;
+  }
+  .myBottomNav {
+    background: white;
+    color: #e00010;
+    border-top-color: #e00010;
+  }
+  .AnalysisPage, .ap_link {
+    color: #e00010;
+  }
+  .ap_link:hover {
+    color: rgba(224, 0, 16, 0.5);
+  }
+  .analysis_button, .login_button, .main_button, .ps_button, .ts_button, .psb_button, .ng_button {
+    color: #f0f0f0;
+    background-color: #555;
+    border-color: #e00010;
+  }
+  .analysis_button:hover, .login_button:hover, .main_button:hover, .ps_button:hover, .ts_button:hover, .psb_button:hover, .ng_button:hover {
+    background-color: rgba(224, 0, 16, 0.5);
+  }
+  .FLP_H1, .loginH1, .loginPtag {
+    color: #e00010;
+  }
+  ::placeholder, :-ms-input-placeholder, ::-ms-input-placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgba(240, 240, 240, 0.5);
+    opacity: 1;
+    /* Firefox */
+  }
+  input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 50px #555 inset;
+    -webkit-text-fill-color: #f0f0f0;
+    /* Change the color to your own background color */
+    border-radius: 5px;
+    border-color: #e00010 !important;
+  }
+  input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 50px #555 inset;
+    -webkit-text-fill-color: #f0f0f0;
+    border-radius: 5px;
+    border-color: #e00010 !important;
+  }
+  .login_input {
+    color: #f0f0f0;
+    border-color: #e00010 !important;
+    background: #555;
+    border-radius: 5px;
+  }
+  .mainH1 {
+    color: #f0f0f0;
+    text-shadow: 2px 2px #e00010;
+  }
+  #app {
+    background-color: #2b2a29;
+  }
+  .sn_title {
+    border-bottom-color: #e00010;
+    background-color: #555;
+  }
+  .sn_tr:hover td {
+    background-color: rgba(224, 0, 16, 0.5);
+  }
+  .dataTable {
+    background-color: #555;
+  }
+  .phH1 {
+    color: #e00010;
+  }
+  .ps_input {
+    color: #e00010;
+  }
+  .psH1 {
+    color: #e00010;
+  }
+  .psLabel {
+    color: #e00010;
+  }
+  .numberBox {
+    color: #e00010;
+    border-bottom-color: #e00010;
+  }
+  .nameBox1 {
+    border-bottom-color: #e00010;
+  }
+  .psb_td {
+    color: #e00010;
+  }
+  .clockPause {
+    color: white;
+    background-color: #e00010;
+    border-color: #e00010;
+  }
+  .clockPause:hover {
+    background-color: rgba(224, 0, 16, 0.5);
+  }
+  #playerSelectionBox {
+    border-color: #e00010;
+  }
+  .ss_selectedButton {
+    background: #e00010;
+    color: white;
+  }
+  .sportButton {
+    color: #e00010;
+    background-color: white;
+    border-color: #e00010;
+  }
+  .selectSportDialog {
+    border-color: #e00010;
+  }
+  .wizardP {
+    color: #e00010;
+  }
+  .wizard__step__indicator {
+    background-color: #e00010;
+    border-color: #e00010;
+  }
+  .wizard__step.active .wizard__step__indicator {
+    background-color: white;
+  }
+  .wizard__step.active:not(:first-child) .wizard__step__line {
+    background-color: #e00010;
+  }
+  #toggleViewDiv {
+    border-color: #e00010;
+  }
+  #entryMode {
+    background-color: #555;
+    color: #f0f0f0;
+  }
+  #entryMode:hover {
+    background-color: rgba(224, 0, 16, 0.5);
+  }
+  #chartMode {
+    background-color: #555;
+    color: #f0f0f0;
+    border-color: #e00010;
+  }
+  #chartMode:hover {
+    background-color: rgba(224, 0, 16, 0.5);
+  }
+  #statMode {
+    background-color: #555;
+    color: #f0f0f0;
+  }
+  #statMode:hover {
+    background-color: rgba(224, 0, 16, 0.5);
+  }
+  .modal-body {
+    background-color: #f0f0f0;
+  }
+  .ng_hidden {
+    color: #f0f0f0;
+  }
+  .snH6, .snH4 {
+    color: #f0f0f0;
+  }
+  .snTD {
+    color: #f0f0f0;
+  }
+  .SBdataEntry {
+    border-color: #e00010;
+  }
+  .sn_tr:hover td {
+    background: rgba(224, 0, 16, 0.5);
+  }
+  .sn_footer {
+    border-color: #e00010;
+    background: #555;
+  }
+  .sn_footer:hover {
+    background: rgba(224, 0, 16, 0.5);
+  }
+  .about_p {
+    background: #555;
+    color: #f0f0f0;
+    border-color: #e00010;
+  }
+  .about_header {
+    color: #f0f0f0;
+    text-shadow: 2px 2px #e00010;
+  }
+  .mt_label {
+    color: #f0f0f0;
+  }
+  

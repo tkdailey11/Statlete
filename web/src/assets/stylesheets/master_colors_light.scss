@@ -1,0 +1,373 @@
+$bright_red: rgb(224, 0, 16);
+$transparent_red: rgba(224, 0, 16, 0.7);
+$txt_color_1: rgb(224, 0, 16);
+$transparent_txt_color_1: rgba(240,240,240, 0.5);
+$background_color: white;
+$foreground_color: rgb(240,240,240);
+
+.TopBanner {
+    color: $bright_red;
+}
+
+.pss_plFooter, .pssTD, .pssH1 {
+    color: $bright_red;
+}
+.pss_plFooter:hover {
+    background-color: $transparent_red;
+    color: white;
+}
+
+.sbdeTD {
+    color: $bright_red;
+}
+
+.ng_box {
+    color: $bright_red;
+
+    .partition_title {
+        color: $bright_red;
+    }
+}
+
+.ng_input {
+    color: $bright_red;
+    border-bottom-color: $bright_red;
+}
+
+.ng_label {
+    color: $bright_red;
+}
+
+.np_box {
+    color: $bright_red;
+}
+
+.np_github-btn {
+    border-color: $bright_red;
+    background-color: $bright_red;
+    color: white;
+}
+
+.np_github-btn:hover {
+    background-color: $transparent_red;
+    color: $foreground_color;
+}
+
+.gl_title {
+    border-bottom-color: $bright_red;
+    background-color: $foreground_color;
+}
+
+.glFooter {
+    color: $txt_color_1;
+    border-top-color: $bright_red;
+}
+
+.glFooter:hover {
+    background-color: $transparent_red;
+    color: $foreground_color;
+}
+
+.glTD {
+    color: $txt_color_1;
+    background-color: $foreground_color;
+}
+
+.glTR:hover .glTD {
+    background-color: $transparent_red;
+    color: $foreground_color;
+}
+
+.gl_table {
+    border-color: $bright_red;
+}
+
+.glH1 {
+    color: $txt_color_1;
+    
+}
+
+.GamesList, .PlayersList {
+    border-color: $bright_red;
+    background-color: $foreground_color;
+}
+
+.plTitle {
+    border-bottom-color: $bright_red;
+    background-color: $foreground_color;
+}
+
+.plFooter {
+    border-top-color: $bright_red;
+    color: $txt_color_1;
+}
+
+.plFooter:hover {
+    background-color: $transparent_red;
+    color: $foreground_color;
+}
+
+.pl_table {
+    border-color: $bright_red;
+}
+
+.plTR:hover td{
+    background-color: $transparent_red;
+    color: $foreground_color;
+}
+
+.plTD {
+    color: $txt_color_1;
+    background-color: $foreground_color;
+}
+
+.plH1 {
+    color: $txt_color_1;
+}
+
+.sidenav {
+    background: $bright_red;
+}
+
+#mySidenav {
+    background: $background_color;
+    border-right: solid 3px $bright_red;
+}
+
+.AboutPage {
+    color: $bright_red;
+}
+
+.myBottomNav {
+    background: white;
+    color: $bright_red;
+    border-top-color: $bright_red;
+    
+}
+
+.AnalysisPage, .ap_link {
+    color: $bright_red;
+}
+
+.ap_link:hover {
+    color: $transparent_red;
+    color: $foreground_color;
+}
+
+.analysis_button, .login_button, .main_button, .ps_button, .ts_button, .psb_button, .ng_button {
+    color: $txt_color_1;
+    background-color: $foreground_color;
+    border-color: $bright_red;
+}
+
+.analysis_button:hover, .login_button:hover, .main_button:hover, .ps_button:hover, .ts_button:hover, .psb_button:hover, .ng_button:hover {
+    background-color: $transparent_red;
+    color: $foreground_color;
+}
+
+.FLP_H1, .loginH1, .loginPtag{
+    color: $bright_red;
+}
+
+::placeholder, :-ms-input-placeholder, ::-ms-input-placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: $transparent_txt_color_1;
+    opacity: 1; /* Firefox */
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow:0 0 0 50px $foreground_color inset; /* Change the color to your own background color */
+    -webkit-text-fill-color: $txt_color_1;
+    border-radius: 5px;
+    border-color: $bright_red !important;
+}
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 50px $foreground_color inset;
+    -webkit-text-fill-color: $txt_color_1;
+    border-radius: 5px;
+    border-color: $bright_red !important;
+}
+
+.login_input {
+    color: $txt_color_1;
+    border-color: $bright_red !important;
+    background: $foreground_color;
+    border-radius: 5px;
+}
+
+.mainH1 {
+    color: $txt_color_1;
+    text-shadow: 2px 2px black;
+}
+#app {
+    background-color: $background_color;
+}
+
+.sn_title{
+    border-bottom-color: $bright_red;
+    background-color: $foreground_color;
+}
+.sn_tr:hover td {
+    background-color: $transparent_red;
+    color: $foreground_color;
+}
+
+.dataTable {
+    background-color: $foreground_color;
+}
+
+.phH1 {
+    color: $bright_red;
+}
+
+.ps_input {
+    color: $bright_red;
+}
+
+.psH1 {
+    color: $bright_red;
+}
+
+.psLabel {
+    color: $bright_red;
+}
+
+.numberBox {
+    color: $bright_red;
+    border-bottom-color: $bright_red;
+}
+
+.nameBox1 {
+    border-bottom-color: $bright_red;
+}
+
+.psb_td {
+    color: $bright_red;
+}
+
+.clockPause {
+    color: white;
+    background-color: $bright_red;
+    border-color: $bright_red;
+}
+
+.clockPause:hover {
+    background-color: $transparent_red;
+    color: $foreground_color;
+}
+
+#playerSelectionBox {
+    border-color: $bright_red;
+}
+
+.ss_selectedButton {
+    background: $bright_red;
+    color: white;
+}
+
+.sportButton {
+    color: $bright_red;
+    background-color: white;
+    border-color: $bright_red;
+}
+
+.selectSportDialog {
+    border-color: $bright_red;
+}
+
+.wizardP {
+    color: $bright_red;
+}
+.wizard__step__indicator {
+    background-color: $bright_red;
+    border-color: $bright_red;
+}
+.wizard__step.active .wizard__step__indicator {
+    background-color: white;
+}
+.wizard__step.active:not(:first-child) .wizard__step__line {
+    background-color: $bright_red;
+}
+// .wizard__step__label {
+
+// }
+
+#toggleViewDiv {
+    border-color: $bright_red;
+}
+
+#entryMode {
+    background-color: $foreground_color;
+    color: $txt_color_1;
+}
+
+#entryMode:hover {
+    background-color: $transparent_red;
+    color: $foreground_color;
+}
+
+#chartMode {
+    background-color: $foreground_color;
+    color: $txt_color_1;
+    border-color: $bright_red;
+}
+
+#chartMode:hover {
+    background-color: $transparent_red;
+    color: $foreground_color;
+}
+
+#statMode {
+    background-color: $foreground_color;
+    color: $txt_color_1;
+}
+
+#statMode:hover {
+    background-color: $transparent_red;
+    color: $foreground_color;
+}
+
+.modal-body {
+    background-color: $txt_color_1;
+}
+
+.ng_hidden {
+    color: $txt_color_1;
+}
+
+.snH6, .snH4 {
+    color: $txt_color_1;
+}
+
+.snTD {
+    color: $txt_color_1;
+}
+
+.SBdataEntry {
+    border-color: $bright_red;
+}
+
+.sn_tr:hover td {
+    background: $transparent_red;
+    color: $foreground_color;
+}
+
+.sn_footer {
+    border-color: $bright_red;
+    background: $foreground_color;
+}
+
+.sn_footer:hover {
+    background: $transparent_red;
+    color: $foreground_color;
+}
+
+.about_p {
+    background: $foreground_color;
+    color: $txt_color_1;
+    border-color: $bright_red;
+}
+
+.about_header{
+    color: $txt_color_1;
+    text-shadow: 2px 2px $bright_red;
+}
