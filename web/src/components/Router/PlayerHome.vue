@@ -3,18 +3,24 @@
     <nav-component />
 
     <div class="mainHeader">
-      <h1 class="phH1">{{selectedTeamName}} - {{theTeamName}}</h1>
+      <h1 v-if="theTeamName != ''" class="phH1">{{selectedTeamName}} - {{theTeamName}}</h1>
+      <h1 v-else class="phH1">{{selectedTeamName}}</h1>
     </div>
     <div class="mainBody">
-      <games-list :games="gamesList"
-                  style="margin-top: 20px;"
-                  @gameSelected="gameSelected"
-                  @AddGame="addGame"
-                  :addGameEnabled="addGameEnabled">
-      </games-list>
+      <div class="list-wrapper">
+        <games-list :games="gamesList"
+                    style="margin-top: 20px;"
+                    @gameSelected="gameSelected"
+                    @AddGame="addGame"
+                    :addGameEnabled="addGameEnabled"
+                    class="phgl">
+        </games-list>
+      </div>
       <div class="button-wrapper">
         <button @click="editMySettings" class="btn btn-outline-primary ph_button">Edit My Settings</button>
         <button @click="viewMyStats" class="btn btn-outline-primary ph_button">View My Stats</button>
+        <button @click="goToAnalysis" class="btn btn-outline-primary main_button">Go to Analysis Page</button>
+        <button @click="goToPdf" class="btn btn-outline-primary main_button">Export Stats to PDF</button>
       </div>
     </div>
   </div>
@@ -127,6 +133,12 @@ export default {
     },
     showTeam: function() {
       this.$router.push('/createteam')
+    },
+    goToAnalysis: function(event) {
+      this.$router.push('/analysis');
+    },
+    goToPdf: function(event) {
+      this.$router.push('/exportstats')
     },
     teamSelected: function(event) {
       this.SET_SELECTED_TEAM({
@@ -381,6 +393,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+.phgl {
+    min-width: 200px;
+    margin-right: 30px;
+    max-height: 70vh;
+}
   #header h1{
       margin:0px;
       font-weight: normal;
@@ -449,27 +467,22 @@ export default {
   }
 
   .button-wrapper {
-    float: right;
-    white-space: nowrap;
-    margin-top: 18px;
+    flex-basis: 50%;
+    padding: 30px 15px 15px 20px;
+  }
+
+  .list-wrapper {
+    flex-basis: 50%;
+    padding: 25px;
     display: flex;
-    flex-wrap: wrap;
-    margin-left: 75px;
+    max-height: 75vh;
   }
 
-  .mainHeader h1 {
-    width: 100%;
-    font-size: 70px;
-    max-height: 100px;
-    white-space: nowrap;
-    text-align: left;
-    margin-left: 15px;
-  }
-
-  .mainBody {
+   .mainBody {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    align-items: stretch;
   }
 
   #mainPage {
@@ -479,4 +492,33 @@ export default {
   .phH1 {
     margin: 25px 50px 50px 50px;
   }
+
+   @media screen and (max-width: 450px) {
+    
+    .mainBody {
+      display: block;
+    }
+    .list-wrapper {
+      display: block;
+    }
+
+    .button-wrapper {
+      display: block;
+      padding: 0px;
+      margin-left: 105px;
+    }
+
+    .phgl{
+      width: 80%;
+      margin-left: 3%;
+      margin-bottom: 5%;
+    }
+
+    .main_button {
+      margin-bottom: 45px;
+      width: 175px;
+      display: block;
+    }
+  }
+
 </style>

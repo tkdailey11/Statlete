@@ -2,7 +2,7 @@
   <div id="GameView">
     <nav-component />
     <div class="TopBanner">
-        <h1 style="font-size: 400%; font-weight: bold;">{{selectedTeamName}}</h1>
+        <h1 class="GV_NAME" style="font-size: 400%; font-weight: bold;">{{selectedTeamName}}</h1>
         <time-clock @ClockClicked="clockClicked"
                     :time="currTime"
                     :activePeriod="activePeriod"
@@ -603,7 +603,7 @@
     min-height: 100px;
     display: flex;
     margin-top: 25px;
-    margin-bottom: -20px;
+    margin-bottom: 10px;
   }
 
   .TopBanner h1 {

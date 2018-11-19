@@ -46,7 +46,7 @@
 
 <style scoped>
   .PlayersList {
-    height: inherit;
+    height: 70vh;
     border-width: 2px;
     border-style: solid; 
     border-radius: 20px; 

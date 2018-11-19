@@ -54,12 +54,11 @@
 
 <style scoped>
   .GamesList {
-    height: inherit;
     border-width: 2px;
     border-style: solid; 
     border-radius: 20px; 
     position: relative;
-    min-height: 500px;
+    height: 70vh;
   }
 
   .gl_title {
@@ -101,7 +100,6 @@
 
   .gl_table {
     width: 100%;
-    background: blue;
   }
 
   .glH1 {

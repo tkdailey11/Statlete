@@ -1,7 +1,7 @@
 <template>
   <div id="WizardPlayer" style="padding-top=100px min-height: 100vh;">
     <nav-component />
-    <h1 style="color: rgb(242,209,24); margin-bottom: 50px; margin-top: 5%;">Create a New Player Sportfolio</h1>
+    <h1 style="color: rgb(240,240,240); margin-bottom: 50px; margin-top: 5%;">Create a New Player Sportfolio</h1>
     <tkd-wizardP>
     </tkd-wizardP>
   </div>
@@ -138,6 +138,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+#WizardPlayer {
+  height: 100vh;
+}
   #header h1{
       margin:0px;
       font-weight: normal;

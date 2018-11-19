@@ -148,6 +148,7 @@
       z-index: 1; /* Stay on top */
       overflow-x: hidden; /* Disable horizontal scroll */
       transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+      height: 100vh;
   }
 
   /* The navigation menu links */

@@ -270,7 +270,17 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+$bright_red: rgb(224, 0, 16);
+$transparent_red: rgba(224, 0, 16, 0.5);
+$light_gray: rgb(240,240,240);
+$transparent_light_gray: rgba(240,240,240, 0.5);
+$dark_bgrd: rgb(43, 42, 41);
+$dark_fgrd: rgb(85, 85, 85);
+
+h3 {
+  color: $light_gray;
+}
 
 .pull-left{
   float:  left !important;
@@ -290,7 +300,6 @@ export default {
 .wizardT {
   position: relative;
   width:  100%;
-  color: rgb(252,102,0);
 }
 
 .wizard__steps{
@@ -324,7 +333,6 @@ export default {
   left:  -50%;
   bottom:  12px;
   height:  3px;
-  background-color: white;
 }
 
 .wizard__step__indicator{
@@ -332,9 +340,9 @@ export default {
   display:  block;
   width:  16px;
   height:  16px;
-  background-color: rgb(224,0,16);
   border-radius: 50%;
-  border: 3px solid #fff;
+  border-width: 3px;
+  border-style: solid;
   position:  absolute;
   left:  50%;
   margin-left:  -10px;
@@ -342,29 +350,35 @@ export default {
   z-index: 1;
 }
 
-.wizard__step.active .wizard__step__indicator{
-  background-color: rgb(242,209,24);
+.wizard__step__label{
+  font-weight: bold;
+  color: $light_gray;
 }
 
-.wizard__step.active:not(:first-child) .wizard__step__line{
-  background-color: rgb(242,209,24);
-}
+// .wizard__step.active .wizard__step__indicator{
+//   background-color: rgb(242,209,24);
+// }
+
+// .wizard__step.active:not(:first-child) .wizard__step__line{
+//   background-color: rgb(242,209,24);
+// }
 
 .wizard__step__label{
-  color: rgb(242,209,24);
   font-weight: bold;
+  color: $light_gray;
 }
 
 .wizard__body{
-  margin-top:  30px;
+  margin-top:  25px;
   min-height:  400px;
   margin-left:  50px;
   margin-right:  50px;
-  border:  3px solid white;
-  background-color: white;
+  border:  3px solid $light_gray;
+  background-color: $dark_fgrd;
   position: relative;
   border-radius: 5px;
   padding-bottom: 50px;
+  color: $light_gray;
 }
 
 .wizard__body__step{
@@ -376,14 +390,14 @@ export default {
   display: block;
   width:  30px;
   height:  30px;
-  border:  1px solid white;
-  top:  280px;
+  border:  1px solid $light_gray;
+  top:  85px; /* height of step + body margin -15 */
   border-top-right-radius: 5px;
-  background-color: #fff;
+  background-color: $light_gray;
   border-left: none;
   border-bottom:  none;
   transform: rotate(-45deg);
-  z-index: 1;
+  z-index: 0;
   -webkit-transition: left 0.3s;
   -o-transition: left 0.3s;
   transition: left 0.3s;
@@ -394,19 +408,20 @@ export default {
   bottom:  0px;
   height:  50px;
   width:  100%;
-  border-top:  1px solid rgb(242,209,24);
-  background-color: rgba(252,102,0, 0.7);
+  border-top:  3px solid $light_gray;
+  background-color: $bright_red;
 }
 
 .wizard__body__actions a{
   width:  120px;
   height:  100%;
   display: block;
-  background-color: rgb(235,95,17);
-  color: white;
+  background-color: $transparent_red;
+  border-left: 3px solid $light_gray;
+  color: $light_gray;
   font-weight: bold;
   text-align: center;
-  line-height: 50px;
+  line-height: 40px;
   cursor: pointer;
   -webkit-transition: background-color 0.3s;
   -o-transition: background-color 0.3s;
@@ -430,27 +445,29 @@ export default {
 }
 
 .vgw-icon.vgw-next::after{
-  border-bottom: 2px solid rgb(242,209,24);
-  border-right: 2px solid rgb(242,209,24);
+  border-bottom: 2px solid $light_gray;
+  border-right: 2px solid $light_gray;
 }
 
 .vgw-icon.vgw-prev::after{
-  border-top: 2px solid white;
-  border-left: 2px solid white;
+  border-top: 2px solid $light_gray;
+  border-left: 2px solid $light_gray;
   left: -10px;
 }
 
 .wizard__body__actions a:hover{
-  background-color: rgb(224,0,16);
-  color: white;
+  background-color: $bright_red;
+  color: $light_gray;
 }
 
 .wizard__body__actions a.final-step{
-  background-color: rgb(252,102,0);
+  background-color: $bright_red;
+  color: $light_gray;
 }
 
 .wizard__body__actions a.final-step:hover{
-  background-color: rgb(224,0,16);
+  background-color: $bright_red;
+  color: $light_gray;
 }
 
 .mySportLabel {
@@ -524,8 +541,16 @@ button:hover {
 }
 
 input {
-  border: none;
-  margin-bottom: 10px;
-  border-bottom: 2px rgb(252,102,0) solid;
+  margin: 10px 0;
+  width: 50%;
+  padding: 15px;
+  border: 0;
+  outline: 0;
+  border-bottom-width: 3px;
+  border-bottom-style: solid;
+  color: $light_gray;
+  border-color: $bright_red !important;
+  background: $dark_fgrd;
+  border-radius: 5px;
 }
 </style>

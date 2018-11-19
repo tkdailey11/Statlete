@@ -343,6 +343,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .main_Other {
+    height: 100vh;
+    overflow: scroll;
+  }
   #header h1{
       margin:0px;
       font-weight: normal;
@@ -392,17 +396,20 @@ export default {
     flex-basis: 67%;
     padding: 25px;
     display: flex;
+    max-height: 75vh;
   }
 
   .mbgl{
     flex-basis: 50%;
     min-width: 200px;
     margin-right: 30px;
+    max-height: 70vh;
   }
 
   .mbpl{
     flex-basis: 50%;
     min-width: 200px;
+    max-height: 70vh;
   }
 
   .mainHeader h1 {
@@ -421,6 +428,7 @@ export default {
   }
 
   #mainPage {
+    height: 100vh;
     overflow-y: scroll;
   }
 
