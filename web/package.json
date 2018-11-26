@@ -25,6 +25,7 @@
     "jspdf": "^1.4.1",
     "moment": "^2.22.1",
     "node-sass": "^4.8.3",
+    "pdfmake": "0.1.26",
     "popper": "^1.0.1",
     "popper.js": "^1.14.1",
     "sass-loader": "^6.0.7",
