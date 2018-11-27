@@ -31,7 +31,6 @@
 <script>
   import firebase from 'firebase'
   import { mapGetters, mapMutations } from 'vuex';
-import { resolve } from 'url';
 
   export default {
     name: 'TeamSettings',

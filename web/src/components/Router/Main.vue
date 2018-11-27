@@ -31,6 +31,7 @@
             <button @click="viewTeamStats" class="btn btn-outline-primary main_button">View Team Stats</button>
             <button @click="goToAnalysis" class="btn btn-outline-primary main_button">Go to Analysis Page</button>
             <button @click="goToPdf" class="btn btn-outline-primary main_button">Export Stats to PDF</button>
+            <button @click="goToGoals" class="btn btn-outline-primary main_button">View/Edit Goals</button>
           </div>
         </div>
       </div>
@@ -128,6 +129,9 @@ export default {
     },
     goToPdf: function(event) {
       this.$router.push('/exportstats')
+    },
+    goToGoals: function(event) {
+      this.$router.push('/goals')
     },
     gameSelected: function(event) {
       this.SET_ACTIVE_GAME_ID(this.gamesList[event - 1]);

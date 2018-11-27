@@ -171,7 +171,8 @@ const state = {
         "TotalAtt" : 0,
         "TotalMade" : 0
       }
-    }
+    },
+    goals: {}
   };
   
   const getters = {
@@ -189,6 +190,9 @@ const state = {
     },
     basketballPlayerStats: state => {
       return state.basketballPlayerStats;
+    },
+    goals: state => {
+      return state.goals;
     }
   };
   
@@ -204,6 +208,12 @@ const state = {
     },
     SS_REMOVE_BASKETBALL_STAT: (state, payload) => {
       delete state.basketballStats.payload;
+    },
+    SS_SET_GOALS: (state, payload) => {
+      state.goals = payload;
+    },
+    SS_UPDATE_GOAL: (state, payload) => {
+      state.goals[payload.stat] = payload.val;
     }
   };
   

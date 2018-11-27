@@ -137,6 +137,8 @@ import Multiselect from 'vue-multiselect'
 Vue.component('multiselect', Multiselect)
 import VueScrollingTable from 'vue-scrolling-table';
 Vue.component('vue-scrolling-table', VueScrollingTable);
+import VueNumericInput from 'vue-numeric-input';
+Vue.use(VueNumericInput)
 
 
 

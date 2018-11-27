@@ -124,10 +124,6 @@
         self.GV_SET_PERIOD_START_TIME(snap.val());
         ref.child('InProgress').on('value', function(snap){
           self.inProgress = snap.val()
-          // if(self.inProgress){
-          //   console.log('setInterval 1')
-          //   self.activeInterval = setInterval(self.updateTime, 1000);
-          // }
         })
       })
 
@@ -192,7 +188,6 @@
           gameData['TimeClockStarted'] = elapsedSeconds
           ref.update(gameData)
           self.GV_SET_PERIOD_START_TIME(elapsedSeconds);
-          console.log('setInterval 2')
           this.activeInterval = setInterval(self.updateTime, 1000);
         }
         //Pause
@@ -212,7 +207,6 @@
         //   score += val.Period2.Goals.Total;
         // }
         // else {
-        //   console.log()
         //   score += val.Period1.FTM.Total;
         //   score += (2 * val.Period1.FG2M.Total);
         //   score += (3 * val.Period1.FG3M.Total);
@@ -314,7 +308,6 @@
             ref.update(gameData)
 
             self.GV_SET_PERIOD_START_TIME(elapsedSeconds);
-            console.log('setInterval 3')
             self.activeInterval = setInterval(self.updateTime, 1000);
           }).catch(function() {
             //NO
@@ -514,7 +507,6 @@
           }
         }
         else{
-          console.log('Basketball time')
           var self = this;
           if(!this.gameLive){
             this.pauseEnabled = false;
