@@ -3,7 +3,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <div class="sn_info">
         <a href="javascript:void(0)" class="closebtn" @click="closeNav">&times;</a>
-        <img src="../../assets/images/testUser.png" class="profileImg">
+        <img src="../../assets/images/testUser.png" @click="changeImage" class="profileImg">
         <h4 class="snH4">{{currentUserName}}</h4>
       </div>
 
@@ -56,7 +56,8 @@
       return {
         loggedInUser: '',
         teamSportfolios: [],
-        playerSportfolios: []
+        playerSportfolios: [],
+        isModalVisible: false
       }
     },
     computed: {
@@ -82,6 +83,9 @@
             self.teamSportfolios = Object.keys(obj);
           }
         });
+      },
+      changeImage: function() {
+
       },
       getPlayerSportfolios: function() {
         var emailStr = this.currentUserEmail;

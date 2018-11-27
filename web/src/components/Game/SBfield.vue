@@ -150,13 +150,11 @@
     width: 600px;
     height: 500px;
     background: black;
-    border-width: 5px;
+    border-width: 3px;
     border-color: black;
     border-style: solid;
     border-radius: 35px;
-    margin-top: 25px;
     margin-bottom: 25px;
-    box-shadow: 5px 5px 5px grey;
   }
   .fill {
     display: flex;

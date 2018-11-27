@@ -29,6 +29,8 @@ import SideNav from '@/components/Navigation/SideNav';
 Vue.component('side-nav', SideNav);
 import NavComponent from '@/components/Navigation/NavComponent';
 Vue.component('nav-component', NavComponent);
+import UploadPhoto from '@/components/UploadPhoto';
+Vue.component('upload-photo', UploadPhoto)
 
 
 

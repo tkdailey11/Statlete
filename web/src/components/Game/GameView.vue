@@ -1,53 +1,58 @@
 <template>
   <div id="GameView">
     <nav-component />
-    <div class="TopBanner">
-        <h1 class="GV_NAME" style="font-size: 400%; font-weight: bold;">{{selectedTeamName}}</h1>
-        <time-clock @ClockClicked="clockClicked"
-                    :time="currTime"
-                    :activePeriod="activePeriod"
-                    @PauseClicked="pauseClicked">
-        </time-clock>
-    </div>
-    <div id="narrow_screen">
-      <h1 style="color: white;">Screen is too narrow for the shot chart</h1>
-    </div>
-    <div id="EntryView">
-      <div id="entryDiv">
-        <player-stat-selector style="float: left;"
-                              :players="players"
-                              :height="'height: 500px;'"
-                              @playerSelected="playerWasSelected"></player-stat-selector>
-        <sb-data-entry id="sbde1"
-                      style="float: left;"
-                      :height="'height: 500px;'"
-                      :isActive="gameLive"
-                      @StatChange="updateDB"
-                      :gameID="activeGameId"></sb-data-entry>
+    <div class="GV_Container">
+      <div class="TopBanner">
+          <h1 class="GV_NAME">{{selectedTeamName}}</h1>
+          <time-clock class="GV_Clock"
+                      @ClockClicked="clockClicked"
+                      :time="currTime"
+                      :activePeriod="activePeriod"
+                      @PauseClicked="pauseClicked"
+                      :pauseLabel="pauseBtnString"
+                      :btnEnabled="pauseEnabled">
+          </time-clock>
       </div>
-      <div id="fieldDiv">
-        <sb-field style="float: left;"
-                  :shots="shotsArr"
-                  @ShotPlaced="shotPlaced">
-        </sb-field>
-        <sb-shot-type style="float: left; margin-left: 50px;"
-                      @ShotTypeChanged="shotTypeChanged"
-                      @SBSTUndo="undoClicked">
-        </sb-shot-type>
-      </div>
-      <div id="statDiv">
-        <team-stats style="float: left; margin-left: 50px; margin-top: 65px;" />
-      </div>
-    </div>
-    <div id="toggleViewDiv">
-      <div id="entryMode" @click="toggleEntryClicked()">
-        Entry
-      </div>
-      <div id="chartMode" @click="toggleChartClicked()">
-        Shots
-      </div>
-      <div id="statMode" @click="toggleStatClicked()">
-        Stats
+      <div class="GV_Body">
+        <div id="EntryView">
+          <div id="entryDiv">
+            <player-stat-selector id="GV_pss"
+                                  :players="players"
+                                  :height="'height: 500px;'"
+                                  @playerSelected="playerWasSelected"></player-stat-selector>
+            <sb-data-entry id="sbde1"
+                          :height="'height: 500px;'"
+                          :isActive="gameLive"
+                          @StatChange="updateDB"
+                          :gameID="activeGameId"></sb-data-entry>
+          </div>
+          <div id="fieldDiv">
+            <sb-field class="GV_field"
+                      :shots="shotsArr"
+                      @ShotPlaced="shotPlaced">
+            </sb-field>
+            <sb-shot-type class="GV_shotType"
+                          @ShotTypeChanged="shotTypeChanged"
+                          @SBSTUndo="undoClicked">
+            </sb-shot-type>
+          </div>
+          <div id="statDiv">
+            <team-stats class="GV_statsTable" />
+          </div>
+        </div>
+        <div class="toggleContainer">
+          <div id="toggleViewDiv">
+            <div id="entryMode" @click="toggleEntryClicked()">
+              Entry
+            </div>
+            <div id="chartMode" @click="toggleChartClicked()">
+              Shots
+            </div>
+            <div id="statMode" @click="toggleStatClicked()">
+              Stats
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -69,13 +74,15 @@
         gameLive: false,
         currentPlayer: '',
         myScore: 0,
-        oppScore: 0
+        oppScore: 0,
+        timeRemaining: 0,
+        pauseBtnString: 'Start',
+        pauseEnabled: true
       }
     },
     mounted() {
       jQuery("#statDiv").hide()
       jQuery("#fieldDiv").hide()
-      jQuery("#narrow_screen").hide()
       var ref = null;
       var self = this;
 
@@ -96,6 +103,11 @@
           self.GV_SET_PERIOD_LENGTH(snap.val());
           self.currTime = snap.val() + ':00';
         })
+        ref.child('TimeRemainingInPeriod').once('value', function(snap){
+          self.GV_SET_TIME_REMAINING(snap.val());
+          self.timeRemaining = snap.val()
+          self.currTime = self.secondsToMinutesString(snap.val())
+        })
       }
       
       ref.child('Live').on('value', function(snap){
@@ -112,12 +124,10 @@
         self.GV_SET_PERIOD_START_TIME(snap.val());
         ref.child('InProgress').on('value', function(snap){
           self.inProgress = snap.val()
-          if(self.activeInterval){
-            clearInterval(self.activeInterval)
-          }
-          if(self.inProgress){
-            self.activeInterval = setInterval(self.updateTime, 1000);
-          }
+          // if(self.inProgress){
+          //   console.log('setInterval 1')
+          //   self.activeInterval = setInterval(self.updateTime, 1000);
+          // }
         })
       })
 
@@ -167,7 +177,33 @@
         GV_SET_TIME_REMAINING: 'gameViewStore/GV_SET_TIME_REMAINING'
       }),
       pauseClicked(){
-        alert('PAUSE')
+        var self = this;
+        if(this.currTime.toLowerCase() === "final"){
+          return;
+        }
+        var gameData = {
+          'InProgress': !this.inProgress
+        }
+        var ref = firebase.database().ref('/BasketballGames').child(self.selectedTeamId).child(self.activeGameId);
+        //Start
+        if(!this.inProgress){
+          var d = new Date();
+          var elapsedSeconds = Math.round(d.getTime() / 1000);
+          gameData['TimeClockStarted'] = elapsedSeconds
+          ref.update(gameData)
+          self.GV_SET_PERIOD_START_TIME(elapsedSeconds);
+          console.log('setInterval 2')
+          this.activeInterval = setInterval(self.updateTime, 1000);
+        }
+        //Pause
+        else {
+          clearInterval(this.activeInterval)
+          this.inProgress = false
+          ref.update({
+            InProgress: false,
+            TimeRemainingInPeriod: self.timeRemaining
+          })
+        }
       },
       computeScore(val){
         var score = 0;
@@ -201,10 +237,6 @@
         var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
         var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
         var statDisplayed = jQuery('#statDiv').css('display') != 'none';
-        var narrowDisplayed = jQuery('#narrow_screen').css('display') != 'none';
-        if(narrowDisplayed){
-          jQuery('#narrow_screen').slideUp(350)
-        }
         if(entryDisplayed){
         }
         else if(fieldDisplayed){
@@ -220,40 +252,22 @@
         var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
         var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
         var statDisplayed = jQuery('#statDiv').css('display') != 'none';
-        var narrowDisplayed = jQuery('#narrow_screen').css('display') != 'none';
-        if(narrowDisplayed){
-          jQuery('#narrow_screen').slideUp(350)
-        }
         var width = jQuery(window).width()
         if(fieldDisplayed){
         }
         else if(entryDisplayed){
           jQuery('#entryDiv').slideUp(350)
-          if(width > 450){
-            jQuery('#fieldDiv').slideDown(350)
-          }
-          else{
-            jQuery('#narrow_screen').slideDown(350)
-          }
+          jQuery('#fieldDiv').slideDown(350)
         }
         else {
           jQuery('#statDiv').slideUp(350)
-          if(width > 450){
-            jQuery('#fieldDiv').slideDown(350)
-          }
-          else{
-            jQuery('#narrow_screen').slideDown(350)
-          }
+          jQuery('#fieldDiv').slideDown(350)
         }
       },
       toggleStatClicked(){
         var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
         var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
         var statDisplayed = jQuery('#statDiv').css('display') != 'none';
-        var narrowDisplayed = jQuery('#narrow_screen').css('display') != 'none';
-        if(narrowDisplayed){
-          jQuery('#narrow_screen').slideUp(350)
-        }
         if(statDisplayed){
         }
         else if(entryDisplayed){
@@ -266,7 +280,8 @@
         }
       },
       clockClicked(event){
-        if(this.currTime.toLowerCase() === "final"){
+        alert('Clock Clicked')
+        if(this.currTime.toLowerCase() === "final" || !this.isSoccer){
           return;
         }
         //Start a Period
@@ -279,18 +294,7 @@
             PeriodStartTime: elapsedSeconds
           }
           if(this.activePeriod == 2){
-            if(this.numberOfPeriods == 4){
-              message = "Start 2nd Quarter?";
-            }
-            else{
-              message = "Start 2nd Half?";
-            }
-          }
-          else if (this.activePeriod == 3){
             message = "Start 2nd Half?";
-          }
-          else if (this.activePeriod == 4){
-            message = "Start 4th Quarter?";
           }
 
           var options = {
@@ -301,11 +305,7 @@
           var self = this;
           self.$dialog.confirm(message, options).then(function() {
             //YES
-            var dbRoot = '/BasketballGames';
-            if(self.isSoccer){
-              dbRoot = '/SoccerGames'
-            }
-            var ref = firebase.database().ref(dbRoot).child(self.selectedTeamId).child(self.activeGameId);
+            var ref = firebase.database().ref('/SoccerGames').child(self.selectedTeamId).child(self.activeGameId);
 
             var result = {};
             var d = new Date();
@@ -314,6 +314,7 @@
             ref.update(gameData)
 
             self.GV_SET_PERIOD_START_TIME(elapsedSeconds);
+            console.log('setInterval 3')
             self.activeInterval = setInterval(self.updateTime, 1000);
           }).catch(function() {
             //NO
@@ -332,11 +333,7 @@
           self.$dialog.confirm(message, options).then(function() {
             clearInterval(self.activeInterval);
             self.currTime = 'FINAL'
-            var dbRoot = '/BasketballGames';
-            if(self.isSoccer){
-              dbRoot = '/SoccerGames';
-            }
-            var ref = firebase.database().ref(dbRoot).child(self.selectedTeamId).child(self.activeGameId);
+            var ref = firebase.database().ref('/SoccerGames').child(self.selectedTeamId).child(self.activeGameId);
             var result = '';
             if(self.myScore == self.oppScore){
               result = 'T'
@@ -489,31 +486,72 @@
         }
       },
       updateTime(){
-        if(!this.currTime){
-          return;
+        if(this.isSoccer){
+          alert('SOCCER')
+          if(!this.currTime){
+            return;
+          }
+          if(!this.gameLive){
+            clearInterval(this.activeInterval);
+            this.currTime = 'FINAL';
+            return;
+          }
+          if(!this.inProgress){
+            clearInterval(this.activeInterval);
+            this.currTime = '00:00'
+            return;
+          }
+          var minutes = parseInt(this.currTime.split(':')[0]);
+          if(isNaN(minutes)){
+            return;
+          }
+          if (minutes < this.periodLength) {
+            this.currTime = this.getTimeString(this.getTime());
+          }
+          else {
+            clearInterval(this.activeInterval);
+            this.currTime = this.periodLength + ':00+';
+          }
         }
-        if(!this.gameLive){
-          clearInterval(this.activeInterval);
-          this.currTime = 'FINAL';
-          return;
+        else{
+          console.log('Basketball time')
+          var self = this;
+          if(!this.gameLive){
+            this.pauseEnabled = false;
+            this.timeRemaining = 0;
+            this.currTime = 'FINAL';
+            return;
+          }
+          if(this.timeRemaining <= 0){
+            clearInterval(this.activeInterval)
+            var ref = firebase.database().ref('/BasketballGames').child(self.selectedTeamId).child(self.activeGameId);
+            //End game
+            if(this.activePeriod == this.numberOfPeriods){
+              this.timeRemaining = 0
+              this.currTime = 'FINAL';
+              ref.update({
+                Live: false,
+                InProgress: false
+              })
+            }
+            //End Period
+            else{
+              var prd = self.activePeriod + 1;
+              ref.update({
+                Period: prd,
+                InProgress: false
+              })
+              this.pauseBtnString = 'Start'
+              this.timeRemaining = this.periodLength * 60
+              self.GV_SET_TIME_REMAINING(this.timeRemaining)
+              this.currTime = this.secondsToMinutesString(this.timeRemaining)
+            }
+            return;
+          }
+          this.timeRemaining -= 1;
+          self.GV_SET_TIME_REMAINING(this.timeRemaining)
+          this.currTime = this.secondsToMinutesString(this.timeRemaining)
         }
-        if(!this.inProgress){
-          clearInterval(this.activeInterval);
-          this.currTime = '00:00'
-          return;
-        }
-        var minutes = parseInt(this.currTime.split(':')[0]);
-        if(isNaN(minutes)){
-          return;
-        }
-        if (minutes < this.periodLength) {
-          this.currTime = this.getTimeString(this.getTime());
-        }
-        else {
-          clearInterval(this.activeInterval);
-          this.currTime = this.periodLength + ':00+';
-        }
-        
       },
       shotPlaced(event){
         var shotData = {
@@ -595,15 +633,58 @@
     height: 100%;
     margin-top: 0px;
   }
-  #EntryView{
-    
+  .GV_Container {
+    display: flex;
+    flex-direction: column;
   }
   .TopBanner {
+    flex-basis: 20%;
     width: 100vw;
-    min-height: 100px;
     display: flex;
-    margin-top: 25px;
-    margin-bottom: 10px;
+  }
+  .GV_NAME {
+    flex-basis: 50%;
+    font-size: 400%; 
+    font-weight: bold;
+  }
+  .GV_Clock {
+    flex-basis: 50%;
+  }
+  .GV_Body {
+    flex-basis: 80%;
+    display: flex;
+  }
+  #EntryView {
+    flex-basis: 85%;
+    overflow-x: scroll;
+  }
+  #fieldDiv {
+  }
+
+  #entryDiv {
+  }
+
+  #statDiv {
+  }
+
+  .GV_field {
+    float: left;
+    margin-top: 5%;
+    margin-left: 15%;
+    margin-right: 15px;
+  }
+  .GV_shotType {
+    float: left;
+    margin-top: 5%;
+    margin-left: 15px;
+    margin-right: 15%;
+  }
+
+  .GV_statsTable {
+    float: left;
+    margin-top: 7%;
+    margin-left: 15%;
+    margin-right: 15%;
   }
 
   .TopBanner h1 {
@@ -611,40 +692,34 @@
     flex-grow: 2;
   }
   #sbde1{
+    float: left;
     width: 500px;
     height: 500px;
-    margin: 50px;
-    margin-right: 0px;
     border-width: 5px;
     border-style: solid;
     border-radius: 35px;
     position: relative;
+    margin-top: 5%;
+    margin-left: 15px;
+    margin-right: 15%;
   }
-  #fieldDiv {
+  #GV_pss {
     float: left;
-    margin-top: 50px;
-    margin-left: 50px;
+    margin-top: 5%;
+    margin-left: 15%;
+    margin-right: 15px;
   }
 
-  #entryDiv {
-    margin-left: 0px;
-    float: left;
+  .toggleContainer {
+    flex-basis: 15%;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 3%;
   }
-
-  #statDiv {
-    margin-left: 0px;
-    float: left;
-  }
-
   #toggleViewDiv {
-    height: 500px;
-    width: 100px;
     border-width: 3px;
     border-style: solid;
     border-radius: 20px;
-    float: right;
-    margin-right: 100px;
-    margin-top: 65px;
   }
 
   #entryMode {

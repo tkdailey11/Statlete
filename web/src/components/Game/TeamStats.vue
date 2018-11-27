@@ -1,6 +1,5 @@
 <template>
   <div class="TeamStats">
-    <nav-component />
     <div id="teamstats_main">
       <vue-scrolling-table
                 :scroll-horizontal="scrollHorizontal"
@@ -10,8 +9,9 @@
                 :include-footer="false"
                 :dead-area-color="deadAreaColor"
                 :class="{ freezeFirstColumn:freezeFirstColumn }"
-                style="border: medium solid black;
-                      border-radius: 5px;">
+                style="border: 5px solid rgb(224, 0, 16);
+                      border-radius: 5px;
+                      background-color: rgb(85, 85, 85);">
         <template slot="thead">
           <tr>
             <th style="border-right: medium solid black; border-bottom: medium solid black;"></th>
@@ -142,9 +142,6 @@
   #teamstats_main {
     height: 400px;
     width: 1090px;
-    margin-top: 10%;
-    margin-left: 15%;
-    margin-right: 15%;
   }
   .TeamStats {
     

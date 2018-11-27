@@ -61,9 +61,6 @@
     background: white;
     border: 5px black solid;
     border-radius: 35px;
-    
-    margin-top: 25px;
-    box-shadow: 5px 5px 5px grey;
     display: flex;
     flex-direction: column;
   }

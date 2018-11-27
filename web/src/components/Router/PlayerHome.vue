@@ -9,7 +9,6 @@
     <div class="mainBody">
       <div class="list-wrapper">
         <games-list :games="gamesList"
-                    style="margin-top: 20px;"
                     @gameSelected="gameSelected"
                     @AddGame="addGame"
                     :addGameEnabled="addGameEnabled"
@@ -17,8 +16,8 @@
         </games-list>
       </div>
       <div class="button-wrapper">
-        <button @click="editMySettings" class="btn btn-outline-primary ph_button">Edit My Settings</button>
-        <button @click="viewMyStats" class="btn btn-outline-primary ph_button">View My Stats</button>
+        <button @click="editMySettings" class="btn btn-outline-primary main_button">Edit My Settings</button>
+        <button @click="viewMyStats" class="btn btn-outline-primary main_button">View My Stats</button>
         <button @click="goToAnalysis" class="btn btn-outline-primary main_button">Go to Analysis Page</button>
         <button @click="goToPdf" class="btn btn-outline-primary main_button">Export Stats to PDF</button>
       </div>
@@ -396,7 +395,7 @@ export default {
 
 .phgl {
     min-width: 200px;
-    margin-right: 30px;
+    width: 100%;
     max-height: 70vh;
 }
   #header h1{
@@ -416,8 +415,8 @@ export default {
   .playerHome {
       transition: margin-left .5s;
       margin:0px;
-      min-height: 100%;
-      height: 100vh
+      height: 100vh;
+      overflow-y: scroll;
   }
 
   /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
@@ -430,12 +429,14 @@ export default {
     width: 210px;
     height: 97px;
   }
-  .ph_button {
+  .main_button {
     margin-top: 20px;
     cursor: pointer;
     height: 50px;
     max-height: 50px;
-    margin: 50px;
+    margin: 10px;
+    padding-top: 10px;
+    padding-bottom: 15px;
   }
 
 
@@ -518,6 +519,12 @@ export default {
       margin-bottom: 45px;
       width: 175px;
       display: block;
+    }
+  }
+
+  @media screen and (min-width: 850px) {
+    .phgl {
+      font-size: 120%;
     }
   }
 

@@ -16,10 +16,14 @@
       <players-list :addPlayerEnabled="false"
                     :title="'Admins'"
                     style="float: left;"
-                    :players="admins"></players-list>
+                    :players="admins">
+      </players-list>
       <players-list :addPlayerEnabled="false"
                     style="float: left;"
-                    :players="players"></players-list>
+                    :players="players"
+                    :removePlayerEnabled="true"
+                    @RemovePlayer="removePlayer">
+      </players-list>
     </div>
   </div>
 </template>
@@ -76,6 +80,9 @@ import { resolve } from 'url';
       }),
       goBack: function() {
         this.$emit('TeamSettingsClose');
+      },
+      removePlayer: function(data){
+        alert(data)
       },
       submitTeamID: function() {        
         if(confirm('Are you sure you want to change your team\'s ID?')){

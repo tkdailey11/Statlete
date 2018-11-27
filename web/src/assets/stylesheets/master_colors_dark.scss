@@ -16,8 +16,13 @@ $dark_fgrd: rgb(85, 85, 85);
 }
 
 .playersTable, .gl_table, .pl_table, .sbde_table, .sbde_th, .selectSportDialog, 
-#playerSelectionBox, #toggleViewDiv, .SBdataEntry, #SBdataEntry {
+#playerSelectionBox, #toggleViewDiv, #SBdataEntry {
     border-color: $bright_red;
+}
+
+.SBdataEntry {
+    border-color: $bright_red;
+    color: $light_gray;
 }
 
 .analysis_button, .login_button, .main_button, .ps_button, .ts_button, .psb_button, .ng_button {
