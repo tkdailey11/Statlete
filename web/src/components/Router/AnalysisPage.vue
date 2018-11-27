@@ -206,6 +206,9 @@ export default {
 </script>
 
 <style scoped>
+    .AnalysisPage {
+        height: 100vh;
+    }
     .analysis_button {
         cursor: pointer;
         height: 50px;
