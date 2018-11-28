@@ -21,6 +21,9 @@ import NewGame from '@/components/MainPageTP/NewGame';
 Vue.component('new-game', NewGame);
 
 
+import NumericInput from '@/components/NumericInput';
+Vue.component('statlete-num-input', NumericInput)
+
 
 //Navigation
 import Navbar from '@/components/Navigation/Navbar';
@@ -29,6 +32,8 @@ import SideNav from '@/components/Navigation/SideNav';
 Vue.component('side-nav', SideNav);
 import NavComponent from '@/components/Navigation/NavComponent';
 Vue.component('nav-component', NavComponent);
+import UploadPhoto from '@/components/UploadPhoto';
+Vue.component('upload-photo', UploadPhoto)
 
 
 
@@ -135,6 +140,8 @@ import Multiselect from 'vue-multiselect'
 Vue.component('multiselect', Multiselect)
 import VueScrollingTable from 'vue-scrolling-table';
 Vue.component('vue-scrolling-table', VueScrollingTable);
+import VueNumericInput from 'vue-numeric-input';
+Vue.use(VueNumericInput)
 
 
 

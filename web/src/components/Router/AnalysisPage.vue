@@ -88,6 +88,7 @@ export default {
                         Stat: secondOption,
                         Team: this.selectedTeamId
                     }).then(function(result) {
+                        alert(result.data)
                         self.analysisResult = JSON.parse(result.data);
                         self.processOneStatResponse(self.analysisResult, secondOption);
                     })
@@ -106,6 +107,7 @@ export default {
                         Stat: firstOption,
                         Team: this.selectedTeamId
                     }).then(function(result) {
+                        alert(result.data)
                         self.analysisResult = JSON.parse(result.data);
                         self.processOneStatResponse(self.analysisResult, firstOption);
                     })
@@ -120,11 +122,13 @@ export default {
                         twoVarReq = firebase.functions().httpsCallable('getTwoStatsBasketball');
                     }
                 var self = this;
+                alert(this.selectedTeamId)
                 twoVarReq({
                     Stat1: firstOption,
                     Stat2: secondOption,
                     Team: this.selectedTeamId
                 }).then(function(result) {
+                    alert(result.data)
                     self.analysisResult = JSON.parse(result.data);
                     self.processTwoStatResponse(self.analysisResult, firstOption, secondOption);
                 })
@@ -202,6 +206,9 @@ export default {
 </script>
 
 <style scoped>
+    .AnalysisPage {
+        height: 100vh;
+    }
     .analysis_button {
         cursor: pointer;
         height: 50px;

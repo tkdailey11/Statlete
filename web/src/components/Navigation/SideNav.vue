@@ -3,7 +3,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <div class="sn_info">
         <a href="javascript:void(0)" class="closebtn" @click="closeNav">&times;</a>
-        <img src="../../assets/images/testUser.png" class="profileImg">
+        <img src="../../assets/images/testUser.png" @click="changeImage" class="profileImg">
         <h4 class="snH4">{{currentUserName}}</h4>
       </div>
 
@@ -56,7 +56,8 @@
       return {
         loggedInUser: '',
         teamSportfolios: [],
-        playerSportfolios: []
+        playerSportfolios: [],
+        isModalVisible: false
       }
     },
     computed: {
@@ -82,6 +83,18 @@
             self.teamSportfolios = Object.keys(obj);
           }
         });
+      },
+      changeImage: function() {
+        var message = "Do you want to upload a new image?"
+        var options = {
+          okText: 'YES',
+          cancelText: 'NO',
+          animation: 'bounce'
+        }
+        var self = this;
+        self.$dialog.confirm(message, options).then(function() {
+          self.$emit('ChangeImage')
+        })
       },
       getPlayerSportfolios: function() {
         var emailStr = this.currentUserEmail;
@@ -148,6 +161,7 @@
       z-index: 1; /* Stay on top */
       overflow-x: hidden; /* Disable horizontal scroll */
       transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+      height: 100vh;
   }
 
   /* The navigation menu links */

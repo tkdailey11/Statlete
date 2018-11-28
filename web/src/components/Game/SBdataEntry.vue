@@ -1,11 +1,11 @@
 <template>
   <div id="SBdataEntry" :style="height">
-    <div id="title">
-      <h2 align="center" style="color: white;">Team/Player Stats</h2>
+    <div id="sbde_title">
+      <h2 align="center" class="sbdeH">Team/Player Stats</h2>
     </div>
     <div id="dataTable" :style="tableHeight">
-      <table width="100%">
-        <tr v-for="obj in dataTypes">
+      <table width="100%" class="sbde_table">
+        <tr v-for="obj in dataTypes" class="sbde_tr">
           <td class="sbdeTD">
             <img v-if="isSoccer" src="../../assets/images/goal.png">
             <img v-else src="../../assets/images/basketball-hoop.png">
@@ -110,19 +110,16 @@ import { setTimeout } from 'timers';
     width: 500px;
     height: 500px;
     border-width: 5px;
-    border-color: black;
     border-style: solid;
     border-radius: 35px;
     position: relative;
-    box-shadow: 5px 5px 5px grey;
     padding-left: 100px;
   }
 
-  #title {
+  #sbde_title {
     width: 490px;
     height: 75px;
     border-radius: 35px 35px 0px 0px;
-    border-bottom-color: black;
     border-bottom-width: medium;
     border-bottom-style: solid;
   }
@@ -150,19 +147,21 @@ import { setTimeout } from 'timers';
     border-radius: 0px 0px 30px 30px;
   }
 
-  table, th {
-    border: 1px solid black;
+  .sbde_table, .sbde_th {
+    border-width: 1px;
+    border-style: solid;
   }
 
   .sbdeTD {
-    border-bottom: 1px solid black;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    padding-top: 5px;
+    padding-bottom: 5px;
   }
 
-/*TODO: Is color overwritten here by the "style" tag above? If so is white the right color?*/
   h2 {
     line-height: 75px;
     height: 75px;
-    color: rgb(224,0,16);
     text-overflow: ellipsis;
     white-space: nowrap;
 

@@ -6,14 +6,14 @@
       <div class="playersTable">
         <table cellpadding="10" width="100%">
           <tr v-for="key in Object.keys(players)" @click="trClicked(key)">
-            <td class="pssTD" v-if="key === selectedPlayer" style="background-color: rgba(235,95,17,0.7); color: white;">{{ key.replace('p', '#') }}</td>
+            <td class="pssTD_selected" v-if="key === selectedPlayer">{{ key.replace('p', '#') }}</td>
             <td class="pssTD" v-else>{{ key.replace('p', '#') }}</td>
-            <td class="pssTD" v-if="key === selectedPlayer" style="text-align:left; background-color: rgba(235,95,17,0.7); color: white;">{{players[key].trim()}}</td>
+            <td class="pssTD_selected" v-if="key === selectedPlayer" style="text-align:left;">{{players[key].trim()}}</td>
             <td class="pssTD" v-else style="text-align:left;">{{players[key].trim()}}</td>
           </tr>
         </table>
       </div>
-      <div class="pss_plFooter" @click="trClicked('otherTeam')" v-if="selectedPlayer === 'otherTeam'" style="background-color: rgba(235,95,17,0.7); color: white;">
+      <div class="pss_plFooter_selected" @click="trClicked('otherTeam')" v-if="selectedPlayer === 'otherTeam'" >
         Opponent
       </div>
       <div class="pss_plFooter" @click="trClicked('otherTeam')" v-else>
@@ -61,24 +61,33 @@
 <style scoped>
   .PlayerStatSelector {
     width: 310px;
-    background: rgb(255,255,255);
     border-width: 5px;
-    border-color: black;
     border-style: solid;
     border-radius: 40px; 
     position: relative;
     margin: 50px 0px 50px 50px;
-    box-shadow: 1px 1px 1px 1px grey;
   }
 
   .plTitle {
     width: 100%;
     height: 75px;
     border-radius: 35px 35px 0px 0px;
-    border-bottom-color: black;
     border-bottom-width: medium;
     border-bottom-style: solid;
-    background-color: white;
+  }
+
+  .pss_plFooter_selected {
+        width: 300px;
+    height: 75px;
+    position: absolute;
+    bottom: 0;
+    border-radius: 0px 0px 35px 35px;
+    border-top-width: medium;
+    border-top-style: solid;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 75px;
+    font-size: 25px;
   }
 
   .pss_plFooter {
@@ -86,9 +95,7 @@
     height: 75px;
     position: absolute;
     bottom: 0;
-    /*background-color: white;*/
     border-radius: 0px 0px 35px 35px;
-    border-top-color: black;
     border-top-width: medium;
     border-top-style: solid;
     text-align: center;
@@ -104,20 +111,23 @@
     width: 300px;
     max-height: 350px;
     height: 340px;
-    background-color: white;
     overflow: scroll;
     margin-bottom: 0px;
     margin: 0px;
     font-weight: bold;
     font-size: 150%;
-  }
-
-  table, th {
-    border: 1px solid black;
+    border-width: 1px;
+    border-style: solid;
   }
 
   .pssTD {
-    border-bottom: 1px solid black;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+  }
+
+  .pssTD_selected {
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
   }
 
   tr {
@@ -125,9 +135,7 @@
   }
 
   tr:hover td {
-    background-color: rgba(235,95,17,0.7);
     cursor: pointer;
-    color: white;
   }
 
   .pssH1 {

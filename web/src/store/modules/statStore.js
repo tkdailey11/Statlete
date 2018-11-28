@@ -90,6 +90,19 @@ const state = {
       "STL"  : 0,
       "TOV"  : 0
     },
+    soccerPlayerStats: {
+      "Assists"       : 0,
+      "Corners"       : 0,
+      "Crosses"       : 0,
+      "Goals"         : 0,
+      "Offsides"      : 0,
+      "Red Cards"     : 0,
+      "Saves"         : 0,
+      "Shots"         : 0,
+      "Shots on Goal" : 0,
+      "Yellow Cards"  : 0,
+      "Minutes"       : 0
+    },
     footballOffenseStats: {
       "INT" : {
         "Total" : 0
@@ -171,7 +184,8 @@ const state = {
         "TotalAtt" : 0,
         "TotalMade" : 0
       }
-    }
+    },
+    goals: {}
   };
   
   const getters = {
@@ -189,6 +203,12 @@ const state = {
     },
     basketballPlayerStats: state => {
       return state.basketballPlayerStats;
+    },
+    soccerPlayerStats: state => {
+      return state.soccerPlayerStats;
+    },
+    goals: state => {
+      return state.goals;
     }
   };
   
@@ -204,6 +224,12 @@ const state = {
     },
     SS_REMOVE_BASKETBALL_STAT: (state, payload) => {
       delete state.basketballStats.payload;
+    },
+    SS_SET_GOALS: (state, payload) => {
+      state.goals = payload;
+    },
+    SS_UPDATE_GOAL: (state, payload) => {
+      state.goals[payload.stat] = payload.val;
     }
   };
   

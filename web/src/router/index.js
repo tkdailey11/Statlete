@@ -10,7 +10,8 @@ import Main from '@/components/Router/Main'
 import FLP from '@/components/Router/FirstLandingPage'
 import GameView from '@/components/Game/GameView'
 import TeamSettings from '@/components/Router/TeamSettings'
-import TeamStats from '@/components/Game/TeamStats'
+import TeamStatsPage from '@/components/Router/TeamStatsPage'
+import GoalsPage from '@/components/Router/GoalsPage'
 import PlayerDetailView from '@/components/Router/PlayerDetailView'
 import PlayerHome from '@/components/Router/PlayerHome'
 import PlayerSettings from '@/components/Router/PlayerSettings'
@@ -88,8 +89,8 @@ let router = new Router({
     },
     {
       path: '/teamstats',
-      name: 'TeamStats',
-      component: TeamStats,
+      name: 'TeamStatsPage',
+      component: TeamStatsPage,
       meta: {
         requiresAuth: true
       }
@@ -154,6 +155,14 @@ let router = new Router({
       path: '/football',
       name: 'FootballGame',
       component: FootballGame,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/goals',
+      name: 'GoalsPage',
+      component: GoalsPage,
       meta: {
         requiresAuth: true
       }

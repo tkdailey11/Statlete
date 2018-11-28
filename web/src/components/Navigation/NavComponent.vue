@@ -5,14 +5,21 @@
     <side-nav id="mySidenav"
               @showPlayer="showPlayer"
               @showTeam="showTeam"
-              @teamSelected="teamSelected">
+              @teamSelected="teamSelected"
+              @ChangeImage ="changeImage">
     </side-nav>
+    <photoModal
+      v-show="isModalVisible"
+      @close="closeModal()"
+    />
   </div>
 </template>
 
 <script>
 import firebase from 'firebase'
 import { mapGetters, mapMutations } from 'vuex';
+import photoModal from '../UploadPhoto.vue';
+
 export default {
   name: 'NavComponent',
   computed: {
@@ -24,6 +31,14 @@ export default {
   },
   mounted () {
       
+  },
+  components: {
+    photoModal
+  },
+  data() {
+    return {
+      isModalVisible: false
+    }
   },
   methods: {
     ...mapMutations({
@@ -48,6 +63,12 @@ export default {
     },
     showTeam: function() {
       this.$router.push('/createteam')
+    },
+    changeImage: function(){
+      this.isModalVisible = true
+    },
+    closeModal: function() {
+      this.isModalVisible = false
     },
     teamSelected: function(event) {
       var sport = event.Sport;

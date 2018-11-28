@@ -13,7 +13,7 @@
         <!-- Clock -->
         <div style="width: 150px; height: 110px; float: left;">
             <h1 @click="clockClicked" style="padding-top: 5px;">{{time}}</h1>
-            <button class="btn clockPause" @click="pauseClicked">Pause</button>
+            <button class="btn clockPause" @click="pauseClicked">{{clockText}}</button>
         </div>
         <!-- Right Periods -->
         <div style="height: 110px; float: left; padding: 0px 10px 20px 10px;">
@@ -55,6 +55,9 @@ export default {
       }),
       isSoccer: function() {
         return this.selectedTeamSport == 1;
+      },
+      clockText: function() {
+          return this.pauseLabel;
       }
     },
     methods: {
@@ -62,7 +65,15 @@ export default {
             this.$emit('ClockClicked')
         },
         pauseClicked(event){
-            this.$emit('PauseClicked')
+            if(this.btnEnabled){
+                this.$emit('PauseClicked')
+                if(this.clockText === 'Start'){
+                    this.pauseLabel = 'Pause'
+                }
+                else{
+                    this.pauseLabel = 'Start'
+                }
+            }
         }
     },
     props: {
@@ -73,6 +84,14 @@ export default {
         activePeriod: {
             type: Number,
             default: 1
+        },
+        pauseLabel: {
+            type: String,
+            default: 'Start'
+        },
+        btnEnabled: {
+            type: Boolean,
+            default: true
         }
     }
 }

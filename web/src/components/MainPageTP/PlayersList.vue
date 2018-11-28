@@ -8,6 +8,7 @@
         <tr class="plTR" v-for="key in Object.keys(players)" @click="trClicked(key)" :key="key">
           <td class="plTD">{{ key.replace('p', '#') }}</td>
           <td class="plTD" style="text-align:left;">{{players[key].trim()}}</td>
+          <td v-if="removePlayerEnabled" class="plTD" style="text-align:right; font-size: 25%;" @click="$emit('RemovePlayer', key)">DELETE</td>
         </tr>
       </table>
     </div>
@@ -33,6 +34,9 @@
       },
       title: {
         default: 'Players'
+      },
+      removePlayerEnabled: {
+        default: false
       }
     },
     methods: {
@@ -46,7 +50,7 @@
 
 <style scoped>
   .PlayersList {
-    height: inherit;
+    height: 70vh;
     border-width: 2px;
     border-style: solid; 
     border-radius: 20px; 

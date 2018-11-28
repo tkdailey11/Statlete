@@ -31,6 +31,7 @@
             <button @click="viewTeamStats" class="btn btn-outline-primary main_button">View Team Stats</button>
             <button @click="goToAnalysis" class="btn btn-outline-primary main_button">Go to Analysis Page</button>
             <button @click="goToPdf" class="btn btn-outline-primary main_button">Export Stats to PDF</button>
+            <button @click="goToGoals" class="btn btn-outline-primary main_button">View/Edit Goals</button>
           </div>
         </div>
       </div>
@@ -128,6 +129,9 @@ export default {
     },
     goToPdf: function(event) {
       this.$router.push('/exportstats')
+    },
+    goToGoals: function(event) {
+      this.$router.push('/goals')
     },
     gameSelected: function(event) {
       this.SET_ACTIVE_GAME_ID(this.gamesList[event - 1]);
@@ -343,6 +347,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .main_Other {
+    height: 100vh;
+    overflow: scroll;
+  }
   #header h1{
       margin:0px;
       font-weight: normal;
@@ -392,17 +400,20 @@ export default {
     flex-basis: 67%;
     padding: 25px;
     display: flex;
+    max-height: 75vh;
   }
 
   .mbgl{
     flex-basis: 50%;
     min-width: 200px;
     margin-right: 30px;
+    max-height: 70vh;
   }
 
   .mbpl{
     flex-basis: 50%;
     min-width: 200px;
+    max-height: 70vh;
   }
 
   .mainHeader h1 {
@@ -421,6 +432,7 @@ export default {
   }
 
   #mainPage {
+    height: 100vh;
     overflow-y: scroll;
   }
 
