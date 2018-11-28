@@ -6,7 +6,7 @@
                 :scroll-vertical="scrollVertical"
                 :sync-header-scroll="syncHeaderScroll"
                 :sync-footer-scroll="false"
-                :include-footer="false"
+                :include-footer="true"
                 :dead-area-color="deadAreaColor"
                 :class="{ freezeFirstColumn:freezeFirstColumn }"
                 style="border: 5px solid rgb(224, 0, 16);
@@ -26,10 +26,12 @@
           <tr v-for="p in playerNumbers" :key="p + '-key'">
             <th style="border-right: medium solid black;">{{ p.replace('p', '#')}}</th>
             <td v-for="statType in statTypes" :key="p + '-' + statType">
-              <p v-if="playerData && playerData[p] && playerData[p][statType]">{{playerData[p][statType]}}</p>
-              <p v-else>0</p>
+              <statlete-num-input :align="'center'" v-model="playerData[p][statType]" :controls="false" @change="statChanged({'STAT': statType, 'PLAYER': p})" readonly></statlete-num-input>
             </td>
           </tr>
+        </template>
+        <template slot="tfoot">
+          <tr><th :colspan="statTypes.length + 1" @click="editClicked" :class="'editStatsBtn'">Edit</th></tr>
         </template>
       </vue-scrolling-table>
     </div>
@@ -78,6 +80,9 @@
       }),
       playerNumbers() {
         return Object.keys(this.players);
+      },
+      isSoccer() {
+        return this.selectedTeamSport == 1;
       }
     },
     methods: {
@@ -91,8 +96,23 @@
       getGameData: function() {
 
       },
-      isSoccer: function() {
-        return this.selectedTeamSport == 1;
+      statChanged: function(data) {
+        var self = this;
+        if(self.isSoccer){
+          var ref = firebase.database().ref('/SoccerGames').child(self.selectedTeamId).child(self.activeGameId);
+          ref.child('Players').child(data.PLAYER).update({
+            [data.STAT]: self.playerData[data.PLAYER][data.STAT]
+          })
+        }
+        else{
+          var ref = firebase.database().ref('/BasketballGames').child(self.selectedTeamId).child(self.activeGameId);
+          ref.child('Players').child(data.PLAYER).update({
+            [data.STAT]: self.playerData[data.PLAYER][data.STAT]
+          })
+        }
+      },
+      editClicked: function() {
+        this.$emit('EditStats')
       }
     },
     created() {
@@ -106,7 +126,7 @@
       // })
       var gameDataRef = null;
 
-      if(this.selectedTeamSport == 1){
+      if(this.isSoccer){
         gameDataRef = firebase.database().ref('/SoccerGames/' + self.selectedTeamId).child(self.activeGameId).child('Players');
       }
       else {
@@ -116,8 +136,8 @@
           "DREB",
           "FG3A",
           "FG3M",
-          "FGA",
-          "FGM",
+          "FG2A",
+          "FG2M",
           "FTA",
           "FTM",
           "OREB",
@@ -129,6 +149,16 @@
       }
       gameDataRef.on('value', function(snapshot) {
         self.playerData = snapshot.val();
+        Object.keys(self.players).forEach(player => {
+          if(!self.playerData[player]){
+            self.playerData[player] = {}
+          }
+          self.statTypes.forEach(statType => {
+            if(!self.playerData[player][statType]){
+              self.playerData[player][statType] = 0
+            }
+          })
+        });
       });
 
     },
@@ -156,9 +186,8 @@
     max-width: 20em;
   }
   table.scrolling tfoot tr th {
-    width: 130em;
-    min-width: 130em;
-    max-width: 130em;
+    width: 100%;
+    min-width: 1090px;
   }
   table.freezeFirstColumn thead tr,
   table.freezeFirstColumn tbody tr {
@@ -182,5 +211,9 @@
     margin-left: auto;
     margin-right: auto;
     overflow: hidden;
+  }
+
+  .editStatsBtn:hover {
+    cursor: pointer;
   }
 </style>

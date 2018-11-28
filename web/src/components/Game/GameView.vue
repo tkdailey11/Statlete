@@ -14,6 +14,10 @@
           </time-clock>
       </div>
       <div class="GV_Body">
+        <esmodal
+          v-show="isModalVisible"
+          @close="closeESModal()"
+        />
         <div id="EntryView">
           <div id="entryDiv">
             <player-stat-selector id="GV_pss"
@@ -37,7 +41,8 @@
             </sb-shot-type>
           </div>
           <div id="statDiv">
-            <team-stats class="GV_statsTable" />
+            <team-stats class="GV_statsTable"
+                        @EditStats="showESModal" />
           </div>
         </div>
         <div class="toggleContainer">
@@ -62,6 +67,8 @@
   import firebase from 'firebase'
   import { mapGetters, mapMutations } from 'vuex';
 
+  import esmodal from '../EditStatsModal.vue';
+
   export default {
     name: 'GameView',
     data () {
@@ -77,7 +84,8 @@
         oppScore: 0,
         timeRemaining: 0,
         pauseBtnString: 'Start',
-        pauseEnabled: true
+        pauseEnabled: true,
+        isModalVisible: false
       }
     },
     mounted() {
@@ -136,6 +144,9 @@
         self.oppScore = self.computeScore(val2);
       })
     },
+    components: {
+      esmodal
+    },
     computed: {
       ...mapGetters({
         activeGameId: 'mainStore/activeGameId',
@@ -172,6 +183,12 @@
         GV_SET_NUM_PERIODS: 'gameViewStore/GV_SET_NUM_PERIODS',
         GV_SET_TIME_REMAINING: 'gameViewStore/GV_SET_TIME_REMAINING'
       }),
+      showESModal() {
+        this.isModalVisible = true;
+      },
+      closeESModal() {
+        this.isModalVisible = false;
+      },
       pauseClicked(){
         var self = this;
         if(this.currTime.toLowerCase() === "final"){

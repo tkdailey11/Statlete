@@ -28,7 +28,7 @@
                 <tr v-for="p in playerNumbers" :key="p + '-key'">
                     <th style="border-right: medium solid black;">{{ p.replace('p', '#')}}</th>
                     <td v-for="statType in statTypes" :key="p + '-' + statType">
-                      <statlete-num-input :align="'center'" v-model="playerData[p][statType]" :controls="false" @change="statChanged({'STAT': statType, 'PLAYER': p})"></statlete-num-input>
+                      <statlete-num-input :align="'center'" v-model="playerData[p][statType]" :controls="false" readonly></statlete-num-input>
                     </td>
                 </tr>
                 </template>
