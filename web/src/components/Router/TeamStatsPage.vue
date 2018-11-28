@@ -1,6 +1,7 @@
 <template>
   <div class="TeamStatsPage">
         <nav-component />
+        <h1 class="teamStatsH1">Team Totals</h1>
         <div id="teamstatspage_main">
             <vue-scrolling-table
                         :scroll-horizontal="scrollHorizontal"
@@ -27,8 +28,7 @@
                 <tr v-for="p in playerNumbers" :key="p + '-key'">
                     <th style="border-right: medium solid black;">{{ p.replace('p', '#')}}</th>
                     <td v-for="statType in statTypes" :key="p + '-' + statType">
-                    <p v-if="playerData && playerData[p] && playerData[p][statType]">{{playerData[p][statType]}}</p>
-                    <p v-else>0</p>
+                      <statlete-num-input :align="'center'" v-model="playerData[p][statType]" :controls="false" @change="statChanged({'STAT': statType, 'PLAYER': p})"></statlete-num-input>
                     </td>
                 </tr>
                 </template>
@@ -66,8 +66,8 @@
         syncHeaderScroll: true,
         deadAreaColor: "#DDDDDD",
         maxRows: 100,
-        freezeFirstColumn: true
-
+        freezeFirstColumn: true,
+        gameDataRef: null
       }
     },
     computed: {
@@ -75,40 +75,59 @@
         activeGameId: 'mainStore/activeGameId',
         players: 'mainStore/players',
         selectedTeamId: 'mainStore/selectedTeamId',
-        selectedTeamSport: 'mainStore/selectedTeamSport'
+        selectedTeamSport: 'mainStore/selectedTeamSport',
+        basketballPlayerStats: 'statStore/basketballPlayerStats',
+        soccerPlayerStats: 'statStore/soccerPlayerStats'
       }),
       playerNumbers() {
         return Object.keys(this.players);
+      },
+      isSoccer: function() {
+        return this.selectedTeamSport == 1;
       }
     },
     methods: {
       goBack: function() {
         this.$emit('TeamStatsPageClose');
-        console.log('CLOSE');
       },
       cellClick: function(x) {
-        console.log(x);
       },
       getGameData: function() {
 
       },
-      isSoccer: function() {
-        return this.selectedTeamSport == 1;
+      statChanged: function(data) {
+        // alert(data.PLAYER + ': ' + data.STAT)
+      },
+      refreshStats: function() {
+        var self = this;
+        self.gameDataRef.on('value', function(snap){
+          Object.keys(self.playerData).forEach(pl => {
+            Object.keys(self.playerData[pl]).forEach(stat => {
+              self.playerData[pl][stat] = 0
+            })
+          })
+          Object.keys(snap.val()).forEach(id => {
+            var playersObj = snap.val()[id].Players;
+            var playersArr = Object.keys(playersObj);
+            playersArr.forEach(p => {
+              var data = playersObj[p];
+              Object.keys(data).forEach(playerStat => {
+                self.playerData[p][playerStat] += parseInt(data[playerStat])
+              })
+            })
+          })
+          console.log('PLAYER DATA')
+          console.log(self.playerData)
+          self.$forceUpdate();
+        })
       }
     },
     created() {
       this.loggedInUser = firebase.auth().currentUser;
       this.currentUserEmail = this.loggedInUser.email;
 
-      var self = this;
-      // var ref = firebase.database().ref('/SoccerGames/' + self.selectedTeamId).child(self.activeGameId).child('MyTotals').child('Period1');
-      // ref.once('value', function(snap) {
-      //   self.statTypes = Object.keys(snap.val())
-      // })
-      var gameDataRef = null;
-
-      if(this.selectedTeamSport == 1){
-        gameDataRef = firebase.database().ref('/SoccerGames/' + self.selectedTeamId).child(self.activeGameId).child('Players');
+      if(this.isSoccer){
+        this.gameDataRef = firebase.database().ref('/SoccerGames/' + this.selectedTeamId);
       }
       else {
         this.statTypes = [
@@ -117,8 +136,8 @@
           "DREB",
           "FG3A",
           "FG3M",
-          "FGA",
-          "FGM",
+          "FG2A",
+          "FG2M",
           "FTA",
           "FTM",
           "OREB",
@@ -126,27 +145,36 @@
           "STL",
           "TOV"
         ]
-        gameDataRef = firebase.database().ref('/BasketballGames/' + self.selectedTeamId).child(self.activeGameId).child('Players');
+        this.gameDataRef = firebase.database().ref('/BasketballGames/' + this.selectedTeamId);
       }
-      gameDataRef.on('value', function(snapshot) {
-        self.playerData = snapshot.val();
-      });
-
+      Object.keys(this.players).forEach(player => {
+        if(!this.playerData[player]){
+          this.playerData[player] = {}
+        }
+      })
+      Object.keys(this.players).forEach(player => {
+        this.statTypes.forEach(stat => {
+          if(!this.playerData[player][stat]){
+            this.playerData[player][stat] = 0
+          }
+        })
+      })
+      this.refreshStats();
+      
     },
     mounted() {
-
+    
     }
   }
 </script>
 
 <style scoped>
   #teamstatspage_main {
-    min-height: 400px;
-    min-width: 1090px;
-    height: 75vh;
-    width: 90vw;
-    margin-left: 5vw;
-    margin-top: 10vh;
+    width: 80vw;
+    height: 60vh;
+    margin-top: 5vh;
+    margin-left: 10vw;
+    margin-right: 10vw;
   }
   .TeamStatsPage {
     overflow-x: scroll;
@@ -154,6 +182,10 @@
   }
   th, td {
     color: black;
+  }
+
+  table.scrolling td {
+    border: none;
   }
 
   table.scrolling .w2 {
@@ -188,5 +220,13 @@
     margin-left: auto;
     margin-right: auto;
     overflow: hidden;
+  }
+
+  .vue-numeric-input input{
+    border: none;
+  }
+
+  .teamStatsH1 {
+    margin-top: 5vh;
   }
 </style>

@@ -21,6 +21,9 @@ import NewGame from '@/components/MainPageTP/NewGame';
 Vue.component('new-game', NewGame);
 
 
+import NumericInput from '@/components/NumericInput';
+Vue.component('statlete-num-input', NumericInput)
+
 
 //Navigation
 import Navbar from '@/components/Navigation/Navbar';

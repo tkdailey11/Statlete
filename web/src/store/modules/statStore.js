@@ -90,6 +90,19 @@ const state = {
       "STL"  : 0,
       "TOV"  : 0
     },
+    soccerPlayerStats: {
+      "Assists"       : 0,
+      "Corners"       : 0,
+      "Crosses"       : 0,
+      "Goals"         : 0,
+      "Offsides"      : 0,
+      "Red Cards"     : 0,
+      "Saves"         : 0,
+      "Shots"         : 0,
+      "Shots on Goal" : 0,
+      "Yellow Cards"  : 0,
+      "Minutes"       : 0
+    },
     footballOffenseStats: {
       "INT" : {
         "Total" : 0
@@ -190,6 +203,9 @@ const state = {
     },
     basketballPlayerStats: state => {
       return state.basketballPlayerStats;
+    },
+    soccerPlayerStats: state => {
+      return state.soccerPlayerStats;
     },
     goals: state => {
       return state.goals;
