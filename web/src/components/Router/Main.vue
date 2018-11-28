@@ -131,7 +131,12 @@ export default {
     },
     gameSelected: function(event) {
       this.SET_ACTIVE_GAME_ID(this.gamesList[event - 1]);
-      this.$router.push('/gameview');
+      if(this.selectedTeamSport == 2){
+        this.$router.push('/football');
+      }
+      else{
+        this.$router.push('/gameview');
+      }
     },
     editTeamSettings() {
       this.$router.push('/teamsettings');

@@ -20,12 +20,17 @@
                 </tr>
                 <tr>
                     <td>Kicker: </td>
-                    <td><input align="right" type="text" size="3" maxlength="2" v-model="punterNum"></td>
+                    <td><vue-numeric-input align="right" type="text" size="3" maxlength="2" v-model="punterNum" :min="0" :max="99" :controls="false"></vue-numeric-input></td>
                 </tr>
                 <tr>
                     <td>Kick Yards:</td>
-                    <td><input align="right" type="text" size="3" maxlength="3" v-model="puntYards"></td>
+                    <td><vue-numeric-input align="right" type="text" size="3" maxlength="3" v-model="puntYards" :min="-99" :max="99" :controls="false"></vue-numeric-input></td>
                 </tr>
+                <tr>
+                    <td>Touchback:</td>
+                    <td><input type="checkbox" v-model="puntTouchback"></td>
+                </tr>
+                <tr><td>Touchdown </td><td><input type="checkbox" v-model="puntTouchdown"></td></tr>
                 <!-- <tr>
                     <td>Turnover</td>
                     <td><input type="checkbox" v-if="activePuntTurnover === 'false'" @click="puntTurnover">
@@ -52,10 +57,14 @@
                     <th>Punt Return</th>
                 </tr>
                 <tr>
-                    <td>Kick Returner: </td><td><input type="text" size="3" maxlength="3" v-model="puntRetNum"></td>
+                    <td>Kick Returner: </td><td><vue-numeric-input type="text" size="3" maxlength="3" v-model="puntRetNum" :min="0" :max="99" :controls="false"></vue-numeric-input></td>
                 </tr>
                 <tr>
-                    <td>Return Yards: </td><td><input type="text" size="3" maxlength="3" v-model="puntRetYards"></td>
+                    <td>Return Yards: </td><td><vue-numeric-input type="text" size="3" maxlength="3" v-model="puntRetYards" :min="-99" :max="100" :controls="false"></vue-numeric-input></td>
+                </tr>
+                <tr>
+                    <td>Touchdown:</td>
+                    <td><input type="checkbox" v-model="puntRetTD"></td>
                 </tr>
                 <!-- <tr>
                     <td>Turnover</td>
@@ -95,13 +104,13 @@
                     <td><input type="checkbox" v-model="extraPoint" checked></td>
                 </tr>
                 <tr>
-                    <td>Attempt Yards: </td><td><input type="text" v-model="fieldGoalYards" maxlength="2" size="3"></td>
+                    <td>Kicker: </td><td><vue-numeric-input type="text" v-model="fieldGoalKicker" maxlength="2" size="3" :min="0" :max="99" :controls="false"></vue-numeric-input></td>
+                </tr>
+                <tr>
+                    <td>Attempt Yards: </td><td><vue-numeric-input type="text" v-model="fieldGoalYards" maxlength="2" size="3" :min="0" :max="60" :controls="false"></vue-numeric-input></td>
                 </tr>
                 <tr>
                     <td>Attempt Made</td> <td><input type="checkbox" v-model="fieldGoalMake"></td>
-                </tr>
-                <tr>
-                    <td>Block</td><td><input type="checkbox" v-model="fieldGoalBlock"></td>
                 </tr>
                 </table>
             <button class="button" @click="fgConfirm">Confirm</button> 
@@ -151,7 +160,7 @@
             <div id="turnoverKickoffForm">
                 <table align="center">
                     <tr><td>Fumble:</td><td><input type="checkbox" v-model="kickoffFumble"></td></tr>
-                    <tr><td>Recovered By: </td><td><input type="text" v-model="kickoffRecoveredNum" maxlength="2" size="2"></td></tr>
+                    <tr><td>Recovered By: </td><td><vue-numeric-input type="text" v-model="kickoffRecoveredNum" maxlength="2" size="2" :min="0" :max="99" :controls="false"></vue-numeric-input></td></tr>
                   </table>
             </div>
             <button class="button" @click="kickoffConfirm">Confirm</button>
@@ -164,14 +173,13 @@
                 </tr>
                 <tr>
                     <td>Kick Returner: </td>
-                    <td><input type="text" maxlength="2" size="3" v-model="kickoffRetNum"></td>
+                    <td><vue-numeric-input type="text" maxlength="2" size="3" v-model="kickoffRetNum" :min="0" :max="99" :controls="false"></vue-numeric-input></td>
                 </tr>
                 <tr>
                     <td>Return Yards: </td>
-                    <td><input alilgn="right" type="text" maxlength="3" size="3" v-model="kickoffRetYards"></td>
+                    <td><vue-numeric-input alilgn="right" type="text" maxlength="3" size="3" v-model="kickoffRetYards" :min="-50" :max="100" :controls="false"></vue-numeric-input></td>
                 </tr>
                 <tr><td>Touchdown </td><td><input type="checkbox" v-model="kickoffRetTouchdown"></td></tr>
-                <tr><td>Fumble:</td><td><input type="checkbox" v-model="kickoffRetFumble"></td></tr>
                 </table>
 
             <button class="button" @click="kickoffReturnConfirm">Confirm</button>
@@ -180,6 +188,8 @@
 </template>
 
 <script>
+import firebase from 'firebase'
+import { mapGetters, mapMutations } from 'vuex'
 export default {
   data() {
     return {
@@ -193,16 +203,20 @@ export default {
       //Punt
       punterNum: '',
       puntYards: '',
+      puntTouchback: '',
+      puntTouchdown: '',
 
       // Punt Ret
       puntRetNum: '',
       puntRetYards: '',
+      puntRetTD: '',
 
       //FG
       extraPoint: '',
       fieldGoalYards: '',
       fieldGoalMake: '',
       fieldGoalBlock: '',
+      fieldGoalKicker: '',
 
       // FG Def
       extraPointDef: '',
@@ -223,6 +237,13 @@ export default {
     };
   },
 
+  computed: {
+    ...mapGetters({
+      selectedTeamId: 'mainStore/selectedTeamId',
+      activeGameId: 'mainStore/activeGameId'
+    })
+  },
+
   methods: {
     punt: function() {
         jQuery("#specialButtons").hide();
@@ -231,9 +252,69 @@ export default {
     puntConfirm: function() {
         jQuery("#puntForm").hide();
         jQuery("#specialButtons").show();
-         
-        this.punterNum = '';
-        this.puntYards = '';
+
+        //Database
+        self = this
+        var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Special")
+        ref.child("Punt").once("value", function(snapshot){
+            var punts = snapshot.val()
+            var playerNum = "p" + self.punterNum
+            var total = punts.Total + 1
+            var playerStat = punts[playerNum]
+            var tb = self.puntTouchback
+            var tbNum = 0
+            var ptotal = 1
+            if(playerStat == null)
+            {
+                if(tb){
+                    tbNum = 1
+                }
+                ref.child("Punt").child(playerNum).update({
+                    "Total": 1,
+                    "TotalTB": parseInt(tbNum),
+                    "TotalYds": parseInt(self.puntYards) + 0
+                })
+            }
+            else{
+                if(tb){
+                    tbNum = 1
+                }
+                ptotal = parseInt(playerStat.Total) + parseInt(1)
+                ref.child("Punt").child(playerNum).update({
+                    "Total": (parseInt(playerStat.Total) + parseInt(1)),
+                    "TotalTB": (parseInt(playerStat.TotalTB) + parseInt(tbNum)),
+                    "TotalYds": (parseInt(playerStat.TotalYds) + parseInt(self.puntYards))
+                })
+            }
+            ref.child("Punt").child(playerNum).child("Punt-"+ptotal).update({
+                "Touchback": parseInt(tbNum),
+                "Yds": self.puntYards
+            })
+            ref.child("Punt").update({
+                "Total": total,
+            })
+        }).then(()=>{
+            ref.child("TotalTDAllowed").once("value", function(shot){
+                if(self.puntTouchdown)
+                {
+                    var numS = shot.val()
+                    if(numS == null)
+                    {
+                        numS = 1
+                    }
+                    else
+                    {
+                        numS += 1
+                    }
+                    ref.update({
+                        ["TotalTDAllowed"]: numS
+                    })
+                }
+            }).then(()=>{
+            this.punterNum = '',
+            this.puntYards = ''
+        })
+        })
     },
     puntReturn: function() {
         jQuery("#puntRetForm").show();
@@ -243,8 +324,57 @@ export default {
         jQuery("#puntRetForm").hide();
         jQuery("#specialButtons").show();
 
-        this.puntRetNum = '';
-        this.puntRetYards = '';
+        self = this
+        var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Special")
+        ref.child("PuntRet").once("value", function(snap){
+            var puntRet = snap.val()
+            var playerNum = "p" + self.puntRetNum
+            var totalPuntRet = parseInt(puntRet.TotalRets) + 1
+            var totalPuntTD = puntRet.TotalTD
+            var totalPuntYds = puntRet.TotalYds
+            var playerStat = puntRet[playerNum]
+            var puntRetTDCheck = self.puntRetTD
+            var tdVar = "N"
+            var ptotal = 1
+            var puntTDNum = 0
+            if(puntRetTDCheck)
+            {
+                puntTDNum = 1
+                tdVar = "Y"
+            }
+            if(playerStat == null)
+            {
+                ref.child("PuntRet").child(playerNum).update({
+                    "TotalTD": parseInt(puntTDNum),
+                    "TotalYds" : parseInt(self.puntRetYards),
+                    "TotalRets" : parseInt(1)
+                })
+            }
+            else
+            {
+                ptotal = parseInt(playerStat.TotalRets) + parseInt(1)
+                ref.child("PuntRet").child(playerNum).update({
+                    "TotalTD": parseInt(playerStat.TotalTD) + parseInt(puntTDNum),
+                    "TotalYds" : parseInt(playerStat.TotalYds) + parseInt(self.puntRetYards),
+                    "TotalRets" : ptotal
+                })
+            }
+            ref.child("PuntRet").child(playerNum).child("PuntRet-"+ptotal).update({
+                "TD": tdVar,
+                "Yds": parseInt(self.puntRetYards)
+            })
+            ref.child("PuntRet").update({
+                "TotalRets": parseInt(totalPuntRet),
+                "TotalTD": parseInt(totalPuntTD) + parseInt(puntTDNum),
+                "TotalYds": parseInt(totalPuntYds) + parseInt(self.puntRetYards)
+            })
+
+        }).then(()=>{
+            this.puntRetNum = '';
+            this.puntRetYards = '';
+        })
+
+        
     },
     fieldGoal: function() {
         jQuery("#specialButtons").hide();
@@ -254,10 +384,77 @@ export default {
         jQuery("#specialButtons").show();
         jQuery("#fg").hide();
 
-      this.extraPoint = '';
-      this.fieldGoalYards = '';
-      this.fieldGoalMake = '';
-      this.fieldGoalBlock = '';
+        self = this
+        var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Special")
+        if(this.extraPoint)
+        {
+            ref.child("XP").once("value", function(shot){
+                var xps = shot.val()
+                var addPoints = 0
+                if(self.fieldGoalMake)
+                {
+                    addPoints = 1
+                }
+                ref.child("XP").update({
+                    "TotalAtt": parseInt(xps.TotalAtt) + parseInt(1),
+                    "TotalMade": parseInt(xps.TotalMade) + parseInt(addPoints)
+                })
+            }).then(()=>{
+                this.extraPoint = '';
+                this.fieldGoalYards = '';
+                this.fieldGoalMake = '';
+                this.fieldGoalKicker = '';
+            })
+        }
+        else
+        {
+            ref.child("FG").once("value", function(fg){
+                var fgStats = fg.val()
+                var playerNum = "p" + self.fieldGoalKicker
+                var totalAtt = parseInt(fgStats.TotalAtt) + parseInt(1)
+                var totalMade = parseInt(fgStats.TotalMade)
+                var playerMade = 0
+                var madeString = "N"
+                if(self.fieldGoalMake)
+                {
+                    madeString = "Y"
+                    totalMade++
+                    playerMade = 1
+                }
+                var playerStat = fgStats[playerNum]
+                var ptotal = 1
+                if(playerStat == null)
+                {
+                    ref.child("FG").child(playerNum).update({
+                        "TotalAtt": 1,
+                        "TotalMade": playerMade
+                    })
+                }
+                else
+                {
+                    ptotal = parseInt(playerStat.TotalAtt) + parseInt(1)
+                    ref.child("FG").child(playerNum).update({
+                        "TotalAtt": parseInt(playerStat.TotalAtt) + parseInt(1),
+                        "TotalMade": parseInt(playerStat.TotalMade) + parseInt(playerMade)
+                    })
+                }
+                ref.child("FG").child(playerNum).child("Kick-"+ptotal).update({
+                    "Made": madeString,
+                    "Yards": parseInt(self.fieldGoalYards)
+                })
+                ref.child("FG").update({
+                    "TotalAtt": parseInt(totalAtt),
+                    "TotalMade": parseInt(totalMade)
+                })
+            }).then(()=>{
+                this.extraPoint = '';
+                this.fieldGoalYards = '';
+                this.fieldGoalMake = '';
+                this.fieldGoalKicker = '';
+            })
+        }
+
+      
     },
      fieldGoalDef: function() {
         jQuery("#specialButtons").hide();
@@ -267,9 +464,44 @@ export default {
         jQuery("#fgDef").hide();
         jQuery("#specialButtons").show();   
       // FG Def
-        this.extraPointDef = '';
-        this.fieldGoalDefMade = '';
-
+        self = this
+        var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Special")
+        ref.once("value", function(fgDef){
+            var fgDefStat = fgDef.val()
+            var xp = fgDefStat.TotalXPAllowed
+            var fg = fgDefStat.TotalFGAllowed
+            if(self.extraPointDef && self.fieldGoalDefMade)
+            {
+                if(xp == null)
+                {
+                    xp = 1
+                }
+                else
+                {
+                    xp += 1
+                }
+                ref.update({
+                    ["TotalXPAllowed"]:  xp
+                })
+            }
+            else if(!self.extraPointDef && self.fieldGoalDefMade)
+            {
+                if(fg == null)
+                {
+                    fg = 1
+                }
+                else
+                {
+                    fg += 1
+                }
+                ref.update({
+                    "TotalFGAllowed": fg
+                })
+            }
+        }).then(()=>{
+            this.extraPointDef = '';
+            this.fieldGoalDefMade = '';
+        })
     },
     kickoff: function() {
         jQuery("#kickOff").show();
@@ -279,10 +511,52 @@ export default {
         jQuery("#specialButtons").show();
         jQuery("#kickOff").hide();
         //Kickoff
-        this.kickoffGainedYards = '';
-        this.kickoffTouchdown = '';
-        this.kickoffFumble = '';
-        this.kickoffRecoveredNum = '';
+        self = this
+        var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Special")
+        ref.child("TotalTDAllowed").once("value", function(shot){
+                if(self.kickoffTouchdown)
+                {
+                    var numS = shot.val()
+                    if(numS == null)
+                    {
+                        numS = 1
+                    }
+                    else
+                    {
+                        numS += 1
+                    }
+                    ref.update({
+                        ["TotalTDAllowed"]: numS
+                    })
+                }
+            }).then(()=>{
+                var ref2 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Defense")
+                ref2.child("FumbleRec").once("value", function(fum){
+                    if(self.kickoffFumble)
+                    {
+                        var fumVal = fum.val()
+                        var playerNum = "p" + self.kickoffRecoveredNum
+                        var playerStat = fumVal[playerNum]
+                        if(playerStat == null)
+                        {
+                            playerStat = 1
+                        }
+                        else
+                        {
+                            playerStat += 1
+                        }
+                        ref2.child("FumbleRec").update({
+                            [playerNum]: playerStat
+                        })
+                    }
+                }).then(()=>{
+            this.kickoffGainedYards = '';
+            this.kickoffTouchdown = '';
+            this.kickoffFumble = '';
+            this.kickoffRecoveredNum = '';
+        })
+            })
+        
     },
     kickoffReturn: function() {
         jQuery("#kickOffRet").show();
@@ -291,11 +565,50 @@ export default {
     kickoffReturnConfirm: function() {
         jQuery("#kickOffRet").hide();
         jQuery("#specialButtons").show();
-
-        this.kickoffRetNum = '';
-        this.kickoffRetYards = '';
-        this.kickoffRetTouchdown = '';
-        this.kickoffRetFumble = '';
+        self = this
+        var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Special")
+        ref.child("KickRet").once("value", function(kickRet){
+            var kickRetStats = kickRet.val()
+            var playerNum = "p" + self.kickoffRetNum
+            var totalRets = parseInt(kickRetStats.TotalRets) + parseInt(1)
+            var totalYds = parseInt(kickRetStats.TotalYds) + parseInt(self.kickoffRetYards)
+            var tdString = "N"
+            var ptotal = 1
+            if(self.kickoffRetTouchdown)
+            {
+                tdString = "Y"                
+            }
+            var playerStat = kickRetStats[playerNum]
+            if(playerStat == null)
+            {
+                ref.child("KickRet").child(playerNum).update({
+                    "TotalRets": parseInt(ptotal),
+                    "TotalYds": parseInt(self.kickoffRetYards)
+                })
+            }
+            else
+            {
+                ptotal = parseInt(playerStat.TotalRets) + parseInt(1)
+                ref.child("KickRet").child(playerNum).update({
+                    "TotalRets": ptotal,
+                    "TotalYds": parseInt(playerStat.TotalYds) + parseInt(self.kickoffRetYards)
+                })
+            }
+            ref.child("KickRet").child(playerNum).child("Ret-" + ptotal).update({
+                "TD": tdString,
+                "Yards": self.kickoffRetYards
+            })
+            ref.child("KickRet").update({
+                "TotalRets": totalRets,
+                "TotalYds": totalYds
+            })
+        }).then(()=>{
+            this.kickoffRetNum = '';
+            this.kickoffRetYards = '';
+            this.kickoffRetTouchdown = '';
+            this.kickoffRetFumble = '';
+        })
+        
     },
     puntTurnover: function() {
       jQuery("#turnoverPuntForm").show();
