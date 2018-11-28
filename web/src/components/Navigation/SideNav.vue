@@ -85,7 +85,16 @@
         });
       },
       changeImage: function() {
-
+        var message = "Do you want to upload a new image?"
+        var options = {
+          okText: 'YES',
+          cancelText: 'NO',
+          animation: 'bounce'
+        }
+        var self = this;
+        self.$dialog.confirm(message, options).then(function() {
+          self.$emit('ChangeImage')
+        })
       },
       getPlayerSportfolios: function() {
         var emailStr = this.currentUserEmail;
