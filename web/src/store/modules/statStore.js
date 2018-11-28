@@ -209,6 +209,24 @@ const state = {
     },
     goals: state => {
       return state.goals;
+    }, 
+    footballOffenseStats: state => {
+      return state.footballOffenseStats;
+    },
+    footballDefenseStats: state => {
+      return state.footballDefenseStats;
+    },
+    footballSpecialStats: state => {
+      return state.footballSpecialStats;
+    },
+    footballOffenseArr: state => {
+      return Object.keys(state.footballOffenseStats)
+    },
+    footballDefenseArr: state => {
+      return Object.keys(state.footballDefenseStats)
+    },
+    footballSpecialArr: state => {
+      return Object.keys(state.footballSpecialStats)
     }
   };
   

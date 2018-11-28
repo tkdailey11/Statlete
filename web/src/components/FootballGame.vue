@@ -1,7 +1,14 @@
 <template>
     <div class="FootballGame">
         <nav-component />
-       
+        <div><span class="item">{{myScore}}</span>
+      <span class="period_item">
+        1 <input type="radio" value="first" v-model="period">
+        2 <input type="radio" value="second" v-model="period">
+        3 <input type="radio" value="third" v-model="period">
+        4 <input type="radio" value="fourth" v-model="period">
+      </span>
+      <span class="item">{{oppScore}}</span></div>
        <div class="column split left">
             <button v-if="activeButton === 'offense'" id="offenseButton" class="currPage" @click="offenseClicked">Offense</button>
             <button v-else id="offenseButton"  @click="offenseClicked">Offense</button><br>
@@ -12,10 +19,10 @@
             <button v-else id="specialButton"  @click="specialClicked">Special Teams</button><br>
 
             <button id="statsButton" class="buttonPosession" @click="statsClicked">Team Stats</button><br>
-            <button id="askButton" class="buttonPosession" @click="askClicked">Ask Statlete</button><br>
 		    </div>
+
         <div class="split right">
-            <football-offense v-if="activeButton === 'offense'"/>
+            <football-offense v-if="activeButton === 'offense'" @oppScore="incrementOpp"/>
             <football-defense v-if="activeButton === 'defense'"/>
             <football-special v-if="activeButton === 'special'"/>
         </div>
@@ -27,12 +34,28 @@
 export default {
   data() {
     return {
-      activeButton: 'offense'
+      activeButton: 'offense',
+      period: '',
+      myScore: 0,
+      oppScore: 0
     }
     
 
   },
+  // props: {
+  //   myScore: {
+  //     type: Number, 
+  //     default: 0
+  //   },
+  //   oppScore: {
+  //     type: Number,
+  //     default: 0
+  //   }
+  // },
   methods: {
+    incrementOpp: function(data) {
+      this.oppScore += parseInt(data);
+    },
     offenseClicked: function() {
       jQuery("#getOffPosition").show();
 
@@ -84,7 +107,7 @@ export default {
   background-color: red; 
   text-decoration: none;
   color: white;
-  border-radius: 3px;
+  border-radius: 15px;
   margin: 5px;
   border: 2px solid black;
   text-decoration: none;
@@ -98,7 +121,7 @@ export default {
     top: 0;
     overflow-x: hidden;
     padding-top: 80px;
-    margin-top: 40px;
+    margin-top: 117px;
 }
 
 .left {
@@ -109,6 +132,27 @@ export default {
 .right {
     right: 0;
     background: grey;
+}
+
+.item {
+  font-size: 50px;
+  flex-shrink: 3;
+  align-content: flex-start;
+  align-items: stretch;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  flex-direction: row;
+  background-color: red;
+}
+
+.period_item {
+  /* flex-shrink: 4;
+  flex-grow: 10; */
+  align-content: flex-start;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  flex-direction: row;
 }
 </style>
 
