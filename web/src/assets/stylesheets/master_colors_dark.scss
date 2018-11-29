@@ -11,7 +11,7 @@ $dark_fgrd: rgb(85, 85, 85);
     color: $bright_red;
 }
 
-.pssH1, .glH1, .plH1, .snH6, .snH4, .ng_hidden, .snTD, .GV_NAME, .sbdeH, .mt_label, .goalsH1, .teamStatsH1 {
+.pssH1, .glH1, .plH1, .snH6, .snH4, .ng_hidden, .snTD, .GV_NAME, .sbdeH, .mt_label, .goalsH1, .teamStatsH1, .tsH3 {
     color: $light_gray;
 }
 
@@ -230,8 +230,9 @@ input:-webkit-autofill:focus {
     color: $light_gray;
 }
 
-.modal-body {
+.modal-body, .color_chooser {
     background-color: $light_gray;
+    border-color: $dark_fgrd;
 }
 
 .sn_footer {

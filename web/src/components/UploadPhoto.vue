@@ -7,20 +7,21 @@
             <div class="ng-modal-header" @click="close">
             </div>
             <div class="modal-body">
-                <a class="btn" @click="toggleShow">set avatar</a>
+                <a class="btn" @click="toggleShow">Select New Image</a>
                 <my-upload field="img"
                     @crop-success="cropSuccess"
                     @crop-upload-success="cropUploadSuccess"
                     @crop-upload-fail="cropUploadFail"
                     v-model="show"
-                    :width="300"
-                    :height="300"
-                    url="/upload"
+                    :width="200"
+                    :height="200"
+                    url=""
                     :params="params"
                     :headers="headers"
                     :langType="'en'"
                     img-format="png"></my-upload>
                 <img :src="imgDataUrl">
+                <a class="main_button" @click="close">Submit</a>
             </div>
             <div class="ng-modal-footer" @click="close">
             </div>
@@ -30,23 +31,22 @@
     </div>
   </transition>
 </template>
-<script>
 
+<script>
+import firebase from 'firebase';
+import { mapGetters, mapMutations } from 'vuex';
 import myUpload from 'vue-image-crop-upload';
+
 export default {
     name: 'photoModal',
+    computed: {
+        ...mapGetters({
+            currentUserEmail: 'mainStore/currentUserEmail'
+        })
+    },
     methods: {
         close() {
             this.$emit('close');
-        },
-        onChange (image) {
-            console.log('New picture selected!')
-            if (image) {
-                console.log('Picture loaded.')
-                this.image = image
-            } else {
-                console.log('FileReader API not supported: use the <form>, Luke!')
-            }
         },
         toggleShow() {
             this.show = !this.show;
@@ -58,8 +58,10 @@ export default {
          * [param] field
          */
         cropSuccess(imgDataUrl, field){
-            console.log('-------- crop success --------');
             this.imgDataUrl = imgDataUrl;
+            var message = this.imgDataUrl;
+            var ref = firebase.storage().ref();
+            ref.child('/Users/').child(this.currentUserEmail.replace('.', '')).putString(message, 'data_url');
         },
         /**
          * upload success
@@ -68,9 +70,7 @@ export default {
          * [param] field
          */
         cropUploadSuccess(jsonData, field){
-            console.log('-------- upload success --------');
-            console.log(jsonData);
-            console.log('field: ' + field);
+
         },
         /**
          * upload fail
@@ -79,9 +79,7 @@ export default {
          * [param] field
          */
         cropUploadFail(status, field){
-            console.log('-------- upload fail --------');
-            console.log(status);
-            console.log('field: ' + field);
+
         }
     },
     components: {

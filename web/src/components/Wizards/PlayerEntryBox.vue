@@ -42,7 +42,7 @@
       var nameBoxes = jQuery('.nameBox1');
       nameBoxes.each(function(nb) {
         if(Object.keys(nb)[0] === 'length' || Object.keys(nb)[0] ==='prevObject'){
-          console.log('INVALID NAME');
+          
         }
         else {
           jQuery(this).addClass('my-class');
@@ -55,7 +55,7 @@
       var nameBoxes2 = jQuery('.nameBox2');
       nameBoxes2.each(function(nb) {
         if(Object.keys(nb)[0] === 'length' || Object.keys(nb)[0] ==='prevObject'){
-          console.log('INVALID NAME');
+          
         }
         else {
           jQuery(this).addClass('my-class2');
@@ -66,7 +66,7 @@
       var nameBoxes1 = jQuery('.nameBox1');
       nameBoxes1.each(function(nb) {
         if(Object.keys(nb)[0] === 'length' || Object.keys(nb)[0] ==='prevObject'){
-          console.log('INVALID NAME');
+          
         }
         else {
           jQuery(this).addClass('my-class');

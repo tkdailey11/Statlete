@@ -94,26 +94,19 @@
             var admin = Object.keys(data.Admins)[0];
             
             //Update Users table
-            console.log('step 1')
             var ref = firebase.database().ref('/Users/' + admin + '/AdminTeams');
             ref.child(oldID).remove().then(() => {
-              console.log('step 2')
               return ref.update({ [newID] : " " })
             }).then(function(val){
-              console.log('step 3')
               return firebase.database().ref('/TeamSportfolios/').update({
                 [newID] : data
               })
             }).then(function(val2) {
-              console.log('step 4')
               return firebase.database().ref('/TeamSportfolios/' + oldID).remove();
             }).then(function(val3){
               self.SET_SELECTED_TEAM_ID(newID);
             });
           });
-        }
-        else{
-          console.log('DO NOT SUBMIT ID');
         }
       },
       submitToken: function() {
@@ -124,9 +117,6 @@
             Token: newToken
           })
           self.SET_SELECTED_TEAM_TOKEN(newToken);
-        }
-        else{
-          console.log('DO NOT SUBMIT TOKEN');
         }
       },
       logout: function() {

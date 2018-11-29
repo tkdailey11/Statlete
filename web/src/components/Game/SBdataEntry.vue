@@ -69,8 +69,6 @@ import { setTimeout } from 'timers';
     },
     mounted() {
       var self = this
-      console.log("GAME ID: " + self.gameID);
-      console.log("Sport: " + this.selectedTeamSport);
       if(self.isSoccer) {
         var dbRef = firebase.database().ref('SoccerGames/' + self.selectedTeamId + '/' + self.gameID + '/MyTotals/Period1/');
         if(dbRef){
@@ -80,8 +78,6 @@ import { setTimeout } from 'timers';
             if(Object){
               keys = Object.keys(obj)
             }
-            console.log('KEYS: ');
-            console.log(keys);
             self.dataTypes = keys;
           })
         }
@@ -95,8 +91,6 @@ import { setTimeout } from 'timers';
             if(Object){
               keys = Object.keys(obj)
             }
-            console.log('KEYS: ');
-            console.log(keys);
             self.dataTypes = keys;
           })
         }

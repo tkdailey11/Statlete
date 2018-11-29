@@ -62,15 +62,10 @@
         firebase.database().ref('/SoccerGames/' + self.activeGameId + '/Shots').on('value', function(snapshot){
           newShots = [];
           if(snapshot.val() == null){
-            console.log('null')
             return;
-          }
-          else{
-            console.log('not null')
           }
           
           dbShots = Object.values(snapshot.val());
-          console.log(dbShots)
           var count = 0;
           dbShots.forEach(shot => {
             var left = self.getOrXfromStdX(shot.x) + 'px';

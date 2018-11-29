@@ -6,6 +6,11 @@
         v-show="isModalVisible"
         @close="closeNGModal()"
       />
+      <colorModal
+        v-show="isColorModalVisible"
+        @close="closeColorModal()"
+        @SubmitColors="submitColors"
+      />
       <nav-component />
     </div>
     <div class="main_Other">
@@ -32,6 +37,7 @@
             <button @click="goToAnalysis" class="btn btn-outline-primary main_button">Go to Analysis Page</button>
             <button @click="goToPdf" class="btn btn-outline-primary main_button">Export Stats to PDF</button>
             <button @click="goToGoals" class="btn btn-outline-primary main_button">View/Edit Goals</button>
+            <button @click="changeColor" class="btn btn-outline-primary main_button">Change Colors</button>
           </div>
         </div>
       </div>
@@ -44,11 +50,13 @@ import firebase from 'firebase';
 import { mapGetters, mapMutations } from 'vuex';
 import NewGame from '../MainPageTP/NewGame.vue';
 import ngmodal from '../NewGameModal.vue';
+import colorModal from '../UploadColors.vue';
 
 export default {
   name: 'Main',
   components: {
     ngmodal,
+    colorModal
   },
   computed: {
     ...mapGetters({
@@ -71,7 +79,8 @@ export default {
       teamName: '',
       teamToken: '',
       isModalVisible: false,
-      darkModeEnabled: true
+      darkModeEnabled: true,
+      isColorModalVisible: false
     }
   },
   mounted () {
@@ -95,7 +104,10 @@ export default {
       SET_PLAYERS: 'mainStore/SET_PLAYERS',
       SET_GAMES_LIST: 'mainStore/SET_GAMES_LIST',
       SET_CURRENT_USER_NAME: 'mainStore/SET_CURRENT_USER_NAME',
-      SET_DARK_MODE: 'mainStore/SET_DARK_MODE'
+      SET_DARK_MODE: 'mainStore/SET_DARK_MODE',
+      SET_MY_COLOR: 'mainStore/SET_MY_COLOR',
+      SET_OPP_COLOR: 'mainStore/SET_OPP_COLOR',
+      SET_SECONDARY_COLOR: 'mainStore/SET_SECONDARY_COLOR'
     }),
     themeChanged(){
       this.SET_DARK_MODE(this.darkModeEnabled)
@@ -113,6 +125,23 @@ export default {
     },
     closeNGModal() {
       this.isModalVisible = false;
+    },
+    changeColor: function() {
+      this.isColorModalVisible = true
+    },
+    closeColorModal: function() {
+      this.isColorModalVisible = false
+    },
+    submitColors: function(data){
+      this.SET_MY_COLOR(data.myColor);
+      this.SET_OPP_COLOR(data.oppColor);
+      this.SET_SECONDARY_COLOR(data.secondaryColor)
+      firebase.database().ref('TeamSportfolios').child(this.selectedTeamId).update({
+        'MyColor': data.myColor,
+        'OppColor': data.oppColor,
+        'MySecondaryColor': data.secondaryColor
+      })
+      this.isColorModalVisible = false;
     },
     addGameClicked: function() {
       //this.showModal('new-game');
@@ -149,7 +178,7 @@ export default {
       this.$router.push('/teamstats')
     },
     viewPlayerInfo() {
-      console.log("View PLAYER INFO");
+      
     },
     getGamesTeam() {
       var email = this.currentUserEmail.replace('.', '');
@@ -175,9 +204,6 @@ export default {
         var obj = snapshot.val();
         if(obj){
           self.SET_PLAYERS(obj);
-          console.log('*** Players: ')
-          console.log(obj)
-          console.log('*********')
         }
       });
     },
@@ -233,8 +259,6 @@ export default {
       })
     },
     addGame(ngData) {
-      console.log('New Game:')
-      console.log(ngData)
       var gameCount = this.gamesList.length + 1;
       var gameCountStr = gameCount + '';
       if(gameCount < 10){

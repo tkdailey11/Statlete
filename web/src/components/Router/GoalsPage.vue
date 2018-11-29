@@ -141,8 +141,6 @@
                             jQuery(id).css('background-color', 'red')
                         }
                     })
-                    console.log('Actuals')
-                    console.log(self.actuals)
                 })
             }
             else {
@@ -182,8 +180,6 @@
                             jQuery(id).css('background-color', 'red')
                         }
                     })
-                    console.log('Actuals')
-                    console.log(self.actuals)
                 })
             }
         }

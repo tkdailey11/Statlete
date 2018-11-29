@@ -51,6 +51,7 @@
     "vue-segmented-control": "^1.0.0",
     "vue-select": "^2.5.1",
     "vue-sticky-js": "0.0.4",
+    "vue-swatches": "^1.0.2",
     "vue-table-component": "^1.9.1",
     "vue-wheel-number": "^0.1.5",
     "vue2-touch-events": "^1.0.0",

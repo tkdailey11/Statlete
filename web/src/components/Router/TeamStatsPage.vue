@@ -116,8 +116,6 @@
               })
             })
           })
-          console.log('PLAYER DATA')
-          console.log(self.playerData)
           self.$forceUpdate();
         })
       }

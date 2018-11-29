@@ -95,6 +95,8 @@ import MyBarChart from '@/components/Charts/MyBarChart';
 Vue.component('bar-chart', MyBarChart);
 import MyLineChart from '@/components/Charts/MyLineChart';
 Vue.component('line-chart', MyLineChart);
+import MyDoughnutChart from '@/components/Charts/MyDoughnutChart';
+Vue.component('doughnut-chart', MyDoughnutChart);
 
 import FootballGame from '@/components/FootballGame';
 Vue.component('football-game', FootballGame);

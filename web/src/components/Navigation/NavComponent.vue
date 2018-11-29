@@ -6,7 +6,8 @@
               @showPlayer="showPlayer"
               @showTeam="showTeam"
               @teamSelected="teamSelected"
-              @ChangeImage ="changeImage">
+              @ChangeImage ="changeImage"
+              :photoURL="userImageURL">
     </side-nav>
     <photoModal
       v-show="isModalVisible"
@@ -20,6 +21,7 @@ import firebase from 'firebase'
 import { mapGetters, mapMutations } from 'vuex';
 import photoModal from '../UploadPhoto.vue';
 
+
 export default {
   name: 'NavComponent',
   computed: {
@@ -30,14 +32,15 @@ export default {
     })
   },
   mounted () {
-      
+      this.downloadImage()
   },
   components: {
     photoModal
   },
   data() {
     return {
-      isModalVisible: false
+      isModalVisible: false,
+      userImageURL: '../../assets/images/testUser.png'
     }
   },
   methods: {
@@ -56,6 +59,15 @@ export default {
         
       })
     },
+    downloadImage: function() {
+      var self = this;
+      var ref = firebase.storage().ref().child('/Users/').child(self.currentUserEmail.replace('.', ''));
+      ref.getDownloadURL().then(function(url) {
+        self.userImageURL = url;
+      }).catch(function(error) {
+        self.userImageURL = '../../assets/images/testUser.png'
+      });
+    },
     openNav: function() {
       setTimeout(function(){
         document.getElementById("mySidenav").style = "width: 250px; position: absolute; z-index: 2;";
@@ -69,6 +81,7 @@ export default {
     },
     closeModal: function() {
       this.isModalVisible = false
+      location.reload();
     },
     teamSelected: function(event) {
       var sport = event.Sport;
@@ -99,28 +112,18 @@ export default {
       this.$router.push('createplayer');
     },
     getGamesTeam() {
-      console.log('GetGamesSideNav')
       var email = this.currentUserEmail.replace('.', '');
       var self = this;
 
       var keysList = [];
       var gamesListRef = firebase.database().ref('/TeamSportfolios/' + self.selectedTeamId + '/Games/');
       if (typeof gamesListRef !== 'undefined') {
-        console.log('Got games')
         gamesListRef.on('value', function(snapshot) {
           var obj = snapshot.val();
           if (obj) {
-            console.log('There were games')
-            console.log(obj)
             self.SET_GAMES_LIST(Object.keys(obj));
           }
-          else{
-            console.log('There weren\'t games')
-          }
         });
-      }
-      else{
-        console.log('Didn\'t get games')
       }
     },
     getPlayers() {

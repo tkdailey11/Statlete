@@ -45,8 +45,6 @@
       },
       trClicked: function(idx) {
         this.$emit('gameSelected', idx);
-        console.log(idx + " clicked");
-        console.log(this.games);
       }
     }
   }

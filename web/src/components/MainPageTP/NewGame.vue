@@ -88,7 +88,7 @@ export default {
         })
     },
     change(value) {
-      console.log('*** ' + value + ' ***')
+      
     },
     onSelect(selectedOption){
       this.numPeriods = selectedOption[0].value;

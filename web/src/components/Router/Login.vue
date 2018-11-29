@@ -48,7 +48,6 @@
         firebase.auth().signInWithPopup(provider).then(
           (user) => {
             var usr = user.user;
-            console.log("USER: " + usr.email);
             this.$router.replace('main');
           },
           function(err) {
