@@ -112,28 +112,18 @@ export default {
       this.$router.push('createplayer');
     },
     getGamesTeam() {
-      console.log('GetGamesSideNav')
       var email = this.currentUserEmail.replace('.', '');
       var self = this;
 
       var keysList = [];
       var gamesListRef = firebase.database().ref('/TeamSportfolios/' + self.selectedTeamId + '/Games/');
       if (typeof gamesListRef !== 'undefined') {
-        console.log('Got games')
         gamesListRef.on('value', function(snapshot) {
           var obj = snapshot.val();
           if (obj) {
-            console.log('There were games')
-            console.log(obj)
             self.SET_GAMES_LIST(Object.keys(obj));
           }
-          else{
-            console.log('There weren\'t games')
-          }
         });
-      }
-      else{
-        console.log('Didn\'t get games')
       }
     },
     getPlayers() {

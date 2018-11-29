@@ -40,7 +40,6 @@ export default {
   },
   methods: {
     submit() {
-      console.log("SUBMIT");
       var data = {
         num: this.pnum,
         name: this.pname

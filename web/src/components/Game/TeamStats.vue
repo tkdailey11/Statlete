@@ -35,12 +35,29 @@
         </template>
       </vue-scrolling-table>
     </div>
+    <div id="teamstats_graphs">
+      <div id="bargraphs">
+        <h3 class="tsH3">My Team Totals</h3>
+        <bar-chart  :TSData="myTeamBarData"
+                    :showGoal="false"
+                    :forceUpdate="chartUpdate"
+                    id="resultBar"
+                    class="statleteChart">
+        </bar-chart>
+      </div>
+      <div id="doughnutCharts">
+        <doughnut-chart class="fg2"></doughnut-chart>
+        <doughnut-chart class="fg3"></doughnut-chart>
+        <doughnut-chart class="ft"></doughnut-chart>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
   import firebase from 'firebase'
   import { mapGetters, mapMutations } from 'vuex';
+import { setTimeout } from 'timers';
 
   export default {
     name: 'TeamStats',
@@ -67,8 +84,10 @@
         syncHeaderScroll: true,
         deadAreaColor: "#DDDDDD",
         maxRows: 100,
-        freezeFirstColumn: true
-
+        freezeFirstColumn: true,
+        myTeamBarLabels: [],
+        myTeamBarData: {},
+        chartUpdate: 0
       }
     },
     computed: {
@@ -88,10 +107,8 @@
     methods: {
       goBack: function() {
         this.$emit('TeamStatsClose');
-        console.log('CLOSE');
       },
       cellClick: function(x) {
-        console.log(x);
       },
       getGameData: function() {
 
@@ -147,23 +164,91 @@
         ]
         gameDataRef = firebase.database().ref('/BasketballGames/' + self.selectedTeamId).child(self.activeGameId).child('Players');
       }
+      Object.keys(self.players).forEach(player => {
+        if(!self.playerData[player]){
+          self.playerData[player] = {}
+        }
+        self.statTypes.forEach(statType => {
+          if(!self.playerData[player][statType]){
+            self.playerData[player][statType] = 0
+          }
+        })
+      });
       gameDataRef.on('value', function(snapshot) {
         self.playerData = snapshot.val();
+        var totals = {}
         Object.keys(self.players).forEach(player => {
           if(!self.playerData[player]){
             self.playerData[player] = {}
           }
           self.statTypes.forEach(statType => {
+            if(!totals[statType]){
+              totals[statType] = 0;
+            }
             if(!self.playerData[player][statType]){
               self.playerData[player][statType] = 0
             }
+            totals[statType] += self.playerData[player][statType]
           })
         });
+        
+        //Update Chart Data
+        if(self.isSoccer){
+          var dataArr = []
+          if(totals['Goals'] !== 'undefined'){
+            dataArr.push(totals['Goals'])
+          }
+          else{
+            dataArr.push(0)
+          }
+          if(totals['Assists'] !== 'undefined'){
+            dataArr.push(totals['Assists'])
+          }
+          else{
+            dataArr.push(0)
+          }
+          if(totals['Shots'] !== 'undefined'){
+            dataArr.push(totals['Shots'])
+          }
+          else{
+            dataArr.push(0)
+          }
+          if(totals['Shots on Goal'] !== 'undefined'){
+            dataArr.push(totals['Shots on Goal'])
+          }
+          else{
+            dataArr.push(0)
+          }
+          if(totals['Fouls'] !== 'undefined'){
+            dataArr.push(totals['Fouls'])
+          }
+          else{
+            dataArr.push(0)
+          }
+          self.myTeamBarLabels = ['Goals', 'Assists', 'Shots', 'Shots on Goal', 'Fouls']
+          self.myTeamBarData = {
+            labels: ['Goals', 'Assists', 'Shots', 'Shots on Goal', 'Fouls'],
+            datasets: [
+              {
+                'backgroundColor': 'rgba(224, 0, 16, 0.75)',
+                'data': dataArr
+              }
+            ]
+          };
+          console.log('--------------------')
+          console.log(self.myTeamBarData)
+          console.log('--------------------')
+          
+        }
       });
 
     },
     mounted() {
-
+      var self = this
+      setTimeout(function(){
+        self.chartUpdate = self.chartUpdate + 1
+      }, 1500)
+      
     }
   }
 </script>
@@ -174,8 +259,24 @@
     width: 1090px;
   }
   .TeamStats {
-    
   }
+
+  #teamstats_graphs {
+    width: 100%;
+    height: 50vh;
+    margin-top: 25px;
+    display: flex;
+    margin-bottom: 50px;
+  }
+  #bargraphs {
+    flex-basis: 40%;
+    margin-right: 5px;
+  }
+  #doughnutCharts {
+    flex-basis: 60%;
+    margin-left: 5px;
+  }
+
   th, td {
     color: black;
   }
@@ -215,5 +316,27 @@
 
   .editStatsBtn:hover {
     cursor: pointer;
+  }
+
+  .fg2{
+    width: 45%;
+    height: 45%;
+    float: left;
+    margin-left: 5%;
+  }
+
+  .fg3{
+    width: 45%;
+    height: 45%;
+    float: left;
+    margin-left: 5%;
+  }
+
+  .ft{
+    width: 45%;
+    height: 45%;
+    float: left;
+    margin: 5%;
+    margin-left: 27.5%;
   }
 </style>

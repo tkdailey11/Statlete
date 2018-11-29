@@ -107,7 +107,6 @@ export default {
               }
 
               var s = self.sportfolios.splice(-1)[0];
-              console.log(s);
               var playerObj = {};
               s.forEach(function(player) {
                 var key = 'p' + player.num;

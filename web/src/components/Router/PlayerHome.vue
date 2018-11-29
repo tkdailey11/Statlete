@@ -101,7 +101,6 @@ export default {
 
         var self = this;
         firebase.database().ref('/TeamSportfolios/' + this.selectedTeamId + '/TeamName').once("value", function(snapshot){
-          console.log(snapshot);
           self.theTeamName = snapshot.val();
         })
     });
@@ -202,7 +201,6 @@ export default {
     },
     viewMyStats() {
       this.viewMode = 'teamStatsView';
-      console.log("VIEW TEAM STATS");
     },
     //<!-- CHANGE THIS -->
     getGames() {

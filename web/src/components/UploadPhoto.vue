@@ -48,15 +48,6 @@ export default {
         close() {
             this.$emit('close');
         },
-        onChange (image) {
-            console.log('New picture selected!')
-            if (image) {
-                console.log('Picture loaded.')
-                this.image = image
-            } else {
-                console.log('FileReader API not supported: use the <form>, Luke!')
-            }
-        },
         toggleShow() {
             this.show = !this.show;
         },
@@ -67,13 +58,10 @@ export default {
          * [param] field
          */
         cropSuccess(imgDataUrl, field){
-            console.log('-------- crop success --------');
             this.imgDataUrl = imgDataUrl;
             var message = this.imgDataUrl;
             var ref = firebase.storage().ref();
-            ref.child('/Users/').child(this.currentUserEmail.replace('.', '')).putString(message, 'data_url').then(function(snapshot) {
-                console.log('Uploaded a data_url string!');
-            });
+            ref.child('/Users/').child(this.currentUserEmail.replace('.', '')).putString(message, 'data_url');
         },
         /**
          * upload success
@@ -82,9 +70,7 @@ export default {
          * [param] field
          */
         cropUploadSuccess(jsonData, field){
-            console.log('-------- upload success --------');
-            console.log(jsonData);
-            console.log('field: ' + field);
+
         },
         /**
          * upload fail
@@ -93,9 +79,7 @@ export default {
          * [param] field
          */
         cropUploadFail(status, field){
-            console.log('-------- upload fail --------');
-            console.log(status);
-            console.log('field: ' + field);
+
         }
     },
     components: {

@@ -86,7 +86,6 @@
       getTeamSportfolios: function() {
         var emailStr = this.currentUserEmail;
         var email = emailStr.replace('.', '');
-        console.log("EMAIL: " + email);
         var self = this
         firebase.database().ref('Users/' + email + '/AdminTeams').on('value', function(snapshot){
           var obj = snapshot.val()
@@ -110,7 +109,6 @@
       getPlayerSportfolios: function() {
         var emailStr = this.currentUserEmail;
         var email = emailStr.replace('.', '');
-        console.log("EMAIL: " + email);
         var self = this
         firebase.database().ref('Users/' + email + '/PlayerTeams').on('value', function(snapshot){
           var obj = snapshot.val()
@@ -123,7 +121,6 @@
         var self = this;
         firebase.database().ref('TeamSportfolios').child(id).once('value', function(snapshot){
           var obj = snapshot.val();
-          console.log(obj)
           var name = obj.TeamName;
           var data = {
             Name: name,
@@ -156,7 +153,6 @@
     },
     mounted() {
       this.$nextTick(() => {
-        console.log("NEXT TICK");
           this.loggedInUser = firebase.auth().currentUser;
           this.currentUserEmail = this.loggedInUser.email;
           this.getTeamSportfolios();

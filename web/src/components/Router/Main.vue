@@ -178,7 +178,7 @@ export default {
       this.$router.push('/teamstats')
     },
     viewPlayerInfo() {
-      console.log("View PLAYER INFO");
+      
     },
     getGamesTeam() {
       var email = this.currentUserEmail.replace('.', '');
@@ -204,9 +204,6 @@ export default {
         var obj = snapshot.val();
         if(obj){
           self.SET_PLAYERS(obj);
-          console.log('*** Players: ')
-          console.log(obj)
-          console.log('*********')
         }
       });
     },
@@ -262,8 +259,6 @@ export default {
       })
     },
     addGame(ngData) {
-      console.log('New Game:')
-      console.log(ngData)
       var gameCount = this.gamesList.length + 1;
       var gameCountStr = gameCount + '';
       if(gameCount < 10){

@@ -153,7 +153,6 @@ export default {
         },
         processTwoStatResponse: function(res, first, second) {
             var arr = Object.values(res.Games);
-            console.log(res);
             var dataStat1 = [];
             var dataStat2 = [];
             arr.forEach(function(item) {
@@ -183,12 +182,10 @@ export default {
         },
         processOneStatResponse: function(res, stat) {
             var arr = Object.values(res.Games);
-            console.log(res);
             var dataStat = [];
             arr.forEach(function(item) {
                 dataStat.push(item.Stat);
             })
-            console.log(dataStat)
             var datasetStat = {
                 label: stat,
                 backgroundColor: 'rgba(224, 0, 16, 0.75)',
@@ -217,7 +214,6 @@ export default {
             else{
                 element = jQuery('#resultLine');
             }
-            console.log(element)
             setTimeout(function() {
                 pdf.fromHTML(element[0], 750, 500);
                 pdf.save('chart-' + rand + '.pdf')

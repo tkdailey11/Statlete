@@ -41,7 +41,6 @@
     },
     methods: {
       trClicked: function(idx) {
-        console.log(idx + " clicked");
         this.$emit('playerSelected', idx);
       }
     }
