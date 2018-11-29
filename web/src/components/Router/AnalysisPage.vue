@@ -9,17 +9,23 @@
         <select id="secondDropdown">
             <option v-for="type in statTypes" :key="'sd-' + type">{{type}}</option>
         </select>
-        <button @click="submitResponse" class="btn btn-outline-primary analysis_button">Ask Statlete</button>
+        <button @click="submitResponse" class="btn btn-outline-primary analysis_button">Get Analysis</button>
         <!--<button @click="saveChart" class="btn btn-outline-primary myButton">Save</button>-->
         <br>
         <br>
         <bar-chart :myLabels="chartLabels"
                     :myDatasets="chartDatasets"
+                    :goalVal="currGoal"
+                    :secondGoalVal="secondaryGoal"
+                    :lineColor="myColor"
+                    :lineSecondaryColor="mySecondaryColor"
                     id="resultBar"
                     class="statleteChart">
         </bar-chart>
         <line-chart :myLabels="chartLabels"
                     :myDatasets="chartDatasets"
+                    :goalVal="currGoal"
+                    :lineColor="myColor"
                     id="resultLine"
                     class="statleteChart">
         </line-chart>
@@ -27,10 +33,9 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex';
+  import { mapGetters, mapMutations } from 'vuex';
   import firebase from 'firebase'
   import jsPDF from 'jspdf'
-import { setTimeout } from 'timers';
 
 export default {
     data() {
@@ -40,7 +45,9 @@ export default {
             secondSelectedStat: '',
             analysisResult: '',
             chartLabels: [],
-            chartDatasets: []
+            chartDatasets: [],
+            currGoal: 0,
+            secondaryGoal: 0,
         }
     },
     computed: {
@@ -48,7 +55,10 @@ export default {
             selectedTeamId: 'mainStore/selectedTeamId',
             selectedTeamSport: 'mainStore/selectedTeamSport',
             soccerStatsArr: 'statStore/soccerStatsArr',
-            basketballStatsArr: 'statStore/basketballStatsArr'
+            basketballStatsArr: 'statStore/basketballStatsArr',
+            goals: 'statStore/goals',
+            mySecondaryColor: 'mainStore/mySecondaryColor',
+            myColor: 'mainStore/myColor'
         }),
         isSoccer: function() {
             return this.selectedTeamSport == 1;
@@ -63,9 +73,17 @@ export default {
         else {
             this.statTypes = this.statTypes.concat(this.basketballStatsArr)
         }
+        var self = this;
+        var ref = firebase.database().ref('TeamSportfolios/').child(self.selectedTeamId).child('Goals');
+        ref.on('value', function(snapshot){
+            self.SS_SET_GOALS(snapshot.val())
+        })
         
     },
     methods: {
+        ...mapMutations({
+            SS_SET_GOALS: 'statStore/SS_SET_GOALS'
+        }),
         submitResponse: function() {
             var firstOption = jQuery('#firstDropdown').find(":selected").text();
             var secondOption = jQuery('#secondDropdown').find(":selected").text();
@@ -82,13 +100,12 @@ export default {
                     else {
                         oneVarReq = firebase.functions().httpsCallable('getSingleStatBasketball');
                     }
-                    
+                    this.currGoal = this.goals[secondOption];
                     var self = this;
                     oneVarReq({
                         Stat: secondOption,
                         Team: this.selectedTeamId
                     }).then(function(result) {
-                        alert(result.data)
                         self.analysisResult = JSON.parse(result.data);
                         self.processOneStatResponse(self.analysisResult, secondOption);
                     })
@@ -102,12 +119,12 @@ export default {
                     else {
                         oneVarReq = firebase.functions().httpsCallable('getSingleStatBasketball');
                     }
+                    this.currGoal = this.goals[firstOption];
                     var self = this;
                     oneVarReq({
                         Stat: firstOption,
                         Team: this.selectedTeamId
                     }).then(function(result) {
-                        alert(result.data)
                         self.analysisResult = JSON.parse(result.data);
                         self.processOneStatResponse(self.analysisResult, firstOption);
                     })
@@ -115,20 +132,20 @@ export default {
             }
             else {
                 var twoVarReq = null;
-                    if(this.isSoccer){
-                        twoVarReq = firebase.functions().httpsCallable('getTwoStatsSoccer');
-                    }
-                    else {
-                        twoVarReq = firebase.functions().httpsCallable('getTwoStatsBasketball');
-                    }
+                if(this.isSoccer){
+                    twoVarReq = firebase.functions().httpsCallable('getTwoStatsSoccer');
+                }
+                else {
+                    twoVarReq = firebase.functions().httpsCallable('getTwoStatsBasketball');
+                }
+                this.currGoal = this.goals[firstOption];
+                this.secondaryGoal = this.goals[secondOption];
                 var self = this;
-                alert(this.selectedTeamId)
                 twoVarReq({
                     Stat1: firstOption,
                     Stat2: secondOption,
                     Team: this.selectedTeamId
                 }).then(function(result) {
-                    alert(result.data)
                     self.analysisResult = JSON.parse(result.data);
                     self.processTwoStatResponse(self.analysisResult, firstOption, secondOption);
                 })
@@ -148,10 +165,16 @@ export default {
                 backgroundColor: 'rgba(224, 0, 16, 0.75)',
                 data: dataStat1
             }
+            if(this.myColor.startsWith('#')){
+                datasetStat1['backgroundColor'] = this.hexToRgbA(this.myColor)
+            }
             var datasetStat2 = {
                 label: second,
                 backgroundColor: 'rgba(247,204,78, 0.9)',
                 data: dataStat2
+            }
+            if(this.mySecondaryColor.startsWith('#')){
+                datasetStat2['backgroundColor'] = this.hexToRgbA(this.mySecondaryColor)
             }
             this.chartLabels = Object.keys(res.Games);
             this.chartDatasets = [datasetStat1, datasetStat2];
@@ -171,6 +194,9 @@ export default {
                 backgroundColor: 'rgba(224, 0, 16, 0.75)',
                 data: dataStat
             }
+            if(this.myColor.startsWith('#')){
+                datasetStat['backgroundColor'] = this.hexToRgbA(this.myColor)
+            }
             this.chartLabels = Object.keys(res.Games);
             this.chartDatasets = [datasetStat];
             jQuery('#resultLine').show();
@@ -183,15 +209,12 @@ export default {
             var firstOption = jQuery('#firstDropdown').find(":selected").text();
             var secondOption = jQuery('#secondDropdown').find(":selected").text();
             if(firstOption != 'none' && secondOption != 'none'){
-                alert('first')
                 element = jQuery('#resultBar');
             }
             else if(firstOption === 'none' && secondOption === 'none'){
-                alert('second')
                 return;
             }
             else{
-                alert('third')
                 element = jQuery('#resultLine');
             }
             console.log(element)
@@ -200,6 +223,18 @@ export default {
                 pdf.save('chart-' + rand + '.pdf')
             }, 6000);
             
+        },
+        hexToRgbA(hex){
+            var c;
+            if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
+                c= hex.substring(1).split('');
+                if(c.length== 3){
+                    c= [c[0], c[0], c[1], c[1], c[2], c[2]];
+                }
+                c= '0x'+c.join('');
+                return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+',0.8)';
+            }
+            throw new Error('Bad Hex');
         }
     }
 }

@@ -11,10 +11,22 @@ const state = {
   },
   players: [],
   playerList: {},
-  gamesList: []
+  gamesList: [],
+  myColor: 'rgba(224, 0, 16, 0.75)',
+  mySecondaryColor: 'rgba(247,204,78, 0.9)',
+  oppColor: 'rgba(247,204,78, 0.9)'
 };
 
 const getters = {
+  mySecondaryColor: state => {
+    return state.mySecondaryColor;
+  },
+  myColor: state => {
+    return state.myColor;
+  },
+  oppColor: state=> {
+    return state.oppColor;
+  },
   currentUserName: state => {
     return state.currentUserName;
   },
@@ -51,6 +63,15 @@ const getters = {
 };
 
 const mutations = {
+  SET_SECONDARY_COLOR: (state, payload) => {
+    state.mySecondaryColor = payload;
+  },
+  SET_MY_COLOR: (state, payload) => {
+    state.myColor = payload;
+  },
+  SET_OPP_COLOR: (state, payload) => {
+    state.oppColor = payload;
+  },
   SET_CURRENT_USER_NAME: (state, payload) => {
     state.currentUserName = payload;
   },

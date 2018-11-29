@@ -7,20 +7,21 @@
             <div class="ng-modal-header" @click="close">
             </div>
             <div class="modal-body">
-                <a class="btn" @click="toggleShow">set avatar</a>
+                <a class="btn" @click="toggleShow">Select New Image</a>
                 <my-upload field="img"
                     @crop-success="cropSuccess"
                     @crop-upload-success="cropUploadSuccess"
                     @crop-upload-fail="cropUploadFail"
                     v-model="show"
-                    :width="300"
-                    :height="300"
-                    url="/upload"
+                    :width="200"
+                    :height="200"
+                    url=""
                     :params="params"
                     :headers="headers"
                     :langType="'en'"
                     img-format="png"></my-upload>
                 <img :src="imgDataUrl">
+                <a class="main_button" @click="close">Submit</a>
             </div>
             <div class="ng-modal-footer" @click="close">
             </div>
@@ -30,11 +31,19 @@
     </div>
   </transition>
 </template>
-<script>
 
+<script>
+import firebase from 'firebase';
+import { mapGetters, mapMutations } from 'vuex';
 import myUpload from 'vue-image-crop-upload';
+
 export default {
     name: 'photoModal',
+    computed: {
+        ...mapGetters({
+            currentUserEmail: 'mainStore/currentUserEmail'
+        })
+    },
     methods: {
         close() {
             this.$emit('close');
@@ -60,6 +69,11 @@ export default {
         cropSuccess(imgDataUrl, field){
             console.log('-------- crop success --------');
             this.imgDataUrl = imgDataUrl;
+            var message = this.imgDataUrl;
+            var ref = firebase.storage().ref();
+            ref.child('/Users/').child(this.currentUserEmail.replace('.', '')).putString(message, 'data_url').then(function(snapshot) {
+                console.log('Uploaded a data_url string!');
+            });
         },
         /**
          * upload success

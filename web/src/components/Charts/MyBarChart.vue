@@ -21,19 +21,72 @@ export default {
                     }
                 ]
             }
-        }
+        },
+        lineColor: {
+            type: String,
+            default: 'red'
+        },
+        lineSecondaryColor: {
+            type: String,
+            default: 'blue'
+        },
+        goalVal: {
+            type: Number,
+            default: 1
+        },
+        secondGoalVal: {
+            type: Number,
+            default: 2
+        },
     },
     mounted () {
         this.renderBarChart();
     },
     methods: {
         renderBarChart: function() {
+            var self = this;
+            this.addPlugin({
+                id: 'horizontalLine',
+                afterDraw: function(chart) {
+                    if (typeof chart.config.options.lineAt != 'undefined' && (self.goalVal > 0 || self.secondGoalVal > 0)) {
+                        var lineAt = chart.config.options.lineAt[0];
+                        var ctxPlugin = chart.chart.ctx;
+                        var xAxe = chart.scales[chart.config.options.scales.xAxes[0].id];
+                        var yAxe = chart.scales[chart.config.options.scales.yAxes[0].id];
+                
+                        if(yAxe.min != 0) return;
+                        
+                        if(self.goalVal > 0){
+                            ctxPlugin.strokeStyle = self.lineColor;
+                            ctxPlugin.beginPath();
+                            lineAt = (lineAt - yAxe.min) * (100 / yAxe.max);
+                            lineAt = (100 - lineAt) / 100 * (yAxe.height) + yAxe.top;
+                            ctxPlugin.moveTo(xAxe.left, lineAt);
+                            ctxPlugin.lineTo(xAxe.right, lineAt);
+                            ctxPlugin.stroke();
+                            chart.ctx.fillText('GOAL', xAxe.right - 35, lineAt - 10);
+                        }
+                        if(self.secondGoalVal > 0){
+                            lineAt = chart.config.options.lineAt[1];
+                            ctxPlugin.strokeStyle = self.lineSecondaryColor;
+                            ctxPlugin.beginPath();
+                            lineAt = (lineAt - yAxe.min) * (100 / yAxe.max);
+                            lineAt = (100 - lineAt) / 100 * (yAxe.height) + yAxe.top;
+                            ctxPlugin.moveTo(xAxe.left, lineAt);
+                            ctxPlugin.lineTo(xAxe.right, lineAt);
+                            ctxPlugin.stroke();
+                            chart.ctx.fillText('GOAL', xAxe.right - 35, lineAt - 10);
+                        }
+                    }
+                }
+            });
             this.renderChart({
                 labels: this.myLabels,
                 datasets: this.myDatasets
             }, {
                 responsive: true, 
                 maintainAspectRatio: false,
+                lineAt: [self.goalVal, self.secondGoalVal],
                 scales: {
                     yAxes: [{
                         ticks: {

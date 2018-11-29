@@ -230,8 +230,9 @@ input:-webkit-autofill:focus {
     color: $light_gray;
 }
 
-.modal-body {
+.modal-body, .color_chooser {
     background-color: $light_gray;
+    border-color: $dark_fgrd;
 }
 
 .sn_footer {

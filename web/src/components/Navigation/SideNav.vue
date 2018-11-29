@@ -3,10 +3,9 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <div class="sn_info">
         <a href="javascript:void(0)" class="closebtn" @click="closeNav">&times;</a>
-        <img src="../../assets/images/testUser.png" @click="changeImage" class="profileImg">
+        <img :src="photoURL" @click="changeImage" class="profileImg">
         <h4 class="snH4">{{currentUserName}}</h4>
       </div>
-
       <!--Team Sportfolios -->
       <div class="sn_ts SBdataEntry">
         <div class="sn_title">
@@ -42,7 +41,6 @@
         </div>
       </div>
       <!--End of Player Sportfolios -->
-
     </div>
 </template>
 
@@ -57,8 +55,21 @@
         loggedInUser: '',
         teamSportfolios: [],
         playerSportfolios: [],
-        isModalVisible: false
+        isModalVisible: false,
+        userImageURL: '../../assets/images/testUser.png'
       }
+    },
+    created() {
+      
+    },
+    props: {
+      photoURL: {
+        type: String,
+        default: '../../assets/images/testUser.png'
+      }
+    },
+    mounted() {
+      
     },
     computed: {
       ...mapGetters({
@@ -281,6 +292,7 @@
   .profileImg {
     max-width: 100%;
     margin-top: 5%;
+    border-radius: 50%;
   }
 
   /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
