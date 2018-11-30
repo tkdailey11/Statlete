@@ -12,7 +12,7 @@
             <tr v-for="stat in goalsDict" :key="stat.Stat.split(' ').join('') + '-key'" class="goalsRow">
                 <td style="font-weight: bold;">{{stat.Stat}}</td>
                 <td style="font-weight: bold;"><vue-numeric-input :align="'center'" v-model="goalsArr[stat.Stat]" :controls="false" @change="goalChanged({'STAT': stat.Stat})"></vue-numeric-input></td>
-                <td v-if="stat.Stat.endsWith('%')" style="font-weight: bold; color: white;"><div :id="stat.Stat.replace('%', '') + '-goalID'" style="border: 10px white solid;">{{actuals[stat.Stat]}}%</div></td>
+                <td v-if="stat.Stat.endsWith('%') || stat.Stat === 'PassComp'" style="font-weight: bold; color: white;"><div :id="stat.Stat.split(' ').join('').replace('%', '') + '-goalID'" style="border: 10px white solid;">{{actuals[stat.Stat]}}%</div></td>
                 <td v-else style="font-weight: bold; color: white;"><div :id="stat.Stat.split(' ').join('') + '-goalID'" style="border: 10px white solid;">{{actuals[stat.Stat]}}</div></td>
             </tr>
         </tbody>
@@ -73,9 +73,9 @@
                 }
                 else{
                     goalsInit = { "Touchdowns": 0,
-                                  "Pass Completion": 0,
-                                  "Passing Yards": 0,
-                                  "Rushing Yards": 0
+                                  "PassComp": 0,
+                                  "PassYds": 0,
+                                  "RushYds": 0
                     }
                 }
                 ref.update({
@@ -195,145 +195,74 @@
             else if(this.isBasketball){
                 ref = firebase.database().ref('BasketballGames/').child(self.selectedTeamId);
                 ref.once('value', function(snapshot){
+                    var fg2a = 0;
+                    var fg2m = 0;
+                    var fg3a = 0;
+                    var fg3m = 0;
+                    var fta = 0;
+                    var ftm = 0;
+                    //sum up values
                     Object.keys(snapshot.val()).forEach(key => {
                         var game = snapshot.val()[key];
                         Object.keys(result).forEach(element => {
                             if(element === 'FG2%'){
                                 if(self.numberOfPeriods == 2){
-                                    var attempted = 0
-                                    attempted += game.MyTotals.Period1['FG2A'].Total
-                                    attempted += game.MyTotals.Period2['FG2A'].Total
-                                    var made = 0
-                                    made += game.MyTotals.Period1['FG2M'].Total
-                                    made += game.MyTotals.Period2['FG2M'].Total
-                                    
-                                    if(attempted == 0){
-                                        if(made == 0){
-                                            result[element] = 0
-                                        }
-                                        else{
-                                            result[element] = 100
-                                        }
-                                    }
-                                    else{
-                                        result[element] = Math.round(1000 * (made/attempted))/10
-                                    }
+                                    fg2a += game.MyTotals.Period1['FG2A'].Total
+                                    fg2a += game.MyTotals.Period2['FG2A'].Total
+
+                                    fg2m += game.MyTotals.Period1['FG2M'].Total
+                                    fg2m += game.MyTotals.Period2['FG2M'].Total
                                 }
                                 else {
-                                    var attempted = 0
-                                    attempted += game.MyTotals.Period1['FG2A'].Total
-                                    attempted += game.MyTotals.Period2['FG2A'].Total
-                                    attempted += game.MyTotals.Period3['FG2A'].Total
-                                    attempted += game.MyTotals.Period4['FG2A'].Total
-                                    var made = 0
-                                    made += game.MyTotals.Period1['FG2M'].Total
-                                    made += game.MyTotals.Period2['FG2M'].Total
-                                    made += game.MyTotals.Period3['FG2M'].Total
-                                    made += game.MyTotals.Period4['FG2M'].Total
-                                    
-                                    if(attempted == 0){
-                                        if(made == 0){
-                                            result[element] = 0
-                                        }
-                                        else{
-                                            result[element] = 100
-                                        }
-                                    }
-                                    else{
-                                        result[element] = Math.round(1000 * (made/attempted))/10
-                                    }
+                                    fg2a += game.MyTotals.Period1['FG2A'].Total
+                                    fg2a += game.MyTotals.Period2['FG2A'].Total
+                                    fg2a += game.MyTotals.Period3['FG2A'].Total
+                                    fg2a += game.MyTotals.Period4['FG2A'].Total
+
+                                    fg2m += game.MyTotals.Period1['FG2M'].Total
+                                    fg2m += game.MyTotals.Period2['FG2M'].Total
+                                    fg2m += game.MyTotals.Period3['FG2M'].Total
+                                    fg2m += game.MyTotals.Period4['FG2M'].Total
                                 }
                             }
                             else if(element === 'FG3%'){
                                 if(self.numberOfPeriods == 2){
-                                    var attempted = 0
-                                    attempted += game.MyTotals.Period1['FG3A'].Total
-                                    attempted += game.MyTotals.Period2['FG3A'].Total
-                                    var made = 0
-                                    made += game.MyTotals.Period1['FG3M'].Total
-                                    made += game.MyTotals.Period2['FG3M'].Total
-                                    
-                                    if(attempted == 0){
-                                        if(made == 0){
-                                            result[element] = 0
-                                        }
-                                        else{
-                                            result[element] = 100
-                                        }
-                                    }
-                                    else{
-                                        result[element] = Math.round(1000 * (made/attempted))/10
-                                    }
+                                    fg3a += game.MyTotals.Period1['FG3A'].Total
+                                    fg3a += game.MyTotals.Period2['FG3A'].Total
+
+                                    fg3m += game.MyTotals.Period1['FG3M'].Total
+                                    fg3m += game.MyTotals.Period2['FG3M'].Total
                                 }
                                 else {
-                                    var attempted = 0
-                                    attempted += game.MyTotals.Period1['FG3A'].Total
-                                    attempted += game.MyTotals.Period2['FG3A'].Total
-                                    attempted += game.MyTotals.Period3['FG3A'].Total
-                                    attempted += game.MyTotals.Period4['FG3A'].Total
-                                    var made = 0
-                                    made += game.MyTotals.Period1['FG3M'].Total
-                                    made += game.MyTotals.Period2['FG3M'].Total
-                                    made += game.MyTotals.Period3['FG3M'].Total
-                                    made += game.MyTotals.Period4['FG3M'].Total
-                                    
-                                    if(attempted == 0){
-                                        if(made == 0){
-                                            result[element] = 0
-                                        }
-                                        else{
-                                            result[element] = 100
-                                        }
-                                    }
-                                    else{
-                                        result[element] = Math.round(1000 * (made/attempted))/10
-                                    }
+                                    fg3a += game.MyTotals.Period1['FG3A'].Total
+                                    fg3a += game.MyTotals.Period2['FG3A'].Total
+                                    fg3a += game.MyTotals.Period3['FG3A'].Total
+                                    fg3a += game.MyTotals.Period4['FG3A'].Total
+
+                                    fg3m += game.MyTotals.Period1['FG3M'].Total
+                                    fg3m += game.MyTotals.Period2['FG3M'].Total
+                                    fg3m += game.MyTotals.Period3['FG3M'].Total
+                                    fg3m += game.MyTotals.Period4['FG3M'].Total
                                 }
                             }
                             else if(element === 'FT%'){
                                 if(self.numberOfPeriods == 2){
-                                    var attempted = 0
-                                    attempted += game.MyTotals.Period1['FTA'].Total
-                                    attempted += game.MyTotals.Period2['FTA'].Total
-                                    var made = 0
-                                    made += game.MyTotals.Period1['FTM'].Total
-                                    made += game.MyTotals.Period2['FTM'].Total
-                                    
-                                    if(attempted == 0){
-                                        if(made == 0){
-                                            result[element] = 0
-                                        }
-                                        else{
-                                            result[element] = 100
-                                        }
-                                    }
-                                    else{
-                                        result[element] = Math.round(1000 * (made/attempted))/10
-                                    }
+                                    fta += game.MyTotals.Period1['FTA'].Total
+                                    fta += game.MyTotals.Period2['FTA'].Total
+
+                                    ftm += game.MyTotals.Period1['FTM'].Total
+                                    ftm += game.MyTotals.Period2['FTM'].Total
                                 }
                                 else {
-                                    var attempted = 0
-                                    attempted += game.MyTotals.Period1['FTA'].Total
-                                    attempted += game.MyTotals.Period2['FTA'].Total
-                                    attempted += game.MyTotals.Period3['FTA'].Total
-                                    attempted += game.MyTotals.Period4['FTA'].Total
-                                    var made = 0
-                                    made += game.MyTotals.Period1['FTM'].Total
-                                    made += game.MyTotals.Period2['FTM'].Total
-                                    made += game.MyTotals.Period3['FTM'].Total
-                                    made += game.MyTotals.Period4['FTM'].Total
-                                    
-                                    if(attempted == 0){
-                                        if(made == 0){
-                                            result[element] = 0
-                                        }
-                                        else{
-                                            result[element] = 100
-                                        }
-                                    }
-                                    else{
-                                        result[element] = Math.round(1000 * (made/attempted))/10
-                                    }
+                                    fta += game.MyTotals.Period1['FTA'].Total
+                                    fta += game.MyTotals.Period2['FTA'].Total
+                                    fta += game.MyTotals.Period3['FTA'].Total
+                                    fta += game.MyTotals.Period4['FTA'].Total
+
+                                    ftm += game.MyTotals.Period1['FTM'].Total
+                                    ftm += game.MyTotals.Period2['FTM'].Total
+                                    ftm += game.MyTotals.Period3['FTM'].Total
+                                    ftm += game.MyTotals.Period4['FTM'].Total
                                 }
                             }
                             else {
@@ -352,10 +281,48 @@
                         })
                     })
                     var gameCount = Object.keys(snapshot.val()).length
-                    
+                    //get avgs
                     Object.keys(result).forEach(element => {
-                        var num = result[element] / gameCount;
-                        result[element] = Math.round(10 * num) / 10
+                        if(element === 'FG2%'){
+                            if(fg2a == 0){
+                                if(fg2m == 0){
+                                    fg2a = 1
+                                }
+                                else{
+                                    fg2a = fg2m
+                                }
+                            }
+                            var num = 100 * (fg2m / fg2a);
+                            result[element] = Math.round(10 * num) / 10
+                        }
+                        else if(element === 'FG3%'){
+                            if(fg3a == 0){
+                                if(fg3m == 0){
+                                    fg3a = 1
+                                }
+                                else{
+                                    fg3a = fg3m
+                                }
+                            }
+                            var num = 100 * (fg3m / fg3a);
+                            result[element] = Math.round(10 * num) / 10
+                        }
+                        else if(element === 'FT%'){
+                            if(fta == 0){
+                                if(ftm == 0){
+                                    fta = 1
+                                }
+                                else{
+                                    fta = ftm
+                                }
+                            }
+                            var num = 100 * (ftm / fta);
+                            result[element] = Math.round(10 * num) / 10
+                        }
+                        else{
+                            var num = result[element] / gameCount;
+                            result[element] = Math.round(10 * num) / 10
+                        }
                     })
                     self.actuals = result
                 }).then(function() {
@@ -379,26 +346,39 @@
             else {
                 ref = firebase.database().ref('FootballGames/').child(self.selectedTeamId);
                 ref.once('value', function(snapshot){
+                    var passComp = 0;
+                    var passAtt = 0;
                     Object.keys(snapshot.val()).forEach(key => {
-                        var game = snapshot.val()[key];
-                        Object.keys(result).forEach(element => {
-                            result[element] += game.MyTotals.Period1[element].Total
-                            result[element] += game.MyTotals.Period2[element].Total
-                            result[element] += game.MyTotals.Period3[element].Total
-                            result[element] += game.MyTotals.Period4[element].Total
-                        })
+                        if(key !== 'AskStatlete'){
+                            var game = snapshot.val()[key];
+
+                            result['Touchdowns'] += game.Totals.Offense.PassTD.Total
+                            result['Touchdowns'] += game.Totals.Offense.RushTD.Total
+                            result['Touchdowns'] += game.Totals.Special.TotalTD
+                            result['Touchdowns'] += game.Totals.Defense.DefTD.Total
+                            
+                            passAtt += game.Totals.Offense.PassAtt.Total
+                            passComp += game.Totals.Offense.PassComp.Total
+                                
+                            result['PassYds'] += game.Totals.Offense.PassYds.Total
+                            result['RushYds'] += game.Totals.Offense.RushYds.Total
+                        }
                     })
-                    var gameCount = Object.keys(snapshot.val()).length
                     
-                    Object.keys(result).forEach(element => {
-                        var num = result[element] / gameCount;
-                        result[element] = parseFloat(num.toFixed(2))
-                    })
-                    var tmp = {}
-                    Object.keys(self.goalsArr).forEach(key => {
-                        tmp[key] = result[key]
-                    })
-                    result = tmp;
+                    var gameCount = Object.keys(snapshot.val()).length
+
+                    var num = result['Touchdowns'] / gameCount;
+                    result['Touchdowns'] = Math.round(10 * num) / 10
+
+                    num = result['PassYds'] / gameCount;
+                    result['PassYds'] = Math.round(10 * num) / 10
+
+                    num = result['RushYds'] / gameCount;
+                    result['RushYds'] = Math.round(10 * num) / 10
+
+                    num = 100 * (passComp / passAtt);
+                    result['PassComp'] = Math.round(10 * num) / 10
+
                     self.actuals = result
                 }).then(function() {
                     Object.keys(result).forEach(element => {
