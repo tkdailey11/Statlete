@@ -1,27 +1,28 @@
 <template>
     <div class="FootballGame">
         <nav-component />
-        <div><span class="item">{{myScore}}</span>
+        <h1 class="mainH1">{{selectedTeamName}}</h1>
+        <!-- <div><span class="item">{{myScore}}</span>
       <span class="period_item">
         1 <input type="radio" value="first" v-model="period">
         2 <input type="radio" value="second" v-model="period">
         3 <input type="radio" value="third" v-model="period">
         4 <input type="radio" value="fourth" v-model="period">
       </span>
-      <span class="item">{{oppScore}}</span></div>
-       <div class="column split left">
+      <span class="item">{{oppScore}}</span></div> -->
+       <div class="column split left footballPosDiv">
             <button v-if="activeButton === 'offense'" id="offenseButton" class="currPage" @click="offenseClicked">Offense</button>
-            <button v-else id="offenseButton"  @click="offenseClicked">Offense</button><br>
+            <button v-else id="offenseButton" class="footballNotCurr" @click="offenseClicked">Offense</button><br>
             <button v-if="activeButton === 'defense'" id="defenseButton" class="currPage" @click="defenseClicked">Defense</button>
-            <button v-else id="defenseButton"  @click="defenseClicked">Defense</button><br>
+            <button v-else id="defenseButton" class="footballNotCurr" @click="defenseClicked">Defense</button><br>
 
             <button v-if="activeButton === 'special'" id="specialButton" class="currPage" @click="specialClicked">Special Teams</button>
-            <button v-else id="specialButton"  @click="specialClicked">Special Teams</button><br>
+            <button v-else id="specialButton" class="footballNotCurr" @click="specialClicked">Special Teams</button><br>
 
-            <button id="statsButton" class="buttonPosession" @click="statsClicked">Team Stats</button><br>
+            <button id="statsButton" class="footballNotCurr" @click="statsClicked">Team Stats</button><br>
 		    </div>
 
-        <div class="split right">
+        <div class="split right footballStatDiv">
             <football-offense v-if="activeButton === 'offense'" @oppScore="incrementOpp"/>
             <football-defense v-if="activeButton === 'defense'"/>
             <football-special v-if="activeButton === 'special'"/>
@@ -31,7 +32,15 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex';
+
 export default {
+  computed: {
+    ...mapGetters({
+      selectedTeamName: 'mainStore/selectedTeamName'
+    })
+  },
+
   data() {
     return {
       activeButton: 'offense',
@@ -102,17 +111,20 @@ export default {
 </script>
 
 <style scoped>
-.currPage {
+.currPage, .footballNotCurr {
   padding: 10px 30px 10px 30px; 
-  background-color: red; 
+  
   text-decoration: none;
-  color: white;
+  
   border-radius: 15px;
   margin: 5px;
-  border: 2px solid black;
+  
   text-decoration: none;
   text-align: center;
 }
+
+
+
 .split {
     height: 100%;
     width: 50%;
@@ -126,12 +138,10 @@ export default {
 
 .left {
     left: 0;
-    background: grey;
 }
 
 .right {
     right: 0;
-    background: grey;
 }
 
 .item {

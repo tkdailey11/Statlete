@@ -2,9 +2,9 @@
     <div class="footballDefense">
             <div id="defenseButtons">
                 <div style="text-align: center"><h3>Defense Stats</h3></div>
-                <div><p class="button" @click="defenseRun">Run</p></div>
-                <div><p class="button" @click="defensePass">Pass</p></div>
-                <div><p class="button" @click="defensePenalty">Penalty</p></div>
+                <div><p class="footballButton" @click="defenseRun">Run</p></div>
+                <div><p class="footballButton" @click="defensePass">Pass</p></div>
+                <div><p class="footballButton" @click="defensePenalty">Penalty</p></div>
             </div>
 
             <div id="getDefPosition">
@@ -19,7 +19,7 @@
                   <td><input type="checkbox" checked v-model="myHalf"></td>
                 </tr>
               </table>
-              <button class="button" @click="startDrive">Start Drive</button>
+              <button class="footballButton" @click="startDrive">Start Drive</button>
             </div>
 
 
@@ -52,7 +52,7 @@
                   </table>
             </div>
 
-                        <button class="button" @click="runConfirm">Confirm</button>
+                        <button class="footballButton" @click="runConfirm">Confirm</button>
                     </div>
 
 
@@ -86,7 +86,7 @@
                   <tr><td>Recovered By: </td><td><vue-numeric-input type="text" v-model="passDefRecoveredBy" maxlength="2" size="2" :min="0" :max="99" :controls="false"></vue-numeric-input></td></tr>
                   </table>
             </div>
-                    <button class="button" @click="passConfirm">Confirm</button>
+                    <button class="footballButton" @click="passConfirm">Confirm</button>
             </div>
 
             <div id="penaltyDefForm">
@@ -103,7 +103,7 @@
                         <tr><td>Down: </td><td>
                         <vue-numeric-input type="text" size="2" maxlength="1" v-model="penaltyDefDown" :min="1" :max="4" :controls="false"></vue-numeric-input></td></tr>
                         </table>
-                        <button class="button" @click="penaltyConfirm">Confirm</button>
+                        <button class="footballButton" @click="penaltyConfirm">Confirm</button>
             </div>
 
             <div id="tracker">
@@ -648,16 +648,16 @@ div button {
   box-sizing: border-box;
   min-width: 250px;
 }
-.button {
+.footballButton {
   text-decoration: none;
   margin: auto;
   width: 60%;
-  border: 2px solid black;
-  background-color: red;
   padding: 10px;
   margin-bottom: 10px;
   text-align: center;
   cursor: default;
+  border-width: 2px;
+  border-style: solid;
 }
 </style>
 

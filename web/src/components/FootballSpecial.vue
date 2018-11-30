@@ -4,12 +4,12 @@
 			<div id="specialButtons">
                 <div style="text-align: center"><h3>Special Teams Stats</h3></div>
 				<table align="center" style="table-layout: fixed; width: 50%; height: 100%; align">                    
-                    <tr><td class="button" @click="punt">Punt</td>
-                    <td class="button" @click="puntReturn">Punt Return</td></tr>
-                    <tr><td class="button" @click="fieldGoal">FG</td>
-                    <td class="button" @click="fieldGoalDef">FG Def</td></tr>
-                    <tr><td class="button" @click="kickoff">Kickoff</td> 
-                    <td class="button" @click="kickoffReturn"> Kick Return</td></tr>
+                    <tr><td class="footballButton" @click="punt">Punt</td>
+                    <td class="footballButton" @click="puntReturn">Punt Return</td></tr>
+                    <tr><td class="footballButton" @click="fieldGoal">FG</td>
+                    <td class="footballButton" @click="fieldGoalDef">FG Def</td></tr>
+                    <tr><td class="footballButton" @click="kickoff">Kickoff</td> 
+                    <td class="footballButton" @click="kickoffReturn"> Kick Return</td></tr>
                 </table>
 		</div>
 
@@ -48,7 +48,7 @@
                   </table>
             </div> -->
 
-            <button class="button" @click="puntConfirm">Confirm</button> 
+            <button class="footballButton" @click="puntConfirm">Confirm</button> 
         </div>
 
         <div id="puntRetForm">
@@ -91,7 +91,7 @@
                     </tr>
                   </table> 
             </div> -->
-            <button class="button" @click="puntRetConfirm">Confirm</button> 
+            <button class="footballButton" @click="puntRetConfirm">Confirm</button> 
         </div>
 
         <div id="fg">
@@ -113,7 +113,7 @@
                     <td>Attempt Made</td> <td><input type="checkbox" v-model="fieldGoalMake"></td>
                 </tr>
                 </table>
-            <button class="button" @click="fgConfirm">Confirm</button> 
+            <button class="footballButton" @click="fgConfirm">Confirm</button> 
         </div>
 
         <div id="fgDef">
@@ -144,7 +144,7 @@
                     </tr>
                   </table>
             </div> -->
-            <button class="button" @click="fgDefConfirm">Confirm</button> 
+            <button class="footballButton" @click="fgDefConfirm">Confirm</button> 
         </div>
 
         <div id="kickOff">
@@ -163,7 +163,7 @@
                     <tr><td>Recovered By: </td><td><vue-numeric-input type="text" v-model="kickoffRecoveredNum" maxlength="2" size="2" :min="0" :max="99" :controls="false"></vue-numeric-input></td></tr>
                   </table>
             </div>
-            <button class="button" @click="kickoffConfirm">Confirm</button>
+            <button class="footballButton" @click="kickoffConfirm">Confirm</button>
         </div>
 
         <div id="kickOffRet">
@@ -182,7 +182,7 @@
                 <tr><td>Touchdown </td><td><input type="checkbox" v-model="kickoffRetTouchdown"></td></tr>
                 </table>
 
-            <button class="button" @click="kickoffReturnConfirm">Confirm</button>
+            <button class="footballButton" @click="kickoffReturnConfirm">Confirm</button>
         </div>
     </div>
 </template>
@@ -680,16 +680,16 @@ div button {
   box-sizing: border-box;
   min-width: 250px;
 }
-.button {
+.footballButton {
   text-decoration: none;
   margin: auto;
   width: 60%;
-  border: 2px solid black;
-  background-color: red;
   padding: 10px;
   margin-bottom: 10px;
   text-align: center;
   cursor: default;
+  border-width: 2px;
+  border-style: solid;
 }
 </style>
         
