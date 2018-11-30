@@ -16,7 +16,7 @@
   "dependencies": {
     "aws-sdk": "^2.218.1",
     "bootstrap": "^4.0.0",
-    "chart.js": "^2.7.2",
+    "chart.js": "^2.7.3",
     "firebase": "^4.6.2",
     "font-awesome": "^4.7.0",
     "grpc": "^1.16.0",

@@ -37,7 +37,7 @@
     </div>
     <div id="teamstats_graphs">
       <div id="bargraphs">
-        <h3 class="tsH3">My Team Totals</h3>
+        <h3 class="tsH3">Totals</h3>
         <bar-chart  :TSData="myTeamBarData"
                     :showGoal="false"
                     :forceUpdate="chartUpdate"
@@ -45,11 +45,23 @@
                     class="statleteChart">
         </bar-chart>
       </div>
-      <div id="doughnutCharts">
-        <doughnut-chart class="fg2"></doughnut-chart>
-        <doughnut-chart class="fg3"></doughnut-chart>
-        <doughnut-chart class="ft"></doughnut-chart>
-      </div>
+      <!-- <div id="doughnutCharts">
+        <doughnut-chart class="fg2"
+                        :label="'FG2'"
+                        :inputDatasets="fg2Datasets"
+                        :updateChart="updatefg2">
+        </doughnut-chart>
+        <doughnut-chart class="fg3"
+                        :label="'FG2'"
+                        :inputDatasets="fg2Datasets"
+                        :updateChart="updatefg2">
+        </doughnut-chart>
+        <doughnut-chart class="ft"
+                        :label="'FG2'"
+                        :inputDatasets="fg2Datasets"
+                        :updateChart="updatefg2">
+        </doughnut-chart>
+      </div> -->
     </div>
   </div>
 </template>
@@ -57,7 +69,6 @@
 <script>
   import firebase from 'firebase'
   import { mapGetters, mapMutations } from 'vuex';
-import { setTimeout } from 'timers';
 
   export default {
     name: 'TeamStats',
@@ -77,6 +88,7 @@ import { setTimeout } from 'timers';
                     "Shots on Goal",
                     "Yellow Cards"],
         playerData: {},
+        totals: {},
         loggedInUser: '',
         currentUserEmail: '',
         scrollVertical: true,
@@ -87,7 +99,12 @@ import { setTimeout } from 'timers';
         freezeFirstColumn: true,
         myTeamBarLabels: [],
         myTeamBarData: {},
-        chartUpdate: 0
+        chartUpdate: 1,
+        fg2Datasets: [{ backgroundColor: ['#2B2A29','#e00010'],
+                        borderColor: '#e00010',
+                        data: [70, 30]
+                      }],
+        updatefg2: 0
       }
     },
     computed: {
@@ -95,7 +112,8 @@ import { setTimeout } from 'timers';
         activeGameId: 'mainStore/activeGameId',
         players: 'mainStore/players',
         selectedTeamId: 'mainStore/selectedTeamId',
-        selectedTeamSport: 'mainStore/selectedTeamSport'
+        selectedTeamSport: 'mainStore/selectedTeamSport',
+        myColor: 'mainStore/myColor'
       }),
       playerNumbers() {
         return Object.keys(this.players);
@@ -130,6 +148,115 @@ import { setTimeout } from 'timers';
       },
       editClicked: function() {
         this.$emit('EditStats')
+      },
+      hexToRgbA(hex){
+        var c;
+        if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
+            c= hex.substring(1).split('');
+            if(c.length== 3){
+                c= [c[0], c[0], c[1], c[1], c[2], c[2]];
+            }
+            c= '0x'+c.join('');
+            return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+',0.8)';
+        }
+        throw new Error('Bad Hex');
+      },
+      createBarGraph(){
+        this.updatefg2 = this.updatefg2 + 1;
+        var self = this;
+        var color = self.myColor;
+        if(color.startsWith('#')){
+          color = self.hexToRgbA(color)
+        }
+        
+        //Update Chart Data
+        if(self.isSoccer){
+          var dataArr = []
+          if(self.totals['Goals'] !== 'undefined'){
+            dataArr.push(self.totals['Goals'])
+          }
+          else{
+            dataArr.push(0)
+          }
+          if(self.totals['Assists'] !== 'undefined'){
+            dataArr.push(self.totals['Assists'])
+          }
+          else{
+            dataArr.push(0)
+          }
+          if(self.totals['Shots'] !== 'undefined'){
+            dataArr.push(self.totals['Shots'])
+          }
+          else{
+            dataArr.push(0)
+          }
+          if(self.totals['Shots on Goal'] !== 'undefined'){
+            dataArr.push(self.totals['Shots on Goal'])
+          }
+          else{
+            dataArr.push(0)
+          }
+          if(self.totals['Fouls'] !== 'undefined'){
+            dataArr.push(self.totals['Fouls'])
+          }
+          else{
+            dataArr.push(0)
+          }
+          
+
+          self.myTeamBarLabels = ['Goals', 'Assists', 'Shots', 'Shots on Goal', 'Fouls']
+          // Vue.set(self.myTeamBarData, 'labels', ['Goals', 'Assists', 'Shots', 'Shots on Goal', 'Fouls']);
+          // Vue.set(self.myTeamBarData, 'datasets', [{'backgroundColor': color,'data': dataArr}]);
+          self.myTeamBarData = {
+            labels: ['Goals', 'Assists', 'Shots', 'Shots on Goal', 'Fouls'],
+            datasets: [{'backgroundColor': color,'data': dataArr}, {'backgroundColor': 'rgba(0,0,255, 0.8)','data': dataArr}]
+          };
+        }
+        else{
+          var dataArr = []
+          if(totals['AST'] !== 'undefined'){
+            dataArr.push(totals['AST'])
+          }
+          else{
+            dataArr.push(0)
+          }
+          if(totals['BLK'] !== 'undefined'){
+            dataArr.push(totals['BLK'])
+          }
+          else{
+            dataArr.push(0)
+          }
+          if(totals['STL'] !== 'undefined'){
+            dataArr.push(totals['STL'])
+          }
+          else{
+            dataArr.push(0)
+          }
+          if(totals['DREB'] !== 'undefined'){
+            dataArr.push(totals['DREB'])
+          }
+          else{
+            dataArr.push(0)
+          }
+          if(totals['OREB'] !== 'undefined'){
+            dataArr.push(totals['OREB'])
+          }
+          else{
+            dataArr.push(0)
+          }
+          
+
+          self.myTeamBarLabels = ['AST', 'BLK', 'STL', 'DREB', 'OREB']
+          self.myTeamBarData = {
+            labels: ['AST', 'BLK', 'STL', 'DREB', 'OREB'],
+            datasets: [
+              {
+                'backgroundColor': color,
+                'data': dataArr
+              }
+            ]
+          };
+        }
       }
     },
     created() {
@@ -137,14 +264,12 @@ import { setTimeout } from 'timers';
       this.currentUserEmail = this.loggedInUser.email;
 
       var self = this;
-      // var ref = firebase.database().ref('/SoccerGames/' + self.selectedTeamId).child(self.activeGameId).child('MyTotals').child('Period1');
-      // ref.once('value', function(snap) {
-      //   self.statTypes = Object.keys(snap.val())
-      // })
       var gameDataRef = null;
+      var totalsRef = null;
 
       if(this.isSoccer){
         gameDataRef = firebase.database().ref('/SoccerGames/' + self.selectedTeamId).child(self.activeGameId).child('Players');
+        totalsRef = firebase.database().ref('/SoccerGames/' + self.selectedTeamId).child(self.activeGameId).child('MyTotals');
       }
       else {
         this.statTypes = [
@@ -163,6 +288,7 @@ import { setTimeout } from 'timers';
           "TOV"
         ]
         gameDataRef = firebase.database().ref('/BasketballGames/' + self.selectedTeamId).child(self.activeGameId).child('Players');
+        totalsRef = firebase.database().ref('/BasketballGames/' + self.selectedTeamId).child(self.activeGameId).child('MyTotals');
       }
       Object.keys(self.players).forEach(player => {
         if(!self.playerData[player]){
@@ -176,79 +302,38 @@ import { setTimeout } from 'timers';
       });
       gameDataRef.on('value', function(snapshot) {
         self.playerData = snapshot.val();
-        var totals = {}
         Object.keys(self.players).forEach(player => {
           if(!self.playerData[player]){
             self.playerData[player] = {}
           }
           self.statTypes.forEach(statType => {
-            if(!totals[statType]){
-              totals[statType] = 0;
-            }
             if(!self.playerData[player][statType]){
               self.playerData[player][statType] = 0
             }
-            totals[statType] += self.playerData[player][statType]
           })
         });
-        
-        //Update Chart Data
-        if(self.isSoccer){
-          var dataArr = []
-          if(totals['Goals'] !== 'undefined'){
-            dataArr.push(totals['Goals'])
-          }
-          else{
-            dataArr.push(0)
-          }
-          if(totals['Assists'] !== 'undefined'){
-            dataArr.push(totals['Assists'])
-          }
-          else{
-            dataArr.push(0)
-          }
-          if(totals['Shots'] !== 'undefined'){
-            dataArr.push(totals['Shots'])
-          }
-          else{
-            dataArr.push(0)
-          }
-          if(totals['Shots on Goal'] !== 'undefined'){
-            dataArr.push(totals['Shots on Goal'])
-          }
-          else{
-            dataArr.push(0)
-          }
-          if(totals['Fouls'] !== 'undefined'){
-            dataArr.push(totals['Fouls'])
-          }
-          else{
-            dataArr.push(0)
-          }
-          self.myTeamBarLabels = ['Goals', 'Assists', 'Shots', 'Shots on Goal', 'Fouls']
-          self.myTeamBarData = {
-            labels: ['Goals', 'Assists', 'Shots', 'Shots on Goal', 'Fouls'],
-            datasets: [
-              {
-                'backgroundColor': 'rgba(224, 0, 16, 0.75)',
-                'data': dataArr
-              }
-            ]
-          };
-          console.log('--------------------')
-          console.log(self.myTeamBarData)
-          console.log('--------------------')
-          
-        }
       });
-
+      totalsRef.on('value', function(snapshot) {
+        Object.keys(snapshot.val()['Period1']).forEach(key => {
+          self.totals[key] = 0
+        })
+        Object.keys(snapshot.val()['Period1']).forEach(key => {
+          self.totals[key] += snapshot.val()['Period1'][key]['Total']
+          self.totals[key] += snapshot.val()['Period2'][key]['Total']
+        })
+      })
+      this.createBarGraph()
     },
     mounted() {
-      var self = this
-      setTimeout(function(){
-        self.chartUpdate = self.chartUpdate + 1
-      }, 1500)
-      
+      this.createBarGraph()
+    },
+    watch: {
+      playerData: {
+        handler(val){
+          this.chartUpdate++;
+        },
+        deep: true
+      }
     }
   }
 </script>
@@ -269,13 +354,10 @@ import { setTimeout } from 'timers';
     margin-bottom: 50px;
   }
   #bargraphs {
-    flex-basis: 40%;
-    margin-right: 5px;
+    flex-basis: 90%;
+    margin-left: 5%;
   }
-  #doughnutCharts {
-    flex-basis: 60%;
-    margin-left: 5px;
-  }
+
 
   th, td {
     color: black;
