@@ -19,12 +19,9 @@
           @close="closeESModal()"
         />
         <div id="EntryView">
-          <!-- <div id="entryDiv">
-            
-            <player-stat-selector id="GV_pss"
-                                  :players="players"
-                                  :height="'height: 500px;'"
-                                  @playerSelected="playerWasSelected"></player-stat-selector>
+          <div id="entryDiv">
+            <!-- Add in selector for player/Opponent -->
+            <!-- Do we want players to keep track of opponent's data? -->
             <sb-data-entry id="sbde1"
                           :height="'height: 500px;'"
                           :isActive="gameLive"
@@ -40,8 +37,9 @@
                           @ShotTypeChanged="shotTypeChanged"
                           @SBSTUndo="undoClicked">
             </sb-shot-type>
-          </div> -->
+          </div>
           <div id="statDiv">
+            <!-- This should probably be different -->
             <team-stats class="GV_statsTable"
                         @EditStats="showESModal" />
           </div>
@@ -86,14 +84,12 @@
         timeRemaining: 0,
         pauseBtnString: 'Start',
         pauseEnabled: true,
-        isModalVisible: false,
-        hasPossesion: 0,
-        possesionTimestamp: '00:00'
+        isModalVisible: false
       }
     },
     mounted() {
-      // jQuery("#statDiv").hide()
-      // jQuery("#fieldDiv").hide()
+      jQuery("#statDiv").hide()
+      jQuery("#fieldDiv").hide()
       var ref = null;
       var self = this;
 
@@ -170,15 +166,6 @@
       }),
       isSoccer: function() {
         return this.selectedTeamSport == 1;
-      },
-      myTeamHasPossesion: function() {
-        return this.hasPossesion == 1
-      },
-      oppHasPossesion: function() {
-        return this.hasPossesion == 2
-      },
-      noPossesion: function() {
-        return (this.hasPossesion != 1 && this.hasPossesion != 2)
       }
     },
     methods: {
@@ -200,40 +187,6 @@
       },
       closeESModal() {
         this.isModalVisible = false;
-      },
-      possesionChanged(data){
-        if(this.noPossesion){
-          this.possesionTimestamp = this.currTime
-          this.hasPossesion = data
-        }
-        else{
-          if(this.myTeamHasPossesion && data != 1){
-            if(data == 2){
-              this.possesionTimestamp = this.currTime
-              this.hasPossesion = 2
-            }
-            else{
-              this.hasPossesion = 0
-            }
-            var time = this.currTime
-            var secondsWithPoss = getTimeDifference(this.possesionTimestamp, time)
-            //TODO: Update DB
-            
-          }
-          else if(this.oppHasPossesion && data != 2){
-            if(data == 1){
-              this.possesionTimestamp = this.currTime
-              this.hasPossesion = 1
-            }
-            else{
-              this.hasPossesion = 0
-            }
-            var time = this.currTime
-            var secondsWithPoss = getTimeDifference(this.possesionTimestamp, time)
-            //TODO: Update DB
-            
-          }
-        }
       },
       pauseClicked(){
         var self = this;
@@ -291,50 +244,50 @@
         return score;
       },
       toggleEntryClicked(){
-        // var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
-        // var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
-        // var statDisplayed = jQuery('#statDiv').css('display') != 'none';
-        // if(entryDisplayed){
-        // }
-        // else if(fieldDisplayed){
-        //   jQuery('#fieldDiv').slideUp(350)
-        //   jQuery('#entryDiv').slideDown(350)
-        // }
-        // else {
-        //   jQuery('#statDiv').slideUp(350)
-        //   jQuery('#entryDiv').slideDown(350)
-        // }
+        var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
+        var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
+        var statDisplayed = jQuery('#statDiv').css('display') != 'none';
+        if(entryDisplayed){
+        }
+        else if(fieldDisplayed){
+          jQuery('#fieldDiv').slideUp(350)
+          jQuery('#entryDiv').slideDown(350)
+        }
+        else {
+          jQuery('#statDiv').slideUp(350)
+          jQuery('#entryDiv').slideDown(350)
+        }
       },
       toggleChartClicked(){
-        // var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
-        // var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
-        // var statDisplayed = jQuery('#statDiv').css('display') != 'none';
-        // var width = jQuery(window).width()
-        // if(fieldDisplayed){
-        // }
-        // else if(entryDisplayed){
-        //   jQuery('#entryDiv').slideUp(350)
-        //   jQuery('#fieldDiv').slideDown(350)
-        // }
-        // else {
-        //   jQuery('#statDiv').slideUp(350)
-        //   jQuery('#fieldDiv').slideDown(350)
-        // }
+        var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
+        var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
+        var statDisplayed = jQuery('#statDiv').css('display') != 'none';
+        var width = jQuery(window).width()
+        if(fieldDisplayed){
+        }
+        else if(entryDisplayed){
+          jQuery('#entryDiv').slideUp(350)
+          jQuery('#fieldDiv').slideDown(350)
+        }
+        else {
+          jQuery('#statDiv').slideUp(350)
+          jQuery('#fieldDiv').slideDown(350)
+        }
       },
       toggleStatClicked(){
-        // var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
-        // var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
-        // var statDisplayed = jQuery('#statDiv').css('display') != 'none';
-        // if(statDisplayed){
-        // }
-        // else if(entryDisplayed){
-        //   jQuery('#entryDiv').slideUp(350)
-        //   jQuery('#statDiv').slideDown(350)
-        // }
-        // else {
-        //   jQuery('#fieldDiv').slideUp(350)
-        //   jQuery('#statDiv').slideDown(350)
-        // }
+        var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
+        var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
+        var statDisplayed = jQuery('#statDiv').css('display') != 'none';
+        if(statDisplayed){
+        }
+        else if(entryDisplayed){
+          jQuery('#entryDiv').slideUp(350)
+          jQuery('#statDiv').slideDown(350)
+        }
+        else {
+          jQuery('#fieldDiv').slideUp(350)
+          jQuery('#statDiv').slideDown(350)
+        }
       },
       clockClicked(event){
         alert('Clock Clicked')

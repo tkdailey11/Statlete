@@ -5,6 +5,10 @@ $transparent_light_gray: rgba(240,240,240, 0.5);
 $dark_bgrd: rgb(43, 42, 41);
 $dark_fgrd: rgb(85, 85, 85);
 
+#myCanvas {
+    background-color: $light_gray;
+}
+
 .TopBanner, .sbdeTD, .ng_box, .ng_box .partition_title, .ng_label, .np_box, 
 .AboutPage, .AnalysisPage, .ap_link, .FLP_H1, .loginH1, .loginPtag, .phH1, 
 .ps_input, .psH1, .psLabel, .psb_td {

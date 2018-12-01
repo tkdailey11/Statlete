@@ -177,6 +177,7 @@ export default {
             }
             this.chartLabels = Object.keys(res.Games);
             this.chartDatasets = [datasetStat1, datasetStat2];
+            console.log(this.chartDatasets)
             jQuery('#resultBar').show();
             jQuery('#resultLine').hide();
         },

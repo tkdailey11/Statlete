@@ -121,6 +121,9 @@
         var self = this;
         firebase.database().ref('TeamSportfolios').child(id).once('value', function(snapshot){
           var obj = snapshot.val();
+          console.log('##### Team #####')
+          console.log(obj)
+          console.log('##########')
           var name = obj.TeamName;
           var data = {
             Name: name,
@@ -136,18 +139,18 @@
         var self = this;
         firebase.database().ref('PlayerSportfolios').child(id).once('value', function(snapshot){
           var obj = snapshot.val();
+          console.log('##### Player #####')
+          console.log(obj)
+          console.log('##########')
           var name = obj.Name;
-          var id = obj.TeamID;
-          var sport = obj.Sport;
-          var token = '';
-          self.SET_SELECTED_TEAM({
-            id,
-            name,
-            token,
-            sport
-          });
+          var data = {
+            Name: name,
+            Id: id,
+            Token: obj.Token,
+            Sport: obj.Sport
+          }
+          self.$emit('playerSelected', data);
           self.closeNav();
-          self.$router.push('/playerhome')
         });
       }
     },

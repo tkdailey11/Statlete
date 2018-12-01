@@ -36,32 +36,7 @@
       </vue-scrolling-table>
     </div>
     <div id="teamstats_graphs">
-      <div id="bargraphs">
-        <h3 class="tsH3">Totals</h3>
-        <bar-chart  :TSData="myTeamBarData"
-                    :showGoal="false"
-                    :forceUpdate="chartUpdate"
-                    id="resultBar"
-                    class="statleteChart">
-        </bar-chart>
-      </div>
-      <!-- <div id="doughnutCharts">
-        <doughnut-chart class="fg2"
-                        :label="'FG2'"
-                        :inputDatasets="fg2Datasets"
-                        :updateChart="updatefg2">
-        </doughnut-chart>
-        <doughnut-chart class="fg3"
-                        :label="'FG2'"
-                        :inputDatasets="fg2Datasets"
-                        :updateChart="updatefg2">
-        </doughnut-chart>
-        <doughnut-chart class="ft"
-                        :label="'FG2'"
-                        :inputDatasets="fg2Datasets"
-                        :updateChart="updatefg2">
-        </doughnut-chart>
-      </div> -->
+      <canvas id="myCanvas" width="1000" height="300"></canvas>
     </div>
   </div>
 </template>
@@ -89,22 +64,18 @@
                     "Yellow Cards"],
         playerData: {},
         totals: {},
+        oppTotals: {},
+        myTotalsArr: [0,0,0,0],
+        oppTotalsArr: [0,0,0,0],
         loggedInUser: '',
         currentUserEmail: '',
         scrollVertical: true,
         scrollHorizontal: true,
         syncHeaderScroll: true,
         deadAreaColor: "#DDDDDD",
-        maxRows: 100,
         freezeFirstColumn: true,
-        myTeamBarLabels: [],
-        myTeamBarData: {},
-        chartUpdate: 1,
-        fg2Datasets: [{ backgroundColor: ['#2B2A29','#e00010'],
-                        borderColor: '#e00010',
-                        data: [70, 30]
-                      }],
-        updatefg2: 0
+        loadChart: false,
+        dataLoaded: false
       }
     },
     computed: {
@@ -113,23 +84,190 @@
         players: 'mainStore/players',
         selectedTeamId: 'mainStore/selectedTeamId',
         selectedTeamSport: 'mainStore/selectedTeamSport',
-        myColor: 'mainStore/myColor'
+        myColor: 'mainStore/myColor',
+        oppColor: 'mainStore/oppColor',
+        numberOfPeriods: 'gameViewStore/numberOfPeriods'
       }),
       playerNumbers() {
         return Object.keys(this.players);
       },
       isSoccer() {
         return this.selectedTeamSport == 1;
+      },
+      isBasketball() {
+        return this.selectedTeamSport == 0;
       }
     },
     methods: {
+      drawTotalsGraph: function(){
+        var myTotals = this.myTotalsArr;
+        var oTotals = this.oppTotalsArr;
+
+        var color = this.myColor;
+        var colorOpp = this.oppColor;
+
+        var labelX = 10
+        var labelY = 90
+        var numX = 100
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+        ctx.clearRect(0,0,canvas.width, canvas.height)
+        ctx.lineWidth = 15;
+
+        if(typeof myTotals[0] === 'undefined' || typeof myTotals[1] === 'undefined' || typeof myTotals[2] === 'undefined' || typeof myTotals[3] === 'undefined'){
+
+          return
+        }
+        if(typeof oTotals[0] === 'undefined' || typeof oTotals[1] === 'undefined' || typeof oTotals[2] === 'undefined' || typeof oTotals[3] === 'undefined'){
+
+          return
+        }
+
+        //Legend
+        ctx.beginPath();
+        ctx.strokeStyle = color;
+        ctx.moveTo(85,15);
+        ctx.lineTo(105,15);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.strokeStyle = colorOpp;
+        ctx.moveTo(85,35);
+        ctx.lineTo(105,35);
+        ctx.stroke();
+        ctx.font = "15px Arial";
+        ctx.fillStyle = "#000000";
+        ctx.fillText("- My Team",110, 20);
+        ctx.fillText("- Opponent",110, 40);
+
+        ctx.font = "20px Arial";
+        ctx.fillStyle = "#000000";
+        ctx.strokeStyle = "#FF0000";
+
+        if(this.isSoccer){
+          ctx.fillText("Goals",labelX, labelY + 0);
+          ctx.fillText("Assists",labelX,labelY + 60);
+          ctx.fillText("Shots",labelX,labelY + 120);
+          ctx.fillText("S.O.G.",labelX,labelY + 180);
+        }
+        else if(this.isBasketball){
+          labelX += 20;
+          ctx.fillText("AST",labelX, labelY + 0);
+          ctx.fillText("REB",labelX,labelY + 60);
+          ctx.fillText("BLK",labelX,labelY + 120);
+          ctx.fillText("STL",labelX,labelY + 180);
+        }
+        else{
+          ctx.font = "18px Arial";
+          ctx.fillText("PassYds",labelX, labelY + 0);
+          ctx.fillText("RushYds",labelX,labelY + 60);
+          ctx.font = "20px Arial";
+          ctx.fillText("TDs",labelX,labelY + 120);
+          ctx.fillText("FGs",labelX,labelY + 180);
+        }
+
+        
+        if(this.isSoccer){
+          for(var i = 0; i < myTotals.length; i++){
+            if(i < 2){
+              ctx.beginPath();
+              ctx.strokeStyle = color;
+              ctx.moveTo(85,75 + (i * 60));
+              ctx.lineTo(85+myTotals[i]*50,75 + (i * 60));
+              ctx.stroke();
+
+              ctx.beginPath();
+              ctx.strokeStyle = colorOpp;
+              ctx.moveTo(85,95 + (i * 60));
+              ctx.lineTo(85+oTotals[i]*50,95 + (i * 60));
+              ctx.stroke();
+            }
+            else{
+              ctx.beginPath();
+              ctx.strokeStyle = color;
+              ctx.moveTo(85,195+((i-2)*60));
+              ctx.lineTo(85+myTotals[i]*25,195+((i-2)*60));
+              ctx.stroke();
+
+              ctx.beginPath();
+              ctx.strokeStyle = colorOpp;
+              ctx.moveTo(85,215+((i-2)*60));
+              ctx.lineTo(85+oTotals[i]*25,215+((i-2)*60));
+              ctx.stroke();
+            }
+          }
+        }
+        else if(this.isBasketball){
+          for(var i = 0; i < myTotals.length; i++){
+            if(i < 2){
+              ctx.beginPath();
+              ctx.strokeStyle = color;
+              ctx.moveTo(85,75 + (i * 60));
+              ctx.lineTo(85+myTotals[i]*25,75 + (i * 60));
+              ctx.stroke();
+
+              ctx.beginPath();
+              ctx.strokeStyle = colorOpp;
+              ctx.moveTo(85,95 + (i * 60));
+              ctx.lineTo(85+oTotals[i]*25,95 + (i * 60));
+              ctx.stroke();
+            }
+            else{
+              ctx.beginPath();
+              ctx.strokeStyle = color;
+              ctx.moveTo(85,195+((i-2)*60));
+              ctx.lineTo(85+myTotals[i]*50,195+((i-2)*60));
+              ctx.stroke();
+
+              ctx.beginPath();
+              ctx.strokeStyle = colorOpp;
+              ctx.moveTo(85,215+((i-2)*60));
+              ctx.lineTo(85+oTotals[i]*50,215+((i-2)*60));
+              ctx.stroke();
+            }
+          }
+        }
+        else {
+          for(var i = 0; i < myTotals.length; i++){
+            if(i < 2){
+              ctx.beginPath();
+              ctx.strokeStyle = color;
+              ctx.moveTo(85,75 + (i * 60));
+              ctx.lineTo(85+myTotals[i],75 + (i * 60));
+              ctx.stroke();
+
+              ctx.beginPath();
+              ctx.strokeStyle = colorOpp;
+              ctx.moveTo(85,95 + (i * 60));
+              ctx.lineTo(85+oTotals[i],95 + (i * 60));
+              ctx.stroke();
+            }
+            else{
+              ctx.beginPath();
+              ctx.strokeStyle = color;
+              ctx.moveTo(85,195+((i-2)*60));
+              ctx.lineTo(85+myTotals[i]*50,195+((i-2)*60));
+              ctx.stroke();
+
+              ctx.beginPath();
+              ctx.strokeStyle = colorOpp;
+              ctx.moveTo(85,215+((i-2)*60));
+              ctx.lineTo(85+oTotals[i]*50,215+((i-2)*60));
+              ctx.stroke();
+            }
+          }
+        }
+
+        ctx.font = "15px Arial";
+        ctx.fillStyle = "#ffffff";
+
+        for(var i = 0; i < myTotals.length; i++){
+          ctx.fillText(myTotals[i],numX,80 + i*60);
+          ctx.fillText(oTotals[i],numX,100 + i*60);
+        }
+      },
       goBack: function() {
         this.$emit('TeamStatsClose');
-      },
-      cellClick: function(x) {
-      },
-      getGameData: function() {
-
       },
       statChanged: function(data) {
         var self = this;
@@ -161,117 +299,84 @@
         }
         throw new Error('Bad Hex');
       },
-      createBarGraph(){
-        this.updatefg2 = this.updatefg2 + 1;
+      getTeamTotals(){
         var self = this;
-        var color = self.myColor;
-        if(color.startsWith('#')){
-          color = self.hexToRgbA(color)
-        }
-        
         //Update Chart Data
         if(self.isSoccer){
-          var dataArr = []
-          if(self.totals['Goals'] !== 'undefined'){
-            dataArr.push(self.totals['Goals'])
-          }
-          else{
-            dataArr.push(0)
-          }
-          if(self.totals['Assists'] !== 'undefined'){
-            dataArr.push(self.totals['Assists'])
-          }
-          else{
-            dataArr.push(0)
-          }
-          if(self.totals['Shots'] !== 'undefined'){
-            dataArr.push(self.totals['Shots'])
-          }
-          else{
-            dataArr.push(0)
-          }
-          if(self.totals['Shots on Goal'] !== 'undefined'){
-            dataArr.push(self.totals['Shots on Goal'])
-          }
-          else{
-            dataArr.push(0)
-          }
-          if(self.totals['Fouls'] !== 'undefined'){
-            dataArr.push(self.totals['Fouls'])
-          }
-          else{
-            dataArr.push(0)
-          }
-          
+          var dataArr = [0,0,0,0]
+          var oppDataArr = [0,0,0,0]
+          dataArr[0] = (typeof self.totals['Goals'] === 'undefined') ? 0 : self.totals['Goals']
+          dataArr[1] = (typeof self.totals['Assists'] === 'undefined') ? 0 : self.totals['Assists']
+          dataArr[2] = (typeof self.totals['Shots'] === 'undefined') ? 0 : self.totals['Shots']
+          dataArr[3] = (typeof self.totals['Shots on Goal'] === 'undefined') ? 0 : self.totals['Shots on Goal']
 
-          self.myTeamBarLabels = ['Goals', 'Assists', 'Shots', 'Shots on Goal', 'Fouls']
-          // Vue.set(self.myTeamBarData, 'labels', ['Goals', 'Assists', 'Shots', 'Shots on Goal', 'Fouls']);
-          // Vue.set(self.myTeamBarData, 'datasets', [{'backgroundColor': color,'data': dataArr}]);
-          self.myTeamBarData = {
-            labels: ['Goals', 'Assists', 'Shots', 'Shots on Goal', 'Fouls'],
-            datasets: [{'backgroundColor': color,'data': dataArr}, {'backgroundColor': 'rgba(0,0,255, 0.8)','data': dataArr}]
-          };
+          oppDataArr[0] = (typeof self.oppTotals['Goals'] === 'undefined') ? 0 : self.oppTotals['Goals']
+          oppDataArr[1] = (typeof self.oppTotals['Assists'] === 'undefined') ? 0 : self.oppTotals['Assists']
+          oppDataArr[2] = (typeof self.oppTotals['Shots'] === 'undefined') ? 0 : self.oppTotals['Shots']
+          oppDataArr[3] = (typeof self.oppTotals['Shots on Goal'] === 'undefined') ? 0 : self.oppTotals['Shots on Goal']
+
+          self.myTotalsArr = dataArr
+          self.oppTotalsArr = oppDataArr          
+        }
+        else if(self.isBasketball){
+          var dataArr = [0,0,0,0]
+          var oppDataArr = [0,0,0,0]
+          var dreb = 0;
+          var oreb = 0;
+          dataArr[0] = (typeof self.totals['AST'] === 'undefined') ? 0 : self.totals['AST']
+          dataArr[2] = (typeof self.totals['BLK'] === 'undefined') ? 0 : self.totals['BLK']
+          dataArr[3] = (typeof self.totals['STL'] === 'undefined') ? 0 : self.totals['STL']
+          dreb = (typeof self.totals['DREB'] === 'undefined') ? 0 : self.totals['DREB']
+          oreb = (typeof self.totals['OREB'] === 'undefined') ? 0 : self.totals['OREB']
+          dataArr[1] = dreb + oreb
+
+          oppDataArr[0] = (typeof self.oppTotals['AST'] === 'undefined') ? 0 : self.oppTotals['AST']
+          oppDataArr[2] = (typeof self.oppTotals['BLK'] === 'undefined') ? 0 : self.oppTotals['BLK']
+          oppDataArr[3] = (typeof self.oppTotals['STL'] === 'undefined') ? 0 : self.oppTotals['STL']
+          dreb = (typeof self.oppTotals['DREB'] === 'undefined') ? 0 : self.oppTotals['DREB']
+          oreb = (typeof self.oppTotals['OREB'] === 'undefined') ? 0 : self.oppTotals['OREB']
+          oppDataArr[1] = dreb + oreb
+
+          self.myTotalsArr = dataArr
+          self.oppTotalsArr = oppDataArr
         }
         else{
-          var dataArr = []
-          if(totals['AST'] !== 'undefined'){
-            dataArr.push(totals['AST'])
-          }
-          else{
-            dataArr.push(0)
-          }
-          if(totals['BLK'] !== 'undefined'){
-            dataArr.push(totals['BLK'])
-          }
-          else{
-            dataArr.push(0)
-          }
-          if(totals['STL'] !== 'undefined'){
-            dataArr.push(totals['STL'])
-          }
-          else{
-            dataArr.push(0)
-          }
-          if(totals['DREB'] !== 'undefined'){
-            dataArr.push(totals['DREB'])
-          }
-          else{
-            dataArr.push(0)
-          }
-          if(totals['OREB'] !== 'undefined'){
-            dataArr.push(totals['OREB'])
-          }
-          else{
-            dataArr.push(0)
-          }
-          
+          //Football
+          var dataArr = {}
+          var oppDataArr = {}
+          dataArr['PassYds'] = (typeof self.totals['PassYds'] === 'undefined') ? 0 : self.totals['PassYds']
+          dataArr['RushYds'] = (typeof self.totals['RushYds'] === 'undefined') ? 0 : self.totals['RushYds']
+          dataArr['Tackles'] = (typeof self.totals['Tackles'] === 'undefined') ? 0 : self.totals['Tackles']
+          dataArr['MadeFG'] = (typeof self.totals['MadeFG'] === 'undefined') ? 0 : self.totals['MadeFG']
+          dataArr['Punts'] = (typeof self.totals['Punts'] === 'undefined') ? 0 : self.totals['Punts']
 
-          self.myTeamBarLabels = ['AST', 'BLK', 'STL', 'DREB', 'OREB']
-          self.myTeamBarData = {
-            labels: ['AST', 'BLK', 'STL', 'DREB', 'OREB'],
-            datasets: [
-              {
-                'backgroundColor': color,
-                'data': dataArr
-              }
-            ]
-          };
+          oppDataArr['PassYds'] = (typeof self.oppTotals['PassYds'] === 'undefined') ? 0 : self.oppTotals['PassYds']
+          oppDataArr['RushYds'] = (typeof self.oppTotals['RushYds'] === 'undefined') ? 0 : self.oppTotals['RushYds']
+          oppDataArr['Tackles'] = (typeof self.oppTotals['Tackles'] === 'undefined') ? 0 : self.oppTotals['Tackles']
+          oppDataArr['MadeFG'] = (typeof self.oppTotals['MadeFG'] === 'undefined') ? 0 : self.oppTotals['MadeFG']
+          oppDataArr['Punts'] = (typeof self.oppTotals['Punts'] === 'undefined') ? 0 : self.oppTotals['Punts']
+        
+          self.myTotals = dataArr
+          self.oppTotals = oppDataArr
+          self.dataLoaded = true;
         }
       }
     },
-    created() {
+    async created() {
       this.loggedInUser = firebase.auth().currentUser;
       this.currentUserEmail = this.loggedInUser.email;
 
       var self = this;
       var gameDataRef = null;
       var totalsRef = null;
+      var oppTotalsRef = null;
 
       if(this.isSoccer){
         gameDataRef = firebase.database().ref('/SoccerGames/' + self.selectedTeamId).child(self.activeGameId).child('Players');
         totalsRef = firebase.database().ref('/SoccerGames/' + self.selectedTeamId).child(self.activeGameId).child('MyTotals');
+        oppTotalsRef = firebase.database().ref('/SoccerGames/' + self.selectedTeamId).child(self.activeGameId).child('OpponentsTotals');
       }
-      else {
+      else if (this.isBasketball){
         this.statTypes = [
           "AST",
           "BLK",
@@ -289,19 +394,31 @@
         ]
         gameDataRef = firebase.database().ref('/BasketballGames/' + self.selectedTeamId).child(self.activeGameId).child('Players');
         totalsRef = firebase.database().ref('/BasketballGames/' + self.selectedTeamId).child(self.activeGameId).child('MyTotals');
+        oppTotalsRef = firebase.database().ref('/BasketballGames/' + self.selectedTeamId).child(self.activeGameId).child('OpponentsTotals');
       }
-      Object.keys(self.players).forEach(player => {
-        if(!self.playerData[player]){
-          self.playerData[player] = {}
-        }
-        self.statTypes.forEach(statType => {
-          if(!self.playerData[player][statType]){
-            self.playerData[player][statType] = 0
-          }
-        })
-      });
-      gameDataRef.on('value', function(snapshot) {
-        self.playerData = snapshot.val();
+      else{
+        //Football
+        this.statTypes = [
+          "AST",
+          "BLK",
+          "DREB",
+          "FG3A",
+          "FG3M",
+          "FG2A",
+          "FG2M",
+          "FTA",
+          "FTM",
+          "OREB",
+          "PF",
+          "STL",
+          "TOV"
+        ]
+        gameDataRef = firebase.database().ref('/BasketballGames/' + self.selectedTeamId).child(self.activeGameId).child('Players');
+        totalsRef = firebase.database().ref('/BasketballGames/' + self.selectedTeamId).child(self.activeGameId).child('MyTotals');
+        oppTotalsRef = firebase.database().ref('/BasketballGames/' + self.selectedTeamId).child(self.activeGameId).child('OpponentsTotals');
+      }
+
+      if(this.isSoccer || this.isBasketball){
         Object.keys(self.players).forEach(player => {
           if(!self.playerData[player]){
             self.playerData[player] = {}
@@ -312,28 +429,55 @@
             }
           })
         });
-      });
-      totalsRef.on('value', function(snapshot) {
-        Object.keys(snapshot.val()['Period1']).forEach(key => {
-          self.totals[key] = 0
-        })
-        Object.keys(snapshot.val()['Period1']).forEach(key => {
-          self.totals[key] += snapshot.val()['Period1'][key]['Total']
-          self.totals[key] += snapshot.val()['Period2'][key]['Total']
-        })
-      })
-      this.createBarGraph()
+        await gameDataRef.on('value', function(snapshot) {
+          self.playerData = snapshot.val();
+          Object.keys(self.players).forEach(player => {
+            if(!self.playerData[player]){
+              self.playerData[player] = {}
+            }
+            self.statTypes.forEach(statType => {
+              if(!self.playerData[player][statType]){
+                self.playerData[player][statType] = 0
+              }
+            })
+          });
+        });
+        await totalsRef.on('value', function(snapshot) {
+          Object.keys(snapshot.val()['Period1']).forEach(key => {
+            self.totals[key] = 0
+          })
+          Object.keys(snapshot.val()['Period1']).forEach(key => {
+            self.totals[key] += snapshot.val()['Period1'][key]['Total']
+            self.totals[key] += snapshot.val()['Period2'][key]['Total']
+            if(self.isBasketball && self.numberOfPeriods == 4){
+              self.totals[key] += snapshot.val()['Period3'][key]['Total']
+              self.totals[key] += snapshot.val()['Period4'][key]['Total']
+            }
+          })
+          self.getTeamTotals()
+          self.drawTotalsGraph()
+        });
+        await oppTotalsRef.on('value', function(snapshot) {
+          Object.keys(snapshot.val()['Period1']).forEach(key => {
+            self.oppTotals[key] = 0
+          })
+          Object.keys(snapshot.val()['Period1']).forEach(key => {
+            self.oppTotals[key] += snapshot.val()['Period1'][key]['Total']
+            self.oppTotals[key] += snapshot.val()['Period2'][key]['Total']
+            if(self.isBasketball && self.numberOfPeriods == 4){
+              self.oppTotals[key] += snapshot.val()['Period3'][key]['Total']
+              self.oppTotals[key] += snapshot.val()['Period4'][key]['Total']
+            }
+          })
+          self.getTeamTotals()
+          self.drawTotalsGraph()
+        });
+      }
+      else{
+        //Football
+      }
     },
     mounted() {
-      this.createBarGraph()
-    },
-    watch: {
-      playerData: {
-        handler(val){
-          this.chartUpdate++;
-        },
-        deep: true
-      }
     }
   }
 </script>
@@ -347,17 +491,9 @@
   }
 
   #teamstats_graphs {
-    width: 100%;
-    height: 50vh;
     margin-top: 25px;
-    display: flex;
     margin-bottom: 50px;
   }
-  #bargraphs {
-    flex-basis: 90%;
-    margin-left: 5%;
-  }
-
 
   th, td {
     color: black;
@@ -420,5 +556,10 @@
     float: left;
     margin: 5%;
     margin-left: 27.5%;
+  }
+
+  #myCanvas{
+    border:2px solid #e00010;
+    border-radius: 25px;
   }
 </style>

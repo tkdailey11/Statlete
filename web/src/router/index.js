@@ -9,6 +9,7 @@ import SignUp from '@/components/Router/SignUp'
 import Main from '@/components/Router/Main'
 import FLP from '@/components/Router/FirstLandingPage'
 import GameView from '@/components/Game/GameView'
+import PlayerGameView from '@/components/Game/PlayerGameView'
 import TeamSettings from '@/components/Router/TeamSettings'
 import TeamStatsPage from '@/components/Router/TeamStatsPage'
 import GoalsPage from '@/components/Router/GoalsPage'
@@ -75,6 +76,14 @@ let router = new Router({
       path: '/gameview',
       name: 'GameView',
       component: GameView,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/playergameview',
+      name: 'PlayerGameView',
+      component: PlayerGameView,
       meta: {
         requiresAuth: true
       }

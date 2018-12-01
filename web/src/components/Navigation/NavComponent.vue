@@ -6,6 +6,7 @@
               @showPlayer="showPlayer"
               @showTeam="showTeam"
               @teamSelected="teamSelected"
+              @playerSelected="playerSelected"
               @ChangeImage ="changeImage"
               :photoURL="userImageURL">
     </side-nav>
@@ -108,6 +109,27 @@ export default {
 
       this.$router.push('/main')
     },
+    playerSelected: function(event) {
+      var sport = event.Sport;
+      if(sport.toString().toLowerCase() === 'soccer'){
+        sport = 1;
+      }
+      else if(sport.toString().toLowerCase() === 'basketball') {
+        sport = 0;
+      }
+      else if(sport.toString().toLowerCase() === 'football') {
+        sport = 2;
+      }
+
+      this.SET_SELECTED_TEAM({
+        id: event.Id,
+        name: event.Name,
+        token: event.Token,
+        sport: sport
+      });
+      this.getGamesPlayer();
+      this.$router.push('/playerhome')
+    },
     showPlayer: function() {
       this.$router.push('createplayer');
     },
@@ -124,6 +146,27 @@ export default {
             self.SET_GAMES_LIST(Object.keys(obj));
           }
         });
+      }
+    },
+    getGamesPlayer(){
+      var email = this.currentUserEmail.replace('.', '');
+      var self = this;
+
+      var keysList = [];
+      var gamesListRef = firebase.database().ref('/PlayerSportfolios/' + self.selectedTeamId + '/Games/');
+      if (typeof gamesListRef !== 'undefined') {
+        gamesListRef.on('value', function(snapshot) {
+          var obj = snapshot.val();
+          if (obj) {
+            self.SET_GAMES_LIST(Object.keys(obj));
+          }
+          else {
+            self.SET_GAMES_LIST([])
+          }
+        });
+      }
+      else{
+        self.SET_GAMES_LIST([])
       }
     },
     getPlayers() {

@@ -44,7 +44,7 @@ export default {
         },
         TSData: {
             type: Object,
-            default: {}
+            default: null
         },
         forceUpdate: {
             type: Number,
