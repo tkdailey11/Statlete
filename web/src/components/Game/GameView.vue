@@ -19,7 +19,7 @@
           @close="closeESModal()"
         />
         <div id="EntryView">
-          <!-- <div id="entryDiv">
+          <div id="entryDiv">
             
             <player-stat-selector id="GV_pss"
                                   :players="players"
@@ -40,7 +40,7 @@
                           @ShotTypeChanged="shotTypeChanged"
                           @SBSTUndo="undoClicked">
             </sb-shot-type>
-          </div> -->
+          </div>
           <div id="statDiv">
             <team-stats class="GV_statsTable"
                         @EditStats="showESModal" />
@@ -92,8 +92,8 @@
       }
     },
     mounted() {
-      // jQuery("#statDiv").hide()
-      // jQuery("#fieldDiv").hide()
+      jQuery("#statDiv").hide()
+      jQuery("#fieldDiv").hide()
       var ref = null;
       var self = this;
 
@@ -291,50 +291,50 @@
         return score;
       },
       toggleEntryClicked(){
-        // var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
-        // var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
-        // var statDisplayed = jQuery('#statDiv').css('display') != 'none';
-        // if(entryDisplayed){
-        // }
-        // else if(fieldDisplayed){
-        //   jQuery('#fieldDiv').slideUp(350)
-        //   jQuery('#entryDiv').slideDown(350)
-        // }
-        // else {
-        //   jQuery('#statDiv').slideUp(350)
-        //   jQuery('#entryDiv').slideDown(350)
-        // }
+        var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
+        var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
+        var statDisplayed = jQuery('#statDiv').css('display') != 'none';
+        if(entryDisplayed){
+        }
+        else if(fieldDisplayed){
+          jQuery('#fieldDiv').slideUp(350)
+          jQuery('#entryDiv').slideDown(350)
+        }
+        else {
+          jQuery('#statDiv').slideUp(350)
+          jQuery('#entryDiv').slideDown(350)
+        }
       },
       toggleChartClicked(){
-        // var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
-        // var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
-        // var statDisplayed = jQuery('#statDiv').css('display') != 'none';
-        // var width = jQuery(window).width()
-        // if(fieldDisplayed){
-        // }
-        // else if(entryDisplayed){
-        //   jQuery('#entryDiv').slideUp(350)
-        //   jQuery('#fieldDiv').slideDown(350)
-        // }
-        // else {
-        //   jQuery('#statDiv').slideUp(350)
-        //   jQuery('#fieldDiv').slideDown(350)
-        // }
+        var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
+        var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
+        var statDisplayed = jQuery('#statDiv').css('display') != 'none';
+        var width = jQuery(window).width()
+        if(fieldDisplayed){
+        }
+        else if(entryDisplayed){
+          jQuery('#entryDiv').slideUp(350)
+          jQuery('#fieldDiv').slideDown(350)
+        }
+        else {
+          jQuery('#statDiv').slideUp(350)
+          jQuery('#fieldDiv').slideDown(350)
+        }
       },
       toggleStatClicked(){
-        // var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
-        // var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
-        // var statDisplayed = jQuery('#statDiv').css('display') != 'none';
-        // if(statDisplayed){
-        // }
-        // else if(entryDisplayed){
-        //   jQuery('#entryDiv').slideUp(350)
-        //   jQuery('#statDiv').slideDown(350)
-        // }
-        // else {
-        //   jQuery('#fieldDiv').slideUp(350)
-        //   jQuery('#statDiv').slideDown(350)
-        // }
+        var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
+        var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
+        var statDisplayed = jQuery('#statDiv').css('display') != 'none';
+        if(statDisplayed){
+        }
+        else if(entryDisplayed){
+          jQuery('#entryDiv').slideUp(350)
+          jQuery('#statDiv').slideDown(350)
+        }
+        else {
+          jQuery('#fieldDiv').slideUp(350)
+          jQuery('#statDiv').slideDown(350)
+        }
       },
       clockClicked(event){
         alert('Clock Clicked')
