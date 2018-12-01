@@ -260,7 +260,7 @@ export default {
       self = this
       var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Defense")
       ref.child("FumbleForced").once("value", function(snapshot){
-        if(self.runDefFumble)
+        if(self.runDefFumble && self.runDefTackle != "")
         {
           var numFumForced = snapshot.val()
           var playerNum = "p" + self.runDefTackle
@@ -280,7 +280,7 @@ export default {
         }        
       }).then(()=>{
         ref.child("FumbleRec").once("value", function(snap){
-        if(self.runDefFumble)
+        if(self.runDefFumble && self.rundefRecoveredBy != "")
         {
           var numFumForced = snap.val()
           var playerNum = "p" + self.rundefRecoveredBy
@@ -300,7 +300,7 @@ export default {
         }  
       }).then(()=>{
         ref.child("Sacks").once("value", function(sack){
-          if(self.runDefSack)
+          if(self.runDefSack && self.runDefTackle != "")
           {
             var numSack = sack.val()
             var playerNum = "p" + self.runDefTackle
@@ -320,21 +320,26 @@ export default {
           }
         }).then(()=>{
           ref.child("Side").once("value", function(side){
-            var rushYds = side.val()
-            var pos = self.pickedRunDefSide
-            var selected = rushYds[pos]
-            if(selected == null)
+            if(self.runDefYards != "")
             {
-              selected = parseInt(self.runDefYards)
+              var rushYds = side.val()
+              var pos = self.pickedRunDefSide
+              var selected = rushYds[pos]
+              if(selected == null)
+              {
+                selected = parseInt(self.runDefYards)
+              }
+              else{
+                selected += parseInt(self.runDefYards)
+              }
+              ref.child("Side").update({
+                [pos]: selected
+              })
             }
-            else{
-              selected += parseInt(self.runDefYards)
-            }
-            ref.child("Side").update({
-              [pos]: selected
-            })
+            
           }).then(()=>{
             ref.child("Tackles").once("value", function(tack){
+              if(self.runDefTackle != "")
               var tackles = tack.val()
               var playerNum = "p" + self.runDefTackle
               var total = tackles.Total + 1
@@ -354,6 +359,7 @@ export default {
               ref.once("value", function(tpt){
                 if(self.runDefTouchdown)
                 {
+                  self.$emit("oppScore", 6)
                   var runTD = tpt.val()
                   var total = parseInt(runTD.TotalRushTD) + parseInt(1)
                   ref.update({
@@ -362,12 +368,37 @@ export default {
                 }
               }).then(()=>{
                 ref.once("value", function(tryds){
-                  var rushYds = tryds.val()
-                  var total = parseInt(rushYds.TotalRushYds) + parseInt(self.runDefYards)
-                  ref.update({
-                    "TotalRushYds": total
-                  })
+                  if(self.runDefYards != "")
+                  {
+                    var rushYds = tryds.val()
+                    var total = parseInt(rushYds.TotalRushYds) + parseInt(self.runDefYards)
+                    ref.update({
+                      "TotalRushYds": total
+                    })
+                  }
                 }).then(()=>{
+                  var ref2 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Offense");
+                  ref2.child("RushTD").once("value", function(rand2){
+                    if(self.runDefTouchdown && self.runDefFumble)
+                    {
+                      self.$emit("incMyScore", 6)
+                      var rushTD = rand2.val()
+                      var playerNum = "p" + self.runPlayerNumber
+                      var total = rushTD.Total + 1
+                      var player = rushTD[playerNum]
+                      if(player == null)
+                      {
+                        player = 1
+                      }
+                      else{
+                        player++
+                      }
+                      ref2.child("RushTD").update({
+                        "Total": total,
+                        [playerNum]: player
+                      })
+                    }
+                  }).then(()=>{
                   this.pickedRunDefSide = "Middle";
                   this.runDefTackle = "";
                   this.runDefYards = "";
@@ -375,6 +406,8 @@ export default {
                   this.runDefSack = "";
                   this.runDefFumble = "";
                   this.rundefRecoveredBy = "";
+                })
+                  
                 })
               })
             })
@@ -435,7 +468,7 @@ export default {
       var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Defense")
       ref.child("FumbleForced").once("value", function(snapshot){
         
-        if(self.passTurnoverDefType == "fumble")
+        if(self.passTurnoverDefType == "fumble" && self.passDefRecoveredBy != "")
         {
           var numFumForced = snapshot.val()
           var playerNum = "p" + self.passDefRecoveredBy
@@ -455,7 +488,7 @@ export default {
         }        
       }).then(()=>{
         ref.child("FumbleRec").once("value", function(snap){
-        if(self.passTurnoverDefType == "fumble")
+        if(self.passTurnoverDefType == "fumble" && self.passDefRecoveredBy != "")
         {
           var numFumForced = snap.val()
           var playerNum = "p" + self.passDefRecoveredBy
@@ -475,7 +508,7 @@ export default {
         }  
       }).then(()=>{
         ref.child("INT").once("value", function(shot){
-        if(self.passTurnoverDefType == "interception")
+        if(self.passTurnoverDefType == "interception" && self.passDefRecoveredBy != "")
         {
           var numInt = shot.val()
           var playerNum = "p" + self.passDefRecoveredBy
@@ -495,7 +528,7 @@ export default {
         }  
       }).then(()=>{
         ref.child("Sacks").once("value", function(sack){
-          if(self.passDefSack)
+          if(self.passDefSack && self.passDefTacklePlayerNum != "")
           {
             var numSack = sack.val()
             var playerNum = "p" + self.passDefTacklePlayerNum
@@ -515,36 +548,42 @@ export default {
           }
         }).then(()=>{
           ref.child("Side").once("value", function(side){
-            var rushYds = side.val()
-            var pos = self.pickedPassDefSide
-            var selected = rushYds[pos]
-            if(selected == null)
+            if(self.passDefYards != "")
             {
-              selected = parseInt(self.passDefYards)
-            }
-            else{
-              selected += parseInt(self.passDefYards)
-            }
-            ref.child("Side").update({
-              [pos]: selected
-            })
-          }).then(()=>{
-            ref.child("Tackles").once("value", function(tack){
-              var tackles = tack.val()
-              var playerNum = "p" + self.passDefTacklePlayerNum
-              var total = tackles.Total + 1
-              var playerStat = tackles[playerNum]
-              if(playerStat == null)
+              var rushYds = side.val()
+              var pos = self.pickedPassDefSide
+              var selected = rushYds[pos]
+              if(selected == null)
               {
-                playerStat = 1
+                selected = parseInt(self.passDefYards)
               }
               else{
-                playerStat++
+                selected += parseInt(self.passDefYards)
               }
-              ref.child("Tackles").update({
-                "Total": total,
-                [playerNum]: playerStat
+              ref.child("Side").update({
+                [pos]: selected
               })
+            }
+          }).then(()=>{
+            ref.child("Tackles").once("value", function(tack){
+              if(self.passDefTacklePlayerNum != "")
+              {
+                  var tackles = tack.val()
+                  var playerNum = "p" + self.passDefTacklePlayerNum
+                  var total = tackles.Total + 1
+                  var playerStat = tackles[playerNum]
+                  if(playerStat == null)
+                  {
+                    playerStat = 1
+                  }
+                  else{
+                    playerStat++
+                  }
+                  ref.child("Tackles").update({
+                    "Total": total,
+                    [playerNum]: playerStat
+                  })
+              }
             }).then(()=>{
               ref.once("value", function(tpt){
                 if(self.passDefTouchdown)
@@ -557,21 +596,47 @@ export default {
                 }
               }).then(()=>{
                 ref.once("value", function(tryds){
-                  var rushYds = tryds.val()
-                  var total = parseInt(rushYds.TotalPassYds) + parseInt(self.passDefYards)
-                  ref.update({
-                    "TotalPassYds": total
-                  })
+                  if(self.passDefYards != "")
+                  {
+                    var rushYds = tryds.val()
+                    var total = parseInt(rushYds.TotalPassYds) + parseInt(self.passDefYards)
+                    ref.update({
+                      "TotalPassYds": total
+                    })
+                  }
                 }).then(()=>{
-                  this.pickedPassDefSide = "Middle";
-                  this.passDefCompletion = '';
-                  this.passDefTacklePlayerNum = '';
-                  this.passDefYards = '';
-                  this.passDefTouchdown = '';
-                  this.passDefSack = '';
-                  this.passDefFumble = '';
-                  this.passDefInterception = '';
-                  this.passDefRecoveredBy = '';
+                  var ref2 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Offense");
+                  ref2.child("RushTD").once("value", function(rand3){
+                    if(self.passDefTouchdown && (self.passTurnoverDefType == "interception" || self.passTurnoverDefType == "fumble") && self.passDefRecoveredBy != "")
+                    {
+                      self.$emit("incMyScore", 6)
+                      var rushTD = rand3.val()
+                      var playerNum = "p" + self.passDefRecoveredBy
+                      var total = rushTD.Total + 1
+                      var player = rushTD[playerNum]
+                      if(player == null)
+                      {
+                        player = 1
+                      }
+                      else{
+                        player++
+                      }
+                      ref2.child("RushTD").update({
+                        "Total": total,
+                        [playerNum]: player
+                      })
+                    }
+                  }).then(()=>{
+                    this.pickedPassDefSide = "Middle";
+                    this.passDefCompletion = '';
+                    this.passDefTacklePlayerNum = '';
+                    this.passDefYards = '';
+                    this.passDefTouchdown = '';
+                    this.passDefSack = '';
+                    this.passDefFumble = '';
+                    this.passDefInterception = '';
+                    this.passDefRecoveredBy = '';
+                })
                 })
               })
             })

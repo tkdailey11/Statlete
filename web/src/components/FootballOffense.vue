@@ -109,11 +109,6 @@
               <p>Yards to go: {{driveYardsLeft}}</p>
               <p>Down {{driveDowns}} </p>
             </div>
-
-            
-
-            
-
 		</div>
 </template>
 
@@ -190,9 +185,6 @@ export default {
       this.driveSpotBall = this.ballLocation;
       this.driveMyHalf = this.myHalf;
 
-      console.log(typeof(this.driveSpotBall));
-      console.log(typeof(this.ballLocation));
-
       //Reset Values
       this.ballLocation = parseInt(25);
       this.myHalf = "true";
@@ -233,7 +225,6 @@ export default {
       this.activeTurnover = "false";
     },
      offenseRunTurnover: function() {
-      //alert("TURNOVER BUTTON CLICKED");
       jQuery("#turnoverRunForm").show();
       this.activeRunTurnover = "true";
     },
@@ -273,7 +264,7 @@ export default {
       {
         this.driveSpotBall -= this.runYards;
       }
-      if(this.driveSpotBall > 50 || this.driveSpotBall < 0 || this.driveDowns > 4)
+      if(this.driveSpotBall > 50 || this.driveSpotBall < 0 || this.driveDowns > 4 || this.runYards == "")
       {
         jQuery("#tracker").hide();
       }
@@ -283,7 +274,8 @@ export default {
       var ref =firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Offense")
       var ref2 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Special");
         ref2.child("TotalTDAllowed").once("value", function(rand2){
-          if(self.runFumble && self.runTouchdown)
+          if(self.runFumble && self.runTouchdown && self.runPlayerNumber != "")
+          {
           self.$emit("oppScore", 6)
           var numS = rand2.val()
           if(numS == null)
@@ -297,61 +289,74 @@ export default {
           ref2.update({
             ["TotalTDAllowed"]: numS
           })
+          }
         }).then(()=>{
         ref.child("RushCarries").once("value", function(snapshot){
-        var numCarries = snapshot.val()
-        var playerNum = "p" + self.runPlayerNumber
-        var total = numCarries.Total + 1
-        var player = numCarries[playerNum]
-        if(player == null)
-        {
-          player = 1
-        }
-        else{
-          player++
-        }
-        ref.child("RushCarries").update({
-          "Total": total,
-          [playerNum]: player
-        })
-      }).then(()=>{
-        ref.child("RushYds").once("value", function(shot){
-          var rushYds = shot.val()
-          var playerNum = "p" + self.runPlayerNumber
-          var total = rushYds.Total + parseInt(self.runYards)
-          var player = rushYds[playerNum]
-          if(player == null)
+          if(self.runPlayerNumber != "" && self.runYards != "")
           {
-            player = parseInt(self.runYards)
-          }
-          else{
-            player += parseInt(self.runYards)
-          }
-          ref.child("RushYds").update({
-            "Total": total,
-            [playerNum]: player
-          })
-        }).then(()=>{
-          ref.child("RushYds").child("Side").once("value", function(side){
-            var rushYds = side.val()
-            var pos = self.pickedRunSide
-            var selected = rushYds[pos]
-            if(selected == null)
+            var numCarries = snapshot.val()
+            var playerNum = "p" + self.runPlayerNumber
+            var total = numCarries.Total + 1
+            var player = numCarries[playerNum]
+            if(player == null)
             {
-              selected = parseInt(self.runYards)
+              player = 1
             }
             else{
-              selected += parseInt(self.runYards)
+              player++
             }
-            ref.child("RushYds").child("Side").update({
-              [pos]: selected
+            ref.child("RushCarries").update({
+              "Total": total,
+              [playerNum]: player
             })
-          })
+          }
+        
+      }).then(()=>{
+        ref.child("RushYds").once("value", function(shot){
+          if(self.runPlayerNumber != "" && self.runYards != "")
+          {
+            var rushYds = shot.val()
+            var playerNum = "p" + self.runPlayerNumber
+            var total = rushYds.Total + parseInt(self.runYards)
+            var player = rushYds[playerNum]
+            if(player == null)
+            {
+              player = parseInt(self.runYards)
+            }
+            else{
+              player += parseInt(self.runYards)
+            }
+            ref.child("RushYds").update({
+              "Total": total,
+              [playerNum]: player
+            })
+          }
+          
         }).then(()=>{
+          ref.child("RushYds").child("Side").once("value", function(side){
+            if(self.runPlayerNumber != "" && self.runYards != "")
+            {
+              var rushYds = side.val()
+              var pos = self.pickedRunSide
+              var selected = rushYds[pos]
+              if(selected == null)
+              {
+                selected = parseInt(self.runYards)
+              }
+              else{
+                selected += parseInt(self.runYards)
+              }
+              ref.child("RushYds").child("Side").update({
+                [pos]: selected
+              })
+            }
+            
+          }).then(()=>{
           
             ref.child("RushTD").once("value", function(points){ 
-            if(self.runTouchdown)
-            {           
+            if(self.runTouchdown && self.runPlayerNumber != "" && self.runYards != "")
+            {
+              self.$emit("incMyScore", 6) 
               var rushTD = points.val()
               var playerNum = "p" + self.runPlayerNumber
               var total = rushTD.Total + 1
@@ -367,10 +372,9 @@ export default {
                 "Total": total,
                 [playerNum]: player
               })
-            }}).then(()=> {
-            
+            }}).then(()=> {            
               ref.child("Fumble").once("value", function(fumbles){
-                if(self.runFumble)
+                if(self.runFumble && self.runPlayerNumber != "")
             {
                 var fum = fumbles.val()
                 var playerNum = "p" + self.runPlayerNumber
@@ -395,7 +399,7 @@ export default {
           self.runFumble = "";
         })    })    
           })        
-          })
+          })})
       })
 
 
@@ -435,7 +439,7 @@ export default {
           this.driveSpotBall -= this.passYards;
         }
       }
-      if(this.driveSpotBall > 50 || this.driveSpotBall < 0 || this.driveDowns > 4)
+      if(this.driveSpotBall > 50 || this.driveSpotBall < 0 || this.driveDowns > 4 || this.runYards == "")
       {
         jQuery("#tracker").hide();
       }
@@ -444,24 +448,27 @@ export default {
       var self = this
       var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Offense")
       ref.child("PassAtt").once("value", function(snapshot){
-        var numAtt = snapshot.val()
-        var playerNum = "p" + self.passPlayerNumber
-        var total = numAtt.Total + 1
-        var playerStat = numAtt[playerNum]
-        if(playerStat == null)
+        if(self.passPlayerNumber != "")
         {
-          playerStat = 1
-        }
-        else{
-          playerStat++
-        }
-        ref.child("PassAtt").update({
-          "Total": total,
-          [playerNum]: playerStat
+          var numAtt = snapshot.val()
+          var playerNum = "p" + self.passPlayerNumber
+          var total = numAtt.Total + 1
+          var playerStat = numAtt[playerNum]
+          if(playerStat == null)
+          {
+            playerStat = 1
+          }
+          else{
+            playerStat++
+          }
+          ref.child("PassAtt").update({
+            "Total": total,
+            [playerNum]: playerStat
         })
+        }
       }).then(()=>{
           ref.child("RushYds").once("value", function(qbsack){
-            if(self.passSack){
+            if(self.passSack && self.passPlayerNumber != "" && self.passYards != ""){
               var sackInfo = qbsack.val()
               var playerNum = "p" + self.passPlayerNumber
               var playerStat = sackInfo[playerNum]
@@ -479,7 +486,7 @@ export default {
             }
           }).then(()=>{
               ref.child("RushYds").child("Side").once("value", function(rand){
-              if(self.passSack)
+              if(self.passSack && self.passYards != "")
               {
                 var numYds = rand.val()
                 var s = self.pickedPassSide
@@ -500,6 +507,7 @@ export default {
               var ref2 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Special");
               ref2.child("TotalTDAllowed").once("value", function(rand2){
                 if(self.passTurnover != "" && self.passTouchdown)
+                self.$emit("oppScore", 6)
                 var numS = rand2.val()
                 if(numS == null)
                 {
@@ -514,7 +522,7 @@ export default {
                 })
               }).then(()=>{
         ref.child("PassComp").once("value", function(snap){
-          if(self.passCompletion)
+          if(self.passCompletion && self.passPlayerNumber != "")
           {
             var numComp = snap.val()
             var playerNum = "p" + self.passPlayerNumber
@@ -534,8 +542,9 @@ export default {
           }
         }).then(()=>{
           ref.child("PassTD").once("value", function(shot){
-            if(self.passTouchdown && self.passCompletion)
+            if(self.passTouchdown && self.passCompletion && self.passPlayerNumber != "")
             {
+              self.$emit("incMyScore", 6)
               var numPassTD = shot.val()
               var playerNum = "p" + self.passPlayerNumber
               var total = numPassTD.Total + 1
@@ -554,7 +563,7 @@ export default {
             }
           }).then(()=> {
             ref.child("PassYds").once("value", function(py){
-              if(self.passCompletion){
+              if(self.passCompletion && self.passPlayerNumber != "" && self.passYards != ""){
               var numYds = py.val()
               var playerNum = "p" + self.passPlayerNumber
               var total = parseInt(numYds.Total) + parseInt(self.passYards)
@@ -575,7 +584,7 @@ export default {
               ref.child("PassYds").child("Side").once("value", function(ps){
                 if(!self.passSack)
                 {
-                if(self.passCompletion){
+                if(self.passCompletion && self.passYards != ""){
                 var numYds = ps.val()
                 var s = self.pickedPassSide
                 var selected = numYds[s]
@@ -594,7 +603,7 @@ export default {
                 }            
               }).then(()=>{
                 ref.child("RecYds").once("value", function(rys){
-                  if(self.passCompletion){
+                  if(self.passCompletion && self.passCatchPlayerNum != "" && self.passYards != ""){
                   var numTD = rys.val()
                   var playerNum = "p" + self.passCatchPlayerNum
                   var total = parseInt(numTD.Total) + parseInt(self.passYards)
@@ -613,7 +622,7 @@ export default {
                   }
                 }).then(()=>{
                   ref.child("RecTD").once("value", function(rtd){
-                  if(self.passCompletion && self.passTouchdown){
+                  if(self.passCompletion && self.passTouchdown && self.passCatchPlayerNum != ""){
                   var numTD = rtd.val()
                   var playerNum = "p" + self.passCatchPlayerNum
                   var total = parseInt(numTD.Total) + 1
@@ -632,7 +641,7 @@ export default {
                   }
                 }).then(()=>{
                   ref.child("Receptions").once("value", function(rec){
-                    if(self.passCompletion)
+                    if(self.passCompletion && self.passCatchPlayerNum != "")
                     {
                       var numRec = rec.val()
                       var playerNum = "p" + self.passCatchPlayerNum
@@ -652,7 +661,7 @@ export default {
                     }
                   }).then(()=>{
                     ref.child("Fumble").once("value", function(fum){
-                      if(self.passTurnover == "fumble")
+                      if(self.passTurnover == "fumble" && self.passTurnoverBy != "")
                       {
                         var numFum = fum.val()
                         var playerNum = "p" + self.passTurnoverBy
@@ -672,7 +681,7 @@ export default {
                       }
                     }).then(()=>{
                       ref.child("INT").once("value", function(int){
-                      if(self.passTurnover == "interception")
+                      if(self.passTurnover == "interception" && self.passTurnoverBy != "")
                       {
                         var numFum = int.val()
                         var playerNum = "p" + self.passTurnoverBy
