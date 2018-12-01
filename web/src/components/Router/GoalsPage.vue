@@ -401,7 +401,7 @@
 <style scoped>
   #GoalsPage {
     width: 100vw;
-    height: 100vh;
+    height: 100%;
   }
   .goalsTable {
       width: 60vw;
@@ -411,6 +411,7 @@
       margin-right: 20vw;
       color: red;
       background-color: white;
+      margin-bottom: 10vh;
   }
 
   .goalsH1 {

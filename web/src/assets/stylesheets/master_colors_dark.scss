@@ -35,10 +35,25 @@ $dark_fgrd: rgb(85, 85, 85);
     border-color: $bright_red;
 }
 
+.playsTableContainer {
+    border-color: $bright_red;
+    color: $light_gray;
+    background-color: $dark_fgrd;
+}
+
+.periodRow {
+    background-color: $light_gray;
+    color: $bright_red;
+}
+
+.myTeamPlay, .oppPlay {
+    border-color: $light_gray;
+}
+
 .pss_plFooter:hover, .np_github-btn:hover, .glFooter:hover, .glTR:hover .glTD,
 .plTR:hover td, .plFooter:hover, .analysis_button:hover, .login_button:hover, 
 .main_button:hover, .ps_button:hover, .ts_button:hover, .psb_button:hover, .ng_button:hover,
-.sn_tr:hover td, .clockPause:hover, #statMode:hover, .sn_tr:hover td, .sn_footer:hover, 
+.sn_tr:hover td, .clockPause:hover, #statMode:hover, #playMode:hover, .sn_tr:hover td, .sn_footer:hover, 
 #chartMode:hover, #entryMode:hover {
     background-color: $transparent_red;
 }
@@ -230,6 +245,12 @@ input:-webkit-autofill:focus {
 }
 
 #statMode {
+    background-color: $dark_fgrd;
+    color: $light_gray;
+    border-color: $bright_red;
+}
+
+#playMode {
     background-color: $dark_fgrd;
     color: $light_gray;
 }

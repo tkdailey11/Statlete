@@ -45,6 +45,25 @@
             <team-stats class="GV_statsTable"
                         @EditStats="showESModal" />
           </div>
+          <div id="playDiv">
+            <div class="playsTableContainer">
+              <table class="playsTable">
+                <thead class="playsHeader">
+                  <th>Team</th>
+                  <th colspan="2">Play</th>
+                </thead>
+                <tbody v-for="period in Object.keys(plays)" :key="period + '-key'">
+                  <tr class="periodRow"><td colspan="3">{{period}}</td></tr>
+                  <tr v-for="playKey in Object.keys(plays[period])" :key="period + '-' + playKey">
+                    <td class="myTeamPlay" v-if="plays[period][playKey].split(' | ')[0] == 0"></td>
+                    <td class="oppPlay" v-else></td>
+                    <td class="tdSeparator"></td>
+                    <td class="playDescr">{{plays[period][playKey].split(' | ')[1]}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
         <div class="toggleContainer">
           <div id="toggleViewDiv">
@@ -56,6 +75,9 @@
             </div>
             <div id="statMode" @click="toggleStatClicked()">
               Stats
+            </div>
+            <div id="playMode" @click="togglePlayClicked()">
+              Plays
             </div>
           </div>
         </div>
@@ -94,10 +116,12 @@
     mounted() {
       jQuery("#statDiv").hide()
       jQuery("#fieldDiv").hide()
+      jQuery("#playDiv").hide()
       var ref = null;
       var self = this;
 
       if(this.isSoccer){
+        self.GV_SET_NUM_PERIODS(2);
         ref = firebase.database().ref('/SoccerGames/').child(this.selectedTeamId).child(this.activeGameId);
         ref.child('HalfLength').once('value', function(snap){
           self.GV_SET_PERIOD_LENGTH(snap.val());
@@ -108,6 +132,9 @@
         ref.child('NumberOfPeriods').once('value', function(snap){
           if(snap.val()){
             self.GV_SET_NUM_PERIODS(snap.val());
+          }
+          else {
+            self.GV_SET_NUM_PERIODS(4);
           }
         })
         ref.child('PeriodLength').once('value', function(snap){
@@ -120,6 +147,12 @@
           self.currTime = self.secondsToMinutesString(snap.val())
         })
       }
+
+      ref.child('Plays').on('value', function(snapshot){
+        if(snapshot.val()){
+          self.GV_SET_PLAYS(snapshot.val())
+        }
+      })
       
       ref.child('Live').on('value', function(snap){
         self.gameLive = snap.val()
@@ -166,7 +199,10 @@
         currGameTime: 'gameViewStore/currGameTime',
         periodLength: 'gameViewStore/periodLength',
         numberOfPeriods: 'gameViewStore/numberOfPeriods',
-        timeRemainingInPeriod: 'gameViewStore/timeRemainingInPeriod'
+        timeRemainingInPeriod: 'gameViewStore/timeRemainingInPeriod',
+        plays: 'gameViewStore/plays',
+        myColor: 'mainStore/myColor',
+        oppColor: 'mainStore/oppColor'
       }),
       isSoccer: function() {
         return this.selectedTeamSport == 1;
@@ -193,8 +229,22 @@
         GV_SET_CURR_GAME_TIME: 'gameViewStore/GV_SET_CURR_GAME_TIME',
         GV_SET_PERIOD_LENGTH: 'gameViewStore/GV_SET_PERIOD_LENGTH',
         GV_SET_NUM_PERIODS: 'gameViewStore/GV_SET_NUM_PERIODS',
-        GV_SET_TIME_REMAINING: 'gameViewStore/GV_SET_TIME_REMAINING'
+        GV_SET_TIME_REMAINING: 'gameViewStore/GV_SET_TIME_REMAINING',
+        GV_APPEND_PLAY: 'gameViewStore/GV_APPEND_PLAY',
+        GV_SET_PLAYS: 'gameViewStore/GV_SET_PLAYS'
       }),
+      setMyTeamColor(){
+        var self = this;
+        jQuery('.myTeamPlay').each(function(){
+          jQuery(this).css('background-color', self.myColor)
+        })
+      },
+      setOppColor(){
+        var self = this;
+        jQuery('.oppPlay').each(function(){
+          jQuery(this).css('background-color', self.oppColor)
+        })
+      },
       showESModal() {
         this.isModalVisible = true;
       },
@@ -294,14 +344,20 @@
         var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
         var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
         var statDisplayed = jQuery('#statDiv').css('display') != 'none';
+        var playDisplayed = jQuery('#playDiv').css('display') != 'none';
+
         if(entryDisplayed){
         }
         else if(fieldDisplayed){
           jQuery('#fieldDiv').slideUp(350)
           jQuery('#entryDiv').slideDown(350)
         }
-        else {
+        else if(statDisplayed) {
           jQuery('#statDiv').slideUp(350)
+          jQuery('#entryDiv').slideDown(350)
+        }
+        else {
+          jQuery('#playDiv').slideUp(350)
           jQuery('#entryDiv').slideDown(350)
         }
       },
@@ -309,15 +365,20 @@
         var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
         var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
         var statDisplayed = jQuery('#statDiv').css('display') != 'none';
-        var width = jQuery(window).width()
+        var playDisplayed = jQuery('#playDiv').css('display') != 'none';
+
         if(fieldDisplayed){
         }
         else if(entryDisplayed){
           jQuery('#entryDiv').slideUp(350)
           jQuery('#fieldDiv').slideDown(350)
         }
-        else {
+        else if(statDisplayed) {
           jQuery('#statDiv').slideUp(350)
+          jQuery('#fieldDiv').slideDown(350)
+        }
+        else {
+          jQuery('#playDiv').slideUp(350)
           jQuery('#fieldDiv').slideDown(350)
         }
       },
@@ -325,15 +386,42 @@
         var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
         var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
         var statDisplayed = jQuery('#statDiv').css('display') != 'none';
+        var playDisplayed = jQuery('#playDiv').css('display') != 'none';
+
         if(statDisplayed){
         }
         else if(entryDisplayed){
           jQuery('#entryDiv').slideUp(350)
           jQuery('#statDiv').slideDown(350)
         }
-        else {
+        else if(fieldDisplayed){
           jQuery('#fieldDiv').slideUp(350)
           jQuery('#statDiv').slideDown(350)
+        }
+        else {
+          jQuery('#playDiv').slideUp(350)
+          jQuery('#statDiv').slideDown(350)
+        }
+      },
+      togglePlayClicked(){
+        var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
+        var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
+        var statDisplayed = jQuery('#statDiv').css('display') != 'none';
+        var playDisplayed = jQuery('#playDiv').css('display') != 'none';
+
+        if(playDisplayed){
+        }
+        else if(entryDisplayed){
+          jQuery('#entryDiv').slideUp(350)
+          jQuery('#playDiv').slideDown(350)
+        }
+        else if(fieldDisplayed){
+          jQuery('#fieldDiv').slideUp(350)
+          jQuery('#playDiv').slideDown(350)
+        }
+        else {
+          jQuery('#statDiv').slideUp(350)
+          jQuery('#playDiv').slideDown(350)
         }
       },
       clockClicked(event){
@@ -677,6 +765,15 @@
 
         return min + ':' + sec;
       }
+    },
+    watch: {
+      plays: {
+        handler: function() {
+          this.setMyTeamColor()
+          this.setOppColor()
+        },
+        deep: true
+      }
     }
   }
 </script>
@@ -778,15 +875,15 @@
   }
 
   #entryMode {
-    height: 147px; 
-    line-height: 147px;
+    height: 100px; 
+    line-height: 100px;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
   }
 
   #chartMode {
-    height: 200px; 
-    line-height: 200px;
+    height: 100px; 
+    line-height: 100px;
     border-top-style: solid;
     border-top-width: 3px;
     border-bottom-style: solid;
@@ -794,9 +891,58 @@
   }
 
   #statMode {
-    height: 147px; 
-    line-height: 147px;
+    height: 100px; 
+    line-height: 100px;
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+  }
+
+  #playMode {
+    height: 100px; 
+    line-height: 100px;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
+  }
+
+  .playsTable {
+    width: 100%;
+  }
+
+  .playsTableContainer {
+    border-width: 4px;
+    border-style: solid;
+    margin: 5vw;
+    height: 60vh;
+    width: 50vw;
+    overflow-y: scroll;
+    margin-left: 20vw;
+    border-radius: 20px;
+  }
+
+  .myTeamPlay {
+    border-width: 2px;
+    border-style: solid;
+    width: 50px;
+  }
+
+  .oppPlay {
+    border-width: 2px;
+    border-style: solid;
+    width: 50px;
+  }
+
+  .tdSeparator {
+    width: 10px;
+  }
+
+  td {
+    padding: 5px;
+  }
+
+  .playDescr {
+    text-align: left;
+  }
+
+  .playsHeader {
   }
 </style>
