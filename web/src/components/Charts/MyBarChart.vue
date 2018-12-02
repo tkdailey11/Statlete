@@ -44,7 +44,7 @@ export default {
         },
         TSData: {
             type: Object,
-            default: {}
+            default: null
         },
         forceUpdate: {
             type: Number,
@@ -56,6 +56,7 @@ export default {
     },
     methods: {
         renderBarChart: function() {
+            alert('RENDER')
             var self = this;
             if(self.showGoal){
                 this.addPlugin({
@@ -118,20 +119,34 @@ export default {
                     labels = self.TSData.labels
                 }
                 var datasets = []
-                if(self.TSData.datasets === 'undefined' || self.TSData.datasets == null){
+                var allDefined = true;
+                var arr = []
+                if(self.TSData.datasets.length = 1){
+                    arr = self.TSData.datasets[0].data
+                }
+                else {
+                    arr = self.TSData.datasets[0].data.concat(self.TSData.datasets[1].data)
+                }
+                for (var i = 0; i < arr.length; i++) {
+                    if (typeof(arr[i])=='undefined') {
+                        allDefined = false
+                        break
+                    };
+                };  
+                if(!allDefined || self.TSData.datasets[0] == null){
+                    alert('Not all defined')
                     datasets = [{
                         backgroundColor: '#0000ff',
                         data: [1,3,1,3,1]
+                    },
+                    {
+                        backgroundColor: '#00ff00',
+                        data: [5,4,3,2,1]
                     }]
                 }
                 else{
                     datasets = self.TSData.datasets
                 }
-
-                console.log('RENDER:')
-                console.log(labels)
-                console.log(datasets)
-                console.log('===============')
                 this.renderChart({
                     labels: labels,
                     datasets: datasets

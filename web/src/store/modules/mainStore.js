@@ -14,10 +14,14 @@ const state = {
   gamesList: [],
   myColor: 'rgba(224, 0, 16, 0.75)',
   mySecondaryColor: 'rgba(247,204,78, 0.9)',
-  oppColor: 'rgba(247,204,78, 0.9)'
+  oppColor: 'rgba(247,204,78, 0.9)',
+  sportfolioType: 'team'
 };
 
 const getters = {
+  sportfolioType: state => {
+    return state.sportfolioType;
+  },
   mySecondaryColor: state => {
     return state.mySecondaryColor;
   },

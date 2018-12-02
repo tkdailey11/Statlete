@@ -20,11 +20,8 @@
         />
         <div id="EntryView">
           <div id="entryDiv">
-            
-            <player-stat-selector id="GV_pss"
-                                  :players="players"
-                                  :height="'height: 500px;'"
-                                  @playerSelected="playerWasSelected"></player-stat-selector>
+            <!-- Add in selector for player/Opponent -->
+            <!-- Do we want players to keep track of opponent's data? -->
             <sb-data-entry id="sbde1"
                           :height="'height: 500px;'"
                           :isActive="gameLive"
@@ -42,27 +39,9 @@
             </sb-shot-type>
           </div>
           <div id="statDiv">
+            <!-- This should probably be different -->
             <team-stats class="GV_statsTable"
                         @EditStats="showESModal" />
-          </div>
-          <div id="playDiv">
-            <div class="playsTableContainer">
-              <table class="playsTable">
-                <thead class="playsHeader">
-                  <th>Team</th>
-                  <th colspan="2">Play</th>
-                </thead>
-                <tbody v-for="period in Object.keys(plays)" :key="period + '-key'">
-                  <tr class="periodRow"><td colspan="3">{{period}}</td></tr>
-                  <tr v-for="playKey in Object.keys(plays[period])" :key="period + '-' + playKey">
-                    <td class="myTeamPlay" v-if="plays[period][playKey].split(' | ')[0] == 0"></td>
-                    <td class="oppPlay" v-else></td>
-                    <td class="tdSeparator"></td>
-                    <td class="playDescr">{{plays[period][playKey].split(' | ')[1]}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
           </div>
         </div>
         <div class="toggleContainer">
@@ -75,9 +54,6 @@
             </div>
             <div id="statMode" @click="toggleStatClicked()">
               Stats
-            </div>
-            <div id="playMode" @click="togglePlayClicked()">
-              Plays
             </div>
           </div>
         </div>
@@ -108,20 +84,16 @@
         timeRemaining: 0,
         pauseBtnString: 'Start',
         pauseEnabled: true,
-        isModalVisible: false,
-        hasPossesion: 0,
-        possesionTimestamp: '00:00'
+        isModalVisible: false
       }
     },
     mounted() {
       jQuery("#statDiv").hide()
       jQuery("#fieldDiv").hide()
-      jQuery("#playDiv").hide()
       var ref = null;
       var self = this;
 
       if(this.isSoccer){
-        self.GV_SET_NUM_PERIODS(2);
         ref = firebase.database().ref('/SoccerGames/').child(this.selectedTeamId).child(this.activeGameId);
         ref.child('HalfLength').once('value', function(snap){
           self.GV_SET_PERIOD_LENGTH(snap.val());
@@ -132,9 +104,6 @@
         ref.child('NumberOfPeriods').once('value', function(snap){
           if(snap.val()){
             self.GV_SET_NUM_PERIODS(snap.val());
-          }
-          else {
-            self.GV_SET_NUM_PERIODS(4);
           }
         })
         ref.child('PeriodLength').once('value', function(snap){
@@ -147,12 +116,6 @@
           self.currTime = self.secondsToMinutesString(snap.val())
         })
       }
-
-      ref.child('Plays').on('value', function(snapshot){
-        if(snapshot.val()){
-          self.GV_SET_PLAYS(snapshot.val())
-        }
-      })
       
       ref.child('Live').on('value', function(snap){
         self.gameLive = snap.val()
@@ -199,25 +162,10 @@
         currGameTime: 'gameViewStore/currGameTime',
         periodLength: 'gameViewStore/periodLength',
         numberOfPeriods: 'gameViewStore/numberOfPeriods',
-        timeRemainingInPeriod: 'gameViewStore/timeRemainingInPeriod',
-        plays: 'gameViewStore/plays',
-        myColor: 'mainStore/myColor',
-        oppColor: 'mainStore/oppColor'
+        timeRemainingInPeriod: 'gameViewStore/timeRemainingInPeriod'
       }),
       isSoccer: function() {
         return this.selectedTeamSport == 1;
-      },
-      isBasketball: function() {
-        return this.selectedTeamSport == 0;
-      },
-      myTeamHasPossesion: function() {
-        return this.hasPossesion == 1
-      },
-      oppHasPossesion: function() {
-        return this.hasPossesion == 2
-      },
-      noPossesion: function() {
-        return (this.hasPossesion != 1 && this.hasPossesion != 2)
       }
     },
     methods: {
@@ -232,61 +180,13 @@
         GV_SET_CURR_GAME_TIME: 'gameViewStore/GV_SET_CURR_GAME_TIME',
         GV_SET_PERIOD_LENGTH: 'gameViewStore/GV_SET_PERIOD_LENGTH',
         GV_SET_NUM_PERIODS: 'gameViewStore/GV_SET_NUM_PERIODS',
-        GV_SET_TIME_REMAINING: 'gameViewStore/GV_SET_TIME_REMAINING',
-        GV_APPEND_PLAY: 'gameViewStore/GV_APPEND_PLAY',
-        GV_SET_PLAYS: 'gameViewStore/GV_SET_PLAYS'
+        GV_SET_TIME_REMAINING: 'gameViewStore/GV_SET_TIME_REMAINING'
       }),
-      setMyTeamColor(){
-        var self = this;
-        jQuery('.myTeamPlay').each(function(){
-          jQuery(this).css('background-color', self.myColor)
-        })
-      },
-      setOppColor(){
-        var self = this;
-        jQuery('.oppPlay').each(function(){
-          jQuery(this).css('background-color', self.oppColor)
-        })
-      },
       showESModal() {
         this.isModalVisible = true;
       },
       closeESModal() {
         this.isModalVisible = false;
-      },
-      possesionChanged(data){
-        if(this.noPossesion){
-          this.possesionTimestamp = this.currTime
-          this.hasPossesion = data
-        }
-        else{
-          if(this.myTeamHasPossesion && data != 1){
-            if(data == 2){
-              this.possesionTimestamp = this.currTime
-              this.hasPossesion = 2
-            }
-            else{
-              this.hasPossesion = 0
-            }
-            var time = this.currTime
-            var secondsWithPoss = getTimeDifference(this.possesionTimestamp, time)
-            //TODO: Update DB
-            
-          }
-          else if(this.oppHasPossesion && data != 2){
-            if(data == 1){
-              this.possesionTimestamp = this.currTime
-              this.hasPossesion = 1
-            }
-            else{
-              this.hasPossesion = 0
-            }
-            var time = this.currTime
-            var secondsWithPoss = getTimeDifference(this.possesionTimestamp, time)
-            //TODO: Update DB
-            
-          }
-        }
       },
       pauseClicked(){
         var self = this;
@@ -347,20 +247,14 @@
         var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
         var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
         var statDisplayed = jQuery('#statDiv').css('display') != 'none';
-        var playDisplayed = jQuery('#playDiv').css('display') != 'none';
-
         if(entryDisplayed){
         }
         else if(fieldDisplayed){
           jQuery('#fieldDiv').slideUp(350)
           jQuery('#entryDiv').slideDown(350)
         }
-        else if(statDisplayed) {
-          jQuery('#statDiv').slideUp(350)
-          jQuery('#entryDiv').slideDown(350)
-        }
         else {
-          jQuery('#playDiv').slideUp(350)
+          jQuery('#statDiv').slideUp(350)
           jQuery('#entryDiv').slideDown(350)
         }
       },
@@ -368,20 +262,15 @@
         var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
         var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
         var statDisplayed = jQuery('#statDiv').css('display') != 'none';
-        var playDisplayed = jQuery('#playDiv').css('display') != 'none';
-
+        var width = jQuery(window).width()
         if(fieldDisplayed){
         }
         else if(entryDisplayed){
           jQuery('#entryDiv').slideUp(350)
           jQuery('#fieldDiv').slideDown(350)
         }
-        else if(statDisplayed) {
-          jQuery('#statDiv').slideUp(350)
-          jQuery('#fieldDiv').slideDown(350)
-        }
         else {
-          jQuery('#playDiv').slideUp(350)
+          jQuery('#statDiv').slideUp(350)
           jQuery('#fieldDiv').slideDown(350)
         }
       },
@@ -389,45 +278,19 @@
         var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
         var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
         var statDisplayed = jQuery('#statDiv').css('display') != 'none';
-        var playDisplayed = jQuery('#playDiv').css('display') != 'none';
-
         if(statDisplayed){
         }
         else if(entryDisplayed){
           jQuery('#entryDiv').slideUp(350)
           jQuery('#statDiv').slideDown(350)
         }
-        else if(fieldDisplayed){
+        else {
           jQuery('#fieldDiv').slideUp(350)
           jQuery('#statDiv').slideDown(350)
-        }
-        else {
-          jQuery('#playDiv').slideUp(350)
-          jQuery('#statDiv').slideDown(350)
-        }
-      },
-      togglePlayClicked(){
-        var entryDisplayed = jQuery('#entryDiv').css('display') != 'none';
-        var fieldDisplayed = jQuery('#fieldDiv').css('display') != 'none';
-        var statDisplayed = jQuery('#statDiv').css('display') != 'none';
-        var playDisplayed = jQuery('#playDiv').css('display') != 'none';
-
-        if(playDisplayed){
-        }
-        else if(entryDisplayed){
-          jQuery('#entryDiv').slideUp(350)
-          jQuery('#playDiv').slideDown(350)
-        }
-        else if(fieldDisplayed){
-          jQuery('#fieldDiv').slideUp(350)
-          jQuery('#playDiv').slideDown(350)
-        }
-        else {
-          jQuery('#statDiv').slideUp(350)
-          jQuery('#playDiv').slideDown(350)
         }
       },
       clockClicked(event){
+        alert('Clock Clicked')
         if(this.currTime.toLowerCase() === "final" || !this.isSoccer){
           return;
         }
@@ -538,62 +401,6 @@
       playerWasSelected(event) {
         this.currentPlayer = event
       },
-      stringifyStatType(stat){
-        if(this.isSoccer){
-          if(stat.endsWith('es')){
-            stat = stat.substring(0, stat.length - 2)
-          }
-          else if(stat.endsWith('s')){
-            stat = stat.slice(0, -1)
-          }
-        }
-        else if(this.isBasketball){
-          switch(stat){
-            case 'AST':
-              stat = 'Assist';
-              break;
-            case 'BLK':
-              stat = 'Block';
-              break;
-            case 'DREB':
-              stat = 'Defensive Rebound';
-              break;
-            case 'FG2A':
-              stat = '2pt shot missed';
-              break;
-            case 'FG2M':
-              stat = '2pt shot made';
-              break;
-            case 'FG3A':
-              stat = '3pt shot missed';
-              break;
-            case 'FG3M':
-              stat = '3pt shot made';
-              break;
-            case 'FTA':
-              stat = 'Free Throw missed';
-              break;
-            case 'FTM':
-              stat = 'Free Throw made';
-              break;
-            case 'OREB':
-              stat = 'Offensive Rebound';
-              break;
-            case 'PF':
-              stat = 'Personal Foul';
-              break;
-            case 'STL':
-              stat = 'Steal';
-              break;
-            case 'TOV':
-              stat = 'Turnover';
-              break;
-            default:
-              stat = stat.toLowerCase();
-          }
-        }
-        return stat
-      },
       updateDB(event){
         var self = this;
         var input = event.split(":");
@@ -607,7 +414,6 @@
           var dbRefGame = firebase.database().ref('SoccerGames/').child(self.selectedTeamId).child(self.activeGameId)
           
           var player = self.currentPlayer;
-          var myTeamStat = true;
           if(player.startsWith('p')){
             var refPlayer = dbRefGame.child('Players').child(player);
             refPlayer.child(input[1]).once('value', function(snapshot){
@@ -622,7 +428,6 @@
           if(player === 'otherTeam'){
             dbRef = dbRefGame.child('OpponentsTotals').child(period).child(input[1]);
             player = ' ';
-            myTeamStat = false;
           }
           else{
             dbRef = dbRefGame.child('MyTotals').child(period).child(input[1]);
@@ -644,27 +449,6 @@
             dbRef.update({
               Total : tot,
               [time] : player
-            })
-          })
-
-          var playRef = dbRefGame.child('Plays').child(period);
-          playRef.once('value', function(snapshot){
-            var playCount = 0;
-            if(typeof snapshot.val() === 'object'){
-              playCount = Object.keys(snapshot.val()).length;
-            }
-            
-            var key = 'Play' + playCount
-            var play = myTeamStat ? '0 | ' : '1 | ';
-            play += self.currTime + ' - '
-            play += self.stringifyStatType(input[1])
-            if (player.startsWith('p')){
-              var playerNum = player.replace('p', '#')
-              play += ' ' + playerNum + ' ' + self.players[player]
-            }
-
-            playRef.update({
-              [key]: play
             })
           })
         }
@@ -672,7 +456,6 @@
           var dbRefGame = firebase.database().ref('BasketballGames/').child(self.selectedTeamId).child(self.activeGameId)
           
           var player = self.currentPlayer;
-          var myTeamStat = true;
           if(player.startsWith('p')){
             var refPlayer = dbRefGame.child('Players').child(player);
             refPlayer.child(input[1]).once('value', function(snapshot){
@@ -687,7 +470,6 @@
           if(player === 'otherTeam'){
             dbRef = dbRefGame.child('OpponentsTotals').child(period).child(input[1]);
             player = ' ';
-            myTeamStat = false;
           }
           else{
             dbRef = dbRefGame.child('MyTotals').child(period).child(input[1]);
@@ -710,32 +492,11 @@
               [time] : player
             })
           })
-
-          var playRef = dbRefGame.child('Plays').child(period);
-          
-          playRef.once('value', function(snapshot){
-            var playCount = 0;
-            if(typeof snapshot.val() === 'object'){
-              playCount = Object.keys(snapshot.val()).length;
-            }
-            
-            var key = 'Play' + playCount
-            var play = myTeamStat ? '0 | ' : '1 | ';
-            play += self.currTime + ' - '
-            play += self.stringifyStatType(input[1])
-            if (player.startsWith('p')){
-              var playerNum = player.replace('p', '#')
-              play += ' ' + playerNum + ' ' + self.players[player]
-            }
-
-            playRef.update({
-              [key]: play
-            })
-          })
         }
       },
       updateTime(){
         if(this.isSoccer){
+          alert('SOCCER')
           if(!this.currTime){
             return;
           }
@@ -869,15 +630,6 @@
 
         return min + ':' + sec;
       }
-    },
-    watch: {
-      plays: {
-        handler: function() {
-          this.setMyTeamColor()
-          this.setOppColor()
-        },
-        deep: true
-      }
     }
   }
 </script>
@@ -979,15 +731,15 @@
   }
 
   #entryMode {
-    height: 100px; 
-    line-height: 100px;
+    height: 147px; 
+    line-height: 147px;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
   }
 
   #chartMode {
-    height: 100px; 
-    line-height: 100px;
+    height: 200px; 
+    line-height: 200px;
     border-top-style: solid;
     border-top-width: 3px;
     border-bottom-style: solid;
@@ -995,58 +747,9 @@
   }
 
   #statMode {
-    height: 100px; 
-    line-height: 100px;
-    border-bottom-style: solid;
-    border-bottom-width: 3px;
-  }
-
-  #playMode {
-    height: 100px; 
-    line-height: 100px;
+    height: 147px; 
+    line-height: 147px;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
-  }
-
-  .playsTable {
-    width: 100%;
-  }
-
-  .playsTableContainer {
-    border-width: 4px;
-    border-style: solid;
-    margin: 5vw;
-    height: 60vh;
-    width: 50vw;
-    overflow-y: scroll;
-    margin-left: 20vw;
-    border-radius: 20px;
-  }
-
-  .myTeamPlay {
-    border-width: 2px;
-    border-style: solid;
-    width: 50px;
-  }
-
-  .oppPlay {
-    border-width: 2px;
-    border-style: solid;
-    width: 50px;
-  }
-
-  .tdSeparator {
-    width: 10px;
-  }
-
-  td {
-    padding: 5px;
-  }
-
-  .playDescr {
-    text-align: left;
-  }
-
-  .playsHeader {
   }
 </style>

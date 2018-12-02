@@ -91,8 +91,12 @@ Vue.component('select-sport', SelectSport);
 
 
 //Charts
+import BarChartContainer from '@/components/Charts/BarChartContainer';
+Vue.component('bar-container', BarChartContainer);
 import MyBarChart from '@/components/Charts/MyBarChart';
 Vue.component('bar-chart', MyBarChart);
+import OtherBarChart from '@/components/Charts/OtherBarChart';
+Vue.component('other-bar-chart', OtherBarChart);
 import MyLineChart from '@/components/Charts/MyLineChart';
 Vue.component('line-chart', MyLineChart);
 import MyDoughnutChart from '@/components/Charts/MyDoughnutChart';

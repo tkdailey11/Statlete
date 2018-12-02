@@ -7,10 +7,14 @@ const state = {
   currGameTime: '0:00',
   periodLength: 45,
   numberOfPeriods: 2,
-  timeRemainingInPeriod: 0
+  timeRemainingInPeriod: 0,
+  plays: {}
 };
 
 const getters = {
+  plays: state => {
+    return state.plays;
+  },
   periodLength: state => {
     return state.periodLength;
   },
@@ -44,6 +48,12 @@ const getters = {
 };
 
 const mutations = {
+  GV_APPEND_PLAY: (state, payload) => {
+    state.plays[payload.key] = payload.val
+  },
+  GV_SET_PLAYS: (state, payload) => {
+    state.plays = payload
+  },
   GV_SET_PERIOD_LENGTH: (state, payload) => {
     state.periodLength = payload;
   },
