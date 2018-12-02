@@ -207,6 +207,9 @@
       isSoccer: function() {
         return this.selectedTeamSport == 1;
       },
+      isBasketball: function() {
+        return this.selectedTeamSport == 0;
+      },
       myTeamHasPossesion: function() {
         return this.hasPossesion == 1
       },
@@ -425,7 +428,6 @@
         }
       },
       clockClicked(event){
-        alert('Clock Clicked')
         if(this.currTime.toLowerCase() === "final" || !this.isSoccer){
           return;
         }
@@ -536,6 +538,62 @@
       playerWasSelected(event) {
         this.currentPlayer = event
       },
+      stringifyStatType(stat){
+        if(this.isSoccer){
+          if(stat.endsWith('es')){
+            stat = stat.substring(0, stat.length - 2)
+          }
+          else if(stat.endsWith('s')){
+            stat = stat.slice(0, -1)
+          }
+        }
+        else if(this.isBasketball){
+          switch(stat){
+            case 'AST':
+              stat = 'Assist';
+              break;
+            case 'BLK':
+              stat = 'Block';
+              break;
+            case 'DREB':
+              stat = 'Defensive Rebound';
+              break;
+            case 'FG2A':
+              stat = '2pt shot missed';
+              break;
+            case 'FG2M':
+              stat = '2pt shot made';
+              break;
+            case 'FG3A':
+              stat = '3pt shot missed';
+              break;
+            case 'FG3M':
+              stat = '3pt shot made';
+              break;
+            case 'FTA':
+              stat = 'Free Throw missed';
+              break;
+            case 'FTM':
+              stat = 'Free Throw made';
+              break;
+            case 'OREB':
+              stat = 'Offensive Rebound';
+              break;
+            case 'PF':
+              stat = 'Personal Foul';
+              break;
+            case 'STL':
+              stat = 'Steal';
+              break;
+            case 'TOV':
+              stat = 'Turnover';
+              break;
+            default:
+              stat = stat.toLowerCase();
+          }
+        }
+        return stat
+      },
       updateDB(event){
         var self = this;
         var input = event.split(":");
@@ -549,6 +607,7 @@
           var dbRefGame = firebase.database().ref('SoccerGames/').child(self.selectedTeamId).child(self.activeGameId)
           
           var player = self.currentPlayer;
+          var myTeamStat = true;
           if(player.startsWith('p')){
             var refPlayer = dbRefGame.child('Players').child(player);
             refPlayer.child(input[1]).once('value', function(snapshot){
@@ -563,6 +622,7 @@
           if(player === 'otherTeam'){
             dbRef = dbRefGame.child('OpponentsTotals').child(period).child(input[1]);
             player = ' ';
+            myTeamStat = false;
           }
           else{
             dbRef = dbRefGame.child('MyTotals').child(period).child(input[1]);
@@ -584,6 +644,27 @@
             dbRef.update({
               Total : tot,
               [time] : player
+            })
+          })
+
+          var playRef = dbRefGame.child('Plays').child(period);
+          playRef.once('value', function(snapshot){
+            var playCount = 0;
+            if(typeof snapshot.val() === 'object'){
+              playCount = Object.keys(snapshot.val()).length;
+            }
+            
+            var key = 'Play' + playCount
+            var play = myTeamStat ? '0 | ' : '1 | ';
+            play += self.currTime + ' - '
+            play += self.stringifyStatType(input[1])
+            if (player.startsWith('p')){
+              var playerNum = player.replace('p', '#')
+              play += ' ' + playerNum + ' ' + self.players[player]
+            }
+
+            playRef.update({
+              [key]: play
             })
           })
         }
@@ -591,6 +672,7 @@
           var dbRefGame = firebase.database().ref('BasketballGames/').child(self.selectedTeamId).child(self.activeGameId)
           
           var player = self.currentPlayer;
+          var myTeamStat = true;
           if(player.startsWith('p')){
             var refPlayer = dbRefGame.child('Players').child(player);
             refPlayer.child(input[1]).once('value', function(snapshot){
@@ -605,6 +687,7 @@
           if(player === 'otherTeam'){
             dbRef = dbRefGame.child('OpponentsTotals').child(period).child(input[1]);
             player = ' ';
+            myTeamStat = false;
           }
           else{
             dbRef = dbRefGame.child('MyTotals').child(period).child(input[1]);
@@ -627,11 +710,32 @@
               [time] : player
             })
           })
+
+          var playRef = dbRefGame.child('Plays').child(period);
+          
+          playRef.once('value', function(snapshot){
+            var playCount = 0;
+            if(typeof snapshot.val() === 'object'){
+              playCount = Object.keys(snapshot.val()).length;
+            }
+            
+            var key = 'Play' + playCount
+            var play = myTeamStat ? '0 | ' : '1 | ';
+            play += self.currTime + ' - '
+            play += self.stringifyStatType(input[1])
+            if (player.startsWith('p')){
+              var playerNum = player.replace('p', '#')
+              play += ' ' + playerNum + ' ' + self.players[player]
+            }
+
+            playRef.update({
+              [key]: play
+            })
+          })
         }
       },
       updateTime(){
         if(this.isSoccer){
-          alert('SOCCER')
           if(!this.currTime){
             return;
           }
