@@ -2,10 +2,10 @@
     <div class="footballOffense">
             <div id="offenseButtons">
                 <div style="text-align: center"><h3>Offense Stats</h3></div>
-                <div><p class="button" @click="offenseRun">Run</p></div>
-                <div><p class="button" @click="offensePass">Pass</p></div>
-                <div><p class="button" @click="offensePenalty">Penalty</p></div>
-                <div><p class="button" @click="askStatlete">Ask Statlete</p></div>
+                <div><p class="footballButton" @click="offenseRun">Run</p></div>
+                <div><p class="footballButton" @click="offensePass">Pass</p></div>
+                <div><p class="footballButton" @click="offensePenalty">Penalty</p></div>
+                <div><p class="footballButton" @click="askStatlete">Ask Statlete</p></div>
             </div>
 
             <div id="getOffPosition">
@@ -23,7 +23,7 @@
                   <td><input type="checkbox" checked v-model="myHalf"></td>
                 </tr>
               </table>
-              <button class="button" @click="startDrive">Start Drive</button>
+              <button class="footballButton" @click="startDrive">Start Drive</button>
             </div>
 
              <div id="runForm">
@@ -44,7 +44,7 @@
                             <tr><td>Touchdown </td><td><input type="checkbox" v-model="runTouchdown" value="td"></td></tr>
                             <tr><td>Fumble:</td><td><input type="checkbox" v-model="runFumble" value="fumble"></td></tr>
                   </table>
-                    <button class="button" @click="runConfirm">Confirm</button>
+                    <button class="footballButton" @click="runConfirm">Confirm</button>
                 </div>
 
 
@@ -81,7 +81,7 @@
                   <tr><td>Turnover By: </td><td><vue-numeric-input type="text" v-model="passTurnoverBy" maxlength="2" size="2" :min="0" :max="99" :controls="false"></vue-numeric-input></td></tr>
                   </table>
             </div>
-                    <button class="button" @click="passConfirm">Confirm</button>
+                    <button class="footballButton" @click="passConfirm">Confirm</button>
             </div>
 
             <div id="penaltyForm">
@@ -97,11 +97,42 @@
                         <tr><td>Down: </td><td>
                         <vue-numeric-input type="text" size="3" maxlength="1" v-model="penaltyDown" :min="1" :max="4" :controls="false"></vue-numeric-input></td></tr>        
                         </table>
-                        <button class="button" @click="penaltyConfirm">Confirm</button>
+                        <button class="footballButton" @click="penaltyConfirm">Confirm</button>
             </div>
-            <div id="statleteForm">
-              GO FOR IT!!!!!!!!!!!
-              <button class="button" @click="askStatleteConfirm">Confirm</button>
+            <div id="runLeftForm">
+              <img src="../assets/images/football-ask-statlete/run_left.png">
+              <br>
+              <button class="footballButton" @click="askStatleteConfirm">Confirm</button>
+            </div>
+
+            <div id="runRightForm">
+              <img src="../assets/images/football-ask-statlete/run_right.png">
+              <br>
+              <button class="footballButton" @click="askStatleteConfirm">Confirm</button>
+            </div>
+
+            <div id="runMiddleForm">
+              <img src="../assets/images/football-ask-statlete/run_middle.png">
+              <br>
+              <button class="footballButton" @click="askStatleteConfirm">Confirm</button>
+            </div>
+
+            <div id="throwLeftForm">
+              <img src="../assets/images/football-ask-statlete/pass_left.png">
+              <br>
+              <button class="footballButton" @click="askStatleteConfirm">Confirm</button>
+            </div>
+
+            <div id="throwMiddleForm">
+              <img src="../assets/images/football-ask-statlete/pass_middle.png">
+              <br>
+              <button class="footballButton" @click="askStatleteConfirm">Confirm</button>
+            </div>
+
+            <div id="throwRightForm">
+              <img src="../assets/images/football-ask-statlete/pass_right.png">
+              <br>
+              <button class="footballButton" @click="askStatleteConfirm">Confirm</button>
             </div>
 
             <div id="tracker">
@@ -109,11 +140,6 @@
               <p>Yards to go: {{driveYardsLeft}}</p>
               <p>Down {{driveDowns}} </p>
             </div>
-
-            
-
-            
-
 		</div>
 </template>
 
@@ -190,22 +216,50 @@ export default {
       this.driveSpotBall = this.ballLocation;
       this.driveMyHalf = this.myHalf;
 
-      console.log(typeof(this.driveSpotBall));
-      console.log(typeof(this.ballLocation));
-
       //Reset Values
       this.ballLocation = parseInt(25);
       this.myHalf = "true";
     },
 
     askStatlete: function() {
-      jQuery("#statleteForm").show();
+      jQuery("#statleteForm").hide();
       jQuery("#offenseButtons").hide();
       jQuery("#turnoverForm").hide();
+      var num = Math.floor((Math.random() * 6) + 1);
+      if(num == 1)
+      {
+        jQuery("#runLeftForm").show();
+      }
+      else if(num == 2)
+      {
+        jQuery("#runMiddleForm").show();
+      }
+      else if(num == 3)
+      {
+        jQuery("#runRightForm").show();
+      }
+      else if(num == 4)
+      {
+        jQuery("#throwLeftForm").show();
+      }
+      else if(num == 5) 
+      {
+        jQuery("#throwMiddleForm").show();
+      }
+      else
+      {
+        jQuery("#throwRightForm").show();
+      }
     },
 
     askStatleteConfirm: function() {
       jQuery("#statleteForm").hide();
+      jQuery("#runLeftForm").hide();
+      jQuery("#runMiddleForm").hide();
+      jQuery("#runRightForm").hide();
+      jQuery("#throwLeftForm").hide();
+      jQuery("#throwMiddleForm").hide();
+      jQuery("#throwRightForm").hide();
       jQuery("#offenseButtons").show();
     },
 
@@ -233,7 +287,6 @@ export default {
       this.activeTurnover = "false";
     },
      offenseRunTurnover: function() {
-      //alert("TURNOVER BUTTON CLICKED");
       jQuery("#turnoverRunForm").show();
       this.activeRunTurnover = "true";
     },
@@ -273,7 +326,7 @@ export default {
       {
         this.driveSpotBall -= this.runYards;
       }
-      if(this.driveSpotBall > 50 || this.driveSpotBall < 0 || this.driveDowns > 4)
+      if(this.driveSpotBall > 50 || this.driveSpotBall < 0 || this.driveDowns > 4 || this.runYards == "")
       {
         jQuery("#tracker").hide();
       }
@@ -283,7 +336,8 @@ export default {
       var ref =firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Offense")
       var ref2 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Special");
         ref2.child("TotalTDAllowed").once("value", function(rand2){
-          if(self.runFumble && self.runTouchdown)
+          if(self.runFumble && self.runTouchdown && self.runPlayerNumber != "")
+          {
           self.$emit("oppScore", 6)
           var numS = rand2.val()
           if(numS == null)
@@ -297,61 +351,74 @@ export default {
           ref2.update({
             ["TotalTDAllowed"]: numS
           })
+          }
         }).then(()=>{
         ref.child("RushCarries").once("value", function(snapshot){
-        var numCarries = snapshot.val()
-        var playerNum = "p" + self.runPlayerNumber
-        var total = numCarries.Total + 1
-        var player = numCarries[playerNum]
-        if(player == null)
-        {
-          player = 1
-        }
-        else{
-          player++
-        }
-        ref.child("RushCarries").update({
-          "Total": total,
-          [playerNum]: player
-        })
-      }).then(()=>{
-        ref.child("RushYds").once("value", function(shot){
-          var rushYds = shot.val()
-          var playerNum = "p" + self.runPlayerNumber
-          var total = rushYds.Total + parseInt(self.runYards)
-          var player = rushYds[playerNum]
-          if(player == null)
+          if(self.runPlayerNumber != "" && self.runYards != "")
           {
-            player = parseInt(self.runYards)
-          }
-          else{
-            player += parseInt(self.runYards)
-          }
-          ref.child("RushYds").update({
-            "Total": total,
-            [playerNum]: player
-          })
-        }).then(()=>{
-          ref.child("RushYds").child("Side").once("value", function(side){
-            var rushYds = side.val()
-            var pos = self.pickedRunSide
-            var selected = rushYds[pos]
-            if(selected == null)
+            var numCarries = snapshot.val()
+            var playerNum = "p" + self.runPlayerNumber
+            var total = numCarries.Total + 1
+            var player = numCarries[playerNum]
+            if(player == null)
             {
-              selected = parseInt(self.runYards)
+              player = 1
             }
             else{
-              selected += parseInt(self.runYards)
+              player++
             }
-            ref.child("RushYds").child("Side").update({
-              [pos]: selected
+            ref.child("RushCarries").update({
+              "Total": total,
+              [playerNum]: player
             })
-          })
+          }
+        
+      }).then(()=>{
+        ref.child("RushYds").once("value", function(shot){
+          if(self.runPlayerNumber != "" && self.runYards != "")
+          {
+            var rushYds = shot.val()
+            var playerNum = "p" + self.runPlayerNumber
+            var total = rushYds.Total + parseInt(self.runYards)
+            var player = rushYds[playerNum]
+            if(player == null)
+            {
+              player = parseInt(self.runYards)
+            }
+            else{
+              player += parseInt(self.runYards)
+            }
+            ref.child("RushYds").update({
+              "Total": total,
+              [playerNum]: player
+            })
+          }
+          
         }).then(()=>{
+          ref.child("RushYds").child("Side").once("value", function(side){
+            if(self.runPlayerNumber != "" && self.runYards != "")
+            {
+              var rushYds = side.val()
+              var pos = self.pickedRunSide
+              var selected = rushYds[pos]
+              if(selected == null)
+              {
+                selected = parseInt(self.runYards)
+              }
+              else{
+                selected += parseInt(self.runYards)
+              }
+              ref.child("RushYds").child("Side").update({
+                [pos]: selected
+              })
+            }
+            
+          }).then(()=>{
           
             ref.child("RushTD").once("value", function(points){ 
-            if(self.runTouchdown)
-            {           
+            if(self.runTouchdown && self.runPlayerNumber != "" && self.runYards != "")
+            {
+              self.$emit("incMyScore", 6) 
               var rushTD = points.val()
               var playerNum = "p" + self.runPlayerNumber
               var total = rushTD.Total + 1
@@ -367,10 +434,9 @@ export default {
                 "Total": total,
                 [playerNum]: player
               })
-            }}).then(()=> {
-            
+            }}).then(()=> {            
               ref.child("Fumble").once("value", function(fumbles){
-                if(self.runFumble)
+                if(self.runFumble && self.runPlayerNumber != "")
             {
                 var fum = fumbles.val()
                 var playerNum = "p" + self.runPlayerNumber
@@ -395,7 +461,7 @@ export default {
           self.runFumble = "";
         })    })    
           })        
-          })
+          })})
       })
 
 
@@ -435,7 +501,7 @@ export default {
           this.driveSpotBall -= this.passYards;
         }
       }
-      if(this.driveSpotBall > 50 || this.driveSpotBall < 0 || this.driveDowns > 4)
+      if(this.driveSpotBall > 50 || this.driveSpotBall < 0 || this.driveDowns > 4 || this.runYards == "")
       {
         jQuery("#tracker").hide();
       }
@@ -444,24 +510,27 @@ export default {
       var self = this
       var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Offense")
       ref.child("PassAtt").once("value", function(snapshot){
-        var numAtt = snapshot.val()
-        var playerNum = "p" + self.passPlayerNumber
-        var total = numAtt.Total + 1
-        var playerStat = numAtt[playerNum]
-        if(playerStat == null)
+        if(self.passPlayerNumber != "")
         {
-          playerStat = 1
-        }
-        else{
-          playerStat++
-        }
-        ref.child("PassAtt").update({
-          "Total": total,
-          [playerNum]: playerStat
+          var numAtt = snapshot.val()
+          var playerNum = "p" + self.passPlayerNumber
+          var total = numAtt.Total + 1
+          var playerStat = numAtt[playerNum]
+          if(playerStat == null)
+          {
+            playerStat = 1
+          }
+          else{
+            playerStat++
+          }
+          ref.child("PassAtt").update({
+            "Total": total,
+            [playerNum]: playerStat
         })
+        }
       }).then(()=>{
           ref.child("RushYds").once("value", function(qbsack){
-            if(self.passSack){
+            if(self.passSack && self.passPlayerNumber != "" && self.passYards != ""){
               var sackInfo = qbsack.val()
               var playerNum = "p" + self.passPlayerNumber
               var playerStat = sackInfo[playerNum]
@@ -479,7 +548,7 @@ export default {
             }
           }).then(()=>{
               ref.child("RushYds").child("Side").once("value", function(rand){
-              if(self.passSack)
+              if(self.passSack && self.passYards != "")
               {
                 var numYds = rand.val()
                 var s = self.pickedPassSide
@@ -500,6 +569,7 @@ export default {
               var ref2 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Special");
               ref2.child("TotalTDAllowed").once("value", function(rand2){
                 if(self.passTurnover != "" && self.passTouchdown)
+                self.$emit("oppScore", 6)
                 var numS = rand2.val()
                 if(numS == null)
                 {
@@ -514,7 +584,7 @@ export default {
                 })
               }).then(()=>{
         ref.child("PassComp").once("value", function(snap){
-          if(self.passCompletion)
+          if(self.passCompletion && self.passPlayerNumber != "")
           {
             var numComp = snap.val()
             var playerNum = "p" + self.passPlayerNumber
@@ -534,8 +604,9 @@ export default {
           }
         }).then(()=>{
           ref.child("PassTD").once("value", function(shot){
-            if(self.passTouchdown && self.passCompletion)
+            if(self.passTouchdown && self.passCompletion && self.passPlayerNumber != "")
             {
+              self.$emit("incMyScore", 6)
               var numPassTD = shot.val()
               var playerNum = "p" + self.passPlayerNumber
               var total = numPassTD.Total + 1
@@ -554,7 +625,7 @@ export default {
             }
           }).then(()=> {
             ref.child("PassYds").once("value", function(py){
-              if(self.passCompletion){
+              if(self.passCompletion && self.passPlayerNumber != "" && self.passYards != ""){
               var numYds = py.val()
               var playerNum = "p" + self.passPlayerNumber
               var total = parseInt(numYds.Total) + parseInt(self.passYards)
@@ -575,7 +646,7 @@ export default {
               ref.child("PassYds").child("Side").once("value", function(ps){
                 if(!self.passSack)
                 {
-                if(self.passCompletion){
+                if(self.passCompletion && self.passYards != ""){
                 var numYds = ps.val()
                 var s = self.pickedPassSide
                 var selected = numYds[s]
@@ -594,7 +665,7 @@ export default {
                 }            
               }).then(()=>{
                 ref.child("RecYds").once("value", function(rys){
-                  if(self.passCompletion){
+                  if(self.passCompletion && self.passCatchPlayerNum != "" && self.passYards != ""){
                   var numTD = rys.val()
                   var playerNum = "p" + self.passCatchPlayerNum
                   var total = parseInt(numTD.Total) + parseInt(self.passYards)
@@ -613,7 +684,7 @@ export default {
                   }
                 }).then(()=>{
                   ref.child("RecTD").once("value", function(rtd){
-                  if(self.passCompletion && self.passTouchdown){
+                  if(self.passCompletion && self.passTouchdown && self.passCatchPlayerNum != ""){
                   var numTD = rtd.val()
                   var playerNum = "p" + self.passCatchPlayerNum
                   var total = parseInt(numTD.Total) + 1
@@ -632,7 +703,7 @@ export default {
                   }
                 }).then(()=>{
                   ref.child("Receptions").once("value", function(rec){
-                    if(self.passCompletion)
+                    if(self.passCompletion && self.passCatchPlayerNum != "")
                     {
                       var numRec = rec.val()
                       var playerNum = "p" + self.passCatchPlayerNum
@@ -652,7 +723,7 @@ export default {
                     }
                   }).then(()=>{
                     ref.child("Fumble").once("value", function(fum){
-                      if(self.passTurnover == "fumble")
+                      if(self.passTurnover == "fumble" && self.passTurnoverBy != "")
                       {
                         var numFum = fum.val()
                         var playerNum = "p" + self.passTurnoverBy
@@ -672,7 +743,7 @@ export default {
                       }
                     }).then(()=>{
                       ref.child("INT").once("value", function(int){
-                      if(self.passTurnover == "interception")
+                      if(self.passTurnover == "interception" && self.passTurnoverBy != "")
                       {
                         var numFum = int.val()
                         var playerNum = "p" + self.passTurnoverBy
@@ -767,6 +838,13 @@ export default {
     jQuery("#specialForm").hide();
     jQuery("#statleteForm").hide();
 
+    jQuery("#runLeftForm").hide();
+    jQuery("#runMiddleForm").hide();
+    jQuery("#runRightForm").hide();
+    jQuery("#throwLeftForm").hide();
+    jQuery("#throwMiddleForm").hide();
+    jQuery("#throwRightForm").hide();
+
     jQuery("#getOffPosition").show();
     jQuery("#offenseButtons").hide();
   }
@@ -777,16 +855,20 @@ div button {
   box-sizing: border-box;
   min-width: 250px;
 }
-.button {
+img {
+  margin: 3vw;
+  zoom: 50%;
+}
+.footballButton {
   text-decoration: none;
   margin: auto;
   width: 60%;
-  border: 2px solid black;
-  background-color: red;
   padding: 10px;
   margin-bottom: 10px;
   text-align: center;
   cursor: default;
+  border-width: 2px;
+  border-style: solid;
 }
 </style>
 

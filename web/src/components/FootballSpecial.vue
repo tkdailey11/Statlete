@@ -4,12 +4,12 @@
 			<div id="specialButtons">
                 <div style="text-align: center"><h3>Special Teams Stats</h3></div>
 				<table align="center" style="table-layout: fixed; width: 50%; height: 100%; align">                    
-                    <tr><td class="button" @click="punt">Punt</td>
-                    <td class="button" @click="puntReturn">Punt Return</td></tr>
-                    <tr><td class="button" @click="fieldGoal">FG</td>
-                    <td class="button" @click="fieldGoalDef">FG Def</td></tr>
-                    <tr><td class="button" @click="kickoff">Kickoff</td> 
-                    <td class="button" @click="kickoffReturn"> Kick Return</td></tr>
+                    <tr><td class="footballButton" @click="punt">Punt</td>
+                    <td class="footballButton" @click="puntReturn">Punt Return</td></tr>
+                    <tr><td class="footballButton" @click="fieldGoal">FG</td>
+                    <td class="footballButton" @click="fieldGoalDef">FG Def</td></tr>
+                    <tr><td class="footballButton" @click="kickoff">Kickoff</td> 
+                    <td class="footballButton" @click="kickoffReturn"> Kick Return</td></tr>
                 </table>
 		</div>
 
@@ -48,7 +48,7 @@
                   </table>
             </div> -->
 
-            <button class="button" @click="puntConfirm">Confirm</button> 
+            <button class="footballButton" @click="puntConfirm">Confirm</button> 
         </div>
 
         <div id="puntRetForm">
@@ -91,7 +91,7 @@
                     </tr>
                   </table> 
             </div> -->
-            <button class="button" @click="puntRetConfirm">Confirm</button> 
+            <button class="footballButton" @click="puntRetConfirm">Confirm</button> 
         </div>
 
         <div id="fg">
@@ -113,7 +113,7 @@
                     <td>Attempt Made</td> <td><input type="checkbox" v-model="fieldGoalMake"></td>
                 </tr>
                 </table>
-            <button class="button" @click="fgConfirm">Confirm</button> 
+            <button class="footballButton" @click="fgConfirm">Confirm</button> 
         </div>
 
         <div id="fgDef">
@@ -144,7 +144,7 @@
                     </tr>
                   </table>
             </div> -->
-            <button class="button" @click="fgDefConfirm">Confirm</button> 
+            <button class="footballButton" @click="fgDefConfirm">Confirm</button> 
         </div>
 
         <div id="kickOff">
@@ -163,7 +163,7 @@
                     <tr><td>Recovered By: </td><td><vue-numeric-input type="text" v-model="kickoffRecoveredNum" maxlength="2" size="2" :min="0" :max="99" :controls="false"></vue-numeric-input></td></tr>
                   </table>
             </div>
-            <button class="button" @click="kickoffConfirm">Confirm</button>
+            <button class="footballButton" @click="kickoffConfirm">Confirm</button>
         </div>
 
         <div id="kickOffRet">
@@ -182,7 +182,7 @@
                 <tr><td>Touchdown </td><td><input type="checkbox" v-model="kickoffRetTouchdown"></td></tr>
                 </table>
 
-            <button class="button" @click="kickoffReturnConfirm">Confirm</button>
+            <button class="footballButton" @click="kickoffReturnConfirm">Confirm</button>
         </div>
     </div>
 </template>
@@ -257,46 +257,50 @@ export default {
         self = this
         var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Special")
         ref.child("Punt").once("value", function(snapshot){
-            var punts = snapshot.val()
-            var playerNum = "p" + self.punterNum
-            var total = punts.Total + 1
-            var playerStat = punts[playerNum]
-            var tb = self.puntTouchback
-            var tbNum = 0
-            var ptotal = 1
-            if(playerStat == null)
+            if( self.punterNum != "" && self.puntYards != "")
             {
-                if(tb){
-                    tbNum = 1
+                var punts = snapshot.val()
+                var playerNum = "p" + self.punterNum
+                var total = punts.Total + 1
+                var playerStat = punts[playerNum]
+                var tb = self.puntTouchback
+                var tbNum = 0
+                var ptotal = 1
+                if(playerStat == null)
+                {
+                    if(tb){
+                        tbNum = 1
+                    }
+                    ref.child("Punt").child(playerNum).update({
+                        "Total": 1,
+                        "TotalTB": parseInt(tbNum),
+                        "TotalYds": parseInt(self.puntYards) + 0
+                    })
                 }
-                ref.child("Punt").child(playerNum).update({
-                    "Total": 1,
-                    "TotalTB": parseInt(tbNum),
-                    "TotalYds": parseInt(self.puntYards) + 0
+                else{
+                    if(tb){
+                        tbNum = 1
+                    }
+                    ptotal = parseInt(playerStat.Total) + parseInt(1)
+                    ref.child("Punt").child(playerNum).update({
+                        "Total": (parseInt(playerStat.Total) + parseInt(1)),
+                        "TotalTB": (parseInt(playerStat.TotalTB) + parseInt(tbNum)),
+                        "TotalYds": (parseInt(playerStat.TotalYds) + parseInt(self.puntYards))
+                    })
+                }
+                ref.child("Punt").child(playerNum).child("Punt-"+ptotal).update({
+                    "Touchback": parseInt(tbNum),
+                    "Yds": self.puntYards
+                })
+                ref.child("Punt").update({
+                    "Total": total,
                 })
             }
-            else{
-                if(tb){
-                    tbNum = 1
-                }
-                ptotal = parseInt(playerStat.Total) + parseInt(1)
-                ref.child("Punt").child(playerNum).update({
-                    "Total": (parseInt(playerStat.Total) + parseInt(1)),
-                    "TotalTB": (parseInt(playerStat.TotalTB) + parseInt(tbNum)),
-                    "TotalYds": (parseInt(playerStat.TotalYds) + parseInt(self.puntYards))
-                })
-            }
-            ref.child("Punt").child(playerNum).child("Punt-"+ptotal).update({
-                "Touchback": parseInt(tbNum),
-                "Yds": self.puntYards
-            })
-            ref.child("Punt").update({
-                "Total": total,
-            })
         }).then(()=>{
             ref.child("TotalTDAllowed").once("value", function(shot){
                 if(self.puntTouchdown)
                 {
+                    self.$emit("oppScore", 6)
                     var numS = shot.val()
                     if(numS == null)
                     {
@@ -327,54 +331,58 @@ export default {
         self = this
         var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Special")
         ref.child("PuntRet").once("value", function(snap){
-            var puntRet = snap.val()
-            var playerNum = "p" + self.puntRetNum
-            var totalPuntRet = parseInt(puntRet.TotalRets) + 1
-            var totalPuntTD = puntRet.TotalTD
-            var totalPuntYds = puntRet.TotalYds
-            var playerStat = puntRet[playerNum]
-            var puntRetTDCheck = self.puntRetTD
-            var tdVar = "N"
-            var ptotal = 1
-            var puntTDNum = 0
-            if(puntRetTDCheck)
+            if(self.puntRetNum != "" && self.puntRetYards != "")
             {
-                puntTDNum = 1
-                tdVar = "Y"
-            }
-            if(playerStat == null)
-            {
-                ref.child("PuntRet").child(playerNum).update({
-                    "TotalTD": parseInt(puntTDNum),
-                    "TotalYds" : parseInt(self.puntRetYards),
-                    "TotalRets" : parseInt(1)
+                if(self.puntRetTD)
+                {
+                    self.$emit("incMyScore", 6)
+                }
+                var puntRet = snap.val()
+                var playerNum = "p" + self.puntRetNum
+                var totalPuntRet = parseInt(puntRet.TotalRets) + 1
+                var totalPuntTD = puntRet.TotalTD
+                var totalPuntYds = puntRet.TotalYds
+                var playerStat = puntRet[playerNum]
+                var puntRetTDCheck = self.puntRetTD
+                var tdVar = "N"
+                var ptotal = 1
+                var puntTDNum = 0
+                if(puntRetTDCheck)
+                {
+                    puntTDNum = 1
+                    tdVar = "Y"
+                }
+                if(playerStat == null)
+                {
+                    ref.child("PuntRet").child(playerNum).update({
+                        "TotalTD": parseInt(puntTDNum),
+                        "TotalYds" : parseInt(self.puntRetYards),
+                        "TotalRets" : parseInt(1)
+                    })
+                }
+                else
+                {
+                    ptotal = parseInt(playerStat.TotalRets) + parseInt(1)
+                    ref.child("PuntRet").child(playerNum).update({
+                        "TotalTD": parseInt(playerStat.TotalTD) + parseInt(puntTDNum),
+                        "TotalYds" : parseInt(playerStat.TotalYds) + parseInt(self.puntRetYards),
+                        "TotalRets" : ptotal
+                    })
+                }
+                ref.child("PuntRet").child(playerNum).child("PuntRet-"+ptotal).update({
+                    "TD": tdVar,
+                    "Yds": parseInt(self.puntRetYards)
+                })
+                ref.child("PuntRet").update({
+                    "TotalRets": parseInt(totalPuntRet),
+                    "TotalTD": parseInt(totalPuntTD) + parseInt(puntTDNum),
+                    "TotalYds": parseInt(totalPuntYds) + parseInt(self.puntRetYards)
                 })
             }
-            else
-            {
-                ptotal = parseInt(playerStat.TotalRets) + parseInt(1)
-                ref.child("PuntRet").child(playerNum).update({
-                    "TotalTD": parseInt(playerStat.TotalTD) + parseInt(puntTDNum),
-                    "TotalYds" : parseInt(playerStat.TotalYds) + parseInt(self.puntRetYards),
-                    "TotalRets" : ptotal
-                })
-            }
-            ref.child("PuntRet").child(playerNum).child("PuntRet-"+ptotal).update({
-                "TD": tdVar,
-                "Yds": parseInt(self.puntRetYards)
-            })
-            ref.child("PuntRet").update({
-                "TotalRets": parseInt(totalPuntRet),
-                "TotalTD": parseInt(totalPuntTD) + parseInt(puntTDNum),
-                "TotalYds": parseInt(totalPuntYds) + parseInt(self.puntRetYards)
-            })
-
         }).then(()=>{
             this.puntRetNum = '';
             this.puntRetYards = '';
         })
-
-        
     },
     fieldGoal: function() {
         jQuery("#specialButtons").hide();
@@ -393,6 +401,7 @@ export default {
                 var addPoints = 0
                 if(self.fieldGoalMake)
                 {
+                    self.$emit("incMyScore", 1)
                     addPoints = 1
                 }
                 ref.child("XP").update({
@@ -409,43 +418,48 @@ export default {
         else
         {
             ref.child("FG").once("value", function(fg){
-                var fgStats = fg.val()
-                var playerNum = "p" + self.fieldGoalKicker
-                var totalAtt = parseInt(fgStats.TotalAtt) + parseInt(1)
-                var totalMade = parseInt(fgStats.TotalMade)
-                var playerMade = 0
-                var madeString = "N"
-                if(self.fieldGoalMake)
+                if(self.fieldGoalKicker != "" && self.fieldGoalYards != "")
                 {
-                    madeString = "Y"
-                    totalMade++
-                    playerMade = 1
-                }
-                var playerStat = fgStats[playerNum]
-                var ptotal = 1
-                if(playerStat == null)
-                {
-                    ref.child("FG").child(playerNum).update({
-                        "TotalAtt": 1,
-                        "TotalMade": playerMade
+                    var fgStats = fg.val()
+                    var playerNum = "p" + self.fieldGoalKicker
+                    var totalAtt = parseInt(fgStats.TotalAtt) + parseInt(1)
+                    var totalMade = parseInt(fgStats.TotalMade)
+                    var playerMade = 0
+                    var madeString = "N"
+                    if(self.fieldGoalMake)
+                    {
+                        self.$emit("incMyScore", 3)
+                        madeString = "Y"
+                        totalMade++
+                        playerMade = 1
+                    }
+                    var playerStat = fgStats[playerNum]
+                    var ptotal = 1
+                    if(playerStat == null)
+                    {
+                        ref.child("FG").child(playerNum).update({
+                            "TotalAtt": 1,
+                            "TotalMade": playerMade
+                        })
+                    }
+                    else
+                    {
+                        ptotal = parseInt(playerStat.TotalAtt) + parseInt(1)
+                        ref.child("FG").child(playerNum).update({
+                            "TotalAtt": parseInt(playerStat.TotalAtt) + parseInt(1),
+                            "TotalMade": parseInt(playerStat.TotalMade) + parseInt(playerMade)
+                        })
+                    }
+                    ref.child("FG").child(playerNum).child("Kick-"+ptotal).update({
+                        "Made": madeString,
+                        "Yards": parseInt(self.fieldGoalYards)
+                    })
+                    ref.child("FG").update({
+                        "TotalAtt": parseInt(totalAtt),
+                        "TotalMade": parseInt(totalMade)
                     })
                 }
-                else
-                {
-                    ptotal = parseInt(playerStat.TotalAtt) + parseInt(1)
-                    ref.child("FG").child(playerNum).update({
-                        "TotalAtt": parseInt(playerStat.TotalAtt) + parseInt(1),
-                        "TotalMade": parseInt(playerStat.TotalMade) + parseInt(playerMade)
-                    })
-                }
-                ref.child("FG").child(playerNum).child("Kick-"+ptotal).update({
-                    "Made": madeString,
-                    "Yards": parseInt(self.fieldGoalYards)
-                })
-                ref.child("FG").update({
-                    "TotalAtt": parseInt(totalAtt),
-                    "TotalMade": parseInt(totalMade)
-                })
+                
             }).then(()=>{
                 this.extraPoint = '';
                 this.fieldGoalYards = '';
@@ -472,6 +486,7 @@ export default {
             var fg = fgDefStat.TotalFGAllowed
             if(self.extraPointDef && self.fieldGoalDefMade)
             {
+                self.$emit("oppScore", 1)
                 if(xp == null)
                 {
                     xp = 1
@@ -486,6 +501,7 @@ export default {
             }
             else if(!self.extraPointDef && self.fieldGoalDefMade)
             {
+                self.$emit("oppScore", 3)
                 if(fg == null)
                 {
                     fg = 1
@@ -516,6 +532,7 @@ export default {
         ref.child("TotalTDAllowed").once("value", function(shot){
                 if(self.kickoffTouchdown)
                 {
+                    self.$emit("oppScore", 6)
                     var numS = shot.val()
                     if(numS == null)
                     {
@@ -532,7 +549,7 @@ export default {
             }).then(()=>{
                 var ref2 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Defense")
                 ref2.child("FumbleRec").once("value", function(fum){
-                    if(self.kickoffFumble)
+                    if(self.kickoffFumble && self.kickoffRecoveredNum != "")
                     {
                         var fumVal = fum.val()
                         var playerNum = "p" + self.kickoffRecoveredNum
@@ -568,40 +585,45 @@ export default {
         self = this
         var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Special")
         ref.child("KickRet").once("value", function(kickRet){
-            var kickRetStats = kickRet.val()
-            var playerNum = "p" + self.kickoffRetNum
-            var totalRets = parseInt(kickRetStats.TotalRets) + parseInt(1)
-            var totalYds = parseInt(kickRetStats.TotalYds) + parseInt(self.kickoffRetYards)
-            var tdString = "N"
-            var ptotal = 1
-            if(self.kickoffRetTouchdown)
+            if(self.kickoffRetNum != "" && self.kickoffRetYards != "")
             {
-                tdString = "Y"                
-            }
-            var playerStat = kickRetStats[playerNum]
-            if(playerStat == null)
-            {
-                ref.child("KickRet").child(playerNum).update({
-                    "TotalRets": parseInt(ptotal),
-                    "TotalYds": parseInt(self.kickoffRetYards)
+                var kickRetStats = kickRet.val()
+                var playerNum = "p" + self.kickoffRetNum
+                var totalRets = parseInt(kickRetStats.TotalRets) + parseInt(1)
+                var totalYds = parseInt(kickRetStats.TotalYds) + parseInt(self.kickoffRetYards)
+                var tdString = "N"
+                var ptotal = 1
+                if(self.kickoffRetTouchdown)
+                {
+                    self.$emit("incMyScore", 6)
+                    tdString = "Y"                
+                }
+                var playerStat = kickRetStats[playerNum]
+                if(playerStat == null)
+                {
+                    ref.child("KickRet").child(playerNum).update({
+                        "TotalRets": parseInt(ptotal),
+                        "TotalYds": parseInt(self.kickoffRetYards)
+                    })
+                }
+                else
+                {
+                    ptotal = parseInt(playerStat.TotalRets) + parseInt(1)
+                    ref.child("KickRet").child(playerNum).update({
+                        "TotalRets": ptotal,
+                        "TotalYds": parseInt(playerStat.TotalYds) + parseInt(self.kickoffRetYards)
+                    })
+                }
+                ref.child("KickRet").child(playerNum).child("Ret-" + ptotal).update({
+                    "TD": tdString,
+                    "Yards": self.kickoffRetYards
+                })
+                ref.child("KickRet").update({
+                    "TotalRets": totalRets,
+                    "TotalYds": totalYds
                 })
             }
-            else
-            {
-                ptotal = parseInt(playerStat.TotalRets) + parseInt(1)
-                ref.child("KickRet").child(playerNum).update({
-                    "TotalRets": ptotal,
-                    "TotalYds": parseInt(playerStat.TotalYds) + parseInt(self.kickoffRetYards)
-                })
-            }
-            ref.child("KickRet").child(playerNum).child("Ret-" + ptotal).update({
-                "TD": tdString,
-                "Yards": self.kickoffRetYards
-            })
-            ref.child("KickRet").update({
-                "TotalRets": totalRets,
-                "TotalYds": totalYds
-            })
+            
         }).then(()=>{
             this.kickoffRetNum = '';
             this.kickoffRetYards = '';
@@ -680,16 +702,16 @@ div button {
   box-sizing: border-box;
   min-width: 250px;
 }
-.button {
+.footballButton {
   text-decoration: none;
   margin: auto;
   width: 60%;
-  border: 2px solid black;
-  background-color: red;
   padding: 10px;
   margin-bottom: 10px;
   text-align: center;
   cursor: default;
+  border-width: 2px;
+  border-style: solid;
 }
 </style>
         

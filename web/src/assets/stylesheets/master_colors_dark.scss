@@ -9,6 +9,18 @@ $dark_fgrd: rgb(85, 85, 85);
     background-color: $light_gray;
 }
 
+.currPage {
+    background-color: $bright_red;
+    color: $light_gray;
+    border-color: $bright_red;
+
+}
+
+.footballPosDiv, .footballStatDiv {
+    background-color: $dark_bgrd;
+    color: $light_gray;
+}
+
 .TopBanner, .sbdeTD, .ng_box, .ng_box .partition_title, .ng_label, .np_box, 
 .AboutPage, .AnalysisPage, .ap_link, .FLP_H1, .loginH1, .loginPtag, .phH1, 
 .ps_input, .psH1, .psLabel, .psb_td {
@@ -29,7 +41,8 @@ $dark_fgrd: rgb(85, 85, 85);
     color: $light_gray;
 }
 
-.analysis_button, .login_button, .main_button, .ps_button, .ts_button, .psb_button, .ng_button {
+.analysis_button, .login_button, .main_button, .ps_button, .ts_button, .psb_button, .ng_button,
+ .footballNotCurr, .footballButton {
     color: $light_gray;
     background-color: $dark_fgrd;
     border-color: $bright_red;
@@ -54,7 +67,9 @@ $dark_fgrd: rgb(85, 85, 85);
 .plTR:hover td, .plFooter:hover, .analysis_button:hover, .login_button:hover, 
 .main_button:hover, .ps_button:hover, .ts_button:hover, .psb_button:hover, .ng_button:hover,
 .sn_tr:hover td, .clockPause:hover, #statMode:hover, #playMode:hover, .sn_tr:hover td, .sn_footer:hover, 
-#chartMode:hover, #entryMode:hover {
+#chartMode:hover, #entryMode:hover,
+.sn_tr:hover td, .clockPause:hover, #statMode:hover, .sn_tr:hover td, .sn_footer:hover, 
+#chartMode:hover, #entryMode:hover, .footballNotCurr:hover, .footballButton:hover{
     background-color: $transparent_red;
 }
 
