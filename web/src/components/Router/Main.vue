@@ -5,6 +5,7 @@
       <ngmodal
         v-show="isModalVisible"
         @close="closeNGModal()"
+        @NewGame="addGame"
       />
       <colorModal
         v-show="isColorModalVisible"
@@ -22,8 +23,7 @@
           <div class="list-wrapper">
             <games-list class="mbgl"
                         @gameSelected="gameSelected"
-                        @AddGame="showNGModal"
-                        @NewGame="addGame(ngData)">
+                        @AddGame="showNGModal">
             </games-list>
             <players-list class="mbpl"
                           @playerSelected="viewPlayerInfo"
@@ -70,7 +70,11 @@ export default {
       soccerStats: 'statStore/soccerStats',
       basketballStats: 'statStore/basketballStats',
       basketballPlayerStats: 'statStore/basketballPlayerStats',
-      gamesList: 'mainStore/gamesList'
+      gamesList: 'mainStore/gamesList',
+      footballOffenseStats: 'statStore/footballOffenseStats',
+      footballDefenseStats: 'statStore/footballDefenseStats',
+      footballSpecialStats: 'statStore/footballSpecialStats'
+
     })
   },
   data () {
@@ -270,7 +274,35 @@ export default {
       var isSoccer = this.selectedTeamSport == 1
       var isBball = this.selectedTeamSport == 0
       var periodLength = ngData.PeriodLength;
-
+      alert("F")
+      if(this.selectedTeamSport == 2){
+        alert("IN FOOTBALL ADD GAME")
+        var gameData = {}
+        gameData['Live'] = false
+        gameData['OpposingTeamName'] = ngData.Opponent
+        gameData['Plays'] = {
+          'Period1': " ",
+          'Period2': " ",
+          'Period3': " ",
+          'Period4': " "
+        }
+        gameData['Totals'] = {
+          'Defense': this.footballDefenseStats,
+          'Offense': this.footballOffenseStats,
+          'Special': this.footballSpecialStats
+        }
+        firebase.database().ref('FootballGames').child(this.selectedTeamId).update({
+          [gameID]: gameData
+        })
+        var newdate = new Date();
+        var dString = newdate.toJSON().substring(0,10);
+        var str = "vs " + ngData.Opponent + "|" + dString + "|0-0"
+        firebase.database().ref('TeamSportfolios').child(this.selectedTeamId).child('Games').update({
+          [gameID] : str
+        })
+        this.closeNGModal()
+        return;
+      }
       // SCEnabled: this.scEnabled,
 
       if(isSoccer){
