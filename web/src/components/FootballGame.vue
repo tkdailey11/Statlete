@@ -2,13 +2,15 @@
     <div class="FootballGame">
         <nav-component />
         <h1 class="mainH1">{{selectedTeamName}}</h1>
+        <div class="footballButton" id="startButton" @click="startButton">Start</div>
+        <div class="footballButton" id="endButton" @click="endButton">End</div>
         <table align="center">
           <tr>
             <td class="item"> {{myScore}}</td>
-            <td> </td>
-            <td> </td>
-            <td> </td>
-            <td> </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
             <td class="item">{{oppScore}}</td>
           </tr>
           <tr>
@@ -54,11 +56,13 @@
 
 <script>
 import {mapGetters} from 'vuex';
-
+import firebase from 'firebase';
 export default {
   computed: {
     ...mapGetters({
-      selectedTeamName: 'mainStore/selectedTeamName'
+      selectedTeamName: 'mainStore/selectedTeamName',
+      selectedTeamId: 'mainStore/selectedTeamId',
+      activeGameId: 'mainStore/activeGameId'
     })
   },
 
@@ -72,7 +76,42 @@ export default {
     
 
   },
+  mounted() {
+    jQuery("#endButton").hide();
+  },
   methods: {
+    startButton: function(data) {
+      jQuery("#startButton").hide();
+      jQuery("#endButton").show();
+      var newdate = new Date();
+      var dString = newdate.toJSON().substring(0,10);
+      var self = this
+      var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId)
+      ref.update({
+        "Date": dString,
+        "Live": true,
+        "Score": "0-0"
+      })
+    },
+    endButton: function(data) {
+      // Set game to over
+      var result = "L"
+      if(this.myScore > this.oppScore)
+      {
+        result = "W"
+      }
+      else if(this.myScore == this.oppScore)
+      {
+        result = "T"
+      }
+      var self = this
+      var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId)
+      ref.update({
+        "Score": self.myScore + "-" + self.oppScore,
+        "Live": false,
+        "Result": result
+      })
+    },
     incrementOpp: function(data) {
       this.oppScore += parseInt(data);
     },
@@ -120,6 +159,7 @@ export default {
   created() {
     jQuery("#runForm").hide();
     jQuery("#passForm").hide();
+    jQuery("#endButton").hide();
   }
 }
 </script>
@@ -140,6 +180,21 @@ export default {
 .scores {
   font-size: 50px;
 }
+div button {
+  box-sizing: border-box;
+  min-width: 250px;
+}
+.footballButton {
+  text-decoration: none;
+  margin: auto;
+  width: 10%;
+  padding: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  cursor: default;
+  border-width: 2px;
+  border-style: solid;
+}
 
 .split {
     height: 100%;
@@ -148,7 +203,7 @@ export default {
     top: 0;
     overflow-x: hidden;
     padding-top: 20px;
-    margin-top: 225px;
+    margin-top: 280px;
 }
 
 .left {

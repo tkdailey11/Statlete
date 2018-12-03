@@ -255,7 +255,7 @@ export default {
 
         //Database
         self = this
-        var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Special")
+        var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Special")
         ref.child("Punt").once("value", function(snapshot){
             if( self.punterNum != "" && self.puntYards != "")
             {
@@ -329,7 +329,7 @@ export default {
         jQuery("#specialButtons").show();
 
         self = this
-        var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Special")
+        var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Special")
         ref.child("PuntRet").once("value", function(snap){
             if(self.puntRetNum != "" && self.puntRetYards != "")
             {
@@ -393,7 +393,7 @@ export default {
         jQuery("#fg").hide();
 
         self = this
-        var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Special")
+        var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Special")
         if(this.extraPoint)
         {
             ref.child("XP").once("value", function(shot){
@@ -479,7 +479,7 @@ export default {
         jQuery("#specialButtons").show();   
       // FG Def
         self = this
-        var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Special")
+        var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Special")
         ref.once("value", function(fgDef){
             var fgDefStat = fgDef.val()
             var xp = fgDefStat.TotalXPAllowed
@@ -528,7 +528,7 @@ export default {
         jQuery("#kickOff").hide();
         //Kickoff
         self = this
-        var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Special")
+        var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Special")
         ref.child("TotalTDAllowed").once("value", function(shot){
                 if(self.kickoffTouchdown)
                 {
@@ -547,7 +547,7 @@ export default {
                     })
                 }
             }).then(()=>{
-                var ref2 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Defense")
+                var ref2 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Defense")
                 ref2.child("FumbleRec").once("value", function(fum){
                     if(self.kickoffFumble && self.kickoffRecoveredNum != "")
                     {
@@ -583,7 +583,7 @@ export default {
         jQuery("#kickOffRet").hide();
         jQuery("#specialButtons").show();
         self = this
-        var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Special")
+        var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Special")
         ref.child("KickRet").once("value", function(kickRet){
             if(self.kickoffRetNum != "" && self.kickoffRetYards != "")
             {

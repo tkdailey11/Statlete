@@ -333,8 +333,8 @@ export default {
       // Database
       // var ref =firebase.database().ref("FootballGames/Example/Example-01/Totals/Period1/Offense")
       var self = this
-      var ref =firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Offense")
-      var ref2 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Special");
+      var ref =firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Offense")
+      var ref2 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Special");
         ref2.child("TotalTDAllowed").once("value", function(rand2){
           if(self.runFumble && self.runTouchdown && self.runPlayerNumber != "")
           {
@@ -508,7 +508,7 @@ export default {
 
       //database stuff
       var self = this
-      var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Offense")
+      var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Offense")
       ref.child("PassAtt").once("value", function(snapshot){
         if(self.passPlayerNumber != "")
         {
@@ -566,7 +566,7 @@ export default {
 
               }            
             }).then(()=>{
-              var ref2 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Special");
+              var ref2 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Special");
               ref2.child("TotalTDAllowed").once("value", function(rand2){
                 if(self.passTurnover != "" && self.passTouchdown)
                 self.$emit("oppScore", 6)
