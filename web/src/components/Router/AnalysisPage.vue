@@ -56,12 +56,17 @@ export default {
             selectedTeamSport: 'mainStore/selectedTeamSport',
             soccerStatsArr: 'statStore/soccerStatsArr',
             basketballStatsArr: 'statStore/basketballStatsArr',
+            footballOffenseArr: 'statStore/footballOffenseArr',
+            footballDefenseArr: 'statStore/footballDefenseArr',
             goals: 'statStore/goals',
             mySecondaryColor: 'mainStore/mySecondaryColor',
             myColor: 'mainStore/myColor'
         }),
         isSoccer: function() {
             return this.selectedTeamSport == 1;
+        },
+        isFootball: function() {
+            return this.selectedTeamSport == 2;
         }
     },
     mounted(){
@@ -69,6 +74,17 @@ export default {
         jQuery('#resultLine').hide();
         if(this.isSoccer){
             this.statTypes = this.statTypes.concat(this.soccerStatsArr)
+        }
+        else if(this.isFootball){
+            this.statTypes = this.statTypes.concat(this.footballOffenseArr).concat(this.footballDefenseArr)
+
+            var filtered = this.statTypes.filter(function(value, index, arr){
+                return (value !== 'Side') && (value !== 'INT') && (value !== 'TotalPassTD') && (value !== 'TotalPassYds') && (value !== 'TotalRushTD') && (value !== 'TotalRushYds');
+            });
+
+            this.statTypes = filtered;
+            this.statTypes.push('INT Thrown')
+            this.statTypes.push('INT Forced')
         }
         else {
             this.statTypes = this.statTypes.concat(this.basketballStatsArr)
@@ -84,6 +100,20 @@ export default {
         ...mapMutations({
             SS_SET_GOALS: 'statStore/SS_SET_GOALS'
         }),
+        getFootballStatType(stat){
+            if(stat === 'INT Thrown'){
+                return 'Offense'
+            }
+            else if(stat === 'INT Forced'){
+                return 'Defense'
+            }
+            else if(this.footballOffenseArr.includes(stat)){
+                return 'Offense'
+            }
+            else{
+                return 'Defense'
+            }
+        },
         submitResponse: function() {
             var firstOption = jQuery('#firstDropdown').find(":selected").text();
             var secondOption = jQuery('#secondDropdown').find(":selected").text();
@@ -97,18 +127,45 @@ export default {
                     if(this.isSoccer){
                         oneVarReq = firebase.functions().httpsCallable('getSingleStatSoccer');
                     }
+                    else if(this.isFootball){
+                        oneVarReq = firebase.functions().httpsCallable('getSingleStatFootball');
+                    }
                     else {
                         oneVarReq = firebase.functions().httpsCallable('getSingleStatBasketball');
                     }
-                    this.currGoal = this.goals[secondOption];
-                    var self = this;
-                    oneVarReq({
-                        Stat: secondOption,
-                        Team: this.selectedTeamId
-                    }).then(function(result) {
-                        self.analysisResult = JSON.parse(result.data);
-                        self.processOneStatResponse(self.analysisResult, secondOption);
-                    })
+                     if(this.goals != null){
+                        this.currGoal = this.goals[secondOption];
+                    }
+                    
+                    if(!this.isFootball){
+                        var self = this;
+                        oneVarReq({
+                            Stat: secondOption,
+                            Team: this.selectedTeamId
+                        }).then(function(result) {
+                            console.log('JSON')
+                            console.log(result.data)
+                            self.analysisResult = JSON.parse(result.data);
+                            self.processOneStatResponse(self.analysisResult, secondOption);
+                        })
+                    }
+                    else {
+                        var self = this;
+                        var type = secondOption.substring(0, secondOption.length);
+                        if(secondOption.startsWith('INT')){
+                            type = 'INT'
+                        }
+                        oneVarReq({
+                            Type: this.getFootballStatType(secondOption),
+                            Stat: type,
+                            Team: this.selectedTeamId
+                        }).then(function(result) {
+                            console.log('JSON')
+                            console.log(result.data)
+                            self.analysisResult = JSON.parse(result.data);
+                            self.processOneStatResponse(self.analysisResult, secondOption);
+                        })
+                    }
                 }
                 else{
                     //process first stat
@@ -116,18 +173,46 @@ export default {
                     if(this.isSoccer){
                         oneVarReq = firebase.functions().httpsCallable('getSingleStatSoccer');
                     }
+                    else if(this.isFootball){
+                        oneVarReq = firebase.functions().httpsCallable('getSingleStatFootball');
+                    }
                     else {
                         oneVarReq = firebase.functions().httpsCallable('getSingleStatBasketball');
                     }
-                    this.currGoal = this.goals[firstOption];
-                    var self = this;
-                    oneVarReq({
-                        Stat: firstOption,
-                        Team: this.selectedTeamId
-                    }).then(function(result) {
-                        self.analysisResult = JSON.parse(result.data);
-                        self.processOneStatResponse(self.analysisResult, firstOption);
-                    })
+                    if(this.goals != null){
+                        this.currGoal = this.goals[firstOption];
+                    }
+                    
+                    if(!this.isFootball){
+                        var self = this;
+                        oneVarReq({
+                            Stat: firstOption,
+                            Team: this.selectedTeamId
+                        }).then(function(result) {
+                            console.log('JSON')
+                            console.log(result.data)
+                            self.analysisResult = JSON.parse(result.data);
+                            self.processOneStatResponse(self.analysisResult, firstOption);
+                        })
+                    }
+                    else {
+                        var self = this;
+                        var type = firstOption.substring(0, firstOption.length);
+                        if(firstOption.startsWith('INT')){
+                            type = 'INT'
+                        }
+                        oneVarReq({
+                            Type: this.getFootballStatType(firstOption),
+                            Stat: type,
+                            Team: this.selectedTeamId
+                        }).then(function(result) {
+                            console.log('JSON')
+                            console.log(result.data)
+                            self.analysisResult = JSON.parse(result.data);
+                            self.processOneStatResponse(self.analysisResult, firstOption);
+                        })
+                    }
+                    
                 }
             }
             else {
@@ -135,20 +220,48 @@ export default {
                 if(this.isSoccer){
                     twoVarReq = firebase.functions().httpsCallable('getTwoStatsSoccer');
                 }
+                else if(this.isFootball){
+                        twoVarReq = firebase.functions().httpsCallable('getTwoStatsFootball');
+                }
                 else {
                     twoVarReq = firebase.functions().httpsCallable('getTwoStatsBasketball');
                 }
+                if(this.goals != null){
                 this.currGoal = this.goals[firstOption];
                 this.secondaryGoal = this.goals[secondOption];
+                }
                 var self = this;
-                twoVarReq({
-                    Stat1: firstOption,
-                    Stat2: secondOption,
-                    Team: this.selectedTeamId
-                }).then(function(result) {
-                    self.analysisResult = JSON.parse(result.data);
-                    self.processTwoStatResponse(self.analysisResult, firstOption, secondOption);
-                })
+                if(!this.isFootball){
+                    twoVarReq({
+                        Stat1: firstOption,
+                        Stat2: secondOption,
+                        Team: this.selectedTeamId
+                    }).then(function(result) {
+                        self.analysisResult = JSON.parse(result.data);
+                        self.processTwoStatResponse(self.analysisResult, firstOption, secondOption);
+                    })
+                }
+                else {
+                    var type1 = firstOption.substring(0, firstOption.length);
+                    if(firstOption.startsWith('INT')){
+                        type1 = 'INT'
+                    }
+                    var type2 = secondOption.substring(0, secondOption.length);
+                    if(secondOption.startsWith('INT')){
+                        type2 = 'INT'
+                    }
+                    twoVarReq({
+                        Type1: this.getFootballStatType(firstOption),
+                        Type2: this.getFootballStatType(secondOption),
+                        Stat1: type1,
+                        Stat2: type2,
+                        Team: this.selectedTeamId
+                    }).then(function(result) {
+                        self.analysisResult = JSON.parse(result.data);
+                        self.processTwoStatResponse(self.analysisResult, firstOption, secondOption);
+                    })
+                }
+                
             }
         },
         processTwoStatResponse: function(res, first, second) {

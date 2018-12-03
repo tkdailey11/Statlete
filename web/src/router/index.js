@@ -12,6 +12,7 @@ import GameView from '@/components/Game/GameView'
 import PlayerGameView from '@/components/Game/PlayerGameView'
 import TeamSettings from '@/components/Router/TeamSettings'
 import TeamStatsPage from '@/components/Router/TeamStatsPage'
+import TeamStatsPageFootball from '@/components/Router/TeamStatsPageFootball'
 import GoalsPage from '@/components/Router/GoalsPage'
 import PlayerDetailView from '@/components/Router/PlayerDetailView'
 import PlayerHome from '@/components/Router/PlayerHome'
@@ -100,6 +101,14 @@ let router = new Router({
       path: '/teamstats',
       name: 'TeamStatsPage',
       component: TeamStatsPage,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/teamstatsfootball',
+      name: 'TeamStatsPageFootball',
+      component: TeamStatsPageFootball,
       meta: {
         requiresAuth: true
       }

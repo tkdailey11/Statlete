@@ -162,10 +162,55 @@ const state = {
       "TotalRushTD" : 0,
       "TotalRushYds" : 0
     },
+    footballTeamStatsSpecial: {
+      "FGAttempted" : {
+        "Total": 0
+      },
+      "FGMade" : {
+        "Total": 0
+      },
+      "KickoffReturns" : {
+        "Total": 0
+      },
+      "KickoffYds": {
+        "Total": 0
+      },
+      "PuntRet" : {
+        "Total": 0
+      },
+      "PuntRetTD": {
+        "Total": 0
+      },
+      "PuntRetYds": {
+        "Total": 0
+      },
+      "XPAtt" : {
+        "Total": 0
+      },
+      "XPMade": {
+        "Total": 0
+      },
+      "TotalFGAllowed": {
+        "Total": 0
+      },
+      "TotalTDAllowed": {
+        "Total": 0
+      },
+      "TotalXPAllowed": {
+        "Total": 0
+      }
+    },
     footballSpecialStats: {
       "FG" : {
         "TotalAtt" : 0,
         "TotalMade" : 0
+      },
+      "FGDef" : {
+        "FGMade": 0,
+        "XPMade": 0
+      },
+      "Kick":{
+        "KickTD": 0
       },
       "KickRet" : {
         "TotalRets" : 0,
@@ -183,7 +228,10 @@ const state = {
       "XP" : {
         "TotalAtt" : 0,
         "TotalMade" : 0
-      }
+      },
+      "TotalFGAllowed": 0,
+      "TotalTDAllowed": 0,
+      "TotalXPAllowed": 0
     },
     goals: {}
   };
@@ -227,6 +275,12 @@ const state = {
     },
     footballSpecialArr: state => {
       return Object.keys(state.footballSpecialStats)
+    },
+    footballTeamStatsSpecial: state => {
+      return state.footballTeamStatsSpecial
+    },
+    footballTeamStatsSpecialArr: state => {
+      return Object.keys(state.footballTeamStatsSpecial)
     }
   };
   

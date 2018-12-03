@@ -56,7 +56,6 @@ export default {
     },
     methods: {
         renderBarChart: function() {
-            alert('RENDER')
             var self = this;
             if(self.showGoal){
                 this.addPlugin({
