@@ -284,9 +284,8 @@ export default {
       var isSoccer = this.selectedTeamSport == 1
       var isBball = this.selectedTeamSport == 0
       var periodLength = ngData.PeriodLength;
-      alert("F")
+      
       if(this.selectedTeamSport == 2){
-        alert("IN FOOTBALL ADD GAME")
         var gameData = {}
         gameData['Live'] = false
         gameData['OpposingTeamName'] = ngData.Opponent

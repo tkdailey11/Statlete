@@ -4,7 +4,7 @@
         <h1 class="teamStatsH1">Team Totals</h1>
         <div id="teamstatspage_main">
             <vue-scrolling-table
-                        :scroll-horizontal="scrollHorizontal"
+                        :scroll-horizontal="scrollHorizontal" v-if="loaded"
                         :scroll-vertical="scrollVertical"
                         :sync-header-scroll="syncHeaderScroll"
                         :sync-footer-scroll="false"
@@ -29,13 +29,13 @@
                 <tr v-for="game in gamesList" :key="game + '-key'">
                     <th style="border-right: medium solid black;">{{game}}</th>
                     <td v-for="stat in footballOffenseArr" :key="stat + '-' + 'statType'">
-                      {{dataPointsArr[game]['Offense'][stat].Total}}
+                      <input v-model="dataPointsArr[game]['Offense'][stat].Total">
                     </td>
                 </tr>
                 </template>
             </vue-scrolling-table>
             <vue-scrolling-table
-                        :scroll-horizontal="scrollHorizontal"
+                        :scroll-horizontal="scrollHorizontal" v-if="loaded"
                         :scroll-vertical="scrollVertical"
                         :sync-header-scroll="syncHeaderScroll"
                         :sync-footer-scroll="false"
@@ -67,7 +67,7 @@
                 </template>
             </vue-scrolling-table>
                         <vue-scrolling-table
-                        :scroll-horizontal="scrollHorizontal"
+                        :scroll-horizontal="scrollHorizontal" v-if="loaded"
                         :scroll-vertical="scrollVertical"
                         :sync-header-scroll="syncHeaderScroll"
                         :sync-footer-scroll="false"
@@ -134,7 +134,7 @@
         maxRows: 100,
         freezeFirstColumn: true,
         gameDataRef: null,
-        dataPointsArr: {},
+        dataPointsArr: null,
         loaded: false
       }
     },
@@ -166,19 +166,21 @@
       goBack: function() {
         this.$emit('TeamStatsPageClose');
       },
-      refreshStats: function() {
+      refreshStats: async function() {
+        console.log(this.dataPointsArr)
         this.loaded = false
         var self = this;
         var dbRef = firebase.database().ref('/FootballGames/' + this.selectedTeamId);
         var promiseList = []
+        var localDataPoints = {}
         promiseList.push(this.gamesList.forEach(function(el){
-            dbRef.child(el).on('value', function(snap){
+            dbRef.child(el).once('value', function(snap){
                 var obj = snap.val()
                 var opposingTeamName = obj['OpponentTeamName']
                 var date = obj['Date']
-                var offStats = obj.Totals.Period1.Offense;
-                var defStats = obj.Totals.Period1.Defense;
-                var specialStats = obj.Totals.Period1.Special;
+                var offStats = obj.Totals.Offense;
+                var defStats = obj.Totals.Defense;
+                var specialStats = obj.Totals.Special;
 
                 var specialTeamStats = {}
 
@@ -247,7 +249,7 @@
                   }
                 })
 
-                self.dataPointsArr[el] = {
+                localDataPoints[el] = {
                     'Date' : date,
                     'OpposingTeam': opposingTeamName,
                     'Offense': offStats,
@@ -256,26 +258,37 @@
                 }
             })
         }))
-
-        Promise.all(promiseList).then(() => {
+        
+        await Promise.all(promiseList).then(() => {
           
+          //self.dataPointsArr = localDataPoints
+          return localDataPoints
         })
       }
+    }, 
+    watch: {
+      dataPointsArr: {
+        handler: function(){
+        this.vm.$forceUpdate()
+        },
+        deep: true
+      }
     },
-    created() {
+    async created() {
       this.loggedInUser = firebase.auth().currentUser;
       this.currentUserEmail = this.loggedInUser.email;
       var self = this
-      this.gamesList.forEach(function(el){
-        self.dataPointsArr[el] = {
-          'Date': 'date',
-          'OpposingTeam': 'opponent',
-          'Offense': self.footballOffenseStats,
-          'Defense': self.footballDefenseStats,
-          'Special': self.footballTeamStatsSpecial
-        }
-      })
-      this.refreshStats();
+      // this.gamesList.forEach(function(el){
+      //   self.dataPointsArr[el] = {
+      //     'Date': 'date',
+      //     'OpposingTeam': 'opponent',
+      //     'Offense': self.footballOffenseStats,
+      //     'Defense': self.footballDefenseStats,
+      //     'Special': self.footballTeamStatsSpecial
+      //   }
+      // })
+      this.dataPointsArr = await this.refreshStats();
+      this.loaded = true;
     },
     mounted() {
       
