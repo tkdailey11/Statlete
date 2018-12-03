@@ -20,20 +20,24 @@
         />
         <div id="EntryView">
           <div id="entryDiv">
-            <player-stat-selector id="GV_pss"
-                                  :players="players"
-                                  :height="'height: 500px;'"
-                                  @playerSelected="playerWasSelected"></player-stat-selector>
-            <sb-data-entry id="sbde1"
-                          :height="'height: 500px;'"
-                          :isActive="gameLive"
-                          @StatChange="updateDB"
-                          :gameID="activeGameId"></sb-data-entry>
-            <v-radio-group v-if="isSoccer" v-model="hasPoss">
-              <v-radio :label="'My Team'" :value="1" />
-              <v-radio :label="'None'" :value="0" />
-              <v-radio :label="'Opponent'" :value="2" />
-            </v-radio-group>
+            <div id="statEntry">
+              <player-stat-selector id="GV_pss"
+                                    :players="players"
+                                    :height="'height: 500px;'"
+                                    @playerSelected="playerWasSelected"></player-stat-selector>
+              <sb-data-entry id="sbde1"
+                            :height="'height: 500px;'"
+                            :isActive="gameLive"
+                            @StatChange="updateDB"
+                            :gameID="activeGameId"></sb-data-entry>
+            </div>
+            <div id="possesionDiv">
+              <v-radio-group v-if="isSoccer" v-model="hasPoss" :light="true">
+                <v-radio :label="'My Team'" :value="1" />
+                <v-radio :label="'None'" :value="0" />
+                <v-radio :label="'Opponent'" :value="2" />
+              </v-radio-group>
+            </div>
           </div>
           <div id="fieldDiv">
             <sb-field class="GV_field"
@@ -257,9 +261,12 @@
             if(this.hadPossession == 2){
               //Opponent's possession has ended
               var seconds = this.getTimeDifference(this.currTime, this.possessionTimestamp)
-              //TODO: Update DB here
-              ref.update({
-
+              ref = ref.child('OpponentsTotals')
+              ref.child('Possession').once('value', function(snapshot){
+                var total = parseInt(snapshot.val()) + seconds
+                ref.update({
+                  'Possession': total
+                })
               })
             }
             this.possessionTimestamp = this.currTime;
@@ -269,9 +276,12 @@
             if(this.hadPossession == 1){
               //My Team's possession has ended
               var seconds = this.getTimeDifference(this.currTime, this.possessionTimestamp)
-              //TODO: Update DB here
-              ref.update({
-                
+              ref = ref.child('MyTotals')
+              ref.child('Possession').once('value', function(snapshot){
+                var total = parseInt(snapshot.val()) + seconds
+                ref.update({
+                  'Possession': total
+                })
               })
             }
             this.possessionTimestamp = this.currTime;
@@ -280,15 +290,23 @@
           default:
             var seconds = this.getTimeDifference(this.currTime, this.possessionTimestamp)
             if(this.hadPossession == 1){
-              //TODO: Update DB here
-              ref.update({
-                
+              var seconds = this.getTimeDifference(this.currTime, this.possessionTimestamp)
+              ref = ref.child('MyTotals')
+              ref.child('Possession').once('value', function(snapshot){
+                var total = parseInt(snapshot.val()) + seconds
+                ref.update({
+                  'Possession': total
+                })
               })
             }
             else if(this.hadPossession == 2){
-              //TODO: Update DB here
-              ref.update({
-                
+              var seconds = this.getTimeDifference(this.currTime, this.possessionTimestamp)
+              ref = ref.child('OpponentsTotals')
+              ref.child('Possession').once('value', function(snapshot){
+                var total = parseInt(snapshot.val()) + seconds
+                ref.update({
+                  'Possession': total
+                })
               })
             }
             this.hadPossession = 0;
@@ -933,10 +951,21 @@
   }
 
   #entryDiv {
+    display: flex;
+    flex-direction: column;
   }
 
-  #statDiv {
+  #possesionDiv{
+    flex-basis: 20%;
   }
+
+  #statEntry {
+    flex-basis: 80%;
+  }
+
+
+  /* #statDiv {
+  } */
 
   .GV_field {
     float: left;
