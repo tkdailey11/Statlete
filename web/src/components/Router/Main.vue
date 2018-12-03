@@ -36,7 +36,7 @@
             <button @click="viewTeamStats" class="btn btn-outline-primary main_button">View Team Stats</button>
             <button @click="goToAnalysis" class="btn btn-outline-primary main_button">Go to Analysis Page</button>
             <button @click="goToPdf" class="btn btn-outline-primary main_button">Export Stats to PDF</button>
-            <button @click="goToGoals" class="btn btn-outline-primary main_button">View/Edit Goals</button>
+            <button v-if="!isFootball" @click="goToGoals" class="btn btn-outline-primary main_button">View/Edit Goals</button>
             <button @click="changeColor" class="btn btn-outline-primary main_button">Change Colors</button>
           </div>
         </div>
@@ -71,7 +71,10 @@ export default {
       basketballStats: 'statStore/basketballStats',
       basketballPlayerStats: 'statStore/basketballPlayerStats',
       gamesList: 'mainStore/gamesList'
-    })
+    }),
+    isFootball: function(){
+      return this.selectedTeamSport == 2
+    }
   },
   data () {
     return {
@@ -175,7 +178,13 @@ export default {
       this.$router.push('/teamsettings');
     },
     viewTeamStats() {
-      this.$router.push('/teamstats')
+      if(this.selectedTeamSport == 2){
+        this.$router.push('/teamstatsfootball')
+      }
+      else{
+        this.$router.push('/teamstats')
+      }
+      
     },
     viewPlayerInfo() {
       
