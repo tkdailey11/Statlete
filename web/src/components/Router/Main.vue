@@ -4,6 +4,7 @@
       <new-player @newPlayerAdded="hideModal" />
       <ngmodal
         v-show="isModalVisible"
+        @NewGame="addGame"
         @close="closeNGModal()"
       />
       <colorModal
@@ -22,8 +23,7 @@
           <div class="list-wrapper">
             <games-list class="mbgl"
                         @gameSelected="gameSelected"
-                        @AddGame="showNGModal"
-                        @NewGame="addGame(ngData)">
+                        @AddGame="showNGModal">
             </games-list>
             <players-list class="mbpl"
                           @playerSelected="viewPlayerInfo"
@@ -378,6 +378,7 @@ export default {
           [gameID] : 'basketball'
         })
       }
+      this.closeNGModal()
     }
   }
 }

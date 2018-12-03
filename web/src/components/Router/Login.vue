@@ -1,9 +1,9 @@
 <template>
   <div class="login">
     <h1 class="loginH1">Statlete</h1>
-    <input class="login_input" type="text" v-model="email" placeholder="Email"><br>
-    <input class="login_input" type="password" v-model="password" placeholder="Password"><br>
-    <button class="btn btn-outline-primary btn-social login_button" @click="signIn">Sign In</button><br>
+    <input id="loginEmail" class="login_input" type="text" v-model="email" placeholder="Email"><br>
+    <input id="loginPass" class="login_input" type="password" v-model="password" placeholder="Password"><br>
+    <button id="signInBtn" class="btn btn-outline-primary btn-social login_button" @click="signIn">Sign In</button><br>
     <button class="btn btn-outline-primary btn-social login_button" @click="signInGoogle">Google</button><br>
     <p class="loginPtag">Don't have an account? <router-link to="/sign-up" class="link">Click here to create one!</router-link></p>
     <footer class="navbar fixed-bottom myBottomNav">
@@ -25,6 +25,27 @@
         email: '',
         password: ''
       }
+    },
+    mounted() {
+      // Get the input field
+      var emailField = document.getElementById("loginEmail");
+      var passwordField = document.getElementById("loginPass");
+
+      emailField.addEventListener("keyup", function(event) {
+        event.preventDefault();
+        // Number 13 is the "Enter" key on the keyboard
+        if (event.keyCode === 13) {
+          document.getElementById("signInBtn").click();
+        }
+      });
+
+      passwordField.addEventListener("keyup", function(event) {
+        event.preventDefault();
+        // Number 13 is the "Enter" key on the keyboard
+        if (event.keyCode === 13) {
+          document.getElementById("signInBtn").click();
+        }
+      });
     },
     methods: {
       aboutClicked: function(){

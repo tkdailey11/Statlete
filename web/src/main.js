@@ -149,6 +149,15 @@ Vue.component('vue-scrolling-table', VueScrollingTable);
 import VueNumericInput from 'vue-numeric-input';
 Vue.use(VueNumericInput)
 
+import VueExpandPanel from 'vue-expand-panel'
+import 'vue-expand-panel/dist/vue-expand-panel.css'
+Vue.use(VueExpandPanel)
+
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
+Vue.use(Vuetify)
+
 
 
 //Stylesheets

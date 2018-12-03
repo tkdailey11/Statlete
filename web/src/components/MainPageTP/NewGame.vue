@@ -21,16 +21,21 @@
                     </div>
                     <div>
                       <label style="float: left; margin-right: 9%;">Number of Periods:</label>
-                      <segmented-control
-                          :options="options"
-                          label="label"
-                          value="value"
-                          color="#fff"
-                          active-color="#e00010"
-                          :multiple="false"
-                          @select="onSelect"
-                          class="ng_sc"
-                      />
+                      <v-btn-toggle v-model="text">
+                        <v-btn flat value="left">
+                          Left
+                        </v-btn>
+                        <v-btn flat value="center">
+                          Center
+                        </v-btn>
+                        <v-btn flat value="right">
+                          Right
+                        </v-btn>
+                        <v-btn flat value="justify">
+                          Justify
+                        </v-btn>
+                      </v-btn-toggle>
+
                     </div>
                     <div>
                       <label class="sceLabel">Shot Chart Enabled:</label>

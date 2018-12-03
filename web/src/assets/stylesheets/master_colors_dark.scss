@@ -43,6 +43,23 @@ $dark_fgrd: rgb(85, 85, 85);
 
 .analysis_button, .login_button, .main_button, .ps_button, .ts_button, .psb_button, .ng_button,
  .footballNotCurr, .footballButton {
+.vcard_txt {
+    
+}
+
+.vcard_header {
+    font-weight: 700;
+}
+
+.faqHeader {
+    color: $light_gray;
+}
+
+.FAQPage {
+    background-color: $dark_bgrd;
+}
+
+.analysis_button, .login_button, .main_button, .ps_button, .ts_button, .psb_button, .ng_button {
     color: $light_gray;
     background-color: $dark_fgrd;
     border-color: $bright_red;

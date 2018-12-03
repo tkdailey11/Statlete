@@ -20,7 +20,6 @@
         />
         <div id="EntryView">
           <div id="entryDiv">
-            
             <player-stat-selector id="GV_pss"
                                   :players="players"
                                   :height="'height: 500px;'"
@@ -30,6 +29,11 @@
                           :isActive="gameLive"
                           @StatChange="updateDB"
                           :gameID="activeGameId"></sb-data-entry>
+            <v-radio-group v-if="isSoccer" v-model="hasPoss">
+              <v-radio :label="'My Team'" :value="1" />
+              <v-radio :label="'None'" :value="0" />
+              <v-radio :label="'Opponent'" :value="2" />
+            </v-radio-group>
           </div>
           <div id="fieldDiv">
             <sb-field class="GV_field"
@@ -109,8 +113,9 @@
         pauseBtnString: 'Start',
         pauseEnabled: true,
         isModalVisible: false,
-        hasPossesion: 0,
-        possesionTimestamp: '00:00'
+        hasPoss: 0,
+        hadPossession: 0,
+        possessionTimestamp: '00:00'
       }
     },
     mounted() {
@@ -209,15 +214,6 @@
       },
       isBasketball: function() {
         return this.selectedTeamSport == 0;
-      },
-      myTeamHasPossesion: function() {
-        return this.hasPossesion == 1
-      },
-      oppHasPossesion: function() {
-        return this.hasPossesion == 2
-      },
-      noPossesion: function() {
-        return (this.hasPossesion != 1 && this.hasPossesion != 2)
       }
     },
     methods: {
@@ -254,39 +250,65 @@
       closeESModal() {
         this.isModalVisible = false;
       },
-      possesionChanged(data){
-        if(this.noPossesion){
-          this.possesionTimestamp = this.currTime
-          this.hasPossesion = data
+      possessionChanged(){
+        var ref = firebase.database().ref('/SoccerGames').child(this.selectedTeamId).child(this.activeGameId);
+        switch(this.hasPoss){
+          case 1:
+            if(this.hadPossession == 2){
+              //Opponent's possession has ended
+              var seconds = this.getTimeDifference(this.currTime, this.possessionTimestamp)
+              //TODO: Update DB here
+              ref.update({
+
+              })
+            }
+            this.possessionTimestamp = this.currTime;
+            this.hadPossession = 1;
+            break;
+          case 2:
+            if(this.hadPossession == 1){
+              //My Team's possession has ended
+              var seconds = this.getTimeDifference(this.currTime, this.possessionTimestamp)
+              //TODO: Update DB here
+              ref.update({
+                
+              })
+            }
+            this.possessionTimestamp = this.currTime;
+            this.hadPossession = 2;
+            break;
+          default:
+            var seconds = this.getTimeDifference(this.currTime, this.possessionTimestamp)
+            if(this.hadPossession == 1){
+              //TODO: Update DB here
+              ref.update({
+                
+              })
+            }
+            else if(this.hadPossession == 2){
+              //TODO: Update DB here
+              ref.update({
+                
+              })
+            }
+            this.hadPossession = 0;
+            break;
         }
-        else{
-          if(this.myTeamHasPossesion && data != 1){
-            if(data == 2){
-              this.possesionTimestamp = this.currTime
-              this.hasPossesion = 2
-            }
-            else{
-              this.hasPossesion = 0
-            }
-            var time = this.currTime
-            var secondsWithPoss = getTimeDifference(this.possesionTimestamp, time)
-            //TODO: Update DB
-            
-          }
-          else if(this.oppHasPossesion && data != 2){
-            if(data == 1){
-              this.possesionTimestamp = this.currTime
-              this.hasPossesion = 1
-            }
-            else{
-              this.hasPossesion = 0
-            }
-            var time = this.currTime
-            var secondsWithPoss = getTimeDifference(this.possesionTimestamp, time)
-            //TODO: Update DB
-            
-          }
-        }
+      },
+      getTimeDifference(current, previous){
+        var currArr = current.split(':')
+        var currNums = [0,0]
+        currNums[0] = parseInt(currArr[0])
+        currNums[1] = parseInt(currArr[1])
+
+        var prevArr = previous.split(':')
+        var prevNums = [0,0]
+        prevNums[0] = parseInt(prevArr[0])
+        prevNums[1] = parseInt(prevArr[1])
+
+        var diff = (currNums[0] - prevNums[0]) * 60
+        diff += (currNums[1] - prevNums[1])
+        return diff;
       },
       pauseClicked(){
         var self = this;
@@ -844,18 +866,6 @@
         
         return result;
       },
-      possButtonClicked(buttonName){
-        switch(buttonName) {
-          case 'myTeam':
-            alert('1');
-            break;
-          case 'opponent':
-            alert('2');
-            break;
-          default:
-            alert('3');
-        }
-      },
       secondsToMinutesString(seconds){
         if(seconds <= 0){
           return '00:00';
@@ -877,6 +887,11 @@
           this.setOppColor()
         },
         deep: true
+      },
+      hasPoss: {
+        handler: function() {
+          this.possessionChanged()
+        }
       }
     }
   }
