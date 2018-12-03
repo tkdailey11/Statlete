@@ -99,8 +99,39 @@
                         </table>
                         <button class="footballButton" @click="penaltyConfirm">Confirm</button>
             </div>
-            <div id="statleteForm">
-              GO FOR IT!!!!!!!!!!!
+            <div id="runLeftForm">
+              <img src="../assets/images/football-ask-statlete/run_left.png">
+              <br>
+              <button class="footballButton" @click="askStatleteConfirm">Confirm</button>
+            </div>
+
+            <div id="runRightForm">
+              <img src="../assets/images/football-ask-statlete/run_right.png">
+              <br>
+              <button class="footballButton" @click="askStatleteConfirm">Confirm</button>
+            </div>
+
+            <div id="runMiddleForm">
+              <img src="../assets/images/football-ask-statlete/run_middle.png">
+              <br>
+              <button class="footballButton" @click="askStatleteConfirm">Confirm</button>
+            </div>
+
+            <div id="throwLeftForm">
+              <img src="../assets/images/football-ask-statlete/pass_left.png">
+              <br>
+              <button class="footballButton" @click="askStatleteConfirm">Confirm</button>
+            </div>
+
+            <div id="throwMiddleForm">
+              <img src="../assets/images/football-ask-statlete/pass_middle.png">
+              <br>
+              <button class="footballButton" @click="askStatleteConfirm">Confirm</button>
+            </div>
+
+            <div id="throwRightForm">
+              <img src="../assets/images/football-ask-statlete/pass_right.png">
+              <br>
               <button class="footballButton" @click="askStatleteConfirm">Confirm</button>
             </div>
 
@@ -191,13 +222,44 @@ export default {
     },
 
     askStatlete: function() {
-      jQuery("#statleteForm").show();
+      jQuery("#statleteForm").hide();
       jQuery("#offenseButtons").hide();
       jQuery("#turnoverForm").hide();
+      var num = Math.floor((Math.random() * 6) + 1);
+      if(num == 1)
+      {
+        jQuery("#runLeftForm").show();
+      }
+      else if(num == 2)
+      {
+        jQuery("#runMiddleForm").show();
+      }
+      else if(num == 3)
+      {
+        jQuery("#runRightForm").show();
+      }
+      else if(num == 4)
+      {
+        jQuery("#throwLeftForm").show();
+      }
+      else if(num == 5) 
+      {
+        jQuery("#throwMiddleForm").show();
+      }
+      else
+      {
+        jQuery("#throwRightForm").show();
+      }
     },
 
     askStatleteConfirm: function() {
       jQuery("#statleteForm").hide();
+      jQuery("#runLeftForm").hide();
+      jQuery("#runMiddleForm").hide();
+      jQuery("#runRightForm").hide();
+      jQuery("#throwLeftForm").hide();
+      jQuery("#throwMiddleForm").hide();
+      jQuery("#throwRightForm").hide();
       jQuery("#offenseButtons").show();
     },
 
@@ -776,6 +838,13 @@ export default {
     jQuery("#specialForm").hide();
     jQuery("#statleteForm").hide();
 
+    jQuery("#runLeftForm").hide();
+    jQuery("#runMiddleForm").hide();
+    jQuery("#runRightForm").hide();
+    jQuery("#throwLeftForm").hide();
+    jQuery("#throwMiddleForm").hide();
+    jQuery("#throwRightForm").hide();
+
     jQuery("#getOffPosition").show();
     jQuery("#offenseButtons").hide();
   }
@@ -785,6 +854,10 @@ export default {
 div button {
   box-sizing: border-box;
   min-width: 250px;
+}
+img {
+  margin: 3vw;
+  zoom: 50%;
 }
 .footballButton {
   text-decoration: none;
