@@ -117,7 +117,12 @@ const state = {
         "Total" : 0
       },
       "PassYds" : {
-        "Total" : 0
+        "Total" : 0,
+        "Side": {
+          "Right": 0,
+          "Left": 0,
+          "Middle": 0
+        }
       },
       "RecTD" : {
         "Total" : 0
@@ -135,12 +140,20 @@ const state = {
         "Total" : 0
       },
       "RushYds" : {
-        "Total" : 0
+        "Total" : 0,
+        "Side": {
+          "Right": 0,
+          "Left": 0,
+          "Middle": 0
+        }
       }
     },
     footballDefenseStats: {
       "FumbleForced" : {
         "Total" : 0
+      },
+      "DefTD": {
+        "Total": 0
       },
       "FumbleRec" : {
         "Total" : 0,
@@ -158,9 +171,23 @@ const state = {
         "Total" : 0
       },
       "TotalPassTD" : 0,
-      "TotalPassYds" : 0,
+      "TotalPassYds" : {
+        "Total" : 0,
+        "Side": {
+          "Right": 0,
+          "Left": 0,
+          "Middle": 0
+        }
+      },
       "TotalRushTD" : 0,
-      "TotalRushYds" : 0
+      "TotalRushYds" : {
+        "Total" : 0,
+        "Side": {
+          "Right": 0,
+          "Left": 0,
+          "Middle": 0
+        }
+      }
     },
     footballTeamStatsSpecial: {
       "FGAttempted" : {
@@ -199,6 +226,88 @@ const state = {
       "TotalXPAllowed": {
         "Total": 0
       }
+    },
+    footballAskStatlete: {
+      "1Down": {
+        "PassLeft": 0,
+        "PassMiddle": 0,
+        "PassRight": 0,
+        "RunLeft": 0,
+        "RunMiddle": 0,
+        "RunRight": 0,
+      },
+      "2DownAndMedium": {
+        "PassLeft": 0,
+        "PassMiddle": 0,
+        "PassRight": 0,
+        "RunLeft": 0,
+        "RunMiddle": 0,
+        "RunRight": 0,
+      },
+      "2DownAndLong": {
+        "PassLeft": 0,
+        "PassMiddle": 0,
+        "PassRight": 0,
+        "RunLeft": 0,
+        "RunMiddle": 0,
+        "RunRight": 0,
+      },
+      "2DownAndShort": {
+        "PassLeft": 0,
+        "PassMiddle": 0,
+        "PassRight": 0,
+        "RunLeft": 0,
+        "RunMiddle": 0,
+        "RunRight": 0,
+      },
+      "3DownAndLong": {
+        "PassLeft": 0,
+        "PassMiddle": 0,
+        "PassRight": 0,
+        "RunLeft": 0,
+        "RunMiddle": 0,
+        "RunRight": 0,
+      },
+      "3DownAndMedium": {
+        "PassLeft": 0,
+        "PassMiddle": 0,
+        "PassRight": 0,
+        "RunLeft": 0,
+        "RunMiddle": 0,
+        "RunRight": 0,
+      },
+      "3DownAndShort": {
+        "PassLeft": 0,
+        "PassMiddle": 0,
+        "PassRight": 0,
+        "RunLeft": 0,
+        "RunMiddle": 0,
+        "RunRight": 0,
+      },
+      "4DownAndLong": {
+        "PassLeft": 0,
+        "PassMiddle": 0,
+        "PassRight": 0,
+        "RunLeft": 0,
+        "RunMiddle": 0,
+        "RunRight": 0,
+      },
+      "3DownAndMedium": {
+        "PassLeft": 0,
+        "PassMiddle": 0,
+        "PassRight": 0,
+        "RunLeft": 0,
+        "RunMiddle": 0,
+        "RunRight": 0,
+      },
+      "4DownAndLong": {
+        "PassLeft": 0,
+        "PassMiddle": 0,
+        "PassRight": 0,
+        "RunLeft": 0,
+        "RunMiddle": 0,
+        "RunRight": 0,
+      },
     },
     footballSpecialStats: {
       "FG" : {
