@@ -3,7 +3,7 @@
         <nav-component />
         <h1 class="teamStatsH1">Team Totals</h1>
         <div id="teamstatspage_main">
-          <v-card>
+          <v-card :dark="true">
             <v-card-title>
               Offense
               <v-spacer></v-spacer>
@@ -14,13 +14,13 @@
               class="elevation-1"
             >
               <template slot="items" slot-scope="props">
-                <td>{{ props.item.gameID }}</td>
-                <td class="text-xs-right" v-for="type in footballOffenseArr" :key="'offense-' + type">{{ props.item[type] }}</td>
+                <td style="color: white;">{{ props.item.gameID }}</td>
+                <td class="text-xs-right" v-for="type in footballOffenseArr" :key="'offense-' + type" style="color: white;">{{ props.item[type] }}</td>
               </template>
             </v-data-table>
           </v-card>
 
-          <v-card style="margin-top: 5vh;">
+          <v-card style="margin-top: 5vh;" :dark="true">
             <v-card-title>
               Defense
               <v-spacer></v-spacer>
@@ -31,13 +31,13 @@
               class="elevation-1"
             >
               <template slot="items" slot-scope="props">
-                <td>{{ props.item.gameID }}</td>
-                <td class="text-xs-right" v-for="type in defKeys" :key="'defense-' + type">{{ props.item[type] }}</td>
+                <td style="color: white;">{{ props.item.gameID }}</td>
+                <td class="text-xs-right" v-for="type in defKeys" :key="'defense-' + type" style="color: white;">{{ props.item[type] }}</td>
               </template>
             </v-data-table>
           </v-card>
 
-          <v-card style="margin-top: 5vh; margin-bottom: 5vh;">
+          <v-card style="margin-top: 5vh; margin-bottom: 5vh;" :dark="true">
             <v-card-title>
               Special Teams
               <v-spacer></v-spacer>
@@ -48,8 +48,8 @@
               class="elevation-1"
             >
               <template slot="items" slot-scope="props">
-                <td>{{ props.item.gameID }}</td>
-                <td class="text-xs-right" v-for="type in specialKeys" :key="'special-' + type">{{ props.item[type] }}</td>
+                <td style="color: white;">{{ props.item.gameID }}</td>
+                <td class="text-xs-right" v-for="type in specialKeys" :key="'special-' + type" style="color: white;">{{ props.item[type] }}</td>
               </template>
             </v-data-table>
           </v-card>
@@ -293,7 +293,7 @@
       this.footballOffenseArr.forEach(stat => {
         this.headers.push({
           'text': stat,
-          'value': 'gameID'
+          'value': stat
         })
       })
       this.defHeaders = [{
@@ -305,7 +305,7 @@
       this.defKeys.forEach(stat => {
         this.defHeaders.push({
           'text': stat,
-          'value': 'gameID'
+          'value': stat
         })
       })
 
@@ -320,7 +320,7 @@
         this.specialKeys.push(stat)
         this.specialHeaders.push({
           'text': stat,
-          'value': 'gameID'
+          'value': stat
         })
       })
 

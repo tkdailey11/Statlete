@@ -1,15 +1,144 @@
 <template>
   <div class="myNavComponent">
-    <statlete-navbar @shouldOpenNav="openNav"
-                     @shouldLogout="logout"></statlete-navbar>
-    <side-nav id="mySidenav"
-              @showPlayer="showPlayer"
-              @showTeam="showTeam"
-              @teamSelected="teamSelected"
-              @playerSelected="playerSelected"
-              @ChangeImage ="changeImage"
-              :photoURL="userImageURL">
-    </side-nav>
+    <template>
+      <v-toolbar dark>
+        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+        <v-toolbar-title>Statlete</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-toolbar-items class="hidden-sm-and-down">
+          <v-btn icon @click="goBack">
+            <v-icon>home</v-icon>
+          </v-btn>
+
+          <v-btn icon @click="logout">
+            <v-icon>input</v-icon>
+          </v-btn>
+        </v-toolbar-items>
+      </v-toolbar>
+    </template>
+    <template>
+      <v-layout
+        wrap
+        style="height: 200px;"
+      >
+        <v-navigation-drawer
+          v-model="drawer"
+          :mini-variant="mini"
+          absolute
+          dark
+          temporary
+        >
+          <v-list class="pa-1">
+            <v-list-tile v-if="mini" @click.stop="mini = !mini">
+              <v-list-tile-action>
+                <v-icon>chevron_right</v-icon>
+              </v-list-tile-action>
+            </v-list-tile>
+
+            <v-list-tile avatar tag="div">
+              <v-list-tile-avatar>
+                <img :src="userImageURL" @click.stop="changeImage">
+              </v-list-tile-avatar>
+
+              <v-list-tile-content>
+                <v-list-tile-title>{{currentUserName}}</v-list-tile-title>
+              </v-list-tile-content>
+
+              <v-list-tile-action>
+                <v-btn icon @click.stop="mini = !mini">
+                  <v-icon>chevron_left</v-icon>
+                </v-btn>
+              </v-list-tile-action>
+            </v-list-tile>
+          </v-list>
+
+      <v-list>
+        <v-list-tile @click.stop="goBack">
+          <v-list-tile-action>
+            <v-icon>home</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-title>Home</v-list-tile-title>
+        </v-list-tile>
+
+      <v-list-group
+        prepend-icon="account_circle"
+        value="true">
+        <v-list-tile slot="activator">
+          <v-list-tile-title>My Sportfolios</v-list-tile-title>
+        </v-list-tile>
+
+        <v-list-group
+          no-action
+          sub-group
+          value="true">
+          <v-list-tile slot="activator">
+            <v-list-tile-title>Team</v-list-tile-title>
+          </v-list-tile>
+
+          <v-list-tile
+            v-for="(team, i) in teamSportfolios"
+            :key="i"
+            @click="selectedTeam(team.id)"
+          >
+          <v-list-tile-action>
+              <font-awesome-icon v-if="team.sport == 0" icon="basketball-ball" />
+              <font-awesome-icon v-else-if="team.sport == 1" icon="futbol" />
+              <font-awesome-icon v-else icon="football-ball" />
+          </v-list-tile-action>
+            <v-list-tile-title v-text="team.id"></v-list-tile-title>
+          </v-list-tile>
+        </v-list-group>
+
+        <v-list-group
+          no-action
+          sub-group
+          value="true">
+          <v-list-tile slot="activator">
+            <v-list-tile-title>Player</v-list-tile-title>
+          </v-list-tile>
+
+          <v-list-tile
+            v-for="(player, i) in playerSportfolios"
+            :key="i"
+            @click="selectedTeam(player.id)"
+          >
+          <v-list-tile-action>
+              <font-awesome-icon v-if="player.sport == 0" icon="basketball-ball" />
+              <font-awesome-icon v-else-if="player.sport == 1" icon="futbol" />
+              <font-awesome-icon v-else icon="football-ball" />
+          </v-list-tile-action>
+          <v-list-tile-title v-text="player.id"></v-list-tile-title>
+            
+          </v-list-tile>
+        </v-list-group>
+      </v-list-group>
+
+      <v-list-group
+        no-action
+        prepend-icon="add_circle"
+        value="true">
+        <v-list-tile slot="activator">
+          <v-list-tile-title>Add New Sportfolios</v-list-tile-title>
+        </v-list-tile>
+        <v-list-tile
+          @click="showTeam">
+          <v-list-tile-action>
+            <v-icon>group_add</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-title v-text="'New Team Sportfolio'"></v-list-tile-title>
+        </v-list-tile>
+        <v-list-tile
+          @click="showPlayer">
+          <v-list-tile-action>
+            <v-icon>person_add</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-title v-text="'New Player Sportfolio'"></v-list-tile-title>
+        </v-list-tile>
+      </v-list-group>
+    </v-list>
+        </v-navigation-drawer>
+      </v-layout>
+    </template>
     <photoModal
       v-show="isModalVisible"
       @close="closeModal()"
@@ -29,8 +158,13 @@ export default {
     ...mapGetters({
       selectedTeamId: 'mainStore/selectedTeamId',
       currentUserEmail: 'mainStore/currentUserEmail',
-      gamesList: 'mainStore/gamesList'
+      gamesList: 'mainStore/gamesList',
+      currentUserName: 'mainStore/currentUserName'
     })
+  },
+  async created() {
+    this.getTeamSportfolios()
+    await this.getPlayerSportfolios()
   },
   mounted () {
       this.downloadImage()
@@ -41,7 +175,20 @@ export default {
   data() {
     return {
       isModalVisible: false,
-      userImageURL: '../../assets/images/testUser.png'
+      userImageURL: '../../assets/images/testUser.png',
+      drawer: null,
+      items: [
+        { title: 'Home', icon: 'dashboard' },
+        { title: 'About', icon: 'question_answer' }
+      ],
+      mini: false,
+      right: null,
+      admins: [
+        ['Management', 'people_outline'],
+        ['Settings', 'settings']
+      ],
+      teamSportfolios: [],
+      playerSportfolios: []
     }
   },
   methods: {
@@ -60,6 +207,57 @@ export default {
         
       })
     },
+    getPlayerSportfolios: async function() {
+      var emailStr = this.currentUserEmail;
+      var email = emailStr.replace('.', '');
+      var self = this
+      firebase.database().ref('Users/' + email + '/PlayerTeams').on('value', function(snapshot){
+        var obj = snapshot.val()
+        var ref = firebase.database().ref('PlayerSportfolios');
+        if (obj) {
+          self.playerSportfolios = []
+          var promises = []
+          Object.values(obj).forEach(key => {
+            promises.push(ref.child(key).once('value', function(snap){
+              self.playerSportfolios.push({
+                sport: typeof snap.val().Sport !== 'undefined' ? snap.val().Sport : 0,
+                id: key
+              })
+            }))
+          });
+
+          Promise.all(promises).then(() =>{
+            console.log("players loaded")
+          })
+
+        }
+      });
+    },
+    getTeamSportfolios: function() {
+      var emailStr = this.currentUserEmail;
+      var email = emailStr.replace('.', '');
+      var self = this
+      firebase.database().ref('Users/' + email + '/AdminTeams').on('value', function(snapshot){
+        var obj = snapshot.val()
+        var ref = firebase.database().ref('TeamSportfolios');
+        if (obj) {
+          self.teamSportfolios = []
+          var promises = []
+          Object.keys(obj).forEach(key => {
+            promises.push(ref.child(key).once('value', function(snap){
+              self.teamSportfolios.push({
+                sport: typeof snap.val().Sport !== 'undefined' ? snap.val().Sport : 0,
+                id: key
+              })
+            }))
+          });
+
+          Promise.all(promises).then(() =>{
+            console.log("teams loaded")
+          })
+        }
+      });
+    },
     downloadImage: function() {
       var self = this;
       var ref = firebase.storage().ref().child('/Users/').child(self.currentUserEmail.replace('.', ''));
@@ -70,44 +268,58 @@ export default {
       });
     },
     openNav: function() {
-      setTimeout(function(){
-        document.getElementById("mySidenav").style = "width: 250px; position: absolute; z-index: 2;";
-      }, 90);
+      // setTimeout(function(){
+      //   document.getElementById("mySidenav").style = "width: 250px; position: absolute; z-index: 2;";
+      // }, 90);
     },
     showTeam: function() {
       this.$router.push('/createteam')
     },
     changeImage: function(){
-      this.isModalVisible = true
+      var message = "Do you want to upload a new image?"
+        var options = {
+          okText: 'YES',
+          cancelText: 'NO',
+          animation: 'bounce'
+        }
+        var self = this;
+        self.$dialog.confirm(message, options).then(function() {
+          self.isModalVisible = true
+        })
+      
     },
     closeModal: function() {
       this.isModalVisible = false
       location.reload();
     },
-    teamSelected: function(event) {
-      var sport = event.Sport;
-      if(sport.toString().toLowerCase() === 'soccer'){
-        sport = 1;
-      }
-      else if(sport.toString().toLowerCase() === 'basketball') {
-        sport = 0;
-      }
-      else if(sport.toString().toLowerCase() === 'football') {
-        sport = 2;
-      }
+    selectedTeam(id){
+      var self = this;
+      firebase.database().ref('TeamSportfolios').child(id).once('value', function(snapshot){
+        var obj = snapshot.val();
+        var name = obj.TeamName;
+        var sport = obj.Sport;
+        if(sport.toString().toLowerCase() === 'soccer'){
+          sport = 1;
+        }
+        else if(sport.toString().toLowerCase() === 'basketball') {
+          sport = 0;
+        }
+        else if(sport.toString().toLowerCase() === 'football') {
+          sport = 2;
+        }
 
-      
-      this.SET_SELECTED_TEAM({
-        id: event.Id,
-        name: event.Name.split('|')[0],
-        token: event.Token,
-        sport: sport
+        self.SET_SELECTED_TEAM({
+          id: id,
+          name: name.split('|')[0],
+          token: obj.Token,
+          sport: sport
+        });
+
+        self.getGamesTeam();
+        self.getPlayers();
+        self.drawer = !self.drawer
+        self.$router.push('/main')
       });
-
-      this.getGamesTeam();
-      this.getPlayers();
-
-      this.$router.push('/main')
     },
     playerSelected: function(event) {
       var sport = event.Sport;
@@ -180,6 +392,11 @@ export default {
           self.SET_PLAYERS(obj);
         }
       });
+    },
+    goBack: function() {
+      if(!(this.$route.path.includes('main') || this.$route.path.includes('playerhome'))){
+        this.$router.go(-1);
+      }
     }
   }
 }
