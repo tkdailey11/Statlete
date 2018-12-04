@@ -130,7 +130,7 @@ export default {
     },
     incrementOpp: function(data) {
       var self = this
-      this.oppScore += parseInt(data);
+      this.oppScore = parseInt(this.oppScore) + parseInt(data);
       var ref4 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId)
       ref4.update({
         "Score": self.myScore + "-" + self.oppScore
@@ -138,7 +138,7 @@ export default {
     },
     incrementMyScore: function(data) {
       var self = this
-      this.myScore += parseInt(data);
+      this.myScore = parseInt(this.myScore) + parseInt(data);
       var ref4 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId)
       ref4.update({
         "Score": self.myScore + "-" + self.oppScore

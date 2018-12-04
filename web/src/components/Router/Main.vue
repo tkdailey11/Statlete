@@ -274,6 +274,10 @@ export default {
     },
     addGame(ngData) {
       var gameCount = this.gamesList.length + 1;
+      if(this.gamesList.length == 1 && (this.gamesList[0] == 0 || this.gamesList[0].includes("02")))
+      {
+        gameCount = 1
+      }
       var gameCountStr = gameCount + '';
       if(gameCount < 10){
         gameCountStr = '0' + gameCount;
@@ -281,17 +285,17 @@ export default {
       var gameID = this.selectedTeamId + '-' + gameCountStr;
       var oppData = [];
       var myData = [];
+      var teamId = this.selectedTeamId
       var isSoccer = this.selectedTeamSport == 1
       var isBball = this.selectedTeamSport == 0
       var periodLength = ngData.PeriodLength;
-      
       if(this.selectedTeamSport == 2){
         var gameData = {}
+        var self = this
         if(gameCount == 1)
         {
-          gameData[this.selectedTeamId] = this.footballAskStatlete
-          firebase.database().ref('AskStatlete').update({
-            [this.selectedTeamId]: gameData
+            firebase.database().ref('AskStatlete').update({
+            [teamId]: self.footballAskStatlete
           })
         }
         gameData['Live'] = false
