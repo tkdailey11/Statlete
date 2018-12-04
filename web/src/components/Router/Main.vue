@@ -72,9 +72,9 @@ export default {
       basketballPlayerStats: 'statStore/basketballPlayerStats',
       gamesList: 'mainStore/gamesList',
       footballOffenseStats: 'statStore/footballOffenseStats',
-      footballDefenseStats: 'statStore/footballDefenseStats',
-      footballSpecialStats: 'statStore/footballSpecialStats'
-
+      footballDefenseStats: 'footballStore/footballDefenseStats',
+      footballSpecialStats: 'statStore/footballSpecialStats',
+      footballAskStatlete: 'statStore/footballAskStatlete'
     }),
       
     isFootball: function(){
@@ -287,6 +287,13 @@ export default {
       
       if(this.selectedTeamSport == 2){
         var gameData = {}
+        if(gameCount == 1)
+        {
+          gameData[this.selectedTeamId] = this.footballAskStatlete
+          firebase.database().ref('AskStatlete').update({
+            [this.selectedTeamId]: gameData
+          })
+        }
         gameData['Live'] = false
         gameData['OpposingTeamName'] = ngData.Opponent
         gameData['Plays'] = {

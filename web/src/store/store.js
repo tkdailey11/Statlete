@@ -6,6 +6,7 @@ import mainStore from './modules/mainStore'
 import gameViewStore from './modules/gameViewStore'
 import playerStore from './modules/playerStore'
 import statStore from './modules/statStore'
+import footballStore from './modules/footballStore'
 
 Vue.use(Vuex);
 
@@ -32,7 +33,8 @@ export const store = new Vuex.Store({
       mainStore,
       gameViewStore,
       playerStore,
-      statStore
+      statStore,
+      footballStore
     },
     //plugins: [vuexLocalStorage.plugin]
     plugins: [createPersistedState()]
