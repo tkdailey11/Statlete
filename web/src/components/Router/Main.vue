@@ -72,7 +72,7 @@ export default {
       basketballPlayerStats: 'statStore/basketballPlayerStats',
       gamesList: 'mainStore/gamesList',
       footballOffenseStats: 'statStore/footballOffenseStats',
-      footballDefenseStats: 'statStore/footballDefenseStats',
+      footballDefenseStats: 'footballStore/footballDefenseStats',
       footballSpecialStats: 'statStore/footballSpecialStats',
       footballAskStatlete: 'statStore/footballAskStatlete'
     }),
