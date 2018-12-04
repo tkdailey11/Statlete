@@ -104,6 +104,9 @@ const state = {
       "Minutes"       : 0
     },
     footballOffenseStats: {
+      "Fumble" : {
+        "Total": 0
+      },
       "INT" : {
         "Total" : 0
       },
@@ -173,19 +176,19 @@ const state = {
       "TotalPassTD" : 0,
       "TotalPassYds" : {
         "Total" : 0,
-        "Side": {
-          "Right": 0,
-          "Left": 0,
-          "Middle": 0
+        "Side" : {
+          "Right" : 0,
+          "Left" : 0,
+          "Middle" : 0
         }
       },
       "TotalRushTD" : 0,
       "TotalRushYds" : {
         "Total" : 0,
-        "Side": {
-          "Right": 0,
-          "Left": 0,
-          "Middle": 0
+        "Side" : {
+          "Right" : 0,
+          "Left" : 0,
+          "Middle" : 0
         }
       }
     },
@@ -375,6 +378,9 @@ const state = {
     },
     footballSpecialStats: state => {
       return state.footballSpecialStats;
+    },
+    footballAskStatlete: state => {
+      return state.footballAskStatlete;
     },
     footballOffenseArr: state => {
       return Object.keys(state.footballOffenseStats)
