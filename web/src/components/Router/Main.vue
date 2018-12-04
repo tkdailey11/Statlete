@@ -12,7 +12,7 @@
         @close="closeColorModal()"
         @SubmitColors="submitColors"
       />
-      <nav-component />
+      <nav-component @ChangeColor="changeColor" />
     </div>
     <div class="main_Other">
       <div id="mainPage">
