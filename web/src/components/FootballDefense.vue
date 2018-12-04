@@ -258,7 +258,7 @@ export default {
 
       //Database
       self = this
-      var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Defense")
+      var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Defense")
       ref.child("FumbleForced").once("value", function(snapshot){
         if(self.runDefFumble && self.runDefTackle != "")
         {
@@ -377,7 +377,7 @@ export default {
                     })
                   }
                 }).then(()=>{
-                  var ref2 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Offense");
+                  var ref2 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Offense");
                   ref2.child("RushTD").once("value", function(rand2){
                     if(self.runDefTouchdown && self.runDefFumble)
                     {
@@ -465,7 +465,7 @@ export default {
       }
 
       self = this
-      var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Defense")
+      var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Defense")
       ref.child("FumbleForced").once("value", function(snapshot){
         
         if(self.passTurnoverDefType == "fumble" && self.passDefRecoveredBy != "")
@@ -605,7 +605,7 @@ export default {
                     })
                   }
                 }).then(()=>{
-                  var ref2 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Period1").child("Offense");
+                  var ref2 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Offense");
                   ref2.child("RushTD").once("value", function(rand3){
                     if(self.passDefTouchdown && (self.passTurnoverDefType == "interception" || self.passTurnoverDefType == "fumble") && self.passDefRecoveredBy != "")
                     {
