@@ -332,7 +332,7 @@ export default {
               else{
                 selected += parseInt(self.runDefYards)
               }
-              ref.child("Side").update({
+              ref.child("TotalRushYds").child("Side").update({
                 [pos]: selected
               })
             }
@@ -357,8 +357,9 @@ export default {
               })
             }).then(()=>{
               ref.once("value", function(tpt){
-                if(self.runDefTouchdown)
+                if(self.runDefTouchdown && !self.runDefFumble)
                 {
+                  alert("TD")
                   self.$emit("oppScore", 6)
                   var runTD = tpt.val()
                   var total = parseInt(runTD.TotalRushTD) + parseInt(1)
@@ -367,13 +368,13 @@ export default {
                   })
                 }
               }).then(()=>{
-                ref.once("value", function(tryds){
+                ref.child("TotalRushYds").once("value", function(tryds){
                   if(self.runDefYards != "")
                   {
                     var rushYds = tryds.val()
-                    var total = parseInt(rushYds.TotalRushYds) + parseInt(self.runDefYards)
-                    ref.update({
-                      "TotalRushYds": total
+                    var total = parseInt(rushYds.Total) + parseInt(self.runDefYards)
+                    ref.child("TotalRushYds").update({
+                      "Total": total
                     })
                   }
                 }).then(()=>{
@@ -393,7 +394,7 @@ export default {
                       else{
                         player++
                       }
-                      ref2.child("RushTD").update({
+                      ref2.child("DefTD").update({
                         "Total": total,
                         [playerNum]: player
                       })
@@ -560,7 +561,7 @@ export default {
               else{
                 selected += parseInt(self.passDefYards)
               }
-              ref.child("Side").update({
+              ref.child("TotalPassYds").child("Side").update({
                 [pos]: selected
               })
             }
@@ -586,7 +587,7 @@ export default {
               }
             }).then(()=>{
               ref.once("value", function(tpt){
-                if(self.passDefTouchdown)
+                if(self.passDefTouchdown && (self.passTurnoverDefType != "interception" || self.passTurnoverDefType != "fumble"))
                 {
                   var runTD = tpt.val()
                   var total = parseInt(runTD.TotalPassTD) + parseInt(1)
@@ -595,18 +596,18 @@ export default {
                   })
                 }
               }).then(()=>{
-                ref.once("value", function(tryds){
+                ref.child("TotalPassYds").once("value", function(tryds){
                   if(self.passDefYards != "")
                   {
                     var rushYds = tryds.val()
-                    var total = parseInt(rushYds.TotalPassYds) + parseInt(self.passDefYards)
-                    ref.update({
-                      "TotalPassYds": total
+                    var total = parseInt(rushYds.Total) + parseInt(self.passDefYards)
+                    ref.child("TotalPassYds").update({
+                      "Total": total
                     })
                   }
                 }).then(()=>{
-                  var ref2 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Offense");
-                  ref2.child("RushTD").once("value", function(rand3){
+                  var ref2 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Defense");
+                  ref2.child("DefTD").once("value", function(rand3){
                     if(self.passDefTouchdown && (self.passTurnoverDefType == "interception" || self.passTurnoverDefType == "fumble") && self.passDefRecoveredBy != "")
                     {
                       self.$emit("incMyScore", 6)
@@ -621,7 +622,7 @@ export default {
                       else{
                         player++
                       }
-                      ref2.child("RushTD").update({
+                      ref2.child("DefTD").update({
                         "Total": total,
                         [playerNum]: player
                       })
