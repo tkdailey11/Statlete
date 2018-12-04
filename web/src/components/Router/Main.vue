@@ -6,7 +6,6 @@
         v-show="isModalVisible"
         @NewGame="addGame"
         @close="closeNGModal()"
-        @NewGame="addGame"
       />
       <colorModal
         v-show="isColorModalVisible"

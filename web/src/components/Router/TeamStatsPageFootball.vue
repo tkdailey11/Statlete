@@ -3,8 +3,8 @@
         <nav-component />
         <h1 class="teamStatsH1">Team Totals</h1>
         <div id="teamstatspage_main">
-            <vue-scrolling-table
-                        :scroll-horizontal="scrollHorizontal" v-if="loaded"
+            <!-- <vue-scrolling-table
+                        :scroll-horizontal="scrollHorizontal"
                         :scroll-vertical="scrollVertical"
                         :sync-header-scroll="syncHeaderScroll"
                         :sync-footer-scroll="false"
@@ -35,7 +35,7 @@
                 </template>
             </vue-scrolling-table>
             <vue-scrolling-table
-                        :scroll-horizontal="scrollHorizontal" v-if="loaded"
+                        :scroll-horizontal="scrollHorizontal"
                         :scroll-vertical="scrollVertical"
                         :sync-header-scroll="syncHeaderScroll"
                         :sync-footer-scroll="false"
@@ -67,7 +67,7 @@
                 </template>
             </vue-scrolling-table>
                         <vue-scrolling-table
-                        :scroll-horizontal="scrollHorizontal" v-if="loaded"
+                        :scroll-horizontal="scrollHorizontal"
                         :scroll-vertical="scrollVertical"
                         :sync-header-scroll="syncHeaderScroll"
                         :sync-footer-scroll="false"
@@ -98,7 +98,33 @@
                     </td>
                 </tr>
                 </template>
-            </vue-scrolling-table>
+            </vue-scrolling-table> -->
+            <template>
+              <v-data-table
+                :headers="headers"
+                :items="offenseArr"
+                class="elevation-1"
+              >
+                <template slot="items" slot-scope="props">
+                  <td>{{ props.item.gameID }}</td>
+                  <td class="text-xs-right" v-for="type in footballOffenseArr" :key="'offense-' + type">{{ props.item[type] }}</td>
+                </template>
+              </v-data-table>
+            </template>
+
+                        <template>
+              <v-data-table
+                :headers="defHeaders"
+                :items="defenseArr"
+                class="elevation-1"
+                style="margin-top: 5vh;"
+              >
+                <template slot="items" slot-scope="props">
+                  <td>{{ props.item.gameID }}</td>
+                  <td class="text-xs-right" v-for="type in footballOffenseArr" :key="'offense-' + type">{{ props.item[type] }}</td>
+                </template>
+              </v-data-table>
+            </template>
         </div>
   </div>
 </template>
@@ -134,8 +160,167 @@
         maxRows: 100,
         freezeFirstColumn: true,
         gameDataRef: null,
-        dataPointsArr: null,
-        loaded: false
+        dataPointsArr: {},
+        loaded: false,
+        headers: [
+          {
+            text: 'Dessert (100g serving)',
+            align: 'left',
+            sortable: false,
+            value: 'name'
+          },
+          { text: 'Calories', value: 'calories' },
+          { text: 'Fat (g)', value: 'fat' },
+          { text: 'Carbs (g)', value: 'carbs' },
+          { text: 'Protein (g)', value: 'protein' },
+          { text: 'Iron (%)', value: 'iron' }
+        ],
+        defHeaders: [
+          {
+            text: 'Dessert (100g serving)',
+            align: 'left',
+            sortable: false,
+            value: 'name'
+          },
+          { text: 'Calories', value: 'calories' },
+          { text: 'Fat (g)', value: 'fat' },
+          { text: 'Carbs (g)', value: 'carbs' },
+          { text: 'Protein (g)', value: 'protein' },
+          { text: 'Iron (%)', value: 'iron' }
+        ],
+        desserts: [
+          {
+            value: false,
+            name: 'Frozen Yogurt',
+            calories: 159,
+            fat: 6.0,
+            carbs: 24,
+            protein: 4.0,
+            iron: '1%'
+          },
+          {
+            value: false,
+            name: 'Ice cream sandwich',
+            calories: 237,
+            fat: 9.0,
+            carbs: 37,
+            protein: 4.3,
+            iron: '1%'
+          },
+          {
+            value: false,
+            name: 'Eclair',
+            calories: 262,
+            fat: 16.0,
+            carbs: 23,
+            protein: 6.0,
+            iron: '7%'
+          },
+          {
+            value: false,
+            name: 'Cupcake',
+            calories: 305,
+            fat: 3.7,
+            carbs: 67,
+            protein: 4.3,
+            iron: '8%'
+          },
+          {
+            value: false,
+            name: 'Gingerbread',
+            calories: 356,
+            fat: 16.0,
+            carbs: 49,
+            protein: 3.9,
+            iron: '16%'
+          },
+          {
+            value: false,
+            name: 'Jelly bean',
+            calories: 375,
+            fat: 0.0,
+            carbs: 94,
+            protein: 0.0,
+            iron: '0%'
+          },
+          {
+            value: false,
+            name: 'Lollipop',
+            calories: 392,
+            fat: 0.2,
+            carbs: 98,
+            protein: 0,
+            iron: '2%'
+          },
+          {
+            value: false,
+            name: 'Honeycomb',
+            calories: 408,
+            fat: 3.2,
+            carbs: 87,
+            protein: 6.5,
+            iron: '45%'
+          },
+          {
+            value: false,
+            name: 'Donut',
+            calories: 452,
+            fat: 25.0,
+            carbs: 51,
+            protein: 4.9,
+            iron: '22%'
+          },
+          {
+            value: false,
+            name: 'KitKat',
+            calories: 518,
+            fat: 26.0,
+            carbs: 65,
+            protein: 7,
+            iron: '6%'
+          }
+        ],
+        offenseArr: [
+          {
+            value: false,
+            name: 'Frozen Yogurt',
+            calories: 159,
+            fat: 6.0,
+            carbs: 24,
+            protein: 4.0,
+            iron: '1%'
+          },
+          {
+            value: false,
+            name: 'Ice cream sandwich',
+            calories: 237,
+            fat: 9.0,
+            carbs: 37,
+            protein: 4.3,
+            iron: '1%'
+          }
+        ],
+        defenseArr: [
+          {
+            value: false,
+            name: 'Frozen Yogurt',
+            calories: 159,
+            fat: 6.0,
+            carbs: 24,
+            protein: 4.0,
+            iron: '1%'
+          },
+          {
+            value: false,
+            name: 'Ice cream sandwich',
+            calories: 237,
+            fat: 9.0,
+            carbs: 37,
+            protein: 4.3,
+            iron: '1%'
+          }
+        ],
+        testArr: []
       }
     },
     computed: {
@@ -167,14 +352,13 @@
         this.$emit('TeamStatsPageClose');
       },
       refreshStats: async function() {
-        console.log(this.dataPointsArr)
         this.loaded = false
         var self = this;
         var dbRef = firebase.database().ref('/FootballGames/' + this.selectedTeamId);
         var promiseList = []
-        var localDataPoints = {}
-        promiseList.push(this.gamesList.forEach(function(el){
-            dbRef.child(el).once('value', function(snap){
+        var localDataPoints = []
+        this.gamesList.forEach(function(el){
+            promiseList.push(dbRef.child(el).once('value', function(snap){
                 var obj = snap.val()
                 var opposingTeamName = obj['OpponentTeamName']
                 var date = obj['Date']
@@ -249,46 +433,85 @@
                   }
                 })
 
-                localDataPoints[el] = {
+                self.testArr.push(
+                {
+                  'id': el,
                     'Date' : date,
                     'OpposingTeam': opposingTeamName,
                     'Offense': offStats,
                     'Defense': defStats,
                     'Special': specialTeamStats
-                }
+                })
+
+                
             })
-        }))
-        
+        )})
         await Promise.all(promiseList).then(() => {
-          
-          //self.dataPointsArr = localDataPoints
-          return localDataPoints
+          console.log('DONE')
         })
-      }
-    }, 
-    watch: {
-      dataPointsArr: {
-        handler: function(){
-        this.vm.$forceUpdate()
-        },
-        deep: true
       }
     },
     async created() {
       this.loggedInUser = firebase.auth().currentUser;
       this.currentUserEmail = this.loggedInUser.email;
       var self = this
-      // this.gamesList.forEach(function(el){
-      //   self.dataPointsArr[el] = {
-      //     'Date': 'date',
-      //     'OpposingTeam': 'opponent',
-      //     'Offense': self.footballOffenseStats,
-      //     'Defense': self.footballDefenseStats,
-      //     'Special': self.footballTeamStatsSpecial
-      //   }
-      // })
-      this.dataPointsArr = await this.refreshStats();
-      this.loaded = true;
+      await this.refreshStats();
+
+      this.headers = [{
+            text: 'Game',
+            align: 'left',
+            sortable: false,
+            value: 'name'
+      }]
+      this.footballOffenseArr.forEach(stat => {
+        this.headers.push({
+          'text': stat,
+          'value': 'gameID'
+        })
+      })
+      this.defHeaders = [{
+            text: 'Game',
+            align: 'left',
+            sortable: false,
+            value: 'name'
+      }]
+      this.footballDefenseArr.forEach(stat => {
+        this.defHeaders.push({
+          'text': stat,
+          'value': 'gameID'
+        })
+      })
+
+      this.offenseArr = []
+      this.defenseArr = []
+
+      this.testArr.forEach(obj => {
+        if(typeof obj.Defense !== 'undefined' && typeof obj.Offense !== 'undefined'){
+          var offObj = obj.Offense
+          var defObj = obj.Defense
+          var tmp = {'value': false, 'gameID': obj.id}
+
+          Object.keys(offObj).forEach(key => {
+            tmp[key] = offObj[key].Total
+          })
+          this.offenseArr.push(tmp)
+
+          tmp = {'value': false, 'gameID': obj.id}
+          console.log('Def obj')
+          console.log(defObj)
+          console.log('----------')
+          
+          console.log('==========')
+          Object.keys(defObj).forEach(key => {
+            tmp[key] = defObj[key].Total
+          })
+          this.defenseArr.push(tmp)
+        }
+      })
+
+      this.defHeaders.forEach(header => {
+        console.log(header.text)
+      })
     },
     mounted() {
       
