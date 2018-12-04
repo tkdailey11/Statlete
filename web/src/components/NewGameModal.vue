@@ -13,26 +13,33 @@
                 </div>
                 <div class="ng-periodLength">
                     <label class="ng_label">Period Length:</label>
-                    <multiselect v-model="selectedPeriodLength"
+                    <multiselect v-if="isSoccer" 
+                                v-model="selectedPeriodLength"
                                 :options="periodLengths"
                                 :multiple="false"
                                 :close-on-select="true"
                                 placeholder="45"
                                 class="es_multiselect ng_right">
                     </multiselect>
+                    <multiselect v-else-if="isBasketball" 
+                                v-model="selectedPeriodLength"
+                                :options="periodLengthsBBall"
+                                :multiple="false"
+                                :close-on-select="true"
+                                placeholder="20"
+                                class="es_multiselect ng_right">
+                    </multiselect>
                 </div>
-                <div class="ng-numPeriods">
+                <div class="ng-numPeriods" v-if="isBasketball">
                     <label class="ng_label ng_hidden">Number of Periods:</label>
-                    <segmented-control
-                        :options="options"
-                        label="label"
-                        value="value"
-                        color="#fff"
-                        active-color="#e00010"
-                        :multiple="false"
-                        @select="onSelect"
-                        class="ng_sc ng_right"
-                    />
+                    <v-btn-toggle v-model="numPeriods" class="ng_sc ng_right">
+                        <v-btn flat value="2">
+                          Halves
+                        </v-btn>
+                        <v-btn flat value="4">
+                          Quarters
+                        </v-btn>
+                      </v-btn-toggle>
                 </div>
                 <div class="ng-shotChart">
                     <label class="ng_label">Shot Chart Enabled:</label>
@@ -56,11 +63,23 @@
 </template>
 <script>
 import SegmentedControl from 'vue-segmented-control'
+import { mapGetters, mapMutations } from 'vuex';
 
 export default {
     name: 'ngmodal',
     components: {
         SegmentedControl
+    },
+    computed: {
+        ...mapGetters({
+            selectedTeamSport: 'mainStore/selectedTeamSport'
+        }),
+        isSoccer() {
+            return this.selectedTeamSport == 1;
+        },
+        isBasketball() {
+            return this.selectedTeamSport == 0;
+        }
     },
     methods: {
         close() {
@@ -72,7 +91,7 @@ export default {
                 SCEnabled: this.scEnabled,
                 TeamCode: this.teamCode,
                 PeriodLength: parseInt(this.selectedPeriodLength),
-                NumPeriods: this.numPeriods
+                NumPeriods: parseInt(this.numPeriods)
             })
         },
         change(value) {
@@ -82,12 +101,18 @@ export default {
             this.numPeriods = selectedOption[0].value;
         }
     },
+    mounted() {
+        if(this.isBasketball){
+            this.selectedPeriodLength = 20
+        }
+    },
     data() {
         return {
             oppName: '',
             scEnabled: false,
             teamCode: false,
             periodLengths: ['45', '40', '35', '30', '25', '20', '1'],
+            periodLengthsBBall: ['20', '15', '12', '10', '8', '6', '5', '1'],
             selectedPeriodLength: 45,
             periodType: '',
             options: [

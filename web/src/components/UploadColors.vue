@@ -126,4 +126,10 @@ export default {
         margin: 50px;
         padding: 25px;
     }
+
+    .main_button {
+        width: 50%;
+        height: 5%;
+        margin-left: 25%;
+    }
 </style>

@@ -3,102 +3,56 @@
         <nav-component />
         <h1 class="teamStatsH1">Team Totals</h1>
         <div id="teamstatspage_main">
-            <vue-scrolling-table
-                        :scroll-horizontal="scrollHorizontal" v-if="loaded"
-                        :scroll-vertical="scrollVertical"
-                        :sync-header-scroll="syncHeaderScroll"
-                        :sync-footer-scroll="false"
-                        :include-footer="false"
-                        :dead-area-color="deadAreaColor"
-                        :class="{ freezeFirstColumn:freezeFirstColumn }"
-                        style="border: 5px solid rgb(224, 0, 16);
-                            border-radius: 5px;
-                            background-color: rgb(85, 85, 85);
-                            height: 25vh;">
-                <template slot="thead">
-                <tr>
-                    <th style="border-right: medium solid black; border-bottom: medium solid black;">OFFENSE</th>
-                    <th v-for="stat in footballOffenseArr" 
-                        :key="stat + '-hd'"
-                        style="border-bottom: medium solid black;">
-                        {{ stat }}
-                    </th>
-                </tr>
-                </template>
-                <template slot="tbody">
-                <tr v-for="game in gamesList" :key="game + '-key'">
-                    <th style="border-right: medium solid black;">{{game}}</th>
-                    <td v-for="stat in footballOffenseArr" :key="stat + '-' + 'statType'">
-                      <input v-model="dataPointsArr[game]['Offense'][stat].Total">
-                    </td>
-                </tr>
-                </template>
-            </vue-scrolling-table>
-            <vue-scrolling-table
-                        :scroll-horizontal="scrollHorizontal" v-if="loaded"
-                        :scroll-vertical="scrollVertical"
-                        :sync-header-scroll="syncHeaderScroll"
-                        :sync-footer-scroll="false"
-                        :include-footer="false"
-                        :dead-area-color="deadAreaColor"
-                        :class="{ freezeFirstColumn:freezeFirstColumn }"
-                        style="border: 5px solid rgb(224, 0, 16);
-                            border-radius: 5px;
-                            background-color: rgb(85, 85, 85);
-                            height: 25vh;
-                            margin-top: 1vh;">
-                <template slot="thead">
-                <tr>
-                    <th style="border-right: medium solid black; border-bottom: medium solid black;">DEFENSE</th>
-                    <th v-for="stat in footballDefenseArr" 
-                        :key="stat + '-hd'"
-                        style="border-bottom: medium solid black;">
-                        {{ stat }}
-                    </th>
-                </tr>
-                </template>
-                <template slot="tbody">
-                <tr v-for="game in gamesList" :key="game + '-key'">
-                    <th style="border-right: medium solid black;">{{game}}</th>
-                    <td v-for="stat in footballDefenseArr" :key="stat + '-' + 'statType'">
-                      {{dataPointsArr[game]['Defense'][stat].Total}}
-                    </td>
-                </tr>
-                </template>
-            </vue-scrolling-table>
-                        <vue-scrolling-table
-                        :scroll-horizontal="scrollHorizontal" v-if="loaded"
-                        :scroll-vertical="scrollVertical"
-                        :sync-header-scroll="syncHeaderScroll"
-                        :sync-footer-scroll="false"
-                        :include-footer="false"
-                        :dead-area-color="deadAreaColor"
-                        :class="{ freezeFirstColumn:freezeFirstColumn }"
-                        style="border: 5px solid rgb(224, 0, 16);
-                            border-radius: 5px;
-                            background-color: rgb(85, 85, 85);
-                            height: 25vh;
-                            margin-top: 1vh;
-                            margin-bottom: 5vh;">
-                <template slot="thead">
-                <tr>
-                    <th style="border-right: medium solid black; border-bottom: medium solid black;">SPECIAL TEAMS</th>
-                    <th v-for="stat in footballTeamStatsSpecialArr" 
-                        :key="stat + '-hd'"
-                        style="border-bottom: medium solid black;">
-                        {{ stat }}
-                    </th>
-                </tr>
-                </template>
-                <template slot="tbody">
-                <tr v-for="game in gamesList" :key="game + '-key'">
-                    <th style="border-right: medium solid black;">{{game}}</th>
-                    <td v-for="stat in footballTeamStatsSpecialArr" :key="stat + '-' + 'statType'">
-                      {{dataPointsArr[game]['Special'][stat].Total}}
-                    </td>
-                </tr>
-                </template>
-            </vue-scrolling-table>
+          <v-card :dark="true">
+            <v-card-title>
+              Offense
+              <v-spacer></v-spacer>
+            </v-card-title>
+            <v-data-table
+              :headers="headers"
+              :items="offenseArr"
+              class="elevation-1"
+            >
+              <template slot="items" slot-scope="props">
+                <td style="color: white;">{{ props.item.gameID }}</td>
+                <td class="text-xs-right" v-for="type in footballOffenseArr" :key="'offense-' + type" style="color: white;">{{ props.item[type] }}</td>
+              </template>
+            </v-data-table>
+          </v-card>
+
+          <v-card style="margin-top: 5vh;" :dark="true">
+            <v-card-title>
+              Defense
+              <v-spacer></v-spacer>
+            </v-card-title>
+            <v-data-table
+              :headers="defHeaders"
+              :items="defenseArr"
+              class="elevation-1"
+            >
+              <template slot="items" slot-scope="props">
+                <td style="color: white;">{{ props.item.gameID }}</td>
+                <td class="text-xs-right" v-for="type in defKeys" :key="'defense-' + type" style="color: white;">{{ props.item[type] }}</td>
+              </template>
+            </v-data-table>
+          </v-card>
+
+          <v-card style="margin-top: 5vh; margin-bottom: 5vh;" :dark="true">
+            <v-card-title>
+              Special Teams
+              <v-spacer></v-spacer>
+            </v-card-title>
+            <v-data-table
+              :headers="specialHeaders"
+              :items="specialArr"
+              class="elevation-1"
+            >
+              <template slot="items" slot-scope="props">
+                <td style="color: white;">{{ props.item.gameID }}</td>
+                <td class="text-xs-right" v-for="type in specialKeys" :key="'special-' + type" style="color: white;">{{ props.item[type] }}</td>
+              </template>
+            </v-data-table>
+          </v-card>
         </div>
   </div>
 </template>
@@ -134,8 +88,66 @@
         maxRows: 100,
         freezeFirstColumn: true,
         gameDataRef: null,
-        dataPointsArr: null,
-        loaded: false
+        dataPointsArr: {},
+        loaded: false,
+        headers: [],
+        defHeaders: [],
+        specialHeaders: [],
+        offenseArr: [
+          {
+            value: false,
+            name: 'Frozen Yogurt',
+            calories: 159,
+            fat: 6.0,
+            carbs: 24,
+            protein: 4.0,
+            iron: '1%'
+          },
+          {
+            value: false,
+            name: 'Ice cream sandwich',
+            calories: 237,
+            fat: 9.0,
+            carbs: 37,
+            protein: 4.3,
+            iron: '1%'
+          }
+        ],
+        defenseArr: [
+          {
+            value: false,
+            name: 'Frozen Yogurt',
+            calories: 159,
+            fat: 6.0,
+            carbs: 24,
+            protein: 4.0,
+            iron: '1%'
+          },
+          {
+            value: false,
+            name: 'Ice cream sandwich',
+            calories: 237,
+            fat: 9.0,
+            carbs: 37,
+            protein: 4.3,
+            iron: '1%'
+          }
+        ],
+        specialArr: [],
+        testArr: [],
+        defKeys: [
+        "DefTD",
+        "FumbleForced",
+        "FumbleRec",
+        "INT",
+        "Sacks",
+        "TackleForLoss",
+        "Tackles",
+        "TotalPassYds",
+        "TotalRushYds"
+        ],
+        specialKeys: [
+        ]
       }
     },
     computed: {
@@ -167,14 +179,13 @@
         this.$emit('TeamStatsPageClose');
       },
       refreshStats: async function() {
-        console.log(this.dataPointsArr)
         this.loaded = false
         var self = this;
         var dbRef = firebase.database().ref('/FootballGames/' + this.selectedTeamId);
         var promiseList = []
-        var localDataPoints = {}
-        promiseList.push(this.gamesList.forEach(function(el){
-            dbRef.child(el).once('value', function(snap){
+        var localDataPoints = []
+        this.gamesList.forEach(function(el){
+            promiseList.push(dbRef.child(el).once('value', function(snap){
                 var obj = snap.val()
                 var opposingTeamName = obj['OpponentTeamName']
                 var date = obj['Date']
@@ -249,46 +260,113 @@
                   }
                 })
 
-                localDataPoints[el] = {
+                self.testArr.push(
+                {
+                  'id': el,
                     'Date' : date,
                     'OpposingTeam': opposingTeamName,
                     'Offense': offStats,
                     'Defense': defStats,
                     'Special': specialTeamStats
-                }
+                })
+
+                
             })
-        }))
-        
+        )})
         await Promise.all(promiseList).then(() => {
-          
-          //self.dataPointsArr = localDataPoints
-          return localDataPoints
+          console.log('DONE')
         })
-      }
-    }, 
-    watch: {
-      dataPointsArr: {
-        handler: function(){
-        this.vm.$forceUpdate()
-        },
-        deep: true
       }
     },
     async created() {
       this.loggedInUser = firebase.auth().currentUser;
       this.currentUserEmail = this.loggedInUser.email;
       var self = this
-      // this.gamesList.forEach(function(el){
-      //   self.dataPointsArr[el] = {
-      //     'Date': 'date',
-      //     'OpposingTeam': 'opponent',
-      //     'Offense': self.footballOffenseStats,
-      //     'Defense': self.footballDefenseStats,
-      //     'Special': self.footballTeamStatsSpecial
-      //   }
-      // })
-      this.dataPointsArr = await this.refreshStats();
-      this.loaded = true;
+      await this.refreshStats();
+
+      this.headers = [{
+            text: 'Game',
+            align: 'left',
+            sortable: false,
+            value: 'name'
+      }]
+      this.footballOffenseArr.forEach(stat => {
+        this.headers.push({
+          'text': stat,
+          'value': stat
+        })
+      })
+      this.defHeaders = [{
+            text: 'Game',
+            align: 'left',
+            sortable: false,
+            value: 'name'
+      }]
+      this.defKeys.forEach(stat => {
+        this.defHeaders.push({
+          'text': stat,
+          'value': stat
+        })
+      })
+
+      this.specialHeaders = [{
+            text: 'Game',
+            align: 'left',
+            sortable: false,
+            value: 'name'
+      }]
+      this.specialKeys = []
+      Object.keys(this.testArr[0]['Special']).forEach(stat => {
+        this.specialKeys.push(stat)
+        this.specialHeaders.push({
+          'text': stat,
+          'value': stat
+        })
+      })
+
+      this.offenseArr = []
+      this.defenseArr = []
+      this.specialArr = []
+      
+      this.testArr.forEach(obj => {
+        if(typeof obj.Defense !== 'undefined' && typeof obj.Offense !== 'undefined'){
+          var offObj = obj.Offense
+          var defObj = obj.Defense
+          var specialObj = obj.Special
+
+          var tmp = {'value': false, 'gameID': obj.id}
+
+          Object.keys(offObj).forEach(key => {
+            tmp[key] = offObj[key].Total
+          })
+          this.offenseArr.push(tmp)
+
+          tmp = {'value': false, 'gameID': obj.id}
+          this.defKeys.forEach(key => {
+            if(typeof defObj[key] === 'undefined'){
+              tmp[key] = 0
+            }
+            else {
+              tmp[key] = typeof defObj[key].Total === 'undefined' ? 0 : defObj[key].Total
+            }
+            
+          })
+          this.defenseArr.push(tmp)
+
+          //Special Teams stats
+          tmp = {'value': false, 'gameID': obj.id}
+          Object.keys(specialObj).forEach(key => {
+            if(typeof specialObj[key] === 'undefined'){
+              tmp[key] = 0
+            }
+            else {
+              tmp[key] = typeof specialObj[key].Total === 'undefined' ? 0 : specialObj[key].Total
+            }
+          })
+          this.specialArr.push(tmp)
+        }
+      })
+
     },
     mounted() {
       

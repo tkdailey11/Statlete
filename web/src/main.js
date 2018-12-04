@@ -26,10 +26,6 @@ Vue.component('statlete-num-input', NumericInput)
 
 
 //Navigation
-import Navbar from '@/components/Navigation/Navbar';
-Vue.component('statlete-navbar', Navbar);
-import SideNav from '@/components/Navigation/SideNav';
-Vue.component('side-nav', SideNav);
 import NavComponent from '@/components/Navigation/NavComponent';
 Vue.component('nav-component', NavComponent);
 import UploadPhoto from '@/components/UploadPhoto';
@@ -149,6 +145,21 @@ Vue.component('vue-scrolling-table', VueScrollingTable);
 import VueNumericInput from 'vue-numeric-input';
 Vue.use(VueNumericInput)
 
+import VueExpandPanel from 'vue-expand-panel'
+import 'vue-expand-panel/dist/vue-expand-panel.css'
+Vue.use(VueExpandPanel)
+
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
+Vue.use(Vuetify)
+
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faBasketballBall, faFutbol, faFootballBall } from '@fortawesome/free-solid-svg-icons';
+import { faJs, faVuejs } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+library.add(faBasketballBall, faFutbol, faFootballBall, faJs, faVuejs);
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 
 //Stylesheets

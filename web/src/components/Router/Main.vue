@@ -4,15 +4,15 @@
       <new-player @newPlayerAdded="hideModal" />
       <ngmodal
         v-show="isModalVisible"
-        @close="closeNGModal()"
         @NewGame="addGame"
+        @close="closeNGModal()"
       />
       <colorModal
         v-show="isColorModalVisible"
         @close="closeColorModal()"
         @SubmitColors="submitColors"
       />
-      <nav-component />
+      <nav-component @ChangeColor="changeColor" />
     </div>
     <div class="main_Other">
       <div id="mainPage">
@@ -417,6 +417,7 @@ export default {
           [gameID] : 'basketball'
         })
       }
+      this.closeNGModal()
     }
   }
 }

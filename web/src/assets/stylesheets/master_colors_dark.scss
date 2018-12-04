@@ -41,8 +41,19 @@ $dark_fgrd: rgb(85, 85, 85);
     color: $light_gray;
 }
 
-.analysis_button, .login_button, .main_button, .ps_button, .ts_button, .psb_button, .ng_button,
- .footballNotCurr, .footballButton {
+.vcard_header {
+    font-weight: 700;
+}
+
+.faqHeader {
+    color: $light_gray;
+}
+
+.FAQPage {
+    background-color: $dark_bgrd;
+}
+
+.analysis_button, .login_button, .main_button, .ps_button, .ts_button, .psb_button, .ng_button, .footballNotCurr, .footballButton {
     color: $light_gray;
     background-color: $dark_fgrd;
     border-color: $bright_red;
@@ -67,9 +78,8 @@ $dark_fgrd: rgb(85, 85, 85);
 .plTR:hover td, .plFooter:hover, .analysis_button:hover, .login_button:hover, 
 .main_button:hover, .ps_button:hover, .ts_button:hover, .psb_button:hover, .ng_button:hover,
 .sn_tr:hover td, .clockPause:hover, #statMode:hover, #playMode:hover, .sn_tr:hover td, .sn_footer:hover, 
-#chartMode:hover, #entryMode:hover,
-.sn_tr:hover td, .clockPause:hover, #statMode:hover, .sn_tr:hover td, .sn_footer:hover, 
-#chartMode:hover, #entryMode:hover, .footballNotCurr:hover, .footballButton:hover{
+#chartMode:hover, #entryMode:hover, .sn_tr:hover td, .clockPause:hover, #statMode:hover, .sn_tr:hover td, 
+.sn_footer:hover, #chartMode:hover, #entryMode:hover, .footballNotCurr:hover, .footballButton:hover {
     background-color: $transparent_red;
 }
 
