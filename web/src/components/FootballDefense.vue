@@ -319,7 +319,7 @@ export default {
             })
           }
         }).then(()=>{
-          ref.child("Side").once("value", function(side){
+          ref.child("TotalRushYds").child("Side").once("value", function(side){
             if(self.runDefYards != "")
             {
               var rushYds = side.val()
@@ -377,13 +377,13 @@ export default {
                     })
                   }
                 }).then(()=>{
-                  var ref2 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Offense");
-                  ref2.child("RushTD").once("value", function(rand2){
-                    if(self.runDefTouchdown && self.runDefFumble)
+                  var ref2 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Defense");
+                  ref2.child("DefTD").once("value", function(rand2){
+                    if(self.runDefTouchdown && self.runDefFumble && self.rundefRecoveredBy != "")
                     {
                       self.$emit("incMyScore", 6)
                       var rushTD = rand2.val()
-                      var playerNum = "p" + self.runPlayerNumber
+                      var playerNum = "p" + self.rundefRecoveredBy
                       var total = rushTD.Total + 1
                       var player = rushTD[playerNum]
                       if(player == null)
@@ -547,7 +547,7 @@ export default {
             })
           }
         }).then(()=>{
-          ref.child("Side").once("value", function(side){
+          ref.child("TotalPassYds").child("Side").once("value", function(side){
             if(self.passDefYards != "")
             {
               var rushYds = side.val()

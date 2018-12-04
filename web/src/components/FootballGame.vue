@@ -78,6 +78,15 @@ export default {
   },
   mounted() {
     jQuery("#endButton").hide();
+    // alert("BEFORE BEFORE")
+    var self = this
+    var ref5 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Score")
+    ref5.once("value", function(scoreVals){
+      var dbScores = scoreVals.val();
+      var splitScore = dbScores.split("-")
+      self.myScore = splitScore[0]
+      self.oppScore = splitScore[1]
+    })
   },
   methods: {
     startButton: function(data) {
@@ -92,6 +101,13 @@ export default {
         "Live": true,
         "Score": "0-0"
       })
+    var ref5 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Score")
+    ref5.once("value", function(scoreVals){
+      var dbScores = scoreVals.val();
+      var splitScore = dbScores.split("-")
+      self.myScore = parseInt(splitScore[0])
+      self.oppScore = parseInt(splitScore[1])
+    })
     },
     endButton: function(data) {
       // Set game to over
@@ -113,10 +129,20 @@ export default {
       })
     },
     incrementOpp: function(data) {
+      var self = this
       this.oppScore += parseInt(data);
+      var ref4 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId)
+      ref4.update({
+        "Score": self.myScore + "-" + self.oppScore
+      })
     },
     incrementMyScore: function(data) {
+      var self = this
       this.myScore += parseInt(data);
+      var ref4 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId)
+      ref4.update({
+        "Score": self.myScore + "-" + self.oppScore
+      })
     },
     offenseClicked: function() {
       jQuery("#getOffPosition").show();
@@ -126,6 +152,13 @@ export default {
       jQuery("#penaltyForm").hide();
       jQuery("#turnoverForm").hide();
       jQuery("#offenseButtons").hide();
+
+      jQuery("#runLeftForm").hide();
+    jQuery("#runMiddleForm").hide();
+    jQuery("#runRightForm").hide();
+    jQuery("#throwLeftForm").hide();
+    jQuery("#throwMiddleForm").hide();
+    jQuery("#throwRightForm").hide();
       this.activeButton = 'offense';
     },
     defenseClicked: function() {
