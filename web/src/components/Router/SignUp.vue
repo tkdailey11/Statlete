@@ -1,18 +1,98 @@
 <template>
   <div class="sign-up">
-    <h1>Statlete</h1>
-    <h2>Create Account</h2>
-    <input type="text" v-model="email" placeholder="Email Address"><br>
-    <input type="password" v-model="password" placeholder="Password"><br>
-    <input type="password" v-model="passwordConfirm" placeholder="Confirm Password"><br>
-    <button class="btn btn-outline-primary" @click="signUp">Sign Up</button>
-    <p style="color: rgb(224,0,16);">or go back to <router-link to="/login" class="link">login</router-link>.</p>
-    <footer class="navbar fixed-bottom myBottomNav">
-        <div><router-link to="/login" class="ap_link">Login</router-link></div>
-        <div>Signup</div>
-        <div><router-link to="/about" class="ap_link">About</router-link></div>
-        <div><router-link to="/faq" class="ap_link">FAQ</router-link></div>
-    </footer>
+      <v-navigation-drawer
+          v-model="sidebar"
+          :mini-variant="mini"
+          absolute
+          dark
+          temporary>
+          <v-list class="pa-1">
+            <v-list-tile v-if="mini" @click.stop="mini = false">
+              <v-list-tile-action>
+                <v-icon>chevron_right</v-icon>
+              </v-list-tile-action>
+            </v-list-tile>
+            <v-list-tile v-else @click.stop="mini = true">
+              <v-list-tile-action>
+                <v-icon right>chevron_left</v-icon>
+              </v-list-tile-action>
+            </v-list-tile>
+            <v-list-tile  v-for="item in menuItems"
+                          :key="item.title"
+                          @click.stop="goTo(item.path)">
+              <v-list-tile >
+                <v-list-tile-action>
+                  <v-icon>{{item.icon}}</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-title>{{item.title}}</v-list-tile-title>
+              </v-list-tile>
+            </v-list-tile>
+          </v-list>
+        </v-navigation-drawer>
+    <v-toolbar app dark>
+      <v-toolbar-side-icon @click="sidebar = !sidebar">
+      </v-toolbar-side-icon>
+      <v-toolbar-title>
+        {{appTitle}}
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items class="hidden-xs-only">
+        <v-btn
+          flat
+          v-for="item in menuItems"
+          :key="item.title"
+          :to="item.path">
+          <v-icon left dark>{{ item.icon }}</v-icon>
+          {{ item.title }}
+        </v-btn>
+      </v-toolbar-items>
+    </v-toolbar>
+    
+    <v-content>
+      <v-container fluid>
+        <v-layout row wrap>
+          <v-flex xs12 class="text-xs-center" mt-5>
+            <h1 class="glH1">Create Account</h1>
+          </v-flex>
+          <v-flex xs12 sm6 offset-sm3 mt-3>
+            <form>
+              <v-layout column>
+                <v-flex>
+                  <v-text-field
+                    name="email"
+                    label="Email"
+                    id="email"
+                    type="email"
+                    required
+                    dark></v-text-field>
+                </v-flex>
+                <v-flex>
+                  <v-text-field
+                    name="password"
+                    label="Password"
+                    id="password"
+                    type="password"
+                    required
+                    dark></v-text-field>
+                </v-flex>
+                <v-flex>
+                  <v-text-field
+                    name="confirmPassword"
+                    label="Confirm Password"
+                    id="confirmPassword"
+                    type="password"
+                    required
+                    dark></v-text-field>
+                </v-flex>
+                <v-flex class="text-xs-center" mt-5>
+                  <v-btn type="submit" dark>Submit</v-btn>
+                </v-flex>
+              </v-layout>
+            </form>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-content>
   </div>
 </template>
 
@@ -24,10 +104,22 @@
       return {
         email: '',
         password: '',
-        passwordConfirm: ''
+        passwordConfirm: '',
+        appTitle: 'Statlete',
+        sidebar: false,
+        menuItems: [
+          { title: 'Login', path: '/login', icon: 'input' },
+          { title: 'Sign Up', path: '/sign-up', icon: 'person_add' },
+          { title: 'About', path: '/about', icon: 'info' },
+          { title: 'FAQ', path: '/faq', icon: 'question_answer' }
+        ],
+        mini: true
       }
     },
     methods: {
+      goTo: function(path) {
+        this.$router.push(path)
+      },
       signUp: function() {
         if(this.password===this.passwordConfirm){
           firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
@@ -51,6 +143,22 @@
   .sign-up {
     height: 100vh;
   }
+
+  .login_input {
+    margin: 10px 0;
+    width: 50%;
+    padding: 15px;
+    border: 0;
+    outline: 0;
+    border-bottom-width: 3px;
+    border-bottom-style: solid;
+  }
+  .login_button {
+    margin-top: 20px;
+    width: 30%;
+    cursor: pointer;
+  }
+
   .myBottomNav{
     padding-left: 25vw;
     padding-right: 25vw;
@@ -70,34 +178,18 @@
     border-bottom: 3px solid rgb(224,0,16);
     color: rgb(224,0,16);
   }
-  button {
-    margin-top: 20px;
-    width: 10%;
-    cursor: pointer;
-    color: white;
-    background-color: rgb(224,0,16);
-    border-color: rgb(224,0,16);
-    color: white;
-  }
-
-  button:hover {
-    background-color: white;
-    border-color: rgb(224,0,16);
-    color: rgb(224,0,16);
-  }
 
   p {
     margin-top: 10px;
     font-size: 13px;
   }
-  p a {
-    text-decoration: underline;
-    cursor: pointer;
-  }
-  
 
   h1 {
     font-size: 60px;
+  }
+
+  a, i {
+    text-decoration: none;
   }
 
 </style>

@@ -1,17 +1,93 @@
 <template>
   <div class="login">
-    <h1 class="loginH1">Statlete</h1>
-    <input id="loginEmail" class="login_input" type="text" v-model="email" placeholder="Email"><br>
-    <input id="loginPass" class="login_input" type="password" v-model="password" placeholder="Password"><br>
-    <button id="signInBtn" class="btn btn-outline-primary btn-social login_button" @click="signIn">Sign In</button><br>
-    <button class="btn btn-outline-primary btn-social login_button" @click="signInGoogle">Google</button><br>
-    <p class="loginPtag">Don't have an account? <router-link to="/sign-up" class="link">Click here to create one!</router-link></p>
-    <footer class="navbar fixed-bottom myBottomNav">
-        <div>Login</div>
-        <div><router-link to="/sign-up" class="ap_link">Signup</router-link></div>
-        <div><router-link to="/about" class="ap_link">About</router-link></div>
-        <div><router-link to="/faq" class="ap_link">FAQ</router-link></div>
-    </footer>
+    <v-navigation-drawer
+      v-model="sidebar"
+      :mini-variant="mini"
+      absolute
+      dark
+      temporary>
+      <v-list class="pa-1">
+        <v-list-tile v-if="mini" @click.stop="mini = false">
+          <v-list-tile-action>
+            <v-icon>chevron_right</v-icon>
+          </v-list-tile-action>
+        </v-list-tile>
+        <v-list-tile v-else @click.stop="mini = true">
+          <v-list-tile-action>
+            <v-icon right>chevron_left</v-icon>
+          </v-list-tile-action>
+        </v-list-tile>
+        <v-list-tile  v-for="item in menuItems"
+                      :key="item.title"
+                      @click.stop="goTo(item.path)">
+          <v-list-tile >
+            <v-list-tile-action>
+              <v-icon>{{item.icon}}</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-title>{{item.title}}</v-list-tile-title>
+          </v-list-tile>
+        </v-list-tile>
+      </v-list>
+    </v-navigation-drawer>
+    <v-toolbar app dark>
+      <v-toolbar-side-icon @click="sidebar = !sidebar">
+      </v-toolbar-side-icon>
+      <v-toolbar-title>
+        {{appTitle}}
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items class="hidden-xs-only">
+        <v-btn
+          flat
+          v-for="item in menuItems"
+          :key="item.title"
+          :to="item.path">
+          <v-icon left dark>{{ item.icon }}</v-icon>
+          {{ item.title }}
+        </v-btn>
+      </v-toolbar-items>
+    </v-toolbar>
+    
+    <v-content>
+      <v-container fluid>
+        <v-layout row wrap>
+          <v-flex xs12 class="text-xs-center" mt-5>
+            <h1 class="glH1">Sign In</h1>
+          </v-flex>
+          <v-flex xs12 sm6 offset-sm3 mt-3>
+            <form>
+              <v-layout column>
+                <v-flex>
+                  <v-text-field
+                    name="email"
+                    label="Email"
+                    id="email"
+                    type="email"
+                    v-model="email"
+                    :rules="emailRules"
+                    dark style="margin-bottom: 15px;">
+                  </v-text-field>
+                </v-flex>
+                <v-flex>
+                  <v-text-field
+                    name="password"
+                    label="Password"
+                    id="password"
+                    type="password"
+                    :rules="passwordRules"
+                    v-model="password"
+                    dark>
+                  </v-text-field>
+                </v-flex>
+                <v-flex class="text-xs-center" mt-5>
+                  <v-btn dark @click="signIn">Sign In</v-btn>
+                </v-flex>
+              </v-layout>
+            </form>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-content>
   </div>
 </template>
 
@@ -23,31 +99,53 @@
     data: function() {
       return {
         email: '',
-        password: ''
+        password: '',
+        appTitle: 'Statlete',
+        sidebar: false,
+        menuItems: [
+          { title: 'Login', path: '/login', icon: 'input' },
+          { title: 'Sign Up', path: '/sign-up', icon: 'person_add' },
+          { title: 'About', path: '/about', icon: 'info' },
+          { title: 'FAQ', path: '/faq', icon: 'question_answer' }
+        ],
+        mini: true,
+        emailRules: [
+          (v) => !!v || 'E-mail is required',
+          (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+        ],
+        passwordRules: [
+          (v) => !!v || 'Password is required',
+          (v) => v.length >= 6 || 'Password must be at least 6 characters.'
+        ],
+        errorMsg: '',
+        alert: false
       }
     },
-    mounted() {
-      // Get the input field
-      var emailField = document.getElementById("loginEmail");
-      var passwordField = document.getElementById("loginPass");
+    // mounted() {
+    //   // Get the input field
+    //   var emailField = document.getElementById("loginEmail");
+    //   var passwordField = document.getElementById("loginPass");
 
-      emailField.addEventListener("keyup", function(event) {
-        event.preventDefault();
-        // Number 13 is the "Enter" key on the keyboard
-        if (event.keyCode === 13) {
-          document.getElementById("signInBtn").click();
-        }
-      });
+    //   emailField.addEventListener("keyup", function(event) {
+    //     event.preventDefault();
+    //     // Number 13 is the "Enter" key on the keyboard
+    //     if (event.keyCode === 13) {
+    //       document.getElementById("signInBtn").click();
+    //     }
+    //   });
 
-      passwordField.addEventListener("keyup", function(event) {
-        event.preventDefault();
-        // Number 13 is the "Enter" key on the keyboard
-        if (event.keyCode === 13) {
-          document.getElementById("signInBtn").click();
-        }
-      });
-    },
+    //   passwordField.addEventListener("keyup", function(event) {
+    //     event.preventDefault();
+    //     // Number 13 is the "Enter" key on the keyboard
+    //     if (event.keyCode === 13) {
+    //       document.getElementById("signInBtn").click();
+    //     }
+    //   });
+    // },
     methods: {
+      goTo: function(path) {
+        this.$router.push(path)
+      },
       aboutClicked: function(){
         this.$router.push('/about')
       },
@@ -55,14 +153,17 @@
         this.$router.push('/sign-up')
       },
       signIn: function() {
-        firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
-          (user) => {
-            this.$router.replace('main')
-          },
-          function(err) {
-            alert('Oops. ' + err.message)
-          }
-        );
+        var self = this
+        if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.email) && this.password.length >= 6){
+          firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
+            (user) => {
+              self.$router.replace('main')
+            },
+            function(err) {
+              alert('ERROR. ' + err.message)
+            }
+          );
+        }
       },
       signInGoogle: function() {
         var provider = new firebase.auth.GoogleAuthProvider();
@@ -72,7 +173,7 @@
             this.$router.replace('main');
           },
           function(err) {
-            alert('Oops. ' + err.message)
+            alert('ERROR. ' + err.message)
           }
         );
       }
@@ -100,14 +201,6 @@
     cursor: pointer;
   }
 
-  p {
-    margin-top: 40px;
-    font-size: 13px;
-  }
-  p a {
-    text-decoration: underline;
-    cursor: pointer;
-  }
   h1 {
     font-size: 60px;
   }
@@ -120,4 +213,17 @@
     border-top-width: 3px;
     margin-top: 25px;
   }
+
+  a, i {
+    text-decoration: none;
+  }
+
+  .v-icon:hover {
+    text-decoration: none;
+  }
+
+  .v-list__tile__action:hover {
+    text-decoration: none;
+  }
+
 </style>
