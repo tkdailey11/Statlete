@@ -184,15 +184,15 @@ $dark_fgrd: rgb(85, 85, 85);
 input:-webkit-autofill {
     -webkit-box-shadow:0 0 0 50px $dark_fgrd inset; /* Change the color to your own background color */
     -webkit-text-fill-color: $light_gray;
-    border-radius: 5px;
-    border-color: $bright_red !important;
+    // border-radius: 5px;
+    // border-color: $bright_red !important;
 }
-input:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0 50px $dark_fgrd inset;
-    -webkit-text-fill-color: $light_gray;
-    border-radius: 5px;
-    border-color: $bright_red !important;
-}
+ input:-webkit-autofill:focus {
+//     -webkit-box-shadow: 0 0 0 50px $dark_fgrd inset;
+     -webkit-text-fill-color: $light_gray;
+//     border-radius: 5px;
+//     border-color: $bright_red !important;
+ }
 
 .login_input {
     color: $light_gray;
