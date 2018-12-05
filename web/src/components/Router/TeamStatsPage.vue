@@ -3,36 +3,22 @@
         <nav-component />
         <h1 class="teamStatsH1">Team Totals</h1>
         <div id="teamstatspage_main">
-            <vue-scrolling-table
-                        :scroll-horizontal="scrollHorizontal"
-                        :scroll-vertical="scrollVertical"
-                        :sync-header-scroll="syncHeaderScroll"
-                        :sync-footer-scroll="false"
-                        :include-footer="false"
-                        :dead-area-color="deadAreaColor"
-                        :class="{ freezeFirstColumn:freezeFirstColumn }"
-                        style="border: 5px solid rgb(224, 0, 16);
-                            border-radius: 5px;
-                            background-color: rgb(85, 85, 85);">
-                <template slot="thead">
-                <tr>
-                    <th style="border-right: medium solid black; border-bottom: medium solid black;"></th>
-                    <th v-for="stat in statTypes" 
-                        :key="stat + '-hd'"
-                        style="border-bottom: medium solid black;">
-                        {{ stat }}
-                    </th>
-                </tr>
-                </template>
-                <template slot="tbody">
-                <tr v-for="p in playerNumbers" :key="p + '-key'">
-                    <th style="border-right: medium solid black;">{{ p.replace('p', '#')}}</th>
-                    <td v-for="statType in statTypes" :key="p + '-' + statType">
-                      <statlete-num-input :align="'center'" v-model="playerData[p][statType]" :controls="false" readonly></statlete-num-input>
-                    </td>
-                </tr>
-                </template>
-            </vue-scrolling-table>
+            <v-card :dark="true">
+            <v-card-title>
+              My Team
+              <v-spacer></v-spacer>
+            </v-card-title>
+            <v-data-table
+              :headers="headers"
+              :items="testArr"
+              class="elevation-1"
+            >
+              <template slot="items" slot-scope="props">
+                <td style="color: white;">{{ props.item.name }}</td>
+                <td class="text-xs-right" v-for="type in statTypes" :key="'offense-' + type" style="color: white;">{{ props.item[type] }}</td>
+              </template>
+            </v-data-table>
+          </v-card>
         </div>
   </div>
 </template>
@@ -67,7 +53,15 @@
         deadAreaColor: "#DDDDDD",
         maxRows: 100,
         freezeFirstColumn: true,
-        gameDataRef: null
+        gameDataRef: null,
+        headers: [{
+            text: 'Player Name',
+            align: 'left',
+            sortable: false,
+            value: 'name'
+        }],
+        playerDataArray: [],
+        testArr: []
       }
     },
     computed: {
@@ -98,9 +92,19 @@
       statChanged: function(data) {
         // alert(data.PLAYER + ': ' + data.STAT)
       },
-      refreshStats: function() {
+      getPlayerArray: function(){
+        var tmpArr = []
+        Object.keys(this.playerData).forEach(player => {
+          tmpArr.push({
+            'name': player,
+            'data': this.playerData[player]
+          })
+        })
+        this.playerDataArray = tmpArr
+      },
+      refreshStats: async function() {
         var self = this;
-        self.gameDataRef.on('value', function(snap){
+        await self.gameDataRef.on('value', function(snap){
           Object.keys(self.playerData).forEach(pl => {
             Object.keys(self.playerData[pl]).forEach(stat => {
               self.playerData[pl][stat] = 0
@@ -116,11 +120,11 @@
               })
             })
           })
-          self.$forceUpdate();
         })
+        self.getPlayerArray()
       }
     },
-    created() {
+    async created() {
       this.loggedInUser = firebase.auth().currentUser;
       this.currentUserEmail = this.loggedInUser.email;
 
@@ -145,6 +149,13 @@
         ]
         this.gameDataRef = firebase.database().ref('/BasketballGames/' + this.selectedTeamId);
       }
+
+      this.statTypes.forEach(type => {
+        this.headers.push({
+          'text': type,
+          'value': type
+        })
+      })
       Object.keys(this.players).forEach(player => {
         if(!this.playerData[player]){
           this.playerData[player] = {}
@@ -157,7 +168,16 @@
           }
         })
       })
-      this.refreshStats();
+      await this.refreshStats();
+      this.testArr = []
+      this.playerDataArray.forEach(player => {
+        var tmp = {'value': false, 'name': player.name}
+        var obj = player.data;
+        Object.keys(obj).forEach(key => {
+          tmp[key] = obj[key]
+        })
+        this.testArr.push(tmp)
+      })
       
     },
     mounted() {
