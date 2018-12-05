@@ -21,15 +21,47 @@
         </div>
         <div class="mainBody">
           <div class="list-wrapper">
-            <games-list class="mbgl"
+            <!-- <games-list class="mbgl"
                         @gameSelected="gameSelected"
                         @AddGame="showNGModal">
-            </games-list>
-            <players-list class="mbpl"
+            </games-list> -->
+            <v-card dark>
+                <v-data-table
+                  :headers="[{
+                    text: 'Games',
+                    align: 'center',
+                    sortable: false,
+                    value: 'name'
+                  }]"
+                  :items="gamesList"
+                  class="elevation-1"
+                >
+                  <template slot="items" slot-scope="props">
+                    <td>{{ props.item.name }}</td>
+                  </template>
+                </v-data-table>
+            </v-card>
+            <v-card dark>
+                <v-data-table
+                  :headers="[{
+                    text: 'Players',
+                    align: 'center',
+                    sortable: false,
+                    value: 'name'
+                  }]"
+                  :items="playersList"
+                  class="elevation-1"
+                >
+                  <template slot="items" slot-scope="props">
+                    <td>{{ props.item.name }}</td>
+                  </template>
+                </v-data-table>
+            </v-card>
+            <!-- <players-list class="mbpl"
                           @playerSelected="viewPlayerInfo"
                           @addPlayerClicked="showModal('new-player')"
                           :players="players">
-            </players-list>
+            </players-list> -->
           </div>
           <div class="button-wrapper">
             <button @click="editTeamSettings" class="btn btn-outline-primary main_button">Edit Team Settings</button>
@@ -88,7 +120,8 @@ export default {
       teamToken: '',
       isModalVisible: false,
       darkModeEnabled: true,
-      isColorModalVisible: false
+      isColorModalVisible: false,
+      playersList: []
     }
   },
   mounted () {
@@ -219,6 +252,10 @@ export default {
         if(obj){
           self.SET_PLAYERS(obj);
         }
+        self.playersList = []
+        Object.keys(self.players).forEach(player => {
+          self.playersList.push({value: false, name: player.replace('p', '#') + ' ' + self.players[player]})
+        })
       });
     },
     showModal (name) {
@@ -274,6 +311,10 @@ export default {
     },
     addGame(ngData) {
       var gameCount = this.gamesList.length + 1;
+      if(this.gamesList.length == 1 && (this.gamesList[0] == 0 || this.gamesList[0].includes("02")))
+      {
+        gameCount = 1
+      }
       var gameCountStr = gameCount + '';
       if(gameCount < 10){
         gameCountStr = '0' + gameCount;
@@ -281,17 +322,17 @@ export default {
       var gameID = this.selectedTeamId + '-' + gameCountStr;
       var oppData = [];
       var myData = [];
+      var teamId = this.selectedTeamId
       var isSoccer = this.selectedTeamSport == 1
       var isBball = this.selectedTeamSport == 0
       var periodLength = ngData.PeriodLength;
-      
       if(this.selectedTeamSport == 2){
         var gameData = {}
+        var self = this
         if(gameCount == 1)
         {
-          gameData[this.selectedTeamId] = this.footballAskStatlete
-          firebase.database().ref('AskStatlete').update({
-            [this.selectedTeamId]: gameData
+            firebase.database().ref('AskStatlete').update({
+            [teamId]: self.footballAskStatlete
           })
         }
         gameData['Live'] = false

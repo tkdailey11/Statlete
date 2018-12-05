@@ -203,8 +203,8 @@ export default {
                         var obj = snap.val()
                         var opposingTeamName = obj['OpponentTeamName']
                         var date = obj['Date']
-                        var offStats = obj.Totals.Period1.Offense;
-                        var defStats = obj.Totals.Period1.Defense;
+                        var offStats = obj.Totals.Offense;
+                        var defStats = obj.Totals.Defense;
                         dataPointsArr.push({
                             'GameID' : el,
                             'Date' : date,
@@ -333,7 +333,7 @@ export default {
             columnsDef.forEach(function(column) {
                 if (column != ' ')
                 {
-                    if(column == 'TotalPassTD' || column == 'TotalPassYds' || column == 'TotalRushTD' || column == 'TotalRushYds')
+                    if(column == 'TotalPassTD' || column == 'TotalRushTD')
                     {
                         dataRow.push(players.Defense[column].toString());
                     }
@@ -364,7 +364,9 @@ export default {
                 columnsOff.forEach(function(column) {
                     if (column != ' ')
                     {
+                        console.log(column)
                         dataRow.push(players.Offense[column].Total.toString());
+                        console.log(column)
                     }
                 })
                 body.push(dataRow);
