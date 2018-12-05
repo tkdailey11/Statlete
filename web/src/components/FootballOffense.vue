@@ -99,37 +99,80 @@
                         </table>
                         <button class="footballButton" @click="penaltyConfirm">Confirm</button>
             </div>
+
             <div id="runLeftForm">
+              Best Option<br>
+              <img src="../assets/images/football-ask-statlete/run_left.png">
+              <br>
+            </div>
+
+            <div id="runRightForm">
+              Best Option<br>
+              <img src="../assets/images/football-ask-statlete/run_right.png">
+              <br>
+            </div>
+
+            <div id="runMiddleForm">
+              Best Option<br>
+              <img src="../assets/images/football-ask-statlete/run_middle.png">
+              <br>
+            </div>
+
+            <div id="throwLeftForm">
+              Best Option<br>
+              <img src="../assets/images/football-ask-statlete/pass_left.png">
+              <br>
+            </div>
+
+            <div id="throwMiddleForm">
+              Best Option<br>
+              <img src="../assets/images/football-ask-statlete/pass_middle.png">
+              <br>
+            </div>
+
+            <div id="throwRightForm">
+              Best Option<br>
+              <img src="../assets/images/football-ask-statlete/pass_right.png">
+              <br>
+            </div>
+
+            <div id="runLeftFormW">
+              Worst Option<br>
               <img src="../assets/images/football-ask-statlete/run_left.png">
               <br>
               <button class="footballButton" @click="askStatleteConfirm">Confirm</button>
             </div>
 
-            <div id="runRightForm">
+            <div id="runRightFormW">
+              Worst Option<br>
               <img src="../assets/images/football-ask-statlete/run_right.png">
               <br>
               <button class="footballButton" @click="askStatleteConfirm">Confirm</button>
             </div>
 
-            <div id="runMiddleForm">
+            <div id="runMiddleFormW">
+              Worst Option<br>
               <img src="../assets/images/football-ask-statlete/run_middle.png">
               <br>
               <button class="footballButton" @click="askStatleteConfirm">Confirm</button>
             </div>
 
-            <div id="throwLeftForm">
+            <div id="throwLeftFormW">
+              Worst Option<br>
               <img src="../assets/images/football-ask-statlete/pass_left.png">
               <br>
               <button class="footballButton" @click="askStatleteConfirm">Confirm</button>
             </div>
 
-            <div id="throwMiddleForm">
+            <div id="throwMiddleFormW">
+              Worst Option<br>
               <img src="../assets/images/football-ask-statlete/pass_middle.png">
               <br>
               <button class="footballButton" @click="askStatleteConfirm">Confirm</button>
             </div>
 
-            <div id="throwRightForm">
+            <div id="throwRightFormW">
+              Worst Option<br>
               <img src="../assets/images/football-ask-statlete/pass_right.png">
               <br>
               <button class="footballButton" @click="askStatleteConfirm">Confirm</button>
@@ -225,24 +268,127 @@ export default {
       jQuery("#statleteForm").hide();
       jQuery("#offenseButtons").hide();
       jQuery("#turnoverForm").hide();
-      var num = Math.floor((Math.random() * 6) + 1);
-      if(num == 1)
+
+      var short = 3;
+      var medium = 8;
+      var downDist = this.driveDowns.toString();
+
+      if(downDist == "1")
+      {
+        downDist = "1Down";
+      }
+      if(downDist == "4")
+      {
+        downDist = "4DownAndLong"
+      }
+      if(this.driveYardsLeft <= short)
+      {
+        if(downDist != "1Down" && downDist != "4DownAndLong")
+        {
+          downDist += "DownAndShort"
+        }
+
+      }
+      else if(this.driveYardsLeft <= medium && this.driveYardsLeft > short)
+      {
+        if(downDist != "1Down" && downDist != "4DownAndLong")
+        {
+          downDist += "DownAndMedium"
+        }
+      }
+      else
+      {
+        if(downDist != "1Down" && downDist != "4DownAndLong")
+        {
+          downDist += "DownAndLong"
+        }
+      }
+      var direc = "PassLeft";
+      var direcW = "PassLeft";
+
+      var self = this;
+      var askRef = firebase.database().ref("AskStatlete").child(self.selectedTeamId)
+      askRef.child(downDist).once("value", function(getValue){
+        var askYds = getValue.val();
+        var pL = parseInt(askYds.PassLeft);
+        var pM = parseInt(askYds.PassMiddle);
+        var pR = parseInt(askYds.PassRight);
+        var rL = parseInt(askYds.RunLeft);
+        var rM = parseInt(askYds.RunMiddle);
+        var rR = parseInt(askYds.RunRight);
+
+        var maxx = pL;
+        var minn = pL;
+        if(pM > maxx)
+        {
+          maxx = pM;
+          direc = "PassMiddle";
+        }
+        if(pR > maxx)
+        {
+          maxx = pR
+          direc = "PassRight"
+        }
+        if(rL > maxx)
+        {
+          maxx = rL;
+          direc = "RunLeft"
+        }
+        if(rM > maxx)
+        {
+          maxx = rM;
+          direc = "RunMiddle"
+        }
+        if(rR > maxx)
+        {
+          maxx = rR;
+          direc = "RunRight"
+        }
+        if(pM < minn)
+        {
+          minn = pM;
+          direcW = "PassMiddle";
+        }
+        if(pR < minn)
+        {
+          minn = pR
+          direcW = "PassRight";
+        }
+        if(rL < minn)
+        {
+          minn = rL;
+          direcW = "RunLeft";
+        }
+        if(rM < minn)
+        {
+          minn = rM;
+          direcW = "RunMiddle";
+        }
+        if(rR < minn)
+        {
+          minn = rR;
+          direcW = "RunRight"
+        }
+
+        
+      }).then(()=>{
+        if(direc == "RunLeft")
       {
         jQuery("#runLeftForm").show();
       }
-      else if(num == 2)
+      else if(direc == "RunMiddle")
       {
         jQuery("#runMiddleForm").show();
       }
-      else if(num == 3)
+      else if(direc == "RunRight")
       {
         jQuery("#runRightForm").show();
       }
-      else if(num == 4)
+      else if(direc == "PassLeft")
       {
         jQuery("#throwLeftForm").show();
       }
-      else if(num == 5) 
+      else if(direc == "PassMiddle") 
       {
         jQuery("#throwMiddleForm").show();
       }
@@ -250,6 +396,34 @@ export default {
       {
         jQuery("#throwRightForm").show();
       }
+
+      if(direcW == "RunLeft")
+      {
+        jQuery("#runLeftFormW").show();
+      }
+      else if(direcW == "RunMiddle")
+      {
+        jQuery("#runMiddleFormW").show();
+      }
+      else if(direcW == "RunRight")
+      {
+        jQuery("#runRightFormW").show();
+      }
+      else if(direcW == "PassLeft")
+      {
+        jQuery("#throwLeftFormW").show();
+      }
+      else if(direcW == "PassMiddle") 
+      {
+        jQuery("#throwMiddleFormW").show();
+      }
+      else
+      {
+        jQuery("#throwRightFormW").show();
+      }
+      })
+
+      
     },
 
     askStatleteConfirm: function() {
@@ -260,6 +434,14 @@ export default {
       jQuery("#throwLeftForm").hide();
       jQuery("#throwMiddleForm").hide();
       jQuery("#throwRightForm").hide();
+
+      jQuery("#statleteFormW").hide();
+      jQuery("#runLeftFormW").hide();
+      jQuery("#runMiddleFormW").hide();
+      jQuery("#runRightFormW").hide();
+      jQuery("#throwLeftFormW").hide();
+      jQuery("#throwMiddleFormW").hide();
+      jQuery("#throwRightFormW").hide();
       jQuery("#offenseButtons").show();
     },
 
@@ -299,32 +481,337 @@ export default {
       jQuery("#turnoverForm").hide();
       jQuery("#offenseButtons").show();
 
-      //Database Stuff
-      //Tracker
-      if(this.runYards >= this.driveYardsLeft)
+      var short = 3;
+      var medium = 8;
+
+      var downDistance = "1Down";
+      var playSide = "Run" + this.pickedRunSide;
+      var playResult = 0;
+
+
+      //AskStatlete
+      if(this.driveDowns <= 4 && this.runYards != "")
       {
-        this.driveDowns = 1;
-        this.driveYardsLeft = 10;
-      }
-      else
-      {
-        this.driveYardsLeft = parseInt(this.driveYardsLeft) - parseInt(this.runYards);
-        this.driveDowns++;
-      }
-      if(this.driveMyHalf)
-      {
-        //this.driveSpotBall += this.runYards;
-        this.driveSpotBall = parseInt(this.driveSpotBall) + parseInt(this.runYards);
-        if(this.driveSpotBall > 50)
+        if(this.driveYardsLeft <= short)
         {
-          var temp = this.driveSpotBall - 50;
-          this.driveSpotBall = 50 - temp;
-          this.driveMyHalf = false;
+          if(this.driveDowns == 1)
+          {
+            downDistance = "1Down";
+            if(this.runYards < 0 || this.runFumble)
+            {
+              playResult = 0;
+            }
+            else if(this.runYards == 0)
+            {
+              playResult = 1;
+            }
+            else if(this.runYards <=3 && this.runYards > 0)
+            {
+              playResult = 2;
+            }
+            else if(this.runYards > 3 && this.runYards <= 7)
+            {
+              playResult = 3;
+            }
+            else if(this.runYards > 7 && this.runYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.runYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else if(this.driveDowns == 2)
+          {
+            downDistance = "2DownAndShort";
+            if(this.runYards < 0 || this.runFumble)
+            {
+              playResult = 0;
+            }
+            else if(this.runYards == 0)
+            {
+              playResult = 1;
+            }
+            else if(this.runYards == 1)
+            {
+              playResult = 2;
+            }
+            else if(this.runYards == 2)
+            {
+              playResult = 3;
+            }
+            else if(this.runYards > 2 && this.runYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.runYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else if(this.driveDowns == 3)
+          {
+            downDistance = "3DownAndShort";
+            if(this.runYards < 0 || this.runFumble)
+            {
+              playResult = 0;
+            }
+            else if(this.runYards == 0 || this.runYards == 1)
+            {
+              playResult = 1;
+            }
+            else if(this.runYards == 2)
+            {
+              playResult = 2;
+            }
+            else if(this.runYards > 2 && this.runYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.runYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else
+          {
+            downDistance = "4DownAndLong";
+            if(this.runYards >= this.driveYardsLeft)
+            {
+              playResult = 4
+            }
+          }
+        }
+        if(this.driveYardsLeft > short && this.driveYardsLeft <= medium)
+        {
+          if(this.driveDowns == 1)
+          {
+            downDistance = "1Down";
+            if(this.runYards < 0 || this.runFumble)
+            {
+              playResult = 0;
+            }
+            else if(this.runYards == 0)
+            {
+              playResult = 1;
+            }
+            else if(this.runYards <=3 && this.runYards > 0)
+            {
+              playResult = 2;
+            }
+            else if(this.runYards > 3 && this.runYards <= 7)
+            {
+              playResult = 3;
+            }
+            else if(this.runYards > 7 && this.runYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.runYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else if(this.driveDowns == 2)
+          {
+            downDistance = "2DownAndMedium";
+            if(this.runYards < 0 || this.runFumble)
+            {
+              playResult = 0;
+            }
+            else if(this.runYards == 0)
+            {
+              playResult = 1;
+            }
+            else if(this.runYards <=3 && this.runYards > 0)
+            {
+              playResult = 2;
+            }
+            else if(this.runYards > 3 && this.runYards <= 7)
+            {
+              playResult = 3;
+            }
+            else if(this.runYards > 7 && this.runYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.runYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else if(this.driveDowns == 3)
+          {
+            downDistance = "3DownAndMedium";
+            if(this.runYards < 0 || this.runFumble)
+            {
+              playResult = 0;
+            }
+            else if(this.runYards >= 0 && this.runYards <= 2)
+            {
+              playResult = 1;
+            }
+            else if(this.runYards > 2 && this.runYards <= 5)
+            {
+              playResult = 2;
+            }
+            else if(this.runYards > 5 && this.runYards <= 7)
+            {
+              playResult = 3;
+            }
+            else if(this.runYards > 7 && this.runYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.runYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else
+          {
+            downDistance = "4DownAndLong";
+            if(this.runYards >= this.driveYardsLeft)
+            {
+              playResult = 4
+            }
+          }
+        }
+        if(this.driveYardsLeft > medium)
+        {
+          if(this.driveDowns == 1)
+          {
+            downDistance = "1Down";
+            if(this.runYards < 0 || this.runFumble)
+            {
+              playResult = 0;
+            }
+            else if(this.runYards == 0)
+            {
+              playResult = 1;
+            }
+            else if(this.runYards <=3 && this.runYards > 0)
+            {
+              playResult = 2;
+            }
+            else if(this.runYards > 3 && this.runYards <= 7)
+            {
+              playResult = 3;
+            }
+            else if(this.runYards > 7 && this.runYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.runYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else if(this.driveDowns == 2)
+          {
+            downDistance = "2DownAndLong";
+            if(this.runYards < 0 || this.runFumble)
+            {
+              playResult = 0;
+            }
+            else if(this.runYards == 0)
+            {
+              playResult = 1;
+            }
+            else if(this.runYards <=3 && this.runYards > 0)
+            {
+              playResult = 2;
+            }
+            else if(this.runYards > 3 && this.runYards <= 7)
+            {
+              playResult = 3;
+            }
+            else if(this.runYards > 7 && this.runYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.runYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else if(this.driveDowns == 3)
+          {
+            downDistance = "3DownAndLong";
+            if(this.runYards < 0 || this.runFumble)
+            {
+              playResult = 0;
+            }
+            else if(this.runYards > 0 && this.runYards <= 5)
+            {
+              playResult = 1;
+            }
+            else if(this.runYards <= 8 && this.runYards > 5)
+            {
+              playResult = 2;
+            }
+            else if(this.runYards > 8 && this.runYards <= 19)
+            {
+              playResult = 3;
+            }
+            else if(this.runYards >= this.driveYardsLeft)
+            {
+              playResult = 4;
+            }
+            else if(this.runYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else
+          {
+            downDistance = "4DownAndLong";
+            if(this.runYards >= this.driveYardsLeft)
+            {
+              playResult = 4;
+            }
+          }
         }
       }
-      else
-      {
-        this.driveSpotBall -= this.runYards;
+      var self = this;
+      var askRef = firebase.database().ref("AskStatlete").child(self.selectedTeamId)
+      askRef.child(downDistance).once("value", function(askValue){
+        var askYds = askValue.val();
+        var needVals = askYds[playSide]
+
+        askRef.child(downDistance).update({
+            [playSide]: parseInt(needVals) + parseInt(playResult)
+          })
+      })
+      //Tracker
+      if(this.runYards != "")
+      {  
+        if(this.runYards >= this.driveYardsLeft)
+        {
+          this.driveDowns = 1;
+          this.driveYardsLeft = 10;
+        }
+        else
+        {
+          this.driveYardsLeft = parseInt(this.driveYardsLeft) - parseInt(this.runYards);
+          this.driveDowns++;
+        }
+        if(this.driveMyHalf)
+        {
+          //this.driveSpotBall += this.runYards;
+          this.driveSpotBall = parseInt(this.driveSpotBall) + parseInt(this.runYards);
+          if(this.driveSpotBall > 50)
+          {
+            var temp = this.driveSpotBall - 50;
+            this.driveSpotBall = 50 - temp;
+            this.driveMyHalf = false;
+          }
+        }
+        else
+        {
+          this.driveSpotBall -= this.runYards;
+        }
       }
       if(this.driveSpotBall > 50 || this.driveSpotBall < 0 || this.driveDowns > 4 || this.runYards == "")
       {
@@ -472,38 +959,343 @@ export default {
       jQuery("#turnoverForm").hide();
       jQuery("#offenseButtons").show();
 
-      //Tracker      
-      if(this.passCompletion || this.passSack)
+      //AskStatlete
+      var short = 3;
+      var medium = 8;
+
+      var downDistance = "1Down";
+      var playSide = "Pass" + this.pickedPassSide;
+      var playResult = 0;
+
+      if(this.driveDowns <= 4 && this.passYards != "")
       {
-        if(this.passYards >= this.driveYardsLeft)
+        if(this.driveYardsLeft <= short)
         {
-          this.driveDowns = 1;
-          this.driveYardsLeft = 10;
-        }
-        else
-        {
-          this.driveYardsLeft = parseInt(this.driveYardsLeft) - parseInt(this.passYards);
-          this.driveDowns++;
-        }
-        if(this.driveMyHalf)
-        {
-          //this.driveSpotBall += this.runYards;
-          this.driveSpotBall = parseInt(this.driveSpotBall) + parseInt(this.passYards);
-          if(this.driveSpotBall > 50)
+          if(this.driveDowns == 1)
           {
-            var temp = this.driveSpotBall - 50;
-            this.driveSpotBall = 50 - temp;
-            this.driveMyHalf = false;
+            downDistance = "1Down";
+            if(this.passYards < 0 || this.passInterception || this.passFumble || this.passSack)
+            {
+              playResult = 0;
+            }
+            else if(this.passYards == 0)
+            {
+              playResult = 1;
+            }
+            else if(this.passYards <=3 && this.passYards > 0)
+            {
+              playResult = 2;
+            }
+            else if(this.passYards > 3 && this.passYards <= 7)
+            {
+              playResult = 3;
+            }
+            else if(this.passYards > 7 && this.passYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.passYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else if(this.driveDowns == 2)
+          {
+            downDistance = "2DownAndShort";
+            if(this.passYards < 0 || this.passInterception || this.passFumble || this.passSack)
+            {
+              playResult = 0;
+            }
+            else if(this.passYards == 0)
+            {
+              playResult = 1;
+            }
+            else if(this.passYards == 1)
+            {
+              playResult = 2;
+            }
+            else if(this.passYards == 2)
+            {
+              playResult = 3;
+            }
+            else if(this.passYards > 2 && this.passYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.passYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else if(this.driveDowns == 3)
+          {
+            downDistance = "3DownAndShort";
+            if(this.passYards < 0 || this.passInterception || this.passFumble || this.passSack)
+            {
+              playResult = 0;
+            }
+            else if(this.passYards == 0 || this.passYards == 1)
+            {
+              playResult = 1;
+            }
+            else if(this.passYards == 2)
+            {
+              playResult = 2;
+            }
+            else if(this.passYards > 2 && this.passYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.passYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else
+          {
+            downDistance = "4DownAndLong";
+            if(this.passYards >= this.driveYardsLeft)
+            {
+              playResult = 4
+            }
           }
         }
-        else
+        if(this.driveYardsLeft > short && this.driveYardsLeft <= medium)
         {
-          this.driveSpotBall -= this.passYards;
+          if(this.driveDowns == 1)
+          {
+            downDistance = "1Down";
+            if(this.passYards < 0 || this.passInterception || this.passFumble || this.passSack)
+            {
+              playResult = 0;
+            }
+            else if(this.passYards == 0)
+            {
+              playResult = 1;
+            }
+            else if(this.passYards <=3 && this.passYards > 0)
+            {
+              playResult = 2;
+            }
+            else if(this.passYards > 3 && this.passYards <= 7)
+            {
+              playResult = 3;
+            }
+            else if(this.passYards > 7 && this.passYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.passYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else if(this.driveDowns == 2)
+          {
+            downDistance = "2DownAndMedium";
+            if(this.passYards < 0 || this.passInterception || this.passFumble || this.passSack)
+            {
+              playResult = 0;
+            }
+            else if(this.passYards == 0)
+            {
+              playResult = 1;
+            }
+            else if(this.passYards <=3 && this.passYards > 0)
+            {
+              playResult = 2;
+            }
+            else if(this.passYards > 3 && this.passYards <= 7)
+            {
+              playResult = 3;
+            }
+            else if(this.passYards > 7 && this.passYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.passYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else if(this.driveDowns == 3)
+          {
+            downDistance = "3DownAndMedium";
+            if(this.passYards < 0 || this.passInterception || this.passFumble || this.passSack)
+            {
+              playResult = 0;
+            }
+            else if(this.passYards >= 0 && this.passYards <= 2)
+            {
+              playResult = 1;
+            }
+            else if(this.passYards > 2 && this.passYards <= 5)
+            {
+              playResult = 2;
+            }
+            else if(this.passYards > 5 && this.passYards <= 7)
+            {
+              playResult = 3;
+            }
+            else if(this.passYards > 7 && this.passYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.passYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else
+          {
+            downDistance = "4DownAndLong";
+            if(this.passYards >= this.driveYardsLeft)
+            {
+              playResult = 4
+            }
+          }
+        }
+        if(this.driveYardsLeft > medium)
+        {
+          if(this.driveDowns == 1)
+          {
+            downDistance = "1Down";
+            if(this.passYards < 0 || this.passInterception || this.passFumble || this.passSack)
+            {
+              playResult = 0;
+            }
+            else if(this.passYards == 0)
+            {
+              playResult = 1;
+            }
+            else if(this.passYards <=3 && this.passYards > 0)
+            {
+              playResult = 2;
+            }
+            else if(this.passYards > 3 && this.passYards <= 7)
+            {
+              playResult = 3;
+            }
+            else if(this.passYards > 7 && this.passYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.passYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else if(this.driveDowns == 2)
+          {
+            downDistance = "2DownAndLong";
+            if(this.passYards < 0 || this.passInterception || this.passFumble || this.passSack)
+            {
+              playResult = 0;
+            }
+            else if(this.passYards == 0)
+            {
+              playResult = 1;
+            }
+            else if(this.passYards <=3 && this.passYards > 0)
+            {
+              playResult = 2;
+            }
+            else if(this.passYards > 3 && this.passYards <= 7)
+            {
+              playResult = 3;
+            }
+            else if(this.passYards > 7 && this.passYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.passYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else if(this.driveDowns == 3)
+          {
+            downDistance = "3DownAndLong";
+            if(this.passYards < 0 || this.passInterception || this.passFumble || this.passSack)
+            {
+              playResult = 0;
+            }
+            else if(this.passYards > 0 && this.passYards <= 5)
+            {
+              playResult = 1;
+            }
+            else if(this.passYards <= 8 && this.passYards > 5)
+            {
+              playResult = 2;
+            }
+            else if(this.passYards > 8 && this.passYards <= 19)
+            {
+              playResult = 3;
+            }
+            else if(this.passYards >= this.driveYardsLeft)
+            {
+              playResult = 4;
+            }
+            else if(this.passYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else
+          {
+            downDistance = "4DownAndLong";
+            if(this.passYards >= this.driveYardsLeft)
+            {
+              playResult = 4;
+            }
+          }
         }
       }
-      if(this.driveSpotBall > 50 || this.driveSpotBall < 0 || this.driveDowns > 4 || this.runYards == "")
-      {
-        jQuery("#tracker").hide();
+      var self = this;
+      var askRef = firebase.database().ref("AskStatlete").child(self.selectedTeamId)
+      askRef.child(downDistance).once("value", function(askValue){
+        var askYds = askValue.val();
+        var needVals = askYds[playSide]
+
+        askRef.child(downDistance).update({
+            [playSide]: parseInt(needVals) + parseInt(playResult)
+          })
+      })
+
+      //Tracker      
+      if(this.passYards != "")
+      { 
+        if(this.passCompletion || this.passSack)
+        {
+          if(this.passYards >= this.driveYardsLeft)
+          {
+            this.driveDowns = 1;
+            this.driveYardsLeft = 10;
+          }
+          else
+          {
+            this.driveYardsLeft = parseInt(this.driveYardsLeft) - parseInt(this.passYards);
+            this.driveDowns++;
+          }
+          if(this.driveMyHalf)
+          {
+            this.driveSpotBall = parseInt(this.driveSpotBall) + parseInt(this.passYards);
+            if(this.driveSpotBall > 50)
+            {
+              var temp = this.driveSpotBall - 50;
+              this.driveSpotBall = 50 - temp;
+              this.driveMyHalf = false;
+            }
+          }
+          else
+          {
+            this.driveSpotBall -= this.passYards;
+          }
+        }
+        if(this.driveSpotBall > 50 || this.driveSpotBall < 0 || this.driveDowns > 4 || this.passYards == "")
+        {
+          jQuery("#tracker").hide();
+        }
       }
 
       //database stuff
@@ -844,6 +1636,14 @@ export default {
     jQuery("#throwLeftForm").hide();
     jQuery("#throwMiddleForm").hide();
     jQuery("#throwRightForm").hide();
+
+    jQuery("#statleteFormW").hide();
+      jQuery("#runLeftFormW").hide();
+      jQuery("#runMiddleFormW").hide();
+      jQuery("#runRightFormW").hide();
+      jQuery("#throwLeftFormW").hide();
+      jQuery("#throwMiddleFormW").hide();
+      jQuery("#throwRightFormW").hide();
 
     jQuery("#getOffPosition").show();
     jQuery("#offenseButtons").hide();

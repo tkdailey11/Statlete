@@ -4,6 +4,7 @@
         <h1 class="mainH1">{{selectedTeamName}}</h1>
         <div class="footballButton" id="startButton" @click="startButton">Start</div>
         <div class="footballButton" id="endButton" @click="endButton">End</div>
+        <div class="footballButton" id="finalButton">Final</div>
         <table align="center">
           <tr>
             <td class="item"> {{myScore}}</td>
@@ -78,6 +79,7 @@ export default {
   },
   mounted() {
     jQuery("#endButton").hide();
+    jQuery("#finalButton").hide();
     // alert("BEFORE BEFORE")
     var self = this
     var ref5 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Score")
@@ -86,6 +88,24 @@ export default {
       var splitScore = dbScores.split("-")
       self.myScore = splitScore[0]
       self.oppScore = splitScore[1]
+    })
+    var ref6 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId)
+    ref6.once("value", function(hasStarted){
+      var sVals = hasStarted.val();
+      var isLive = sVals.Live
+      var isOver = sVals.Result
+      if(isLive)
+      {
+        jQuery("#startButton").hide();
+        jQuery("#endButton").show();
+      }
+      if(isOver != null)
+      {
+        jQuery("#startButton").hide();
+        jQuery("#endButton").hide();
+        jQuery("#finalButton").show();
+      }
+      
     })
   },
   methods: {
@@ -127,6 +147,8 @@ export default {
         "Live": false,
         "Result": result
       })
+      jQuery("#endButton").hide();
+      jQuery("#finalButton").show();
     },
     incrementOpp: function(data) {
       var self = this
@@ -159,6 +181,14 @@ export default {
     jQuery("#throwLeftForm").hide();
     jQuery("#throwMiddleForm").hide();
     jQuery("#throwRightForm").hide();
+
+    jQuery("#statleteFormW").hide();
+      jQuery("#runLeftFormW").hide();
+      jQuery("#runMiddleFormW").hide();
+      jQuery("#runRightFormW").hide();
+      jQuery("#throwLeftFormW").hide();
+      jQuery("#throwMiddleFormW").hide();
+      jQuery("#throwRightFormW").hide();
       this.activeButton = 'offense';
     },
     defenseClicked: function() {
@@ -235,6 +265,8 @@ div button {
     position: fixed;
     top: 0;
     overflow-x: hidden;
+    overflow-y: scroll;
+    padding-bottom: 280px;
     padding-top: 20px;
     margin-top: 280px;
 }
@@ -264,6 +296,7 @@ tr {
   background-color: rgb(224, 0, 16);
   color: rgb(240,240,240);
 }
+template { overflow-y: scroll; }
 
 .period_item {
   /* flex-shrink: 4;
