@@ -13,148 +13,143 @@
       </v-toolbar>
     </template>
     <template>
-      <v-layout
-        wrap
-        style="height: 200px;"
-      >
-        <v-navigation-drawer
-          v-model="drawer"
-          :mini-variant="mini"
-          absolute
-          dark
-          temporary>
-          <v-list class="pa-1">
-            <v-list-tile v-if="mini" @click.stop="mini = !mini">
-              <v-list-tile-action>
-                <v-icon>chevron_right</v-icon>
-              </v-list-tile-action>
-            </v-list-tile>
+      <v-navigation-drawer
+        v-model="drawer"
+        :mini-variant="mini"
+        absolute
+        dark
+        temporary>
+        <v-list class="pa-1">
+          <v-list-tile v-if="mini" @click.stop="mini = !mini">
+            <v-list-tile-action>
+              <v-icon>chevron_right</v-icon>
+            </v-list-tile-action>
+          </v-list-tile>
 
-            <v-list-tile avatar tag="div">
-              <v-list-tile-avatar>
-                <img :src="userImageURL" @click.stop="changeImage">
-              </v-list-tile-avatar>
+          <v-list-tile avatar tag="div">
+            <v-list-tile-avatar>
+              <img :src="userImageURL" @click.stop="changeImage">
+            </v-list-tile-avatar>
 
-              <v-list-tile-content>
-                <v-list-tile-title>{{currentUserName}}</v-list-tile-title>
-              </v-list-tile-content>
+            <v-list-tile-content>
+              <v-list-tile-title>{{currentUserName}}</v-list-tile-title>
+            </v-list-tile-content>
 
-              <v-list-tile-action>
-                <v-btn icon @click.stop="mini = !mini">
-                  <v-icon>chevron_left</v-icon>
-                </v-btn>
-              </v-list-tile-action>
-            </v-list-tile>
-          </v-list>
+            <v-list-tile-action>
+              <v-btn icon @click.stop="mini = !mini">
+                <v-icon>chevron_left</v-icon>
+              </v-btn>
+            </v-list-tile-action>
+          </v-list-tile>
+        </v-list>
 
-          <v-list>
-            <v-list-tile @click.stop="goBack">
-              <v-list-tile-action>
-                <v-icon>home</v-icon>
-              </v-list-tile-action>
-              <v-list-tile-title>Home</v-list-tile-title>
+        <v-list>
+          <v-list-tile @click.stop="goBack">
+            <v-list-tile-action>
+              <v-icon>home</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-title>Home</v-list-tile-title>
+          </v-list-tile>
+
+          <v-list-group
+            no-action
+            prepend-icon="settings"
+            :value="false">
+              <v-list-tile slot="activator">
+                <v-list-tile-title>Settings</v-list-tile-title>
+              </v-list-tile>
+              <v-list-tile
+                @click="changeColor">
+                  <v-list-tile-action>
+                    <v-icon>color_lens</v-icon>
+                  </v-list-tile-action>
+                  <v-list-tile-title v-text="'Choose Colors'"></v-list-tile-title>
+              </v-list-tile>
+          </v-list-group>
+
+          <v-list-group
+            prepend-icon="account_circle"
+            :value="false">
+            <v-list-tile slot="activator">
+              <v-list-tile-title>My Sportfolios</v-list-tile-title>
             </v-list-tile>
 
             <v-list-group
               no-action
-              prepend-icon="settings"
-              :value="false">
-                <v-list-tile slot="activator">
-                  <v-list-tile-title>Settings</v-list-tile-title>
-                </v-list-tile>
-                <v-list-tile
-                  @click="changeColor">
-                    <v-list-tile-action>
-                      <v-icon>color_lens</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-title v-text="'Choose Colors'"></v-list-tile-title>
-                </v-list-tile>
-            </v-list-group>
-
-            <v-list-group
-              prepend-icon="account_circle"
-              :value="false">
+              sub-group
+              value="true">
               <v-list-tile slot="activator">
-                <v-list-tile-title>My Sportfolios</v-list-tile-title>
+                <v-list-tile-action>
+                  <v-icon>group</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-title>Team</v-list-tile-title>
               </v-list-tile>
 
-              <v-list-group
-                no-action
-                sub-group
-                value="true">
-                <v-list-tile slot="activator">
-                  <v-list-tile-action>
-                    <v-icon>group</v-icon>
-                  </v-list-tile-action>
-                  <v-list-tile-title>Team</v-list-tile-title>
-                </v-list-tile>
-
-                <v-list-tile
-                  v-for="(team, i) in teamSportfolios"
-                  :key="i"
-                  @click="selectedTeam(team.id)"
-                >
-                <v-list-tile-action>
-                    <font-awesome-icon v-if="team.sport == 0" icon="basketball-ball" />
-                    <font-awesome-icon v-else-if="team.sport == 1" icon="futbol" />
-                    <font-awesome-icon v-else icon="football-ball" />
-                </v-list-tile-action>
-                  <v-list-tile-title v-text="team.id"></v-list-tile-title>
-                </v-list-tile>
-              </v-list-group>
-
-              <v-list-group
-                no-action
-                sub-group
-                :value="false">
-                <v-list-tile slot="activator">
-                  <v-list-tile-action>
-                    <v-icon>person</v-icon>
-                  </v-list-tile-action>
-                  <v-list-tile-title>Player</v-list-tile-title>
-                </v-list-tile>
-
-                <v-list-tile
-                  v-for="(player, i) in playerSportfolios"
-                  :key="i"
-                  @click="selectedTeam(player.id)"
-                >
-                <v-list-tile-action>
-                    <font-awesome-icon v-if="player.sport == 0" icon="basketball-ball" />
-                    <font-awesome-icon v-else-if="player.sport == 1" icon="futbol" />
-                    <font-awesome-icon v-else icon="football-ball" />
-                </v-list-tile-action>
-                <v-list-tile-title v-text="player.id"></v-list-tile-title>
-                  
-                </v-list-tile>
-              </v-list-group>
+              <v-list-tile
+                v-for="(team, i) in teamSportfolios"
+                :key="i"
+                @click="selectedTeam(team.id)"
+              >
+              <v-list-tile-action>
+                  <font-awesome-icon v-if="team.sport == 0" icon="basketball-ball" />
+                  <font-awesome-icon v-else-if="team.sport == 1" icon="futbol" />
+                  <font-awesome-icon v-else icon="football-ball" />
+              </v-list-tile-action>
+                <v-list-tile-title v-text="team.id"></v-list-tile-title>
+              </v-list-tile>
             </v-list-group>
 
             <v-list-group
               no-action
-              prepend-icon="add_circle"
+              sub-group
               :value="false">
               <v-list-tile slot="activator">
-                <v-list-tile-title>Add New Sportfolios</v-list-tile-title>
-              </v-list-tile>
-              <v-list-tile
-                @click="showTeam">
                 <v-list-tile-action>
-                  <v-icon>group_add</v-icon>
+                  <v-icon>person</v-icon>
                 </v-list-tile-action>
-                <v-list-tile-title v-text="'New Team Sportfolio'"></v-list-tile-title>
+                <v-list-tile-title>Player</v-list-tile-title>
               </v-list-tile>
+
               <v-list-tile
-                @click="showPlayer">
-                <v-list-tile-action>
-                  <v-icon>person_add</v-icon>
-                </v-list-tile-action>
-                <v-list-tile-title v-text="'New Player Sportfolio'"></v-list-tile-title>
+                v-for="(player, i) in playerSportfolios"
+                :key="i"
+                @click="selectedTeam(player.id)"
+              >
+              <v-list-tile-action>
+                  <font-awesome-icon v-if="player.sport == 0" icon="basketball-ball" />
+                  <font-awesome-icon v-else-if="player.sport == 1" icon="futbol" />
+                  <font-awesome-icon v-else icon="football-ball" />
+              </v-list-tile-action>
+              <v-list-tile-title v-text="player.id"></v-list-tile-title>
+                
               </v-list-tile>
             </v-list-group>
-          </v-list>
-        </v-navigation-drawer>
-      </v-layout>
+          </v-list-group>
+
+          <v-list-group
+            no-action
+            prepend-icon="add_circle"
+            :value="false">
+            <v-list-tile slot="activator">
+              <v-list-tile-title>Add New Sportfolios</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile
+              @click="showTeam">
+              <v-list-tile-action>
+                <v-icon>group_add</v-icon>
+              </v-list-tile-action>
+              <v-list-tile-title v-text="'New Team Sportfolio'"></v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile
+              @click="showPlayer">
+              <v-list-tile-action>
+                <v-icon>person_add</v-icon>
+              </v-list-tile-action>
+              <v-list-tile-title v-text="'New Player Sportfolio'"></v-list-tile-title>
+            </v-list-tile>
+          </v-list-group>
+        </v-list>
+      </v-navigation-drawer>
     </template>
     <photoModal
       v-show="isModalVisible"
@@ -469,5 +464,10 @@ export default {
       font-size: 36px;
       margin-left: 50px;
       z-index: 2;
+  }
+
+  .wrap {
+    height: 0px;
+    background-color: green;
   }
 </style>
