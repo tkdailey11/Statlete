@@ -181,6 +181,14 @@ export default {
     jQuery("#throwLeftForm").hide();
     jQuery("#throwMiddleForm").hide();
     jQuery("#throwRightForm").hide();
+
+    jQuery("#statleteFormW").hide();
+      jQuery("#runLeftFormW").hide();
+      jQuery("#runMiddleFormW").hide();
+      jQuery("#runRightFormW").hide();
+      jQuery("#throwLeftFormW").hide();
+      jQuery("#throwMiddleFormW").hide();
+      jQuery("#throwRightFormW").hide();
       this.activeButton = 'offense';
     },
     defenseClicked: function() {
@@ -257,6 +265,8 @@ div button {
     position: fixed;
     top: 0;
     overflow-x: hidden;
+    overflow-y: scroll;
+    padding-bottom: 280px;
     padding-top: 20px;
     margin-top: 280px;
 }
@@ -286,6 +296,7 @@ tr {
   background-color: rgb(224, 0, 16);
   color: rgb(240,240,240);
 }
+template { overflow-y: scroll; }
 
 .period_item {
   /* flex-shrink: 4;
