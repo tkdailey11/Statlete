@@ -299,32 +299,337 @@ export default {
       jQuery("#turnoverForm").hide();
       jQuery("#offenseButtons").show();
 
-      //Database Stuff
-      //Tracker
-      if(this.runYards >= this.driveYardsLeft)
+      var short = 3;
+      var medium = 8;
+
+      var downDistance = "1Down";
+      var playSide = "Run" + this.pickedRunSide;
+      var playResult = 0;
+
+
+      //AskStatlete
+      if(this.driveDowns <= 4 && this.runYards != "")
       {
-        this.driveDowns = 1;
-        this.driveYardsLeft = 10;
-      }
-      else
-      {
-        this.driveYardsLeft = parseInt(this.driveYardsLeft) - parseInt(this.runYards);
-        this.driveDowns++;
-      }
-      if(this.driveMyHalf)
-      {
-        //this.driveSpotBall += this.runYards;
-        this.driveSpotBall = parseInt(this.driveSpotBall) + parseInt(this.runYards);
-        if(this.driveSpotBall > 50)
+        if(this.driveYardsLeft <= short)
         {
-          var temp = this.driveSpotBall - 50;
-          this.driveSpotBall = 50 - temp;
-          this.driveMyHalf = false;
+          if(this.driveDowns == 1)
+          {
+            downDistance = "1Down";
+            if(this.runYards < 0 || this.runFumble)
+            {
+              playResult = 0;
+            }
+            else if(this.runYards == 0)
+            {
+              playResult = 1;
+            }
+            else if(this.runYards <=3 && this.runYards > 0)
+            {
+              playResult = 2;
+            }
+            else if(this.runYards > 3 && this.runYards <= 7)
+            {
+              playResult = 3;
+            }
+            else if(this.runYards > 7 && this.runYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.runYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else if(this.driveDowns == 2)
+          {
+            downDistance = "2DownAndShort";
+            if(this.runYards < 0 || this.runFumble)
+            {
+              playResult = 0;
+            }
+            else if(this.runYards == 0)
+            {
+              playResult = 1;
+            }
+            else if(this.runYards == 1)
+            {
+              playResult = 2;
+            }
+            else if(this.runYards == 2)
+            {
+              playResult = 3;
+            }
+            else if(this.runYards > 2 && this.runYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.runYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else if(this.driveDowns == 3)
+          {
+            downDistance = "3DownAndShort";
+            if(this.runYards < 0 || this.runFumble)
+            {
+              playResult = 0;
+            }
+            else if(this.runYards == 0 || this.runYards == 1)
+            {
+              playResult = 1;
+            }
+            else if(this.runYards == 2)
+            {
+              playResult = 2;
+            }
+            else if(this.runYards > 2 && this.runYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.runYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else
+          {
+            downDistance = "4DownAndLong";
+            if(this.runYards >= this.driveYardsLeft)
+            {
+              playResult = 4
+            }
+          }
+        }
+        if(this.driveYardsLeft > short && this.driveYardsLeft <= medium)
+        {
+          if(this.driveDowns == 1)
+          {
+            downDistance = "1Down";
+            if(this.runYards < 0 || this.runFumble)
+            {
+              playResult = 0;
+            }
+            else if(this.runYards == 0)
+            {
+              playResult = 1;
+            }
+            else if(this.runYards <=3 && this.runYards > 0)
+            {
+              playResult = 2;
+            }
+            else if(this.runYards > 3 && this.runYards <= 7)
+            {
+              playResult = 3;
+            }
+            else if(this.runYards > 7 && this.runYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.runYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else if(this.driveDowns == 2)
+          {
+            downDistance = "2DownAndMedium";
+            if(this.runYards < 0 || this.runFumble)
+            {
+              playResult = 0;
+            }
+            else if(this.runYards == 0)
+            {
+              playResult = 1;
+            }
+            else if(this.runYards <=3 && this.runYards > 0)
+            {
+              playResult = 2;
+            }
+            else if(this.runYards > 3 && this.runYards <= 7)
+            {
+              playResult = 3;
+            }
+            else if(this.runYards > 7 && this.runYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.runYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else if(this.driveDowns == 3)
+          {
+            downDistance = "3DownAndMedium";
+            if(this.runYards < 0 || this.runFumble)
+            {
+              playResult = 0;
+            }
+            else if(this.runYards >= 0 && this.runYards <= 2)
+            {
+              playResult = 1;
+            }
+            else if(this.runYards > 2 && this.runYards <= 5)
+            {
+              playResult = 2;
+            }
+            else if(this.runYards > 5 && this.runYards <= 7)
+            {
+              playResult = 3;
+            }
+            else if(this.runYards > 7 && this.runYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.runYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else
+          {
+            downDistance = "4DownAndLong";
+            if(this.runYards >= this.driveYardsLeft)
+            {
+              playResult = 4
+            }
+          }
+        }
+        if(this.driveYardsLeft > medium)
+        {
+          if(this.driveDowns == 1)
+          {
+            downDistance = "1Down";
+            if(this.runYards < 0 || this.runFumble)
+            {
+              playResult = 0;
+            }
+            else if(this.runYards == 0)
+            {
+              playResult = 1;
+            }
+            else if(this.runYards <=3 && this.runYards > 0)
+            {
+              playResult = 2;
+            }
+            else if(this.runYards > 3 && this.runYards <= 7)
+            {
+              playResult = 3;
+            }
+            else if(this.runYards > 7 && this.runYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.runYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else if(this.driveDowns == 2)
+          {
+            downDistance = "2DownAndLong";
+            if(this.runYards < 0 || this.runFumble)
+            {
+              playResult = 0;
+            }
+            else if(this.runYards == 0)
+            {
+              playResult = 1;
+            }
+            else if(this.runYards <=3 && this.runYards > 0)
+            {
+              playResult = 2;
+            }
+            else if(this.runYards > 3 && this.runYards <= 7)
+            {
+              playResult = 3;
+            }
+            else if(this.runYards > 7 && this.runYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.runYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else if(this.driveDowns == 3)
+          {
+            downDistance = "3DownAndLong";
+            if(this.runYards < 0 || this.runFumble)
+            {
+              playResult = 0;
+            }
+            else if(this.runYards > 0 && this.runYards <= 5)
+            {
+              playResult = 1;
+            }
+            else if(this.runYards <= 8 && this.runYards > 5)
+            {
+              playResult = 2;
+            }
+            else if(this.runYards > 8 && this.runYards <= 19)
+            {
+              playResult = 3;
+            }
+            else if(this.runYards >= this.driveYardsLeft)
+            {
+              playResult = 4;
+            }
+            else if(this.runYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else
+          {
+            downDistance = "4DownAndLong";
+            if(this.runYards >= this.driveYardsLeft)
+            {
+              playResult = 4;
+            }
+          }
         }
       }
-      else
-      {
-        this.driveSpotBall -= this.runYards;
+      var self = this;
+      var askRef = firebase.database().ref("AskStatlete").child(self.selectedTeamId)
+      askRef.child(downDistance).once("value", function(askValue){
+        var askYds = askValue.val();
+        var needVals = askYds[playSide]
+
+        askRef.child(downDistance).update({
+            [playSide]: parseInt(needVals) + parseInt(playResult)
+          })
+      })
+      //Tracker
+      if(this.runYards != "")
+      {  
+        if(this.runYards >= this.driveYardsLeft)
+        {
+          this.driveDowns = 1;
+          this.driveYardsLeft = 10;
+        }
+        else
+        {
+          this.driveYardsLeft = parseInt(this.driveYardsLeft) - parseInt(this.runYards);
+          this.driveDowns++;
+        }
+        if(this.driveMyHalf)
+        {
+          //this.driveSpotBall += this.runYards;
+          this.driveSpotBall = parseInt(this.driveSpotBall) + parseInt(this.runYards);
+          if(this.driveSpotBall > 50)
+          {
+            var temp = this.driveSpotBall - 50;
+            this.driveSpotBall = 50 - temp;
+            this.driveMyHalf = false;
+          }
+        }
+        else
+        {
+          this.driveSpotBall -= this.runYards;
+        }
       }
       if(this.driveSpotBall > 50 || this.driveSpotBall < 0 || this.driveDowns > 4 || this.runYards == "")
       {
@@ -472,38 +777,343 @@ export default {
       jQuery("#turnoverForm").hide();
       jQuery("#offenseButtons").show();
 
-      //Tracker      
-      if(this.passCompletion || this.passSack)
+      //AskStatlete
+      var short = 3;
+      var medium = 8;
+
+      var downDistance = "1Down";
+      var playSide = "Pass" + this.pickedPassSide;
+      var playResult = 0;
+
+      if(this.driveDowns <= 4 && this.passYards != "")
       {
-        if(this.passYards >= this.driveYardsLeft)
+        if(this.driveYardsLeft <= short)
         {
-          this.driveDowns = 1;
-          this.driveYardsLeft = 10;
-        }
-        else
-        {
-          this.driveYardsLeft = parseInt(this.driveYardsLeft) - parseInt(this.passYards);
-          this.driveDowns++;
-        }
-        if(this.driveMyHalf)
-        {
-          //this.driveSpotBall += this.runYards;
-          this.driveSpotBall = parseInt(this.driveSpotBall) + parseInt(this.passYards);
-          if(this.driveSpotBall > 50)
+          if(this.driveDowns == 1)
           {
-            var temp = this.driveSpotBall - 50;
-            this.driveSpotBall = 50 - temp;
-            this.driveMyHalf = false;
+            downDistance = "1Down";
+            if(this.passYards < 0 || this.passInterception || this.passFumble || this.passSack)
+            {
+              playResult = 0;
+            }
+            else if(this.passYards == 0)
+            {
+              playResult = 1;
+            }
+            else if(this.passYards <=3 && this.passYards > 0)
+            {
+              playResult = 2;
+            }
+            else if(this.passYards > 3 && this.passYards <= 7)
+            {
+              playResult = 3;
+            }
+            else if(this.passYards > 7 && this.passYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.passYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else if(this.driveDowns == 2)
+          {
+            downDistance = "2DownAndShort";
+            if(this.passYards < 0 || this.passInterception || this.passFumble || this.passSack)
+            {
+              playResult = 0;
+            }
+            else if(this.passYards == 0)
+            {
+              playResult = 1;
+            }
+            else if(this.passYards == 1)
+            {
+              playResult = 2;
+            }
+            else if(this.passYards == 2)
+            {
+              playResult = 3;
+            }
+            else if(this.passYards > 2 && this.passYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.passYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else if(this.driveDowns == 3)
+          {
+            downDistance = "3DownAndShort";
+            if(this.passYards < 0 || this.passInterception || this.passFumble || this.passSack)
+            {
+              playResult = 0;
+            }
+            else if(this.passYards == 0 || this.passYards == 1)
+            {
+              playResult = 1;
+            }
+            else if(this.passYards == 2)
+            {
+              playResult = 2;
+            }
+            else if(this.passYards > 2 && this.passYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.passYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else
+          {
+            downDistance = "4DownAndLong";
+            if(this.passYards >= this.driveYardsLeft)
+            {
+              playResult = 4
+            }
           }
         }
-        else
+        if(this.driveYardsLeft > short && this.driveYardsLeft <= medium)
         {
-          this.driveSpotBall -= this.passYards;
+          if(this.driveDowns == 1)
+          {
+            downDistance = "1Down";
+            if(this.passYards < 0 || this.passInterception || this.passFumble || this.passSack)
+            {
+              playResult = 0;
+            }
+            else if(this.passYards == 0)
+            {
+              playResult = 1;
+            }
+            else if(this.passYards <=3 && this.passYards > 0)
+            {
+              playResult = 2;
+            }
+            else if(this.passYards > 3 && this.passYards <= 7)
+            {
+              playResult = 3;
+            }
+            else if(this.passYards > 7 && this.passYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.passYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else if(this.driveDowns == 2)
+          {
+            downDistance = "2DownAndMedium";
+            if(this.passYards < 0 || this.passInterception || this.passFumble || this.passSack)
+            {
+              playResult = 0;
+            }
+            else if(this.passYards == 0)
+            {
+              playResult = 1;
+            }
+            else if(this.passYards <=3 && this.passYards > 0)
+            {
+              playResult = 2;
+            }
+            else if(this.passYards > 3 && this.passYards <= 7)
+            {
+              playResult = 3;
+            }
+            else if(this.passYards > 7 && this.passYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.passYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else if(this.driveDowns == 3)
+          {
+            downDistance = "3DownAndMedium";
+            if(this.passYards < 0 || this.passInterception || this.passFumble || this.passSack)
+            {
+              playResult = 0;
+            }
+            else if(this.passYards >= 0 && this.passYards <= 2)
+            {
+              playResult = 1;
+            }
+            else if(this.passYards > 2 && this.passYards <= 5)
+            {
+              playResult = 2;
+            }
+            else if(this.passYards > 5 && this.passYards <= 7)
+            {
+              playResult = 3;
+            }
+            else if(this.passYards > 7 && this.passYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.passYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else
+          {
+            downDistance = "4DownAndLong";
+            if(this.passYards >= this.driveYardsLeft)
+            {
+              playResult = 4
+            }
+          }
+        }
+        if(this.driveYardsLeft > medium)
+        {
+          if(this.driveDowns == 1)
+          {
+            downDistance = "1Down";
+            if(this.passYards < 0 || this.passInterception || this.passFumble || this.passSack)
+            {
+              playResult = 0;
+            }
+            else if(this.passYards == 0)
+            {
+              playResult = 1;
+            }
+            else if(this.passYards <=3 && this.passYards > 0)
+            {
+              playResult = 2;
+            }
+            else if(this.passYards > 3 && this.passYards <= 7)
+            {
+              playResult = 3;
+            }
+            else if(this.passYards > 7 && this.passYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.passYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else if(this.driveDowns == 2)
+          {
+            downDistance = "2DownAndLong";
+            if(this.passYards < 0 || this.passInterception || this.passFumble || this.passSack)
+            {
+              playResult = 0;
+            }
+            else if(this.passYards == 0)
+            {
+              playResult = 1;
+            }
+            else if(this.passYards <=3 && this.passYards > 0)
+            {
+              playResult = 2;
+            }
+            else if(this.passYards > 3 && this.passYards <= 7)
+            {
+              playResult = 3;
+            }
+            else if(this.passYards > 7 && this.passYards <= 19)
+            {
+              playResult = 4;
+            }
+            else if(this.passYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else if(this.driveDowns == 3)
+          {
+            downDistance = "3DownAndLong";
+            if(this.passYards < 0 || this.passInterception || this.passFumble || this.passSack)
+            {
+              playResult = 0;
+            }
+            else if(this.passYards > 0 && this.passYards <= 5)
+            {
+              playResult = 1;
+            }
+            else if(this.passYards <= 8 && this.passYards > 5)
+            {
+              playResult = 2;
+            }
+            else if(this.passYards > 8 && this.passYards <= 19)
+            {
+              playResult = 3;
+            }
+            else if(this.passYards >= this.driveYardsLeft)
+            {
+              playResult = 4;
+            }
+            else if(this.passYards > 19)
+            {
+              playResult = 5;
+            }
+          }
+          else
+          {
+            downDistance = "4DownAndLong";
+            if(this.passYards >= this.driveYardsLeft)
+            {
+              playResult = 4;
+            }
+          }
         }
       }
-      if(this.driveSpotBall > 50 || this.driveSpotBall < 0 || this.driveDowns > 4 || this.runYards == "")
-      {
-        jQuery("#tracker").hide();
+      var self = this;
+      var askRef = firebase.database().ref("AskStatlete").child(self.selectedTeamId)
+      askRef.child(downDistance).once("value", function(askValue){
+        var askYds = askValue.val();
+        var needVals = askYds[playSide]
+
+        askRef.child(downDistance).update({
+            [playSide]: parseInt(needVals) + parseInt(playResult)
+          })
+      })
+
+      //Tracker      
+      if(this.passYards != "")
+      { 
+        if(this.passCompletion || this.passSack)
+        {
+          if(this.passYards >= this.driveYardsLeft)
+          {
+            this.driveDowns = 1;
+            this.driveYardsLeft = 10;
+          }
+          else
+          {
+            this.driveYardsLeft = parseInt(this.driveYardsLeft) - parseInt(this.passYards);
+            this.driveDowns++;
+          }
+          if(this.driveMyHalf)
+          {
+            this.driveSpotBall = parseInt(this.driveSpotBall) + parseInt(this.passYards);
+            if(this.driveSpotBall > 50)
+            {
+              var temp = this.driveSpotBall - 50;
+              this.driveSpotBall = 50 - temp;
+              this.driveMyHalf = false;
+            }
+          }
+          else
+          {
+            this.driveSpotBall -= this.passYards;
+          }
+        }
+        if(this.driveSpotBall > 50 || this.driveSpotBall < 0 || this.driveDowns > 4 || this.passYards == "")
+        {
+          jQuery("#tracker").hide();
+        }
       }
 
       //database stuff
