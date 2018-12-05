@@ -21,15 +21,47 @@
         </div>
         <div class="mainBody">
           <div class="list-wrapper">
-            <games-list class="mbgl"
+            <!-- <games-list class="mbgl"
                         @gameSelected="gameSelected"
                         @AddGame="showNGModal">
-            </games-list>
-            <players-list class="mbpl"
+            </games-list> -->
+            <v-card dark>
+                <v-data-table
+                  :headers="[{
+                    text: 'Games',
+                    align: 'center',
+                    sortable: false,
+                    value: 'name'
+                  }]"
+                  :items="gamesList"
+                  class="elevation-1"
+                >
+                  <template slot="items" slot-scope="props">
+                    <td>{{ props.item.name }}</td>
+                  </template>
+                </v-data-table>
+            </v-card>
+            <v-card dark>
+                <v-data-table
+                  :headers="[{
+                    text: 'Players',
+                    align: 'center',
+                    sortable: false,
+                    value: 'name'
+                  }]"
+                  :items="playersList"
+                  class="elevation-1"
+                >
+                  <template slot="items" slot-scope="props">
+                    <td>{{ props.item.name }}</td>
+                  </template>
+                </v-data-table>
+            </v-card>
+            <!-- <players-list class="mbpl"
                           @playerSelected="viewPlayerInfo"
                           @addPlayerClicked="showModal('new-player')"
                           :players="players">
-            </players-list>
+            </players-list> -->
           </div>
           <div class="button-wrapper">
             <button @click="editTeamSettings" class="btn btn-outline-primary main_button">Edit Team Settings</button>
@@ -88,7 +120,8 @@ export default {
       teamToken: '',
       isModalVisible: false,
       darkModeEnabled: true,
-      isColorModalVisible: false
+      isColorModalVisible: false,
+      playersList: []
     }
   },
   mounted () {
@@ -219,6 +252,10 @@ export default {
         if(obj){
           self.SET_PLAYERS(obj);
         }
+        self.playersList = []
+        Object.keys(self.players).forEach(player => {
+          self.playersList.push({value: false, name: player.replace('p', '#') + ' ' + self.players[player]})
+        })
       });
     },
     showModal (name) {

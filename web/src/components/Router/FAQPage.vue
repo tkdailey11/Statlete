@@ -1,17 +1,53 @@
 <template>
     <div class="FAQPage">
-        <h1 class="faqHeader">FAQ</h1>
-        <!-- <div class="vue-expand-panel">
-            <ul>
-                <li v-for="(item, index) in dataPoints" :key="index">
-                    <expand-panel :title="item.header">
-                        <div class="section-content">
-                            <div class="col-txt col-1">{{item.body}}</div>
-                        </div>
-                    </expand-panel>
-                </li>
-            </ul>
-        </div> -->
+    <v-navigation-drawer
+          v-model="sidebar"
+          :mini-variant="mini"
+          absolute
+          dark
+          temporary>
+          <v-list class="pa-1">
+            <v-list-tile v-if="mini" @click.stop="mini = false">
+              <v-list-tile-action>
+                <v-icon>chevron_right</v-icon>
+              </v-list-tile-action>
+            </v-list-tile>
+            <v-list-tile v-else @click.stop="mini = true">
+              <v-list-tile-action>
+                <v-icon right>chevron_left</v-icon>
+              </v-list-tile-action>
+            </v-list-tile>
+            <v-list-tile  v-for="item in menuItems"
+                          :key="item.title"
+                          @click.stop="goTo(item.path)">
+              <v-list-tile >
+                <v-list-tile-action>
+                  <v-icon>{{item.icon}}</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-title>{{item.title}}</v-list-tile-title>
+              </v-list-tile>
+            </v-list-tile>
+          </v-list>
+        </v-navigation-drawer>
+    <v-toolbar app dark>
+      <v-toolbar-side-icon @click="sidebar = !sidebar">
+      </v-toolbar-side-icon>
+      <v-toolbar-title>
+        {{appTitle}}
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items class="hidden-xs-only">
+        <v-btn
+          flat
+          v-for="item in menuItems"
+          :key="item.title"
+          :to="item.path">
+          <v-icon left dark>{{ item.icon }}</v-icon>
+          {{ item.title }}
+        </v-btn>
+      </v-toolbar-items>
+    </v-toolbar>
+    <v-content style="margin: 5vh;">
         <template>
             <v-expansion-panel
                 :dark="true">
@@ -26,12 +62,7 @@
                 </v-expansion-panel-content>
             </v-expansion-panel>
         </template>
-        <footer class="navbar fixed-bottom myBottomNav">
-            <div><router-link to="/login" class="ap_link">Login</router-link></div>
-            <div><router-link to="/sign-up" class="ap_link">Signup</router-link></div>
-            <div><router-link to="/about" class="ap_link">About</router-link></div>
-            <div>FAQ</div>
-        </footer>
+    </v-content>
     </div>
 </template>
 
@@ -80,8 +111,22 @@ export default {
                     'header': 'I don\'t have an iOS device, am I out of luck?',
                     'body': 'In an effort to bring our competitive analysis to as many as possible, Statlete is also available on the web!  Head over to Statlete.net, where all of the stat-tracking and analytical features of the app are also available.'
                 }
-            ]
+            ],
+        appTitle: 'Statlete',
+        sidebar: false,
+        menuItems: [
+          { title: 'Login', path: '/login', icon: 'input' },
+          { title: 'Sign Up', path: '/sign-up', icon: 'person_add' },
+          { title: 'About', path: '/about', icon: 'info' },
+          { title: 'FAQ', path: '/faq', icon: 'question_answer' }
+        ],
+        mini: true
         }
+    },
+    methods: {
+        goTo: function(path) {
+            this.$router.push(path)
+        },
     }
 }
 </script>
@@ -101,4 +146,7 @@ export default {
     margin-top: 25px;
   }
 
+a, i {
+    text-decoration: none;
+  }
 </style>

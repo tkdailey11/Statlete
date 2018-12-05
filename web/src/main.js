@@ -161,6 +161,14 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 library.add(faBasketballBall, faFutbol, faFootballBall, faJs, faVuejs);
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
+// import Simplert from 'vue2-simplert'
+// import 'vue2-simplert/dist/simplert.css'
+// Vue.component('simplert', Simplert)
+import VueFlashMessage from 'vue-flash-message';
+import 'vue-flash-message/dist/vue-flash-message.min.css';
+Vue.use(VueFlashMessage);
+
+
 
 //Stylesheets
 import './assets/stylesheets/vuejs-dialog.min.css'
