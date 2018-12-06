@@ -1,9 +1,9 @@
 <template>
   <div id="GoalsPage">
     <nav-component />
-    <v-card dark style="margin: 10vw; padding-bottom: 25px;">
+    <v-card dark style="margin: 10vw; padding-bottom: 25px; margin-top: 5vh;">
         <v-card-title>
-            Goals
+            <h3>Goals</h3>
             <v-spacer></v-spacer>
         </v-card-title>
         <table style="width: 80%; margin-left: 10%; margin-right: 10%;">
