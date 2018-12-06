@@ -307,6 +307,7 @@ template { overflow-y: scroll; }
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow: scroll;
   }
   #fg_banner{
     margin-top: 5vh;
@@ -317,6 +318,7 @@ template { overflow-y: scroll; }
     margin-top: 10vh;
     flex-basis: 80%;
     display: flex;
+    
   }
   .footballPosDiv {
     flex-basis: 50%;

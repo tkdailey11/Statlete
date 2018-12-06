@@ -8,7 +8,7 @@
             </div>
 
             <div id="getDefPosition">
-              <table align="center">
+              <table class="gdp_table">
                 <tr><th>Spot The Ball</th></tr>
                 <tr>
                   <td>Ball is on the: </td>
@@ -24,7 +24,7 @@
 
 
              <div id="runDefForm">
-                <table align="center">
+                <table class="gdp_table">
                     <tr><th>Run</th></tr>
                     <tr>
                     <td>Defend to the: </td>
@@ -46,7 +46,7 @@
                             <input type="checkbox" v-else @click="defenseRunTurnoverHide"></td></tr></table>
 
                             <div id="turnoverRunForm">
-                <table align="center"><tr><td>Fumble:</td><td><input type="checkbox" v-model="runDefFumble" value="fumble" checked>
+                <table class="gdp_table"><tr><td>Fumble:</td><td><input type="checkbox" v-model="runDefFumble" value="fumble" checked>
                 </td></tr>
                   <tr><td>Recovered By: </td><td><vue-numeric-input type="text" v-model="rundefRecoveredBy" maxlength="2" size="2" :min="0" :max="99" :controls="false"></vue-numeric-input></td></tr>
                   </table>
@@ -58,7 +58,7 @@
 
 
             <div id="passDefForm">
-                <table align="center">
+                <table class="gdp_table">
                     <tr><th>Pass</th></tr>
                     <tr>
                     <td>Defend to the: </td>
@@ -80,7 +80,7 @@
                     <tr><td>Turnover</td><td><input type="checkbox" v-if="activeTurnover === 'false'" @click="defenseTurnover">
                     <input type="checkbox" v-else @click="defenseTurnoverHide"></td></tr></table>
                     <div id="turnoverForm">
-                <table align="center"><tr><td>Fumble:</td><td><input type="radio" v-model="passTurnoverDefType" value="fumble">
+                <table class="gdp_table"><tr><td>Fumble:</td><td><input type="radio" v-model="passTurnoverDefType" value="fumble">
                 </td></tr><tr><td>Interception:</td><td>
                   <input type="radio" v-model="passTurnoverDefType" value="interception"></td></tr>
                   <tr><td>Recovered By: </td><td><vue-numeric-input type="text" v-model="passDefRecoveredBy" maxlength="2" size="2" :min="0" :max="99" :controls="false"></vue-numeric-input></td></tr>
@@ -90,7 +90,7 @@
             </div>
 
             <div id="penaltyDefForm">
-                      <table align="center"><tr><td>Penalty: </td><td>
+                      <table class="gdp_table"><tr><td>Penalty: </td><td>
                         <select v-model="penaltyDefType" size="1">
                           <option value="defensiveInterference">Defensive Pass Interference</option>
                           <option value="offside">Offside Defense</option>
@@ -724,6 +724,12 @@ div button {
   cursor: default;
   border-width: 2px;
   border-style: solid;
+}
+.gdp_table {
+  margin-left: 43%;
+  margin-bottom: 2vh;
+    border-collapse:separate;
+    border-spacing:0 5px;
 }
 </style>
 

@@ -9,7 +9,7 @@
             </div>
 
             <div id="getOffPosition">
-              <table align="center">
+              <table class="gop_table">
                 <tr><th>Spot The Ball</th></tr>
                 <tr>
                   <td>Ball is on the: </td>
@@ -27,7 +27,7 @@
             </div>
 
              <div id="runForm">
-                <table align="center">
+                <table class="gop_table">
                   <tr><th>Run</th></tr>
                   <tr>
                     <td>Ran to the: </td>
@@ -49,7 +49,7 @@
 
 
             <div id="passForm">
-                <table align="center">
+                <table class="gop_table">
                   <tr><th>Pass</th></tr>
                   <tr>
                     <td>Threw to the: </td>
@@ -71,7 +71,7 @@
                     <tr><td>Turnover</td><td><input type="checkbox" v-if="activeTurnover === 'false'" @click="offenseTurnover">
                     <input type="checkbox" v-else @click="offenseTurnoverHide"></td></tr></table>
                     <div id="turnoverForm">
-                <table align="center">
+                <table class="gop_table">
                   <tr><td>Fumble:</td><td><input type="radio" value="fumble" v-model="passTurnover" checked>
                 </td></tr>
                 <tr>
@@ -85,7 +85,7 @@
             </div>
 
             <div id="penaltyForm">
-                      <table align="center"><tr><td>Penalty: </td><td>
+                      <table class="gop_table"><tr><td>Penalty: </td><td>
                         <select v-model="penaltyType" size="1">
                           <option value="falseStart">False Start Offense</option>
                           <option value="offensiveHolding">Holding Offense</option>
@@ -1670,6 +1670,13 @@ img {
   border-width: 2px;
   border-style: solid;
 }
+.gop_table {
+  margin-left: 43%;
+  margin-bottom: 2vh;
+    border-collapse:separate;
+    border-spacing:0 5px;
+}
+
 </style>
 
 
