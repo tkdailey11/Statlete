@@ -1,6 +1,6 @@
 <template>
     <div class="FootballGame">
-        <nav-component />
+      <nav-component />
         <h1 class="mainH1">{{selectedTeamName}}</h1>
         <div class="footballButton" id="startButton" @click="startButton">Start</div>
         <div class="footballButton" id="endButton" @click="endButton">End</div>
@@ -312,10 +312,10 @@ template { overflow-y: scroll; }
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-    /* flex-basis: 15%;
-    padding-left: 5%;
-    padding-right: 5%;
-    padding-top: 3%; */
+}
+
+  table {
+    margin-left: 44vw;
   }
 </style>
 
