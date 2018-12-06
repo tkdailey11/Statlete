@@ -1,34 +1,43 @@
 <template>
     <div class="AnalysisPage">
         <nav-component />
-        <label for="firstDropdown">First Stat:</label>
-        <select id="firstDropdown">
-            <option v-for="type in statTypes" :key="'fd-' + type">{{type}}</option>
-        </select>
-        <label for="secondDropdown">Second Stat:</label>
-        <select id="secondDropdown">
-            <option v-for="type in statTypes" :key="'sd-' + type">{{type}}</option>
-        </select>
-        <button @click="submitResponse" class="btn btn-outline-primary analysis_button">Get Analysis</button>
-        <!--<button @click="saveChart" class="btn btn-outline-primary myButton">Save</button>-->
-        <br>
-        <br>
-        <bar-chart :myLabels="chartLabels"
-                    :myDatasets="chartDatasets"
-                    :goalVal="currGoal"
-                    :secondGoalVal="secondaryGoal"
-                    :lineColor="myColor"
-                    :lineSecondaryColor="mySecondaryColor"
-                    id="resultBar"
-                    class="statleteChart">
-        </bar-chart>
-        <line-chart :myLabels="chartLabels"
-                    :myDatasets="chartDatasets"
-                    :goalVal="currGoal"
-                    :lineColor="myColor"
-                    id="resultLine"
-                    class="statleteChart">
-        </line-chart>
+        <v-card :dark="true" style="margin: 5vw 10vw 5vw 10vw;">
+            <v-card-title>
+              Request Analysis
+              <v-spacer></v-spacer>
+            </v-card-title>
+                <v-flex xs6 d-flex>
+                    <label for="firstDropdown">First Stat:</label>
+                    <select id="firstDropdown">
+                        <option v-for="type in statTypes" :key="'fd-' + type">{{type}}</option>
+                    </select>
+                    <label for="secondDropdown">Second Stat:</label>
+                    <select id="secondDropdown">
+                        <option v-for="type in statTypes" :key="'sd-' + type">{{type}}</option>
+                    </select>
+                </v-flex>
+                <v-card-actions>
+                  <v-btn flat color="red" @click.stop="submitResponse">Request</v-btn>
+                </v-card-actions>
+        </v-card>
+        <v-card dark id="analysisCharts">
+            <bar-chart :myLabels="chartLabels"
+                        :myDatasets="chartDatasets"
+                        :goalVal="currGoal"
+                        :secondGoalVal="secondaryGoal"
+                        :lineColor="myColor"
+                        :lineSecondaryColor="mySecondaryColor"
+                        id="resultBar"
+                        class="statleteChart">
+            </bar-chart>
+            <line-chart :myLabels="chartLabels"
+                        :myDatasets="chartDatasets"
+                        :goalVal="currGoal"
+                        :lineColor="myColor"
+                        id="resultLine"
+                        class="statleteChart">
+            </line-chart>
+        </v-card>
     </div>
 </template>
 
@@ -48,6 +57,7 @@ export default {
             chartDatasets: [],
             currGoal: 0,
             secondaryGoal: 0,
+            items: ['Foo', 'Bar', 'Fizz', 'Buzz']
         }
     },
     computed: {
@@ -352,7 +362,8 @@ export default {
 
 <style scoped>
     .AnalysisPage {
-        height: 100vh;
+        min-height: 100vh;
+        height: 100%;
     }
     .analysis_button {
         cursor: pointer;
@@ -361,10 +372,12 @@ export default {
         margin: 50px;
     }
     #firstDropdown {
-        margin: 100px 50px 0px 5px;
+        margin: 0px 50px 100px 5px;
+        background-color: lightslategray;
     }
     #secondDropdown {
-        margin: 100px 50px 0px 5px;
+        margin: 0px 50px 100px 5px;
+        background-color: lightslategray;
     }
     #resultP {
         width: 400px;
@@ -381,6 +394,9 @@ export default {
         width: 75vw; 
         height: 50vh;
         display: inline-block;
+    }
+    #analysisCharts {
+        margin: 0 10vw 5vh 10vw;
     }
 </style>
 
