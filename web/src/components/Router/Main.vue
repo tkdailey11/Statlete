@@ -3,6 +3,7 @@
     <nav-component @ChangeColor="changeColor" />
     <v-content>
       <new-player @newPlayerAdded="hideModal" />
+      <player-detail-view @close="hideModalDetail" :playerID="playerIDProp" :playerData="testArr" />
       <ngmodal
         v-show="isModalVisible"
         @NewGame="addGame"
@@ -54,7 +55,27 @@
                 >
                   <template slot="items" slot-scope="props">
                     <tr @click="viewPlayerInfo(props.item.name)">
-                      <td>{{ props.item.name }}</td>
+                      <td>{{ props.item.name }}
+                        <v-spacer style="width: 10px;" />
+                        <v-dialog v-model="dialog" width="500">
+                          <v-btn slot="activator" flat color="red" dark>View Stats</v-btn>
+                          <v-card dark>
+                            <v-card-title>
+                              My Stats
+                              <v-spacer></v-spacer>
+                            </v-card-title>
+                                <v-data-table
+                                  :headers="msHeaders"
+                                  :items="getDataArr(props.item.name)"
+                                  class="elevation-1">
+                                  <template slot="items" slot-scope="props">
+                                    <td style="color: white;">{{ props.item.type }}</td>
+                                    <td class="text-xs-right" v-for="type in statTypes" :key="'offense-' + type" style="color: white;">{{ props.item.total }}</td>
+                                  </template>
+                                </v-data-table>
+                          </v-card>
+                        </v-dialog>
+                      </td>
                     </tr>
                   </template>
                 </v-data-table>
@@ -123,9 +144,84 @@ export default {
       darkModeEnabled: true,
       isColorModalVisible: false,
       playersList: [],
-      v_gameslist: []
+      v_gameslist: [],
+      playerIDProp: '',
+      playerDataArray: [],
+        testArr: [],
+        gameData : {},
+        statTypes: ["Assists",
+                    "Corners",
+                    "Crosses",
+                    "Fouls",
+                    "Goals",
+                    "Minutes",
+                    "Offsides",
+                    "Red Cards",
+                    "Saves",
+                    "Shots",
+                    "Shots on Goal",
+                    "Yellow Cards"],
+        playerData: {},
+        msHeaders: [{
+          text: 'Stat Type',
+          align: 'left',
+          sortable: false,
+          value: 'type'
+      },
+      {
+        text: 'Total',
+        align: 'left',
+        sortable: false,
+        value: 'total'
+      }],
     }
   },
+      async created() {
+      if(this.isSoccer){
+        this.gameDataRef = firebase.database().ref('/SoccerGames/' + this.selectedTeamId);
+      }
+      else {
+        this.statTypes = [
+          "AST",
+          "BLK",
+          "DREB",
+          "FG3A",
+          "FG3M",
+          "FG2A",
+          "FG2M",
+          "FTA",
+          "FTM",
+          "OREB",
+          "PF",
+          "STL",
+          "TOV"
+        ]
+        this.gameDataRef = firebase.database().ref('/BasketballGames/' + this.selectedTeamId);
+      }
+
+      Object.keys(this.players).forEach(player => {
+        if(!this.playerData[player]){
+          this.playerData[player] = {}
+        }
+      })
+      Object.keys(this.players).forEach(player => {
+        this.statTypes.forEach(stat => {
+          if(!this.playerData[player][stat]){
+            this.playerData[player][stat] = 0
+          }
+        })
+      })
+      await this.refreshStats();
+      this.testArr = []
+      this.playerDataArray.forEach(player => {
+        var tmp = {'value': false, 'name': player.name}
+        var obj = player.data;
+        Object.keys(obj).forEach(key => {
+          tmp[key] = obj[key]
+        })
+        this.testArr.push(tmp)
+      })
+    },
   async mounted () {
     this.SET_LOGGED_IN_USER(firebase.auth().currentUser);
     var self = this;
@@ -150,6 +246,60 @@ export default {
       SET_OPP_COLOR: 'mainStore/SET_OPP_COLOR',
       SET_SECONDARY_COLOR: 'mainStore/SET_SECONDARY_COLOR'
     }),
+    getDataArr: function(idstr){
+      var id = idstr.split(' ')[0].replace('#', 'p')
+      var tableArr = []
+      var obj = null
+      var p3 = id.split(' ')[0].replace('#','p')
+        for(var i = 0; i < this.playerData.length; i++){
+          if(this.playerData[i].name === p3){
+            obj = this.playerData[i]
+            break;
+          }
+        }
+        if(obj != null){
+          var tArr = []
+          delete obj['name']
+          delete obj['value']
+          Object.keys(obj).forEach(key => {
+            tArr.push({'value': 'false', 'type': key, 'total': obj[key]})
+          })
+          tableArr = tArr
+        }
+        return tableArr
+    },
+          getPlayerArray: function(){
+        var tmpArr = []
+        Object.keys(this.playerData).forEach(player => {
+          tmpArr.push({
+            'name': player,
+            'data': this.playerData[player]
+          })
+        })
+        this.playerDataArray = tmpArr
+      },
+      refreshStats: async function() {
+        var self = this;
+        await self.gameDataRef.on('value', function(snap){
+          Object.keys(self.playerData).forEach(pl => {
+            Object.keys(self.playerData[pl]).forEach(stat => {
+              self.playerData[pl][stat] = 0
+            })
+          })
+          
+          Object.keys(snap.val()).forEach(id => {
+            var playersObj = snap.val()[id].Players;
+            var playersArr = Object.keys(playersObj);
+            playersArr.forEach(p => {
+              var data = playersObj[p];
+              Object.keys(data).forEach(playerStat => {
+                self.playerData[p][playerStat] += parseInt(data[playerStat])
+              })
+            })
+          })
+        })
+        self.getPlayerArray()
+      },
     showNGModal() {
       this.isModalVisible = true;
     },
@@ -214,8 +364,9 @@ export default {
       
     },
     viewPlayerInfo(id) {
-      var playerID = id.split(' ')[0].replace('#', 'p')
-      alert(playerID)
+      this.playerIDProp = id
+
+      this.$modal.show('player-detail-view')
     },
     async getGamesTeam() {
       var email = this.currentUserEmail.replace('.', '');
@@ -271,6 +422,9 @@ export default {
     hideGameModal (event) {
       this.addGame(event)
       this.$modal.hide('new-game')
+    },
+    hideModalDetail (event) {
+      this.$modal.hide('player-detail-view')
     },
     hideModal (event) {
       var id = this.selectedTeamId;

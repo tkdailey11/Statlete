@@ -359,6 +359,7 @@ export default {
         var obj = snapshot.val();
         var sport = obj.Sport;
         var name = obj.Name;
+        self.SET_PLAYERS({[id]: name})
         self.SET_SELECTED_TEAM({
           id: id,
           name: name,
