@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-stepper v-model="e1" dark>
+        <v-stepper v-model="e1" :dark="darkMode">
             <v-stepper-header>
                 <v-stepper-step :complete="e1 > 1" step="1">Name and Sport</v-stepper-step>
 
@@ -109,7 +109,8 @@ import { mapGetters, mapMutations } from 'vuex';
     computed: {
         ...mapGetters({
             selectedTeamId: 'mainStore/selectedTeamId',
-            currentUserEmail: 'mainStore/currentUserEmail'
+            currentUserEmail: 'mainStore/currentUserEmail',
+            darkMode: 'mainStore/darkMode'
         })
     },
     methods: {

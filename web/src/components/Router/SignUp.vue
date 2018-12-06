@@ -4,7 +4,7 @@
           v-model="sidebar"
           :mini-variant="mini"
           absolute
-          dark
+          :dark="darkMode"
           temporary>
           <v-list class="pa-1">
             <v-list-tile v-if="mini" @click.stop="mini = false">
@@ -27,9 +27,16 @@
                 <v-list-tile-title>{{item.title}}</v-list-tile-title>
               </v-list-tile>
             </v-list-tile>
+            <v-list-tile
+                @click="TOGGLE_DARK_MODE()">
+                  <v-list-tile-action>
+                    <v-icon>color_lens</v-icon>
+                  </v-list-tile-action>
+                  <v-list-tile-title v-text="'Toggle DarkMode'"></v-list-tile-title>
+              </v-list-tile>
           </v-list>
         </v-navigation-drawer>
-    <v-toolbar app dark>
+    <v-toolbar app :dark="darkMode">
       <v-toolbar-side-icon @click="sidebar = !sidebar">
       </v-toolbar-side-icon>
       <v-toolbar-title>
@@ -42,7 +49,7 @@
           v-for="item in menuItems"
           :key="item.title"
           :to="item.path">
-          <v-icon left dark>{{ item.icon }}</v-icon>
+          <v-icon left :dark="darkMode">{{ item.icon }}</v-icon>
           {{ item.title }}
         </v-btn>
       </v-toolbar-items>
@@ -64,7 +71,7 @@
                     id="email"
                     type="email"
                     required
-                    dark></v-text-field>
+                    :dark="darkMode"></v-text-field>
                 </v-flex>
                 <v-flex>
                   <v-text-field
@@ -73,7 +80,7 @@
                     id="password"
                     type="password"
                     required
-                    dark></v-text-field>
+                    :dark="darkMode"></v-text-field>
                 </v-flex>
                 <v-flex>
                   <v-text-field
@@ -82,10 +89,10 @@
                     id="confirmPassword"
                     type="password"
                     required
-                    dark></v-text-field>
+                    :dark="darkMode"></v-text-field>
                 </v-flex>
                 <v-flex class="text-xs-center" mt-5>
-                  <v-btn type="submit" dark>Submit</v-btn>
+                  <v-btn type="submit" :dark="darkMode">Submit</v-btn>
                 </v-flex>
               </v-layout>
             </form>
@@ -98,6 +105,7 @@
 
 <script>
   import firebase from 'firebase'
+  import { mapGetters, mapMutations } from 'vuex';
   export default {
     name: 'signUp',
     data: function() {
@@ -116,7 +124,15 @@
         mini: true
       }
     },
+    computed:{
+      ...mapGetters({
+        darkMode: 'mainStore/darkMode'
+      })
+    },
     methods: {
+      ...mapMutations({
+            TOGGLE_DARK_MODE: 'mainStore/TOGGLE_DARK_MODE'
+        }),
       goTo: function(path) {
         this.$router.push(path)
       },

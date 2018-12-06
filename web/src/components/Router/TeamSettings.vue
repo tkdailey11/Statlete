@@ -4,7 +4,7 @@
     <new-admin @newPlayerAdded="hideModal" />
     <div id="settingsBody">
       <div class="TextFieldContainer">
-        <v-card dark>
+        <v-card :dark="darkMode">
           <v-flex xs9 style="padding-left: 15vw; padding-top: 2vh;">
             <v-text-field
               label="Team ID"
@@ -26,7 +26,7 @@
         </v-card>
       </div>
       <div class="ListContainer">
-        <v-card dark class="adminLs">
+        <v-card :dark="darkMode" class="adminLs">
           <v-card-title>ADMINS</v-card-title>
           <v-data-table
             :headers="[{
@@ -43,7 +43,7 @@
             }]"
             :items="adminsList"
             class="elevation-1"
-            dark>
+            :dark="darkMode">
             <template slot="items" slot-scope="props">
               <tr>
                 <td>{{ props.item.email }}</td>
@@ -53,8 +53,8 @@
           </v-data-table>
           <v-card-actions>
             <v-dialog v-model="dialog" width="500">
-              <v-btn slot="activator" flat color="red" dark>Add</v-btn>
-              <v-card dark>
+              <v-btn slot="activator" flat color="red" :dark="darkMode">Add</v-btn>
+              <v-card :dark="darkMode">
                 <v-card-title class="headline" primary-title>New Admin</v-card-title>
                 <v-flex xs12 style="padding: 2vh;">
                     <v-text-field
@@ -72,7 +72,7 @@
             </v-dialog>
           </v-card-actions>
         </v-card>
-        <v-card dark class="playerLs">
+        <v-card :dark="darkMode" class="playerLs">
           <v-card-title>Players</v-card-title>
           <v-data-table
             :headers="[{
@@ -95,7 +95,7 @@
             }]"
             :items="playersArr"
             class="elevation-1"
-            dark>
+            :dark="darkMode">
             <template slot="items" slot-scope="props">
               <tr>
                 <td style="text-align: left;">{{ props.item.number }}</td>
@@ -154,7 +154,8 @@
         selectedTeamToken: 'mainStore/selectedTeamToken',
         currentUserEmail: 'mainStore/currentUserEmail',
         activeGameId: 'mainStore/activeGameId',
-        players: 'mainStore/players'
+        players: 'mainStore/players',
+        darkMode: 'mainStore/darkMode'
       }),
       playersArr: function(){
         var arr = []

@@ -10,7 +10,7 @@
               slot-scope="{ active, toggle }"
               :color="active ? 'primary' : ''"
               class="d-flex align-center"
-              dark
+              :dark="darkMode" 
               height="200"
               @click="toggle">
               <v-scroll-y-transition>
@@ -28,12 +28,17 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex';
   export default {
     data () {
       return {
           
       }
-    }
+    },
+        computed: {
+        ...mapGetters({
+            darkMode: 'mainStore/darkMode'
+        }),
   }
 
 </script>

@@ -2,7 +2,7 @@
   <modal name="player-detail-view" transition="pop-out" :width="modalWidth" :height="300">
   <div class="np_box">
     <div class="partition" id="partition-register">
-      <v-card dark>
+      <v-card :dark="darkMode">
         <v-card-title>
           My Stats
           <v-spacer></v-spacer>
@@ -79,7 +79,8 @@
         selectedTeamId: 'mainStore/selectedTeamId',
         selectedTeamSport: 'mainStore/selectedTeamSport',
         basketballPlayerStats: 'statStore/basketballPlayerStats',
-        soccerPlayerStats: 'statStore/soccerPlayerStats'
+        soccerPlayerStats: 'statStore/soccerPlayerStats',
+        darkMode: 'mainStore/darkMode'
       }),
       myPlayer: function(){
         return this.playerID.split(' ')[0].replace('#','p')

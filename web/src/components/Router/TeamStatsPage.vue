@@ -3,7 +3,7 @@
         <nav-component />
         <h1 class="teamStatsH1">Team Totals</h1>
         <div id="teamstatspage_main">
-            <v-card :dark="true">
+            <v-card :dark="darkMode">
             <v-card-title>
               My Team
               <v-spacer></v-spacer>
@@ -14,8 +14,8 @@
               class="elevation-1"
             >
               <template slot="items" slot-scope="props">
-                <td style="color: white;">{{ props.item.name }}</td>
-                <td class="text-xs-right" v-for="type in statTypes" :key="'offense-' + type" style="color: white;">{{ props.item[type] }}</td>
+                <td>{{ props.item.name }}</td>
+                <td class="text-xs-right" v-for="type in statTypes" :key="'offense-' + type" >{{ props.item[type] }}</td>
               </template>
             </v-data-table>
           </v-card>
@@ -71,7 +71,8 @@
         selectedTeamId: 'mainStore/selectedTeamId',
         selectedTeamSport: 'mainStore/selectedTeamSport',
         basketballPlayerStats: 'statStore/basketballPlayerStats',
-        soccerPlayerStats: 'statStore/soccerPlayerStats'
+        soccerPlayerStats: 'statStore/soccerPlayerStats',
+        darkMode: 'mainStore/darkMode'
       }),
       playerNumbers() {
         return Object.keys(this.players);

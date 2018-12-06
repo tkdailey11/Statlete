@@ -4,7 +4,7 @@
           v-model="sidebar"
           :mini-variant="mini"
           absolute
-          dark
+          :dark="darkMode"
           temporary>
           <v-list class="pa-1">
             <v-list-tile v-if="mini" @click.stop="mini = false">
@@ -27,9 +27,16 @@
                 <v-list-tile-title>{{item.title}}</v-list-tile-title>
               </v-list-tile>
             </v-list-tile>
+            <v-list-tile
+                @click="TOGGLE_DARK_MODE()">
+                  <v-list-tile-action>
+                    <v-icon>color_lens</v-icon>
+                  </v-list-tile-action>
+                  <v-list-tile-title v-text="'Toggle DarkMode'"></v-list-tile-title>
+              </v-list-tile>
           </v-list>
         </v-navigation-drawer>
-        <v-toolbar app dark>
+        <v-toolbar app :dark="darkMode">
             <v-toolbar-side-icon @click="sidebar = !sidebar">
             </v-toolbar-side-icon>
             <v-toolbar-title>
@@ -42,7 +49,7 @@
                 v-for="item in menuItems"
                 :key="item.title"
                 :to="item.path">
-                <v-icon left dark>{{ item.icon }}</v-icon>
+                <v-icon left :dark="darkMode">{{ item.icon }}</v-icon>
                 {{ item.title }}
                 </v-btn>
             </v-toolbar-items>
@@ -51,7 +58,7 @@
             <v-container grid-list-md text-xs-center>
                 <v-layout style="margin-bottom: 10vh;">
                     <v-flex xs12 sm12>
-                        <v-card dark>
+                        <v-card :dark="darkMode">
                             <v-card-title primary-title>
                                 <div>
                                     <h1>What is Statlete?</h1>
@@ -80,7 +87,7 @@
             <v-container grid-list-md text-xs-center>
                 <v-layout style="margin-bottom: 10vh;">
                     <v-flex xs12 sm12>
-                        <v-card dark>
+                        <v-card :dark="darkMode">
                             <v-card-title primary-title>
                                 <div>
                                     <h2>Components in Statlete</h2>
@@ -90,7 +97,7 @@
                             <div style="padding-bottom: 10px;">
                                 <v-tabs
                                     v-model="active"
-                                    dark>
+                                    :dark="darkMode">
                                     <v-tab ripple>
                                         iOS
                                     </v-tab>
@@ -121,6 +128,7 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex';
 export default {
     data() {
         return {
@@ -139,6 +147,9 @@ export default {
         }
     },
     methods: {
+        ...mapMutations({
+            TOGGLE_DARK_MODE: 'mainStore/TOGGLE_DARK_MODE'
+        }),
         next () {
             const active = parseInt(this.active)
             this.active = (active < 2 ? active + 1 : 0)
@@ -146,6 +157,11 @@ export default {
         goTo: function(path) {
             this.$router.push(path)
         },
+    },
+    computed: {
+        ...mapGetters({
+            darkMode: 'mainStore/darkMode'
+        })
     }
 }
 </script>

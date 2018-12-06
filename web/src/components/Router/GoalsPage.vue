@@ -1,7 +1,7 @@
 <template>
   <div id="GoalsPage">
     <nav-component />
-    <v-card dark style="margin: 10vw; padding-bottom: 25px; margin-top: 5vh;">
+    <v-card :dark="darkMode" style="margin: 10vw; padding-bottom: 25px; margin-top: 5vh;">
         <v-card-title>
             <h3>Goals</h3>
             <v-spacer></v-spacer>
@@ -106,7 +106,8 @@
         soccerStatsArr: 'statStore/soccerStatsArr',
         basketballStatsArr: 'statStore/basketballStatsArr',
         goals: 'statStore/goals',
-        numberOfPeriods: 'gameViewStore/numberOfPeriods'
+        numberOfPeriods: 'gameViewStore/numberOfPeriods',
+        darkMode: 'mainStore/darkMode'
       }),
       isSoccer: function() {
         return this.selectedTeamSport == 1;

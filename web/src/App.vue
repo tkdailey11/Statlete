@@ -1,13 +1,19 @@
 <template>
-  <div id="app">
+  <v-app id="app" :dark="darkMode">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <router-view/>
-  </div>
+  </v-app>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
-  name: 'App'
+  name: 'App',
+    computed: {
+    ...mapGetters({
+      darkMode: 'mainStore/darkMode'
+    })
+    }
 }
 </script>
 

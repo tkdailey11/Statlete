@@ -1,7 +1,7 @@
 <template>
     <div class="AnalysisPage">
         <nav-component />
-        <v-card :dark="true" style="margin: 5vw 10vw 5vw 10vw;">
+        <v-card :dark="darkMode" style="margin: 5vw 10vw 5vw 10vw;">
             <v-card-title>
               Request Analysis
               <v-spacer></v-spacer>
@@ -20,7 +20,7 @@
                   <v-btn flat color="red" @click.stop="submitResponse">Request</v-btn>
                 </v-card-actions>
         </v-card>
-        <v-card dark id="analysisCharts">
+        <v-card :dark="darkMode" id="analysisCharts">
             <bar-chart :myLabels="chartLabels"
                         :myDatasets="chartDatasets"
                         :goalVal="currGoal"
@@ -70,7 +70,8 @@ export default {
             footballDefenseArr: 'statStore/footballDefenseArr',
             goals: 'statStore/goals',
             mySecondaryColor: 'mainStore/mySecondaryColor',
-            myColor: 'mainStore/myColor'
+            myColor: 'mainStore/myColor',
+            darkMode: 'mainStore/darkMode'
         }),
         isSoccer: function() {
             return this.selectedTeamSport == 1;

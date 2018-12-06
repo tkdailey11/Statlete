@@ -4,7 +4,7 @@
       v-model="sidebar"
       :mini-variant="mini"
       absolute
-      dark
+      :dark="darkMode"
       temporary>
       <v-list class="pa-1">
         <v-list-tile v-if="mini" @click.stop="mini = false">
@@ -27,9 +27,16 @@
             <v-list-tile-title>{{item.title}}</v-list-tile-title>
           </v-list-tile>
         </v-list-tile>
+        <v-list-tile
+                @click="TOGGLE_DARK_MODE()">
+                  <v-list-tile-action>
+                    <v-icon>color_lens</v-icon>
+                  </v-list-tile-action>
+                  <v-list-tile-title v-text="'Toggle DarkMode'"></v-list-tile-title>
+              </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar app dark>
+    <v-toolbar app :dark="darkMode">
       <v-toolbar-side-icon @click="sidebar = !sidebar">
       </v-toolbar-side-icon>
       <v-toolbar-title>
@@ -42,7 +49,7 @@
           v-for="item in menuItems"
           :key="item.title"
           :to="item.path">
-          <v-icon left dark>{{ item.icon }}</v-icon>
+          <v-icon left :dark="darkMode">{{ item.icon }}</v-icon>
           {{ item.title }}
         </v-btn>
       </v-toolbar-items>
@@ -65,7 +72,7 @@
                     type="email"
                     v-model="email"
                     :rules="emailRules"
-                    dark style="margin-bottom: 15px;">
+                    :dark="darkMode" style="margin-bottom: 15px;">
                   </v-text-field>
                 </v-flex>
                 <v-flex>
@@ -77,11 +84,11 @@
                     :rules="passwordRules"
                     :counter="6"
                     v-model="password"
-                    dark>
+                    :dark="darkMode">
                   </v-text-field>
                 </v-flex>
                 <v-flex class="text-xs-center" mt-5>
-                  <v-btn dark @click="signIn">Sign In</v-btn>
+                  <v-btn :dark="darkMode" @click="signIn">Sign In</v-btn>
                 </v-flex>
               </v-layout>
             </form>
@@ -94,6 +101,7 @@
 
 <script>
   import firebase from 'firebase'
+  import { mapGetters, mapMutations } from 'vuex';
 
   export default {
     name: 'login',
@@ -143,7 +151,15 @@
     //     }
     //   });
     // },
+    computed: {
+        ...mapGetters({
+            darkMode: 'mainStore/darkMode'
+        })
+    },
     methods: {
+      ...mapMutations({
+            TOGGLE_DARK_MODE: 'mainStore/TOGGLE_DARK_MODE'
+        }),
       goTo: function(path) {
         this.$router.push(path)
       },

@@ -3,7 +3,7 @@
         <nav-component />
         <h1 class="teamStatsH1">My Totals</h1>
         <div id="playerstatspage_main">
-            <v-card :dark="true">
+            <v-card :dark="darkMode">
             <v-card-title>
               My Team
               <v-spacer></v-spacer>
@@ -71,7 +71,8 @@
         selectedTeamId: 'mainStore/selectedTeamId',
         selectedTeamSport: 'mainStore/selectedTeamSport',
         basketballPlayerStats: 'statStore/basketballPlayerStats',
-        soccerPlayerStats: 'statStore/soccerPlayerStats'
+        soccerPlayerStats: 'statStore/soccerPlayerStats',
+        darkMode: 'mainStore/darkMode'
       }),
       playerNumbers() {
         return Object.keys(this.players);
