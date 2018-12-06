@@ -344,7 +344,13 @@ export default {
         self.getGamesTeam();
         self.getPlayers();
         self.drawer = !self.drawer
-        location.reload();
+        if(self.$route.path.includes('main')){
+          location.reload();
+        }
+        else{
+          self.$router.push('main')
+        }
+        
       });
     },
     playerSelected: function(event) {
