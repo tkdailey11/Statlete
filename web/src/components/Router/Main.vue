@@ -64,7 +64,7 @@
                               {{props.item.name}} Stats
                               <v-spacer></v-spacer>
                             </v-card-title>
-                            <table style="width: 100%">
+                            <table style="width: 80%; margin-left: 10%; margin-right: 10%;">
                                 <thead>
                                   <th>Type</th>
                                   <th>Total</th>

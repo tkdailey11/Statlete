@@ -1,22 +1,27 @@
 <template>
   <div id="GoalsPage">
     <nav-component />
-    <h1 class="goalsH1">Goals</h1>
-    <table class="goalsTable">
-        <thead class="goalsHeader">
-            <th>Stat</th>
-            <th>Goal</th>
-            <th>Actual</th>
-        </thead>
-        <tbody class="goalsBody">
-            <tr v-for="stat in goalsDict" :key="stat.Stat.split(' ').join('') + '-key'" class="goalsRow">
-                <td style="font-weight: bold;">{{stat.Stat}}</td>
-                <td style="font-weight: bold;"><vue-numeric-input :align="'center'" v-model="goalsArr[stat.Stat]" :controls="false" @change="goalChanged({'STAT': stat.Stat})"></vue-numeric-input></td>
-                <td v-if="stat.Stat.endsWith('%') || stat.Stat === 'PassComp'" style="font-weight: bold; color: white;"><div :id="stat.Stat.split(' ').join('').replace('%', '') + '-goalID'" style="border: 10px white solid;">{{actuals[stat.Stat]}}%</div></td>
-                <td v-else style="font-weight: bold; color: white;"><div :id="stat.Stat.split(' ').join('') + '-goalID'" style="border: 10px white solid;">{{actuals[stat.Stat]}}</div></td>
-            </tr>
-        </tbody>
-    </table>
+    <v-card dark style="margin: 10vw; padding-bottom: 25px;">
+        <v-card-title>
+            Goals
+            <v-spacer></v-spacer>
+        </v-card-title>
+        <table style="width: 80%; margin-left: 10%; margin-right: 10%;">
+            <thead>
+                <th>Stat</th>
+                <th>Goal</th>
+                <th>Actual</th>
+            </thead>
+            <tbody>
+                <tr v-for="stat in goalsDict" :key="stat.Stat.split(' ').join('') + '-key'">
+                    <td style="font-weight: bold;">{{stat.Stat}}</td>
+                    <td style="font-weight: bold;"><vue-numeric-input :align="'center'" v-model="goalsArr[stat.Stat]" :controls="false" @change="goalChanged({'STAT': stat.Stat})"></vue-numeric-input></td>
+                    <td v-if="stat.Stat.endsWith('%') || stat.Stat === 'PassComp'" style="font-weight: bold;"><div :id="stat.Stat.split(' ').join('').replace('%', '') + '-goalID'" >{{actuals[stat.Stat]}}%</div></td>
+                    <td v-else style="font-weight: bold;"><div :id="stat.Stat.split(' ').join('') + '-goalID'">{{actuals[stat.Stat]}}</div></td>
+                </tr>
+            </tbody>
+        </table>
+    </v-card>
   </div>
 </template>
 
@@ -184,10 +189,10 @@
                         var el = element.split(' ').join('')
                         var id = '#' + el + '-goalID'
                         if(result[element] >= self.goalsArr[element]){
-                            jQuery(id).css('background-color', 'green')
+                            jQuery(id).css('background-color', 'rgba(0,255,0,0.5)')
                         }
                         else {
-                            jQuery(id).css('background-color', 'red')
+                            jQuery(id).css('background-color', 'rgba(255,0,0,0.5)')
                         }
                     })
                 })
@@ -335,10 +340,10 @@
                         }
                         var id = '#' + el + '-goalID'
                         if(result[element] >= self.goalsArr[element]){
-                            jQuery(id).css('background-color', 'green')
+                            jQuery(id).css('background-color', 'rgba(0,255,0,0.5)')
                         }
                         else {
-                            jQuery(id).css('background-color', 'red')
+                            jQuery(id).css('background-color', 'rgba(255,0,0,0.5)')
                         }
                     })
                 })
@@ -385,10 +390,10 @@
                         var el = element.split(' ').join('')
                         var id = '#' + el + '-goalID'
                         if(result[element] >= self.goalsArr[element]){
-                            jQuery(id).css('background-color', 'green')
+                            jQuery(id).css('background-color', 'rgba(0,255,0,0.5)')
                         }
                         else {
-                            jQuery(id).css('background-color', 'red')
+                            jQuery(id).css('background-color', 'rgba(255,0,0,0.5)')
                         }
                     })
                 })
@@ -404,14 +409,9 @@
     height: 100%;
   }
   .goalsTable {
-      width: 60vw;
-      height: 60vh;
-      margin-top: 5vh;
-      margin-left: 20vw;
-      margin-right: 20vw;
-      color: red;
-      background-color: white;
-      margin-bottom: 10vh;
+      width: 80%;
+      margin-left: 10%;
+      margin-right: 10%;
   }
 
   .goalsH1 {
@@ -419,29 +419,27 @@
   }
 
   table {
-    border-collapse: separate;
-    border-spacing: 0;
-    border: 3px solid red;
-    border-radius: 20px;
-    -moz-border-radius: 20px;
+    border-collapse:separate;
+    border-spacing:0 5px;
 }
 
   .goalsHeader {
-    border-radius: 20px;
+    
   }
   .goalsBody {
-      overflow-y: scroll;
+      
   }
 
-    td {
-        border-top: 3px solid red;
+    tr, td {
+        border-bottom: 0.1px solid gray;
+        padding-bottom: 5px;
     }
 
     .acheivedGoal {
-        background-color: green;
+        background-color: rgba(0,255,0,0.5);
     }
 
     .missedGoal {
-        background-color: red;
+        background-color: rgba(255,0,0,0.5);
     }
 </style>
