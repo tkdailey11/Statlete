@@ -61,18 +61,21 @@
                           <v-btn slot="activator" flat color="red" dark>View Stats</v-btn>
                           <v-card dark>
                             <v-card-title>
-                              My Stats
+                              {{props.item.name}} Stats
                               <v-spacer></v-spacer>
                             </v-card-title>
-                                <v-data-table
-                                  :headers="msHeaders"
-                                  :items="getDataArr(props.item.name)"
-                                  class="elevation-1">
-                                  <template slot="items" slot-scope="props">
-                                    <td style="color: white;">{{ props.item.type }}</td>
-                                    <td class="text-xs-right" v-for="type in statTypes" :key="'offense-' + type" style="color: white;">{{ props.item.total }}</td>
-                                  </template>
-                                </v-data-table>
+                            <table style="width: 100%">
+                                <thead>
+                                  <th>Type</th>
+                                  <th>Total</th>
+                                </thead>
+                                <tbody>
+                                  <tr v-for="type in Object.keys(playerData[props.item.name.split(' ')[0].replace('#','p')])" :key="props.item.name.split(' ')[0].replace('#','p') + '-'+type">
+                                    <td>{{type}}</td>
+                                    <td>{{getVal(playerData[props.item.name.split(' ')[0].replace('#','p')][type])}}</td>
+                                  </tr>
+                                </tbody>
+                            </table>
                           </v-card>
                         </v-dialog>
                       </td>
@@ -105,6 +108,7 @@ import { mapGetters, mapMutations } from 'vuex';
 import NewGame from '../MainPageTP/NewGame.vue';
 import ngmodal from '../NewGameModal.vue';
 import colorModal from '../UploadColors.vue';
+import { isNull, isNullOrUndefined } from 'util';
 
 export default {
   name: 'Main',
@@ -246,6 +250,9 @@ export default {
       SET_OPP_COLOR: 'mainStore/SET_OPP_COLOR',
       SET_SECONDARY_COLOR: 'mainStore/SET_SECONDARY_COLOR'
     }),
+    getVal(data){
+      return (isNullOrUndefined(data) || isNaN(data)) ? 0 : data
+    },
     getDataArr: function(idstr){
       var id = idstr.split(' ')[0].replace('#', 'p')
       var tableArr = []
