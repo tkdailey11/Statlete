@@ -56,10 +56,10 @@
     </v-toolbar>
     
     <v-content>
-      <v-container fluid>
+      <v-container fluid :dark="darkMode">
         <v-layout row wrap>
-          <v-flex xs12 class="text-xs-center" mt-5>
-            <h1 class="glH1">Sign In</h1>
+          <v-flex xs12 class="text-xs-center" mt-5 :dark="darkMode">
+            <h1>Sign In</h1>
           </v-flex>
           <v-flex xs12 sm6 offset-sm3 mt-3>
             <form>
