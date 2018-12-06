@@ -20,6 +20,9 @@ Vue.component('new-player', NewPlayer);
 import NewGame from '@/components/MainPageTP/NewGame';
 Vue.component('new-game', NewGame);
 
+import NewAdmin from '@/components/NewAdmin';
+Vue.component('new-admin', NewAdmin);
+
 
 import NumericInput from '@/components/NumericInput';
 Vue.component('statlete-num-input', NumericInput)

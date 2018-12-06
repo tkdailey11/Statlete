@@ -113,6 +113,9 @@ const mutations = {
   APPEND_PLAYER: (state, payload) => {
     state.players.push(payload)
   },
+  DELETE_PLAYER: (state, payload) => {
+    delete state.players[payload]
+  },
   CLEAR_STATE: (state, payload) => {
     state.loggedInUser = '';
     state.currentUserEmail = '';
