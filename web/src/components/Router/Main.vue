@@ -1,31 +1,26 @@
 <template>
   <div class="main">
-    <div class="main_Nav">
+    <nav-component @ChangeColor="changeColor" />
+    <v-content>
       <new-player @newPlayerAdded="hideModal" />
       <ngmodal
         v-show="isModalVisible"
         @NewGame="addGame"
-        @close="closeNGModal()"
-      />
+        @close="closeNGModal()" 
+        />
       <colorModal
         v-show="isColorModalVisible"
         @close="closeColorModal()"
         @SubmitColors="submitColors"
       />
-      <nav-component @ChangeColor="changeColor" />
-    </div>
-    <div class="main_Other">
       <div id="mainPage">
+
         <div class="mainHeader">
           <h1 class="mainH1">{{selectedTeamName}}</h1>
         </div>
         <div class="mainBody">
           <div class="list-wrapper">
-            <!-- <games-list class="mbgl"
-                        @gameSelected="gameSelected"
-                        @AddGame="showNGModal">
-            </games-list> -->
-            <v-card dark>
+            <v-card dark style="margin-right: 1vw;" class="mbgl">
                 <v-data-table
                   :headers="[{
                     text: 'Games',
@@ -33,15 +28,20 @@
                     sortable: false,
                     value: 'name'
                   }]"
-                  :items="gamesList"
+                  :items="v_gameslist"
                   class="elevation-1"
                 >
                   <template slot="items" slot-scope="props">
-                    <td>{{ props.item.name }}</td>
+                    <tr @click="gameSelected(props.item.name)">
+                      <td>{{ props.item.name }}</td>
+                    </tr>
                   </template>
                 </v-data-table>
+              <v-card-actions>
+                <v-btn flat color="red" @click.stop="showNGModal">New Game</v-btn>
+              </v-card-actions>
             </v-card>
-            <v-card dark>
+            <v-card dark style="margin-left: 1vw;" class="mbpl">
                 <v-data-table
                   :headers="[{
                     text: 'Players',
@@ -53,27 +53,28 @@
                   class="elevation-1"
                 >
                   <template slot="items" slot-scope="props">
-                    <td>{{ props.item.name }}</td>
+                    <tr @click="viewPlayerInfo(props.item.name)">
+                      <td>{{ props.item.name }}</td>
+                    </tr>
                   </template>
                 </v-data-table>
+                <v-card-actions>
+                  <v-btn flat color="red" @click.stop="showModal('new-player')">New Player</v-btn>
+                </v-card-actions>
             </v-card>
-            <!-- <players-list class="mbpl"
-                          @playerSelected="viewPlayerInfo"
-                          @addPlayerClicked="showModal('new-player')"
-                          :players="players">
-            </players-list> -->
           </div>
           <div class="button-wrapper">
-            <button @click="editTeamSettings" class="btn btn-outline-primary main_button">Edit Team Settings</button>
-            <button @click="viewTeamStats" class="btn btn-outline-primary main_button">View Team Stats</button>
-            <button @click="goToAnalysis" class="btn btn-outline-primary main_button">Go to Analysis Page</button>
-            <button @click="goToPdf" class="btn btn-outline-primary main_button">Export Stats to PDF</button>
-            <button v-if="!isFootball" @click="goToGoals" class="btn btn-outline-primary main_button">View/Edit Goals</button>
-            <button @click="changeColor" class="btn btn-outline-primary main_button">Change Colors</button>
+            <v-card dark>
+              <v-btn @click="editTeamSettings" dark class="myVbtn">Edit Team Settings</v-btn>
+              <v-btn @click="viewTeamStats" dark class="myVbtn">View Team Stats</v-btn>
+              <v-btn @click="goToAnalysis" dark class="myVbtn">Go to Analysis Page</v-btn>
+              <v-btn @click="goToPdf" dark class="myVbtn">Export Stats to PDF</v-btn>
+              <v-btn v-if="!isFootball" @click="goToGoals" dark class="myVbtn">View/Edit Goals</v-btn>
+            </v-card>
           </div>
         </div>
       </div>
-    </div>
+    </v-content>
   </div>
 </template>
 
@@ -121,21 +122,21 @@ export default {
       isModalVisible: false,
       darkModeEnabled: true,
       isColorModalVisible: false,
-      playersList: []
+      playersList: [],
+      v_gameslist: []
     }
   },
-  mounted () {
+  async mounted () {
     this.SET_LOGGED_IN_USER(firebase.auth().currentUser);
     var self = this;
-    firebase.database().ref('/Users').child(firebase.auth().currentUser.email.replace('.', '')).child('Name').once('value', function(snapshot){
+    await firebase.database().ref('/Users').child(firebase.auth().currentUser.email.replace('.', '')).child('Name').once('value', function(snapshot){
       self.SET_CURRENT_USER_NAME(snapshot.val())
+      self.getGamesTeam();
+      self.getPlayers();
+      self.getSportfolios();
     })
-    this.getGamesTeam();
-    this.getPlayers();
+    
     this.getSportfolios();
-    firebase.database().ref('/Users').child(firebase.auth().currentUser.email.replace('.', '')).child('DarkModeEnabled').once('value', function(snap){
-      self.darkModeEnabled = (snap.val() == 1)
-    })
   },
   methods: {
     ...mapMutations({
@@ -145,22 +146,10 @@ export default {
       SET_PLAYERS: 'mainStore/SET_PLAYERS',
       SET_GAMES_LIST: 'mainStore/SET_GAMES_LIST',
       SET_CURRENT_USER_NAME: 'mainStore/SET_CURRENT_USER_NAME',
-      SET_DARK_MODE: 'mainStore/SET_DARK_MODE',
       SET_MY_COLOR: 'mainStore/SET_MY_COLOR',
       SET_OPP_COLOR: 'mainStore/SET_OPP_COLOR',
       SET_SECONDARY_COLOR: 'mainStore/SET_SECONDARY_COLOR'
     }),
-    themeChanged(){
-      this.SET_DARK_MODE(this.darkModeEnabled)
-      var self = this;
-      var value = 0;
-      if(this.darkModeEnabled){
-        value = 1;
-      }
-      firebase.database().ref('/Users').child(self.currentUserEmail.replace('.', '')).update({
-        'DarkModeEnabled': value
-      })
-    },
     showNGModal() {
       this.isModalVisible = true;
     },
@@ -203,8 +192,8 @@ export default {
     goToGoals: function(event) {
       this.$router.push('/goals')
     },
-    gameSelected: function(event) {
-      this.SET_ACTIVE_GAME_ID(this.gamesList[event - 1]);
+    gameSelected: function(id) {
+      this.SET_ACTIVE_GAME_ID(id);
       if(this.selectedTeamSport == 2){
         this.$router.push('/football');
       }
@@ -224,30 +213,36 @@ export default {
       }
       
     },
-    viewPlayerInfo() {
-      
+    viewPlayerInfo(id) {
+      var playerID = id.split(' ')[0].replace('#', 'p')
+      alert(playerID)
     },
-    getGamesTeam() {
+    async getGamesTeam() {
       var email = this.currentUserEmail.replace('.', '');
       var self = this;
 
       var keysList = [];
       var gamesListRef = firebase.database().ref('/TeamSportfolios/' + self.selectedTeamId + '/Games/');
       if (typeof gamesListRef !== 'undefined') {
-        gamesListRef.on('value', function(snapshot) {
+        await gamesListRef.on('value', function(snapshot) {
+          self.v_gameslist = []
           var obj = snapshot.val();
           if (obj) {
             self.SET_GAMES_LIST(Object.keys(obj));
+
+            Object.keys(obj).forEach(game => {
+              self.v_gameslist.push({value: false, name: game})
+            })
           }
         })
       }
     },
-    getPlayers() {
+    async getPlayers() {
       var id = this.selectedTeamId;
       var self = this;
       self.SET_PLAYERS([]);
       var playersRef = firebase.database().ref('/TeamSportfolios/' + id + '/Players/');
-      playersRef.on('value', function(snapshot) {
+      await playersRef.on('value', function(snapshot) {
         var obj = snapshot.val();
         if(obj){
           self.SET_PLAYERS(obj);
@@ -290,13 +285,13 @@ export default {
       });
       this.$modal.hide('new-player');
     },
-    getSportfolios() {
+    async getSportfolios() {
       var id = this.selectedTeamId;
       var keysList = [];
       var self = this;
       var email = this.currentUserEmail.replace('.', '');
       var sportfoliosListRef = firebase.database().ref('/Users/' + email + '/AdminTeams/');
-      sportfoliosListRef.on('value', function(snapshot) {
+      await sportfoliosListRef.on('value', function(snapshot) {
         var obj = snapshot.val();
         keysList = Object.keys(obj);
         //self.SET_SELECTED_TEAM_ID(keysList[0]);
@@ -466,10 +461,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .main_Other {
+  /* .main_Other {
     height: 100vh;
     overflow: scroll;
-  }
+  } */
   #header h1{
       margin:0px;
       font-weight: normal;
@@ -511,7 +506,7 @@ export default {
   }
 
   .button-wrapper {
-    flex-basis: 33%;
+    flex-basis: 20%;
     padding: 30px 15px 15px 20px;
   }
 
@@ -522,7 +517,7 @@ export default {
     max-height: 75vh;
   }
 
-  .mbgl{
+  /* .mbgl{
     flex-basis: 50%;
     min-width: 200px;
     margin-right: 30px;
@@ -533,8 +528,11 @@ export default {
     flex-basis: 50%;
     min-width: 200px;
     max-height: 70vh;
-  }
+  } */
 
+  .myVbtn{
+    margin-bottom: 28px;
+  }
   .mainHeader h1 {
     width: 100%;
     font-size: 70px;
@@ -571,12 +569,11 @@ export default {
     }
     .list-wrapper {
       display: block;
+      margin-bottom: 150px;
     }
 
     .button-wrapper {
       display: block;
-      padding: 0px;
-      margin-left: 105px;
     }
 
     .mbgl{

@@ -3,11 +3,19 @@
     <template>
       <v-toolbar dark>
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-        <v-toolbar-title>Statlete</v-toolbar-title>
+        <v-toolbar-title @click="goBack">Statlete</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down">
-          <v-btn icon @click="logout">
+          <v-btn @click="goBack">
+            <v-icon>arrow_back</v-icon>
+            Back
+          </v-btn>
+        </v-toolbar-items>
+        <v-toolbar-items class="sm">
+          <v-btn @click="logout">
             <v-icon>input</v-icon>
+            <v-spacer style="width: 5px;"></v-spacer>
+            LOGOUT
           </v-btn>
         </v-toolbar-items>
       </v-toolbar>
@@ -149,6 +157,8 @@
             </v-list-tile>
           </v-list-group>
         </v-list>
+
+        <v-btn flat color="red" @click="drawer = false">Close</v-btn>
       </v-navigation-drawer>
     </template>
     <photoModal
@@ -187,7 +197,7 @@ export default {
   data() {
     return {
       isModalVisible: false,
-      userImageURL: '../../assets/images/testUser.png',
+      userImageURL: 'src/assets/images/testUser.png',
       drawer: null,
       items: [
         { title: 'Home', icon: 'dashboard' },
@@ -334,7 +344,7 @@ export default {
         self.getGamesTeam();
         self.getPlayers();
         self.drawer = !self.drawer
-        self.$router.push('/main')
+        location.reload();
       });
     },
     playerSelected: function(event) {
