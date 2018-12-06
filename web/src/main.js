@@ -87,6 +87,9 @@ Vue.component('player-entry-box', PlayerEntryBox);
 import SelectSport from '@/components/Wizards/SelectSport';
 Vue.component('select-sport', SelectSport);
 
+import PSWizard from '@/components/Wizards/PSWizard';
+Vue.component('ps-wizard', PSWizard);
+
 
 
 //Charts

@@ -121,7 +121,7 @@
               <v-list-tile
                 v-for="(player, i) in playerSportfolios"
                 :key="i"
-                @click="selectedTeam(player.id)"
+                @click="selectedPlayer(player.id)"
               >
               <v-list-tile-action>
                   <font-awesome-icon v-if="player.sport == 0" icon="basketball-ball" />
@@ -353,26 +353,21 @@ export default {
         
       });
     },
-    playerSelected: function(event) {
-      var sport = event.Sport;
-      if(sport.toString().toLowerCase() === 'soccer'){
-        sport = 1;
-      }
-      else if(sport.toString().toLowerCase() === 'basketball') {
-        sport = 0;
-      }
-      else if(sport.toString().toLowerCase() === 'football') {
-        sport = 2;
-      }
-
-      this.SET_SELECTED_TEAM({
-        id: event.Id,
-        name: event.Name,
-        token: event.Token,
-        sport: sport
-      });
-      this.getGamesPlayer();
-      this.$router.push('/playerhome')
+    selectedPlayer: function(id) {
+      var self = this;
+      firebase.database().ref('PlayerSportfolios').child(id).once('value', function(snapshot){
+        var obj = snapshot.val();
+        var sport = obj.Sport;
+        var name = obj.Name;
+        self.SET_SELECTED_TEAM({
+          id: id,
+          name: name,
+          token: '',
+          sport: sport
+        });
+        self.getGamesPlayer();
+        self.$router.push('/playerhome')
+      })
     },
     showPlayer: function() {
       this.$router.push('createplayer');
