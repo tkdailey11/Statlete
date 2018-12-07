@@ -530,7 +530,7 @@ export default {
         self = this
         var ref = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Special")
         ref.child("TotalTDAllowed").once("value", function(shot){
-                if(self.kickoffTouchdown)
+                if(self.kickoffTouchdown && !self.kickoffFumble)
                 {
                     self.$emit("oppScore", 6)
                     var numS = shot.val()
@@ -551,6 +551,10 @@ export default {
                 ref2.child("FumbleRec").once("value", function(fum){
                     if(self.kickoffFumble && self.kickoffRecoveredNum != "")
                     {
+                        if(self.kickoffTouchdown)
+                        {     
+                            self.$emit("incMyScore", 6)
+                        }
                         var fumVal = fum.val()
                         var playerNum = "p" + self.kickoffRecoveredNum
                         var playerStat = fumVal[playerNum]
@@ -566,6 +570,8 @@ export default {
                             [playerNum]: playerStat
                         })
                     }
+                }).then(()=>{
+                    
                 }).then(()=>{
             this.kickoffGainedYards = '';
             this.kickoffTouchdown = '';

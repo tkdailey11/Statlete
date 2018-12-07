@@ -903,7 +903,7 @@ export default {
           }).then(()=>{
           
             ref.child("RushTD").once("value", function(points){ 
-            if(self.runTouchdown && self.runPlayerNumber != "" && self.runYards != "")
+            if(self.runTouchdown && self.runPlayerNumber != "" && self.runYards != "" && !self.runFumble)
             {
               self.$emit("incMyScore", 6) 
               var rushTD = points.val()
@@ -967,8 +967,12 @@ export default {
       var playSide = "Pass" + this.pickedPassSide;
       var playResult = 0;
 
-      if(this.driveDowns <= 4 && this.passYards != "")
+      if(this.driveDowns <= 4)
       {
+        if(this.passYards == "")
+        {
+          this.passYards = 0;
+        }
         if(this.driveYardsLeft <= short)
         {
           if(this.driveDowns == 1)
@@ -1263,10 +1267,12 @@ export default {
       })
 
       //Tracker      
-      if(this.passYards != "")
+      if(this.passPlayerNumber != "")
       { 
-        if(this.passCompletion || this.passSack)
+        if(this.passYards == "")
         {
+          this.passYards = 0;
+        }
           if(this.passYards >= this.driveYardsLeft)
           {
             this.driveDowns = 1;
@@ -1291,8 +1297,8 @@ export default {
           {
             this.driveSpotBall -= this.passYards;
           }
-        }
-        if(this.driveSpotBall > 50 || this.driveSpotBall < 0 || this.driveDowns > 4 || this.passYards == "")
+        
+        if(this.driveSpotBall > 50 || this.driveSpotBall < 0 || this.driveDowns > 4)
         {
           jQuery("#tracker").hide();
         }
@@ -1361,6 +1367,7 @@ export default {
               var ref2 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Totals").child("Special");
               ref2.child("TotalTDAllowed").once("value", function(rand2){
                 if(self.passTurnover != "" && self.passTouchdown)
+                { 
                 self.$emit("oppScore", 6)
                 var numS = rand2.val()
                 if(numS == null)
@@ -1373,7 +1380,7 @@ export default {
                 }
                 ref2.update({
                   ["TotalTDAllowed"]: numS
-                })
+                })}
               }).then(()=>{
         ref.child("PassComp").once("value", function(snap){
           if(self.passCompletion && self.passPlayerNumber != "")
@@ -1396,7 +1403,7 @@ export default {
           }
         }).then(()=>{
           ref.child("PassTD").once("value", function(shot){
-            if(self.passTouchdown && self.passCompletion && self.passPlayerNumber != "")
+            if(self.passTouchdown && self.passCompletion && self.passPlayerNumber != "" && self.passTurnover == "")
             {
               self.$emit("incMyScore", 6)
               var numPassTD = shot.val()

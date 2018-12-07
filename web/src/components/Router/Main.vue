@@ -495,12 +495,16 @@ export default {
       if(this.selectedTeamSport == 2){
         var gameData = {}
         var self = this
-        if(gameCount == 1)
-        {
+        firebase.database().ref('AskStatlete').once("value", function(func){
+          var stats = func.val();
+          if(stats[teamId] == null)
+          {
             firebase.database().ref('AskStatlete').update({
             [teamId]: self.footballAskStatlete
-          })
-        }
+            })
+          }
+        })
+        
         gameData['Live'] = false
         gameData['OpposingTeamName'] = ngData.Opponent
         gameData['Plays'] = {

@@ -47,8 +47,6 @@
 
           <button v-if="activeButton === 'special'" id="specialButton" class="currPage" @click="specialClicked">Special Teams</button>
           <button v-else id="specialButton" class="footballNotCurr" @click="specialClicked">Special Teams</button><br>
-
-          <button id="statsButton" class="footballNotCurr" @click="statsClicked">Team Stats</button><br>
         </div>
 
         <div class="footballStatDiv">

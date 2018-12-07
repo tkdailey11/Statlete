@@ -359,7 +359,6 @@ export default {
               ref.once("value", function(tpt){
                 if(self.runDefTouchdown && !self.runDefFumble)
                 {
-                  alert("TD")
                   self.$emit("oppScore", 6)
                   var runTD = tpt.val()
                   var total = parseInt(runTD.TotalRushTD) + parseInt(1)
@@ -432,8 +431,10 @@ export default {
       jQuery("#defenseButtons").show();
 
       //Tracker
-      if(this.passDefCompletion)
+      if(!this.passDefCompletion)
       {
+        this.passDefYards = 0;
+      }
         if(this.passDefYards >= this.driveYardsLeft)
         {
           this.driveDowns = 1;
@@ -459,7 +460,7 @@ export default {
         {
           this.driveSpotBall -= this.passDefYards;
         }
-      }
+      
       if(this.driveSpotBall > 50 || this.driveSpotBall < 0 || this.driveDowns > 4)
       {
         jQuery("#tracker").hide();
@@ -587,8 +588,9 @@ export default {
               }
             }).then(()=>{
               ref.once("value", function(tpt){
-                if(self.passDefTouchdown && (self.passTurnoverDefType != "interception" || self.passTurnoverDefType != "fumble"))
+                if(self.passDefTouchdown && self.passTurnoverDefType != "interception" && self.passTurnoverDefType != "fumble")
                 {
+                  self.$emit("oppScore", 6)
                   var runTD = tpt.val()
                   var total = parseInt(runTD.TotalPassTD) + parseInt(1)
                   ref.update({
