@@ -6,7 +6,7 @@
         <div class="modal-center">
             <div class="ng-modal-header" @click="close">
             </div>
-            <div class="modal-body">
+            <v-card class="modal-body" :dark="darkMode">
                 <a class="btn" @click="toggleShow">Select New Image</a>
                 <my-upload field="img"
                     @crop-success="cropSuccess"
@@ -20,9 +20,11 @@
                     :headers="headers"
                     :langType="'en'"
                     img-format="png"></my-upload>
-                <img :src="imgDataUrl">
-                <a class="main_button" @click="close">Submit</a>
-            </div>
+                <img style="margin: 5vh 30vw 5vh 30vw; border-radius: 50%;" :src="imgDataUrl">
+                <v-card-actions>
+                    <v-btn color="red" @click="close">Submit</v-btn>
+                </v-card-actions>
+            </v-card>
             <div class="ng-modal-footer" @click="close">
             </div>
         </div>
@@ -41,7 +43,8 @@ export default {
     name: 'photoModal',
     computed: {
         ...mapGetters({
-            currentUserEmail: 'mainStore/currentUserEmail'
+            currentUserEmail: 'mainStore/currentUserEmail',
+            darkMode: 'mainStore/darkMode'
         })
     },
     methods: {

@@ -62,7 +62,7 @@
             <h1 class="glH1">Create Account</h1>
           </v-flex>
           <v-flex xs12 sm6 offset-sm3 mt-3>
-            <form>
+            <div>
               <v-layout column>
                 <v-flex>
                   <v-text-field
@@ -70,6 +70,8 @@
                     label="Email"
                     id="email"
                     type="email"
+                    :rules="emailRules"
+                    v-model="email"
                     required
                     :dark="darkMode"></v-text-field>
                 </v-flex>
@@ -79,6 +81,9 @@
                     label="Password"
                     id="password"
                     type="password"
+                    :rules="passwordRules"
+                    :counter="6"
+                    v-model="password"
                     required
                     :dark="darkMode"></v-text-field>
                 </v-flex>
@@ -88,14 +93,17 @@
                     label="Confirm Password"
                     id="confirmPassword"
                     type="password"
+                    :rules="passwordRules"
+                    :counter="6"
+                    v-model="passwordConfirm"
                     required
                     :dark="darkMode"></v-text-field>
                 </v-flex>
                 <v-flex class="text-xs-center" mt-5>
-                  <v-btn type="submit" :dark="darkMode">Submit</v-btn>
+                  <v-btn :dark="darkMode" @click="signUp">Submit</v-btn>
                 </v-flex>
               </v-layout>
-            </form>
+            </div>
           </v-flex>
         </v-layout>
       </v-container>
@@ -122,7 +130,15 @@
           { title: 'FAQ', path: '/faq', icon: 'question_answer' },
           { title: 'Live Game', path: '/liveview', icon: 'videogame_asset' }
         ],
-        mini: true
+        mini: true,
+        emailRules: [
+          (v) => !!v || 'E-mail is required',
+          (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+        ],
+        passwordRules: [
+          (v) => !!v || 'Password is required',
+          (v) => v.length >= 6 || 'Password must be at least 6 characters.'
+        ],
       }
     },
     computed:{
@@ -139,14 +155,16 @@
       },
       signUp: function() {
         if(this.password===this.passwordConfirm){
-          firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
-            (user) => {
-              this.$router.replace('flp')
-            },
-            function (err) {
-              alert('Oops. ' + err.message)
-            }
-          );
+          if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.email) && this.password.length >= 6){
+            firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
+              (user) => {
+                this.$router.replace('main')
+              },
+              function(err) {
+                alert('ERROR. ' + err.message)
+              }
+            );
+          }
         }
         else {
           alert('Passwords don\'t match');
