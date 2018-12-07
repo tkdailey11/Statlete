@@ -6,7 +6,11 @@
 
                 <v-divider></v-divider>
 
-                <v-stepper-step :complete="e1 > 2" step="2">Linking (Optional)</v-stepper-step>
+                <v-stepper-step :complete="e1 > 2" step="2">Add Players</v-stepper-step>
+
+                <v-divider></v-divider>
+
+                <v-stepper-step :complete="e1 > 3" step="3">Setup Linking Info</v-stepper-step>
             </v-stepper-header>
 
             <v-stepper-items>
@@ -37,32 +41,39 @@
                             </v-btn-toggle>
                         </div>
                         <div id="entryDivPSW">
-                            <p>Player</p>
                             <div id="nameNumPSW">
                                 <v-text-field
-                                    v-model="number"
-                                    label="Number"
-                                    type="number"
+                                    v-model="teamName"
+                                    label="Team Name"
                                     id="nameTxt">
-                                </v-text-field>
-                                <v-text-field
-                                    v-model="name"
-                                    label="Name"
-                                    id="numTxt">
                                 </v-text-field>
                             </div>
                         </div>
                     </v-card>
-
+                    <v-btn flat @click="goBack">Cancel</v-btn>
                     <v-btn color="primary"
                         @click="e1 = 2">
                     Continue
                     </v-btn>
-
-                    <v-btn flat @click="goBack">Cancel</v-btn>
                 </v-stepper-content>
 
                 <v-stepper-content step="2">
+                    <v-card class="mb-5"
+                            height="200px"
+                            id="vcard2PSW">
+          <player-selection-box @playerInfo="setPlayerInfo"
+                                :sport="sportName"
+                                :playersList="playersList"></player-selection-box>
+                    </v-card>
+
+                    <v-btn flat @click="goBack">Cancel</v-btn>
+                    <v-btn color="primary"
+                        @click="e1 = 3">
+                    Continue
+                    </v-btn>
+                </v-stepper-content>
+
+                <v-stepper-content step="3">
                     <v-card class="mb-5"
                             height="200px"
                             id="vcard2PSW">
@@ -83,7 +94,7 @@
                     </v-card>
 
                     <v-btn color="primary"
-                           @click="submitPlayerSportfolio">
+                           @click="submitTeamSportfolio">
                         Submit
                     </v-btn>
                 </v-stepper-content>
@@ -95,6 +106,7 @@
 <script>
 import firebase from 'firebase'
 import { mapGetters, mapMutations } from 'vuex';
+import { isNullOrUndefined } from 'util';
   export default {
     data () {
       return {
@@ -103,21 +115,108 @@ import { mapGetters, mapMutations } from 'vuex';
         number: '',
         name: '',
         teamID: '',
-        teamToken: ''
+        teamToken: '',
+        teamName: '',
+        playersList: []
       }
     },
     computed: {
         ...mapGetters({
             selectedTeamId: 'mainStore/selectedTeamId',
             currentUserEmail: 'mainStore/currentUserEmail',
-            darkMode: 'mainStore/darkMode'
-        })
+            darkMode: 'mainStore/darkMode',
+            basketballGoals: 'statStore/basketballGoals',
+            soccerGoals: 'statStore/soccerGoals',
+            footballGoals: 'statStore/footballGoals'
+        }),
+        sportName: function() {
+            if(this.selectedSport == 0){
+                return 'basketball'
+            }
+            else if(this.selectedSport == 1){
+                return 'soccer'
+            }
+            else {
+                return 'football'
+            }
+        }
     },
     methods: {
         ...mapMutations({
             SET_SELECTED_TEAM: 'mainStore/SET_SELECTED_TEAM',
-            SET_SELECTED_SPORT: 'mainStore/SET_SELECTED_SPORT'
+            SET_SELECTED_SPORT: 'mainStore/SET_SELECTED_SPORT',
+            SET_PLAYERS: 'mainStore/SET_PLAYERS'
         }),
+            setPlayerInfo(event) {
+      this.playersList = event;
+    },
+    submitTeamSportfolio(){
+      var emailStr = this.currentUserEmail;
+      var email = emailStr.replace('.', '');
+      var nam = this.teamName + '|' + this.selectedSport;
+      var tok = this.teamToken;
+      var d1 = {}
+      if(this.selectedSport == 0){
+          d1 = this.basketballGoals
+      }
+      else if(this.selectedSport == 1){
+          d1 = this.soccerGoals
+      }
+      else {
+          d1 = this.footballGoals
+      }
+
+      var teamData = {
+          "Admins" : {
+            [email] : 'admin1'
+          },
+          "Creator" : email,
+          "TeamName" : nam,
+          "Token" : tok,
+          "Goals" : d1,
+          "Sport": this.selectedSport
+      }
+
+      var playerObj = {};
+      this.playersList.forEach( function (player)
+      {
+        if(!isNullOrUndefined(player.num) && !isNaN(player.num)){
+            var key = 'p' + player.num;
+            if(player.name==='') {
+                playerObj[key] = ' ';
+            }
+            else {
+                playerObj[key] = player.name;
+            }
+        }
+      });
+      teamData.Players = playerObj;
+      console.log(teamData)
+      var id = this.teamID;
+      firebase.database().ref('TeamSportfolios/').update({
+        [id] : teamData
+      });
+
+      firebase.database().ref('Users/' + email + '/AdminTeams').update({
+        [this.teamID] : " "
+      });
+      
+      this.SET_SELECTED_TEAM({
+        id: this.teamID,
+        name: this.teamName,
+        token: this.teamToken,
+        sport: this.selectedSport
+      })
+
+      this.teamID = ''
+      this.teamName = ''
+      this.teamToken = ''
+
+    //   this.getGamesTeam();
+        this.getPlayers();
+
+      this.$router.push('/main');
+    },
         getSportNum: function(sport){
             switch(sport){
                 case 'basketball':
@@ -174,23 +273,17 @@ import { mapGetters, mapMutations } from 'vuex';
             })
 
         },
-        getGamesPlayer() {
-            var teamIDList = [];
-            var emailStr = this.currentUserEmail;
-            var email = emailStr.replace('.', '');
+        getPlayers() {
+            var id = this.selectedTeamId;
             var self = this;
-
-            var keysList = [];
-            self.gamesList = [];
-            var gamesListRef = firebase.database().ref('/PlayerSportfolios/' + self.selectedTeamId + '/Games/');
-            if (typeof gamesListRef !== 'undefined') {
-                gamesListRef.on('value', function(snapshot) {
+            self.SET_PLAYERS([]);
+            var playersRef = firebase.database().ref('/TeamSportfolios/' + id + '/Players/');
+            playersRef.on('value', function(snapshot) {
                 var obj = snapshot.val();
-                if (obj) {
-                    self.gamesList = Object.keys(obj);
+                if(obj){
+                self.SET_PLAYERS(obj);
                 }
-                });
-            }
+            });
         }
     }
   }

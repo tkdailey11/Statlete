@@ -1,7 +1,7 @@
 <template>
   <div id="GoalsPage">
     <nav-component />
-    <v-card dark style="margin: 10vw; padding-bottom: 25px; margin-top: 5vh;">
+    <v-card :dark="darkMode" style="margin: 10vw; padding-bottom: 25px; margin-top: 5vh;">
         <v-card-title>
             <h3>Goals</h3>
             <v-spacer></v-spacer>
@@ -106,7 +106,8 @@
         soccerStatsArr: 'statStore/soccerStatsArr',
         basketballStatsArr: 'statStore/basketballStatsArr',
         goals: 'statStore/goals',
-        numberOfPeriods: 'gameViewStore/numberOfPeriods'
+        numberOfPeriods: 'gameViewStore/numberOfPeriods',
+        darkMode: 'mainStore/darkMode'
       }),
       isSoccer: function() {
         return this.selectedTeamSport == 1;
@@ -165,25 +166,27 @@
             if(this.isSoccer){
                 ref = firebase.database().ref('SoccerGames/').child(self.selectedTeamId);
                 ref.once('value', function(snapshot){
-                    Object.keys(snapshot.val()).forEach(key => {
-                        var game = snapshot.val()[key];
-                        Object.keys(result).forEach(element => {
-                            result[element] += game.MyTotals.Period1[element].Total
-                            result[element] += game.MyTotals.Period2[element].Total
+                    if(!isNullOrUndefined(snapshot.val())){
+                        Object.keys(snapshot.val()).forEach(key => {
+                            var game = snapshot.val()[key];
+                            Object.keys(result).forEach(element => {
+                                result[element] += game.MyTotals.Period1[element].Total
+                                result[element] += game.MyTotals.Period2[element].Total
+                            })
                         })
-                    })
-                    var gameCount = Object.keys(snapshot.val()).length
-                    
-                    Object.keys(result).forEach(element => {
-                        var num = result[element] / gameCount;
-                        result[element] = Math.round(10*num)/10
-                    })
-                    var tmp = {}
-                    Object.keys(self.goalsArr).forEach(key => {
-                        tmp[key] = result[key]
-                    })
-                    result = tmp;
-                    self.actuals = result
+                        var gameCount = Object.keys(snapshot.val()).length
+                        
+                        Object.keys(result).forEach(element => {
+                            var num = result[element] / gameCount;
+                            result[element] = Math.round(10*num)/10
+                        })
+                        var tmp = {}
+                        Object.keys(self.goalsArr).forEach(key => {
+                            tmp[key] = result[key]
+                        })
+                        result = tmp;
+                        self.actuals = result
+                    }
                 }).then(function(){
                     Object.keys(result).forEach(element => {
                         var el = element.split(' ').join('')
@@ -208,7 +211,8 @@
                     var ftm = 0;
                     //sum up values
                     Object.keys(snapshot.val()).forEach(key => {
-                        var game = snapshot.val()[key];
+                        if(!isNullOrUndefined(snapshot.val())){
+                            var game = snapshot.val()[key];
                         Object.keys(result).forEach(element => {
                             if(element === 'FG2%'){
                                 if(self.numberOfPeriods == 2){
@@ -284,6 +288,8 @@
                             }
                             
                         })
+                        }
+                        
                     })
                     var gameCount = Object.keys(snapshot.val()).length
                     //get avgs

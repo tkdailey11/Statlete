@@ -89,6 +89,8 @@ Vue.component('select-sport', SelectSport);
 
 import PSWizard from '@/components/Wizards/PSWizard';
 Vue.component('ps-wizard', PSWizard);
+import TSWizard from '@/components/Wizards/TSWizard';
+Vue.component('ts-wizard', TSWizard);
 
 
 

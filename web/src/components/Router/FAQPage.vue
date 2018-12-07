@@ -4,7 +4,7 @@
           v-model="sidebar"
           :mini-variant="mini"
           absolute
-          dark
+          :dark="darkMode"
           temporary>
           <v-list class="pa-1">
             <v-list-tile v-if="mini" @click.stop="mini = false">
@@ -27,9 +27,16 @@
                 <v-list-tile-title>{{item.title}}</v-list-tile-title>
               </v-list-tile>
             </v-list-tile>
+            <v-list-tile
+                @click="TOGGLE_DARK_MODE()">
+                  <v-list-tile-action>
+                    <v-icon>color_lens</v-icon>
+                  </v-list-tile-action>
+                  <v-list-tile-title v-text="'Toggle DarkMode'"></v-list-tile-title>
+              </v-list-tile>
           </v-list>
         </v-navigation-drawer>
-    <v-toolbar app dark>
+    <v-toolbar app :dark="darkMode">
       <v-toolbar-side-icon @click="sidebar = !sidebar">
       </v-toolbar-side-icon>
       <v-toolbar-title>
@@ -42,7 +49,7 @@
           v-for="item in menuItems"
           :key="item.title"
           :to="item.path">
-          <v-icon left dark>{{ item.icon }}</v-icon>
+          <v-icon left :dark="darkMode">{{ item.icon }}</v-icon>
           {{ item.title }}
         </v-btn>
       </v-toolbar-items>
@@ -50,7 +57,7 @@
     <v-content style="margin: 5vh;">
         <template>
             <v-expansion-panel
-                :dark="true">
+                :dark="darkMode">
                 <v-expansion-panel-content
                     v-for="(item,i) in dataPoints"
                     :key="i"
@@ -67,6 +74,7 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex';
 export default {
     data() {
         return {
@@ -118,15 +126,24 @@ export default {
           { title: 'Login', path: '/login', icon: 'input' },
           { title: 'Sign Up', path: '/sign-up', icon: 'person_add' },
           { title: 'About', path: '/about', icon: 'info' },
-          { title: 'FAQ', path: '/faq', icon: 'question_answer' }
+          { title: 'FAQ', path: '/faq', icon: 'question_answer' },
+          { title: 'Live Game', path: '/liveview', icon: 'videogame_asset' }
         ],
         mini: true
         }
     },
     methods: {
+        ...mapMutations({
+            TOGGLE_DARK_MODE: 'mainStore/TOGGLE_DARK_MODE'
+        }),
         goTo: function(path) {
             this.$router.push(path)
-        },
+        }
+    },
+    computed: {
+        ...mapGetters({
+            darkMode: 'mainStore/darkMode'
+        })
     }
 }
 </script>

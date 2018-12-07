@@ -1,9 +1,10 @@
 <template>
   <div id="TeamWizard" class="teamWiz">
     <nav-component />
-    <h1 style="color: rgb(242,209,24); margin: 50px 0px 50px 0px;">Create a New Team Sportfolio</h1>
-    <tkd-wizardT>
-    </tkd-wizardT>
+    <h1 style="margin: 50px 0px 50px 0px;">Create a New Team Sportfolio</h1>
+    <!-- <tkd-wizardT>
+    </tkd-wizardT> -->
+    <ts-wizard style="margin-left: 5vw; margin-right: 5vw;"></ts-wizard>
   </div>
 </template>
 
@@ -43,6 +44,7 @@ export default {
     }
   },
   mounted () {
+    
   },
   methods: {
     ...mapMutations({

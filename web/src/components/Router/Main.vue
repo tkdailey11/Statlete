@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <nav-component @ChangeColor="changeColor" />
-    <v-content>
+    <v-content :dark="darkMode">
       <new-player @newPlayerAdded="hideModal" />
       <player-detail-view @close="hideModalDetail" :playerID="playerIDProp" :playerData="testArr" />
       <ngmodal
@@ -17,11 +17,11 @@
       <div id="mainPage">
 
         <div class="mainHeader">
-          <h1 class="mainH1">{{selectedTeamName}}</h1>
+          <h1>{{selectedTeamName}}</h1>
         </div>
         <div class="mainBody">
           <div class="list-wrapper">
-            <v-card dark style="margin-right: 1vw;" class="mbgl">
+            <v-card :dark="darkMode" style="margin-right: 1vw;" class="mbgl">
                 <v-data-table
                   :headers="[{
                     text: 'Games',
@@ -42,7 +42,7 @@
                 <v-btn flat color="red" @click.stop="showNGModal">New Game</v-btn>
               </v-card-actions>
             </v-card>
-            <v-card dark style="margin-left: 1vw;" class="mbpl">
+            <v-card :dark="darkMode" style="margin-left: 1vw;" class="mbpl">
                 <v-data-table
                   :headers="[{
                     text: 'Players',
@@ -57,9 +57,9 @@
                     <tr @click="viewPlayerInfo(props.item.name)">
                       <td>{{ props.item.name }}
                         <v-spacer style="width: 10px;" />
-                        <v-dialog v-model="dialog" width="500">
-                          <v-btn slot="activator" flat color="red" dark>View Stats</v-btn>
-                          <v-card dark>
+                        <v-dialog width="500">
+                          <v-btn slot="activator" flat color="red" :dark="darkMode">View Stats</v-btn>
+                          <v-card :dark="darkMode">
                             <v-card-title>
                               {{props.item.name}} Stats
                               <v-spacer></v-spacer>
@@ -88,12 +88,12 @@
             </v-card>
           </div>
           <div class="button-wrapper">
-            <v-card dark>
-              <v-btn @click="editTeamSettings" dark class="myVbtn">Edit Team Settings</v-btn>
-              <v-btn @click="viewTeamStats" dark class="myVbtn">View Team Stats</v-btn>
-              <v-btn @click="goToAnalysis" dark class="myVbtn">Go to Analysis Page</v-btn>
-              <v-btn @click="goToPdf" dark class="myVbtn">Export Stats to PDF</v-btn>
-              <v-btn v-if="!isFootball" @click="goToGoals" dark class="myVbtn">View/Edit Goals</v-btn>
+            <v-card :dark="darkMode">
+              <v-btn @click="editTeamSettings" :dark="darkMode" class="myVbtn">Edit Team Settings</v-btn>
+              <v-btn @click="viewTeamStats" :dark="darkMode" class="myVbtn">View Team Stats</v-btn>
+              <v-btn @click="goToAnalysis" :dark="darkMode" class="myVbtn">Go to Analysis Page</v-btn>
+              <v-btn @click="goToPdf" :dark="darkMode" class="myVbtn">Export Stats to PDF</v-btn>
+              <v-btn v-if="!isFootball" @click="goToGoals" :dark="darkMode" class="myVbtn">View/Edit Goals</v-btn>
             </v-card>
           </div>
         </div>
@@ -132,7 +132,8 @@ export default {
       footballOffenseStats: 'statStore/footballOffenseStats',
       footballDefenseStats: 'footballStore/footballDefenseStats',
       footballSpecialStats: 'statStore/footballSpecialStats',
-      footballAskStatlete: 'statStore/footballAskStatlete'
+      footballAskStatlete: 'statStore/footballAskStatlete',
+      darkMode: 'mainStore/darkMode'
     }),
       
     isFootball: function(){
@@ -226,6 +227,14 @@ export default {
         this.testArr.push(tmp)
       })
     },
+    watch:{
+      darkMode: {
+        handler(){
+          alert('changed')
+        }
+        
+      }
+    },
   async mounted () {
     this.SET_LOGGED_IN_USER(firebase.auth().currentUser);
     var self = this;
@@ -248,7 +257,8 @@ export default {
       SET_CURRENT_USER_NAME: 'mainStore/SET_CURRENT_USER_NAME',
       SET_MY_COLOR: 'mainStore/SET_MY_COLOR',
       SET_OPP_COLOR: 'mainStore/SET_OPP_COLOR',
-      SET_SECONDARY_COLOR: 'mainStore/SET_SECONDARY_COLOR'
+      SET_SECONDARY_COLOR: 'mainStore/SET_SECONDARY_COLOR',
+      TOGGLE_DARK_MODE: 'mainStore/TOGGLE_DARK_MODE'
     }),
     getVal(data){
       return (isNullOrUndefined(data) || isNaN(data)) ? 0 : data

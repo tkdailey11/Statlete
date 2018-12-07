@@ -15,10 +15,14 @@ const state = {
   myColor: 'rgba(224, 0, 16, 0.75)',
   mySecondaryColor: 'rgba(247,204,78, 0.9)',
   oppColor: 'rgba(247,204,78, 0.9)',
-  sportfolioType: 'team'
+  sportfolioType: 'team',
+  darkMode: false
 };
 
 const getters = {
+  darkMode: state => {
+    return state.darkMode;
+  },
   sportfolioType: state => {
     return state.sportfolioType;
   },
@@ -67,6 +71,13 @@ const getters = {
 };
 
 const mutations = {
+  TOGGLE_DARK_MODE: (state, payload) => {
+    console.log('==========')
+    console.log('Dark: ' + state.darkMode)
+    state.darkMode = !state.darkMode;
+    console.log('Dark: ' + state.darkMode)
+    console.log('----------')
+  },
   SET_SECONDARY_COLOR: (state, payload) => {
     state.mySecondaryColor = payload;
   },

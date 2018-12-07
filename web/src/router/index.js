@@ -19,12 +19,13 @@ import PlayerHome from '@/components/Router/PlayerHome'
 import PlayerSettings from '@/components/Router/PlayerSettings'
 import PlayerStatsPage from '@/components/Router/PlayerStatsPage'
 import WizardPlayer from '@/components/Wizards/WizardPlayer'
-import WizardT from '@/components/Wizards/WizardT'
+import WizardTeam from '@/components/Wizards/WizardTeam'
 import AnalysisPage from '@/components/Router/AnalysisPage'
 import AboutPage from '@/components/Router/AboutPage'
 import FAQPage from '@/components/Router/FAQPage'
 import ExportStats from '@/components/Router/ExportStats'
 import FootballGame from '@/components/FootballGame'
+import ExistingGame from '@/components/ExistingGame'
 
 Vue.use(Router)
 
@@ -156,8 +157,8 @@ let router = new Router({
     },
     {
       path: '/createteam',
-      name: 'WizardT',
-      component: WizardT,
+      name: 'WizardTeam',
+      component: WizardTeam,
       meta: {
         requiresAuth: true
       }
@@ -193,6 +194,11 @@ let router = new Router({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: '/liveview',
+      name: 'ExistingGame',
+      component: ExistingGame
     }
   ]
 })

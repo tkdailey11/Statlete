@@ -3,7 +3,7 @@
         <nav-component />
         <h1 class="teamStatsH1">Team Totals</h1>
         <div id="teamstatspage_main">
-          <v-card :dark="true">
+          <v-card :dark="darkMode">
             <v-card-title>
               Offense
               <v-spacer></v-spacer>
@@ -20,7 +20,7 @@
             </v-data-table>
           </v-card>
 
-          <v-card style="margin-top: 5vh;" :dark="true">
+          <v-card style="margin-top: 5vh;" :dark="darkMode">
             <v-card-title>
               Defense
               <v-spacer></v-spacer>
@@ -37,7 +37,7 @@
             </v-data-table>
           </v-card>
 
-          <v-card style="margin-top: 5vh; margin-bottom: 5vh;" :dark="true">
+          <v-card style="margin-top: 5vh; margin-bottom: 5vh;" :dark="darkMode">
             <v-card-title>
               Special Teams
               <v-spacer></v-spacer>
@@ -165,7 +165,8 @@
         footballDefenseStats: 'statStore/footballDefenseStats',
         footballSpecialArr: 'statStore/footballSpecialArr',
         footballTeamStatsSpecial: 'statStore/footballTeamStatsSpecial',
-        footballTeamStatsSpecialArr: 'statStore/footballTeamStatsSpecialArr'
+        footballTeamStatsSpecialArr: 'statStore/footballTeamStatsSpecialArr',
+        darkMode: 'mainStore/darkMode'
       }),
       playerNumbers() {
         return Object.keys(this.players);
