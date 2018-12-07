@@ -88,6 +88,7 @@
     vertical-align: middle;
     line-height: 75px;
     font-size: 25px;
+    background-color: rgba(224, 0, 16, 0.5);
   }
 
   .pss_plFooter {
@@ -105,6 +106,7 @@
   }
   .pss_plFooter:hover {
     cursor: pointer;
+    background-color: rgba(224, 0, 16, 0.5);
   }
 
   .playersTable {
@@ -128,6 +130,7 @@
   .pssTD_selected {
     border-bottom-width: 2px;
     border-bottom-style: solid;
+    background-color: rgba(224, 0, 16, 0.5);
   }
 
   tr {
@@ -136,6 +139,7 @@
 
   tr:hover td {
     cursor: pointer;
+    background-color: rgba(224, 0, 16, 0.5);
   }
 
   .pssH1 {

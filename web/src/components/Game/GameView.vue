@@ -9,8 +9,10 @@
                       :time="currTime"
                       :activePeriod="activePeriod"
                       @PauseClicked="pauseClicked"
-                      :pauseLabel="pauseBtnString"
-                      :btnEnabled="pauseEnabled">
+                      :btnEnabled="pauseEnabled"
+                      :myScore="myScore"
+                      :oppScore="oppScore"
+                      :setToPause="setBtnToPause">
           </time-clock>
       </div>
       <div class="GV_Body">
@@ -63,8 +65,8 @@
                 <tbody v-for="period in Object.keys(plays)" :key="period + '-key'">
                   <tr class="periodRow"><td colspan="3">{{period}}</td></tr>
                   <tr v-for="playKey in Object.keys(plays[period])" :key="period + '-' + playKey">
-                    <td class="myTeamPlay" v-if="plays[period][playKey].split(' | ')[0] == 0"></td>
-                    <td class="oppPlay" v-else></td>
+                    <td class="myTeamPlay" v-if="plays[period][playKey].split(' | ')[0] == 0">MY TEAM</td>
+                    <td class="oppPlay" v-else>OPPONENT</td>
                     <td class="tdSeparator"></td>
                     <td class="playDescr">{{plays[period][playKey].split(' | ')[1]}}</td>
                   </tr>
@@ -114,12 +116,12 @@
         myScore: 0,
         oppScore: 0,
         timeRemaining: 0,
-        pauseBtnString: 'Start',
         pauseEnabled: true,
         isModalVisible: false,
         hasPoss: 0,
         hadPossession: 0,
-        possessionTimestamp: '00:00'
+        possessionTimestamp: '00:00',
+        setBtnToPause: false
       }
     },
     mounted() {
@@ -149,12 +151,14 @@
         ref.child('PeriodLength').once('value', function(snap){
           self.GV_SET_PERIOD_LENGTH(snap.val());
           self.currTime = snap.val() + ':00';
+          
+          ref.child('TimeRemainingInPeriod').once('value', function(snap){
+            self.GV_SET_TIME_REMAINING(snap.val());
+            self.timeRemaining = snap.val()
+            self.currTime = self.secondsToMinutesString(snap.val())
+          })
         })
-        ref.child('TimeRemainingInPeriod').once('value', function(snap){
-          self.GV_SET_TIME_REMAINING(snap.val());
-          self.timeRemaining = snap.val()
-          self.currTime = self.secondsToMinutesString(snap.val())
-        })
+        
       }
 
       ref.child('Plays').on('value', function(snapshot){
@@ -175,8 +179,13 @@
       
       ref.child('PeriodStartTime').on('value', function(snap){
         self.GV_SET_PERIOD_START_TIME(snap.val());
+        //compute time remaining
         ref.child('InProgress').on('value', function(snap){
           self.inProgress = snap.val()
+          if(self.inProgress){
+            self.activeInterval = setInterval(self.updateTime, 1000);
+            self.setBtnToPause = true
+          }
         })
       })
 
@@ -358,29 +367,29 @@
       },
       computeScore(val){
         var score = 0;
-        // if(this.isSoccer){
-        //   score += val.Period1.Goals.Total;
-        //   score += val.Period2.Goals.Total;
-        // }
-        // else {
-        //   score += val.Period1.FTM.Total;
-        //   score += (2 * val.Period1.FG2M.Total);
-        //   score += (3 * val.Period1.FG3M.Total);
+        if(this.isSoccer){
+          score += val.Period1.Goals.Total;
+          score += val.Period2.Goals.Total;
+        }
+        else {
+          score += val.Period1.FTM.Total;
+          score += (2 * val.Period1.FG2M.Total);
+          score += (3 * val.Period1.FG3M.Total);
 
-        //   score += val.Period2.FTM.Total;
-        //   score += (2 * val.Period2.FG2M.Total);
-        //   score += (3 * val.Period2.FG3M.Total);
+          score += val.Period2.FTM.Total;
+          score += (2 * val.Period2.FG2M.Total);
+          score += (3 * val.Period2.FG3M.Total);
 
-        //   if(this.numberOfPeriods == 4){
-        //     score += val.Period3.FTM.Total;
-        //     score += (2 * val.Period3.FG2M.Total);
-        //     score += (3 * val.Period3.FG3M.Total);
+          if(this.numberOfPeriods == 4){
+            score += val.Period3.FTM.Total;
+            score += (2 * val.Period3.FG2M.Total);
+            score += (3 * val.Period3.FG3M.Total);
 
-        //     score += val.Period4.FTM.Total;
-        //     score += (2 * val.Period4.FG2M.Total);
-        //     score += (3 * val.Period4.FG3M.Total);
-        //   }
-        // }
+            score += val.Period4.FTM.Total;
+            score += (2 * val.Period4.FG2M.Total);
+            score += (3 * val.Period4.FG3M.Total);
+          }
+        }
         return score;
       },
       toggleEntryClicked(){
@@ -773,6 +782,7 @@
             })
           })
         }
+        self.com
       },
       updateTime(){
         if(this.isSoccer){
@@ -828,7 +838,6 @@
                 Period: prd,
                 InProgress: false
               })
-              this.pauseBtnString = 'Start'
               this.timeRemaining = this.periodLength * 60
               self.GV_SET_TIME_REMAINING(this.timeRemaining)
               this.currTime = this.secondsToMinutesString(this.timeRemaining)
@@ -1071,12 +1080,14 @@
     border-width: 2px;
     border-style: solid;
     width: 50px;
+    font-size: 75%;
   }
 
   .oppPlay {
     border-width: 2px;
     border-style: solid;
     width: 50px;
+    font-size: 75%;
   }
 
   .tdSeparator {
