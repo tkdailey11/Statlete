@@ -6,7 +6,7 @@
         <div class="modal-center">
             <div class="ng-modal-header" @click="close">
             </div>
-            <div class="modal-body">
+            <v-card :dark="darkMode" class="modal-body">
                 <div class="color_chooser">
                     <div style="float: left;">
                         <strong>Please choose a color for your team:</strong>
@@ -38,8 +38,8 @@
                         </swatches>
                     </div>
                 </div>
-                <a class="main_button" @click="submit">Submit</a>
-            </div>
+                <v-btn class="main_button" color="red" :dark="darkMode" @click="submit">Submit</v-btn>
+            </v-card>
             <div class="ng-modal-footer" @click="close">
             </div>
         </div>
@@ -58,7 +58,8 @@ export default {
     name: 'colorModal',
     computed: {
         ...mapGetters({
-            currentUserEmail: 'mainStore/currentUserEmail'
+            currentUserEmail: 'mainStore/currentUserEmail',
+            darkMode: 'mainStore/darkMode'
         })
     },
     methods: {

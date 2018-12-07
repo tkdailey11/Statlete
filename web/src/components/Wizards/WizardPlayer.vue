@@ -69,7 +69,6 @@ export default {
       }
 
       var id = this.teamName + '-' + this.teamID;
-      alert(id)
       var exists = firebase.database().ref('PlayerSportfolios/'+ id).key;
 
       if(exists===null){

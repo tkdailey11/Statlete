@@ -52,7 +52,7 @@
                     </v-card>
                     <v-btn flat @click="goBack">Cancel</v-btn>
                     <v-btn color="primary"
-                        @click="e1 = 2">
+                        @click="firstPageNextClicked">
                     Continue
                     </v-btn>
                 </v-stepper-content>
@@ -150,7 +150,19 @@ import { isNullOrUndefined } from 'util';
             setPlayerInfo(event) {
       this.playersList = event;
     },
+    firstPageNextClicked(){
+        if(this.teamName.length == 0){
+            alert('Please enter a team name.')
+        }
+        else{
+            this.e1 = 2
+        }
+    },
     submitTeamSportfolio(){
+        if(this.teamID.replace(/\s/g, "").length == 0){
+            alert('Please enter a team ID.')
+            return
+        }
       var emailStr = this.currentUserEmail;
       var email = emailStr.replace('.', '');
       var nam = this.teamName + '|' + this.selectedSport;

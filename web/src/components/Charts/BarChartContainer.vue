@@ -37,7 +37,6 @@ export default {
     },
     methods: {
         loadChart: async function(){
-            alert('loading chart')
             var self = this;
             var ref = firebase.database().ref('/SoccerGames').child('tkd_rsl_1').child('tkd_rsl_1-13');
             var totalsRef = ref.child('MyTotals');
@@ -84,7 +83,6 @@ export default {
                     }]
                 }
             };
-            alert('loaded')
             this.loaded = true;
             
         }

@@ -92,7 +92,7 @@
 
       },
       statChanged: function(data) {
-        // alert(data.PLAYER + ': ' + data.STAT)
+        
       },
       getPlayerArray: function(){
         var tmpArr = []

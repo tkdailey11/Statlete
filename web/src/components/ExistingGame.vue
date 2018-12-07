@@ -255,14 +255,12 @@ export default {
             this.setOppColor()
         },
         setMyTeamColor(){
-            alert('teamColor')
             var self = this;
             jQuery('.eg_myTeamPlay').each(function(){
                 jQuery(this).css('background-color', self.myColor)
             })
         },
         setOppColor(){
-            alert('oppColor')
             var self = this;
             jQuery('.eg_oppPlay').each(function(){
             jQuery(this).css('background-color', self.oppColor)

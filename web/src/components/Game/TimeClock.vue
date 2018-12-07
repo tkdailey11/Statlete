@@ -13,7 +13,7 @@
         <!-- Clock -->
         <div class="scoreboard_clock">
             <h1 @click="clockClicked" style="padding-top: 5px;">{{time}}</h1>
-            <v-btn color="red" @click="pauseClicked">{{pauseBtnString}}</v-btn>
+            <v-btn color="red" @click="pauseClicked"><v-icon>pause</v-icon><v-icon>play_arrow</v-icon></v-btn>
         </div>
         <!-- Right Periods -->
         <div class="right_periods">
@@ -73,7 +73,6 @@ export default {
         },
     },
     mounted() {
-        alert('mounted' + this.setBtnToPause)
         if(this.setBtnToPause){
             this.pauseBtnString = 'Pause'
         }
@@ -114,7 +113,6 @@ export default {
     watch: {
         setBtnToPause: {
             handler() {
-                alert('handler')
                 if(this.setBtnToPause){
                     this.pauseBtnString = 'Pause'
                 }

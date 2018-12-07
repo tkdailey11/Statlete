@@ -7,15 +7,15 @@
           My Stats
           <v-spacer></v-spacer>
         </v-card-title>
-            <v-data-table
-              :headers="headers"
-              :items="tableArr"
-              class="elevation-1">
-              <template slot="items" slot-scope="props">
-                <td style="color: white;">{{ props.item.type }}</td>
-                <td class="text-xs-right" v-for="type in statTypes" :key="'offense-' + type" style="color: white;">{{ props.item.total }}</td>
-              </template>
-            </v-data-table>
+            <table>
+              <thead><th>Stat Type</th><th>Total</th></thead>
+              <tbody>
+                <tr v-for="obj in tableArr" :key="obj.type">
+                  <td>{{ obj.type }}</td>
+                  <td>{{ obj.total }}</td>
+                </tr>
+              </tbody>
+            </table>
       </v-card>
     </div>
   </div>
@@ -102,20 +102,19 @@
           }
         }
         if(obj != null){
-          var tArr = []
+          this.tableArr = []
           delete obj['name']
           delete obj['value']
           Object.keys(obj).forEach(key => {
-            tArr.push({'value': 'false', 'type': key, 'total': obj[key]})
+            this.tableArr.push({'type': key, 'total': obj[key]})
           })
-          this.tableArr = tArr
           console.log(this.tableArr)
         }
 
       },
       tableArr: {
         handler() {
-          alert('changed')
+          
         },
         deep: true
       }

@@ -27,7 +27,6 @@ export default {
   },
   watch: {
       rerender: function(){
-          alert('rerender')
           console.log(this.chartdata)
           this.renderChart(this.chartdata, this.options)
       }

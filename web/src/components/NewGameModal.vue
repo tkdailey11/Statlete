@@ -6,12 +6,12 @@
         <div class="modal-center">
             <div class="ng-modal-header" @click="close">
             </div>
-            <div class="modal-body">
+            <v-card :dark="darkMode" class="modal-body">
                 <div class="ng-oppEntry">
                     <label class="ng_label">Opponent:</label>
                     <input class="ng_input ng_right" id="opponent" type="text" placeholder="Opponent" v-model="oppName">
                 </div>
-                <div class="ng-periodLength">
+                <div class="ng-periodLength" v-if="!this.isFootball">
                     <label class="ng_label">Period Length:</label>
                     <multiselect v-if="isSoccer" 
                                 v-model="selectedPeriodLength"
@@ -41,18 +41,18 @@
                         </v-btn>
                       </v-btn-toggle>
                 </div>
-                <div class="ng-shotChart">
+                <div class="ng-shotChart" v-if="!this.isFootball">
                     <label class="ng_label">Shot Chart Enabled:</label>
                     <toggle-button :color="'#e00010'" v-model="scEnabled" class="ng_right" />
                 </div>
-                <div class="ng-teamCode">
+                <div class="ng-teamCode" v-if="!this.isFootball">
                     <label class="ng_label">Viewable with Team Code:</label>
                     <toggle-button :color="'#e00010'" v-model="teamCode" class="ng_right" />
                 </div>
                 <div class="ng-submit">
-                    <button class="btn ng_button" @click="submit">SUBMIT</button>
+                    <v-btn color="red" :dark="darkMode" @click="submit">SUBMIT</v-btn>
                 </div>
-            </div>
+            </v-card>
             <div class="ng-modal-footer" @click="close">
             </div>
         </div>
@@ -72,13 +72,17 @@ export default {
     },
     computed: {
         ...mapGetters({
-            selectedTeamSport: 'mainStore/selectedTeamSport'
+            selectedTeamSport: 'mainStore/selectedTeamSport',
+            darkMode: 'mainStore/darkMode'
         }),
         isSoccer() {
             return this.selectedTeamSport == 1;
         },
         isBasketball() {
             return this.selectedTeamSport == 0;
+        },
+        isFootball(){
+            return this.selectedTeamSport == 2;
         }
     },
     methods: {

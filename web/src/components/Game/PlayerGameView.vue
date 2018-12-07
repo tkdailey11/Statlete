@@ -290,7 +290,6 @@
         }
       },
       clockClicked(event){
-        alert('Clock Clicked')
         if(this.currTime.toLowerCase() === "final" || !this.isSoccer){
           return;
         }
@@ -496,7 +495,6 @@
       },
       updateTime(){
         if(this.isSoccer){
-          alert('SOCCER')
           if(!this.currTime){
             return;
           }
@@ -606,16 +604,13 @@
         return result;
       },
       possButtonClicked(buttonName){
-        switch(buttonName) {
-          case 'myTeam':
-            alert('1');
-            break;
-          case 'opponent':
-            alert('2');
-            break;
-          default:
-            alert('3');
-        }
+        // switch(buttonName) {
+        //   case 'myTeam':
+        //     break;
+        //   case 'opponent':
+        //     break;
+        //   default:
+        // }
       },
       secondsToMinutesString(seconds){
         if(seconds <= 0){

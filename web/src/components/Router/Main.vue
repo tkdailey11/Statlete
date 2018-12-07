@@ -54,11 +54,11 @@
                   class="elevation-1"
                 >
                   <template slot="items" slot-scope="props">
-                    <tr @click="viewPlayerInfo(props.item.name)">
+                    <!-- <tr @click="viewPlayerInfo(props.item.name)"> -->
+                    <tr>
                       <td>{{ props.item.name }}
                         <v-spacer style="width: 10px;" />
                         <v-dialog width="500">
-                          <v-btn slot="activator" flat color="red" :dark="darkMode">View Stats</v-btn>
                           <v-card :dark="darkMode">
                             <v-card-title>
                               {{props.item.name}} Stats
@@ -230,7 +230,7 @@ export default {
     watch:{
       darkMode: {
         handler(){
-          alert('changed')
+          
         }
         
       }
@@ -381,9 +381,10 @@ export default {
       
     },
     viewPlayerInfo(id) {
-      this.playerIDProp = id
-
-      this.$modal.show('player-detail-view')
+      if(this.selectedTeamSport != 2){
+        this.playerIDProp = id
+        this.$modal.show('player-detail-view')
+      }
     },
     async getGamesTeam() {
       var email = this.currentUserEmail.replace('.', '');
@@ -430,7 +431,6 @@ export default {
             title: 'Submit',       // Button title
             default: true,    // Will be triggered by default if 'Enter' pressed.
             handler: () => {
-              alert('Submit clicked')
             } // Button click handler
           }
         ]

@@ -133,7 +133,6 @@ export default {
                     };
                 };  
                 if(!allDefined || self.TSData.datasets[0] == null){
-                    alert('Not all defined')
                     datasets = [{
                         backgroundColor: '#0000ff',
                         data: [1,3,1,3,1]

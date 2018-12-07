@@ -84,7 +84,6 @@ export default {
   mounted() {
     jQuery("#endButton").hide();
     jQuery("#finalButton").hide();
-    // alert("BEFORE BEFORE")
     var self = this
     var ref5 = firebase.database().ref("FootballGames").child(self.selectedTeamId).child(self.activeGameId).child("Score")
     ref5.once("value", function(scoreVals){
@@ -217,10 +216,10 @@ export default {
       this.activeButton = 'special';
     },
     statsClicked: function() {
-      alert("Stats Clicked");
+      
     },
     askClicked: function() {
-      alert("Ask Clicked");
+      
     },
   },
   created() {
