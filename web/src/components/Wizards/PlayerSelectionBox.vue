@@ -11,13 +11,14 @@
       </tr>
       <tr>
         <td class="psb_td"></td>
-        <td class="psb_td"><button class="psb_button" @click="buttonClicked">Add Player</button></td>
+        <td class="psb_td"><v-btn flat :dark="darkMode" @click="buttonClicked">Add Player</v-btn></td>
       </tr>
     </table>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
   export default {
     name: 'playerSelectionBox',
     beforeDestroy() {
@@ -54,6 +55,11 @@
         type: String
       },
       playersList: {}
+    },
+    computed: {
+      ...mapGetters({
+        darkMode: 'mainStore/darkMode'
+      })
     },
     mounted() {
       //do something after mounting vue instance

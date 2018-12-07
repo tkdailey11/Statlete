@@ -115,7 +115,8 @@
           { title: 'Login', path: '/login', icon: 'input' },
           { title: 'Sign Up', path: '/sign-up', icon: 'person_add' },
           { title: 'About', path: '/about', icon: 'info' },
-          { title: 'FAQ', path: '/faq', icon: 'question_answer' }
+          { title: 'FAQ', path: '/faq', icon: 'question_answer' },
+          { title: 'Live Game', path: '/liveview', icon: 'videogame_asset' }
         ],
         mini: true,
         emailRules: [

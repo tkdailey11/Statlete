@@ -1,8 +1,8 @@
 <template>
   <div class="PlayerEntryBox">
     <input class="numberBox" type="text" @blur="sendData" v-model="pnum" placeholder="#">
-    <input class="nameBox1" type="text" @blur="sendData" v-model="pname" placeholder="" v-if="pnum===''">
-    <input class="nameBox1" type="text" @blur="sendData" v-model="pname" placeholder="Player Name (Optional)" v-else>
+    <!-- <input class="nameBox1" type="text" @blur="sendData" v-model="pname" placeholder="" v-if="pnum===''"> -->
+    <input class="nameBox1" type="text" @blur="sendData" v-model="pname" placeholder="Player Name">
   </div>
 </template>
 
@@ -39,40 +39,40 @@
     },
     mounted() {
       //do something after mounting vue instance
-      var nameBoxes = jQuery('.nameBox1');
-      nameBoxes.each(function(nb) {
-        if(Object.keys(nb)[0] === 'length' || Object.keys(nb)[0] ==='prevObject'){
+      //var nameBoxes = jQuery('.nameBox1');
+      // nameBoxes.each(function(nb) {
+      //   if(Object.keys(nb)[0] === 'length' || Object.keys(nb)[0] ==='prevObject'){
           
-        }
-        else {
-          jQuery(this).addClass('my-class');
-          jQuery(this).prop('disabled', true);
-        }
-      })
+      //   }
+      //   else {
+      //     jQuery(this).addClass('my-class');
+      //     jQuery(this).prop('disabled', true);
+      //   }
+      // })
     },
     updated() {
       //do something before updating vue instance
-      var nameBoxes2 = jQuery('.nameBox2');
-      nameBoxes2.each(function(nb) {
-        if(Object.keys(nb)[0] === 'length' || Object.keys(nb)[0] ==='prevObject'){
+      // var nameBoxes2 = jQuery('.nameBox2');
+      // nameBoxes2.each(function(nb) {
+      //   if(Object.keys(nb)[0] === 'length' || Object.keys(nb)[0] ==='prevObject'){
           
-        }
-        else {
-          jQuery(this).addClass('my-class2');
-          jQuery(this).prop('disabled', false);
-        }
-      })
+      //   }
+      //   else {
+      //     jQuery(this).addClass('my-class2');
+      //     jQuery(this).prop('disabled', false);
+      //   }
+      // })
 
-      var nameBoxes1 = jQuery('.nameBox1');
-      nameBoxes1.each(function(nb) {
-        if(Object.keys(nb)[0] === 'length' || Object.keys(nb)[0] ==='prevObject'){
+      // var nameBoxes1 = jQuery('.nameBox1');
+      // nameBoxes1.each(function(nb) {
+      //   if(Object.keys(nb)[0] === 'length' || Object.keys(nb)[0] ==='prevObject'){
           
-        }
-        else {
-          jQuery(this).addClass('my-class');
-          jQuery(this).prop('disabled', true);
-        }
-      })
+      //   }
+      //   else {
+      //     jQuery(this).addClass('my-class');
+      //     jQuery(this).prop('disabled', true);
+      //   }
+      // })
     }
   }
 </script>

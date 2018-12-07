@@ -12,6 +12,7 @@
               :headers="headers"
               :items="testArr"
               class="elevation-1"
+              :dark="darkMode"
             >
               <template slot="items" slot-scope="props">
                 <td>{{ props.item.name }}</td>
@@ -198,9 +199,6 @@
   .TeamStatsPage {
     overflow-x: scroll;
     height: 100vh;
-  }
-  th, td {
-    color: black;
   }
 
   table.scrolling td {

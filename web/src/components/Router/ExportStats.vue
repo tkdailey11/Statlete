@@ -1,15 +1,20 @@
 <template>
     <div class="ExportStats">
         <nav-component />
-        <multiselect v-model="selected"
-                    :options="playersList"
-                    :multiple="true"
-                    :close-on-select="true"
-                    placeholder="Whole Team"
-                    class="es_multiselect">
-        </multiselect>
+        <v-card style="margin: 5vh 10vw 5vh 10vw; padding: 20px;" :dark="darkMode">
+            <v-card-title>Export Stats to PDF</v-card-title>
 
-        <button @click="exportStatsNew" class="btn btn-outline-primary main_button">ExportStats</button>
+            <multiselect v-model="selected"
+                        :options="playersList"
+                        :multiple="true"
+                        :close-on-select="true"
+                        placeholder="Whole Team"
+                        class="es_multiselect">
+            </multiselect>
+            <v-card-actions>
+                <v-btn @click="exportStatsNew" :dark="darkMode">ExportStats</v-btn>
+            </v-card-actions>
+        </v-card>
     </div>
 </template>
 
@@ -32,7 +37,8 @@ export default {
             selectedTeamId: 'mainStore/selectedTeamId',
             players: 'mainStore/players',
             selectedTeamName: 'mainStore/selectedTeamName',
-            selectedTeamSport: 'mainStore/selectedTeamSport'
+            selectedTeamSport: 'mainStore/selectedTeamSport',
+            darkMode: 'mainStore/darkMode'
         }),
         playersList: function() {
             var list = []
@@ -471,12 +477,7 @@ export default {
     .ExportStats {
         height: 100vh;
     }
-    .es_multiselect {
-        width: 50%;
-        margin-left: 20%;
-        margin-top: 25vh;
-        float: left;
-    }
+    
     .main_button {
         margin-top: 24.5vh;
         cursor: pointer;

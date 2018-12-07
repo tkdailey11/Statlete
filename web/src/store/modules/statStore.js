@@ -1,4 +1,32 @@
 const state = {
+  soccerGoals: {
+    'Assists': 0,
+    'Corners': 0,
+    'Crosses': 0,
+    'Goals': 0,
+    'Saves': 0,
+    'Shots': 0,
+    'Shots on Goal': 0
+  },
+  basketballGoals: {
+    'AST': 0,
+    'BLK': 0,
+    'DREB': 0,
+    'FG2%': 0,
+    'FG2M': 0,
+    'FG3%': 0,
+    'FG3M': 0,
+    'FT%': 0,
+    'FTM': 0,
+    'OREB': 0,
+    'STL': 0
+  },
+  footballGoals: {
+    'PassComp': 0,
+    'PassYds': 0,
+    'RushYds': 0,
+    'Toushdowns': 0
+  },
     soccerStats: {
       "Assists" : {
         "Total" : 0
@@ -349,6 +377,15 @@ const state = {
   };
   
   const getters = {
+    soccerGoals: state => {
+      return state.soccerGoals;
+    },
+    basketballGoals: state => {
+      return state.basketballGoals;
+    },
+    footballGoals: state => {
+      return state.footballGoals;
+    },
     soccerStats: state => {
       return state.soccerStats;
     },

@@ -89,6 +89,8 @@ Vue.component('select-sport', SelectSport);
 
 import PSWizard from '@/components/Wizards/PSWizard';
 Vue.component('ps-wizard', PSWizard);
+import TSWizard from '@/components/Wizards/TSWizard';
+Vue.component('ts-wizard', TSWizard);
 
 
 
@@ -182,7 +184,7 @@ import './assets/stylesheets/bootstrap.min.css'
 import './assets/stylesheets/bootstrap-social.css'
 import './assets/stylesheets/vue-multiselect.min.css'
 //import './assets/stylesheets/master_colors_light.scss'
-//import './assets/stylesheets/master_colors_dark.scss'
+import './assets/stylesheets/master_colors_dark.scss'
 
 Vue.config.productionTip = false
 
