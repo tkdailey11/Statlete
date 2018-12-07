@@ -18,7 +18,7 @@
       <div class="button-wrapper">
         <button @click="editMySettings" class="btn btn-outline-primary main_button">Edit My Settings</button>
         <button @click="viewMyStats" class="btn btn-outline-primary main_button">View My Stats</button>
-        <button @click="goToAnalysis" class="btn btn-outline-primary main_button">Go to Analysis Page</button>
+        <!-- <button @click="goToAnalysis" class="btn btn-outline-primary main_button">Go to Analysis Page</button> -->
         <button @click="goToPdf" class="btn btn-outline-primary main_button">Export Stats to PDF</button>
       </div>
     </div>
@@ -200,7 +200,7 @@ export default {
       this.$router.push('/playersettings')
     },
     viewMyStats() {
-      this.viewMode = 'teamStatsView';
+      this.$router.push('/playerstats')
     },
     //<!-- CHANGE THIS -->
     getGames() {

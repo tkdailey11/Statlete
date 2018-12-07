@@ -36,7 +36,7 @@ export default {
         }),
         playersList: function() {
             var list = []
-            if(this.selectedTeamSport != 2)
+            if(this.selectedTeamSport != 2) 
             {
                 
             var keys = Object.keys(this.players)
@@ -194,8 +194,7 @@ export default {
             }
 
             var dbRef = null;
-            if(this.selectedTeamSport==2)
-            {
+            if(this.selectedTeamSport==2) {
                 dbRef = firebase.database().ref('/FootballGames/' + this.selectedTeamId);
                 var promisesList = [];
                 this.gamesList.forEach(function(el){
@@ -233,6 +232,7 @@ export default {
                     dbRef = firebase.database().ref('/BasketballGames/' + this.selectedTeamId);
                 }
                 var promisesList = [];
+                console.log(playersList)
                 this.gamesList.forEach(function(el){
                     promisesList.push(dbRef.child(el).once('value', function(snap){
                         var obj = snap.val()
@@ -351,9 +351,11 @@ export default {
         },
         buildGameTableBody(players) {
             
-            var columnsOff = [];
+            
+            
             if(this.selectedTeamSport==2)
             {
+                var columnsOff = [];
                 columnsOff = [' ', 'Fumble', 'INT', 'PassAtt', 'PassComp', 'PassTD', 'PassYds', 'RushCarries', 'RushTD', 'RushYds']
                 
                 var body = [];
@@ -373,6 +375,7 @@ export default {
             }
             else
             {
+                var columns = [];
                 if(this.selectedTeamSport==1){
                     columns = ['#', 'Goals', 'Assists', 'Shots on Goal', 'Shots', 'Saves', 'Crosses', 'Corners', 'Offsides', 'Fouls', 'Yellow Cards', 'Red Cards'];
                 }
