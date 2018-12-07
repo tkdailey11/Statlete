@@ -1,58 +1,64 @@
 <template>
-    <div class="FootballGame">
-        <nav-component />
-        <h1 class="mainH1">{{selectedTeamName}}</h1>
-        <div class="footballButton" id="startButton" @click="startButton">Start</div>
-        <div class="footballButton" id="endButton" @click="endButton">End</div>
-        <div class="footballButton" id="finalButton">Final</div>
-        <table align="center">
-          <tr>
-            <td class="item"> {{myScore}}</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="item">{{oppScore}}</td>
-          </tr>
-          <tr>
-            <td>My Team</td>
-            <td><input type="radio" value="first" v-model="period"></td>
-            <td><input type="radio" value="second" v-model="period"></td>
-            <td><input type="radio" value="third" v-model="period"></td>
-            <td><input type="radio" value="fourth" v-model="period"></td>
-            <td>Opponent</td>
-          </tr>
-          <tr>
-            <td></td>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>4</td>
-            <td></td>
-          </tr>
-        </table>
-     
-      <div style="display: flex; height: 100%">
-       <div class="split column toggleView left footballPosDiv">
-            <button v-if="activeButton === 'offense'" id="offenseButton" class="currPage" @click="offenseClicked">Offense</button>
-            <button v-else id="offenseButton" class="footballNotCurr" @click="offenseClicked">Offense</button><br>
-            <button v-if="activeButton === 'defense'" id="defenseButton" class="currPage" @click="defenseClicked">Defense</button>
-            <button v-else id="defenseButton" class="footballNotCurr" @click="defenseClicked">Defense</button><br>
+  <div class="FootballGame">
+    <nav-component />
+    <div id="fg_body">
+      <div id="fg_banner">
+        <h1 class="mainH1 fgTeamName">{{selectedTeamName}}</h1>
+        <div id="fg_clock">
+          <table style="margin-left: 5vw; min-width: 15vw;">
+            <tr>
+              <td class="item"> {{myScore}}</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="item">{{oppScore}}</td>
+            </tr>
+            <tr>
+              <td>My Team</td>
+              <td><input type="radio" value="first" v-model="period"></td>
+              <td><input type="radio" value="second" v-model="period"></td>
+              <td><input type="radio" value="third" v-model="period"></td>
+              <td><input type="radio" value="fourth" v-model="period"></td>
+              <td>Opponent</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>1</td>
+              <td>2</td>
+              <td>3</td>
+              <td>4</td>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+                <div id="fg_btn">
+          <div class="footballButton" id="startButton" @click="startButton">Start</div>
+          <div class="footballButton" id="endButton" @click="endButton">End</div>
+          <div class="footballButton" id="finalButton">Final</div>
+        </div>
+      </div>
+      <div id="fg_main">
+        <div class="footballPosDiv">
+          <button v-if="activeButton === 'offense'" id="offenseButton" class="currPage" @click="offenseClicked">Offense</button>
+          <button v-else id="offenseButton" class="footballNotCurr" @click="offenseClicked">Offense</button><br>
+          <button v-if="activeButton === 'defense'" id="defenseButton" class="currPage" @click="defenseClicked">Defense</button>
+          <button v-else id="defenseButton" class="footballNotCurr" @click="defenseClicked">Defense</button><br>
 
-            <button v-if="activeButton === 'special'" id="specialButton" class="currPage" @click="specialClicked">Special Teams</button>
-            <button v-else id="specialButton" class="footballNotCurr" @click="specialClicked">Special Teams</button><br>
+          <button v-if="activeButton === 'special'" id="specialButton" class="currPage" @click="specialClicked">Special Teams</button>
+          <button v-else id="specialButton" class="footballNotCurr" @click="specialClicked">Special Teams</button><br>
 
-            <button id="statsButton" class="footballNotCurr" @click="statsClicked">Team Stats</button><br>
-		    </div>
+          <button id="statsButton" class="footballNotCurr" @click="statsClicked">Team Stats</button><br>
+        </div>
 
-        <div class=" split right footballStatDiv">
+        <div class="footballStatDiv">
             <football-offense v-if="activeButton === 'offense'" @oppScore="incrementOpp" @incMyScore="incrementMyScore"/>
             <football-defense v-if="activeButton === 'defense'" @oppScore="incrementOpp" @incMyScore="incrementMyScore"/>
             <football-special v-if="activeButton === 'special'" @oppScore="incrementOpp" @incMyScore="incrementMyScore"/>
         </div>
-        </div>
-       
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -249,34 +255,12 @@ div button {
 }
 .footballButton {
   text-decoration: none;
-  margin: auto;
-  width: 10%;
   padding: 10px;
   margin-bottom: 10px;
   text-align: center;
   cursor: default;
   border-width: 2px;
   border-style: solid;
-}
-
-.split {
-    height: 100%;
-    width: 50%;
-    position: fixed;
-    top: 0;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    padding-bottom: 280px;
-    padding-top: 20px;
-    margin-top: 280px;
-}
-
-.left {
-    left: 0;
-}
-
-.right {
-    right: 0;
 }
 
 tr {
@@ -312,10 +296,50 @@ template { overflow-y: scroll; }
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-    /* flex-basis: 15%;
-    padding-left: 5%;
-    padding-right: 5%;
-    padding-top: 3%; */
+}
+
+  table {
+    margin-left: 44vw;
+  }
+
+  #fg_body {
+    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+  }
+  #fg_banner{
+    margin-top: 5vh;
+    flex-basis: 20%;
+    display: flex;
+  }
+  #fg_main{
+    margin-top: 10vh;
+    flex-basis: 80%;
+    display: flex;
+    
+  }
+  .footballPosDiv {
+    flex-basis: 50%;
+    padding: 50px;
+  }
+  .footballStatDiv {
+    flex-basis: 50%;
+  }
+  .fgTeamName {
+    flex-basis: 25%;
+    width: 100%;
+  }
+  #fg_clock {
+    flex-basis: 32%;
+    width: 100%;
+    margin-left: 10vw;
+  }
+  #fg_btn {
+    flex-basis: 15%;
+    width: 100%;
+    margin-left: 5vw;
   }
 </style>
 

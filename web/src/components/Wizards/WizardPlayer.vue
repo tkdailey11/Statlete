@@ -2,8 +2,9 @@
   <div id="WizardPlayer" style="padding-top=100px min-height: 100vh;">
     <nav-component />
     <h1 style="color: rgb(240,240,240); margin-bottom: 50px; margin-top: 5%;">Create a New Player Sportfolio</h1>
-    <tkd-wizardP>
-    </tkd-wizardP>
+    <!-- <tkd-wizardP>
+    </tkd-wizardP> -->
+    <ps-wizard style="margin-left: 5vw; margin-right: 5vw;"></ps-wizard>
   </div>
 </template>
 

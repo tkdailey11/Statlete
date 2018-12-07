@@ -3,7 +3,7 @@
             <br>
 			<div id="specialButtons">
                 <div style="text-align: center"><h3>Special Teams Stats</h3></div>
-				<table align="center" style="table-layout: fixed; width: 50%; height: 100%; align">                    
+				<table style="table-layout: fixed; width: 50%; height: 100%; margin-left: 25%; margin-top: 3vh;">                    
                     <tr><td class="footballButton" @click="punt">Punt</td>
                     <td class="footballButton" @click="puntReturn">Punt Return</td></tr>
                     <tr><td class="footballButton" @click="fieldGoal">FG</td>
@@ -14,7 +14,7 @@
 		</div>
 
         <div id="puntForm">
-            <table align="center">
+            <table class="gsp_table">
                 <tr>
                     <th>Punt</th>
                 </tr>
@@ -52,7 +52,7 @@
         </div>
 
         <div id="puntRetForm">
-            <table align="center">
+            <table class="gsp_table">
                 <tr>
                     <th>Punt Return</th>
                 </tr>
@@ -95,7 +95,7 @@
         </div>
 
         <div id="fg">
-            <table align="center">
+            <table class="gsp_table">
                 <tr>
                     <th>Field Goal</th>
                 </tr>
@@ -117,7 +117,7 @@
         </div>
 
         <div id="fgDef">
-            <table align="center">
+            <table class="gsp_table">
                 <tr>
                     <th>Field Goal Defense</th>
                 </tr>
@@ -148,7 +148,7 @@
         </div>
 
         <div id="kickOff">
-            <table align="center">
+            <table class="gsp_table">
                 <tr>
                     <th>KickOff</th>
                 </tr>
@@ -167,7 +167,7 @@
         </div>
 
         <div id="kickOffRet">
-            <table align="center">
+            <table class="gsp_table">
                 <tr>
                     <th>KickOff</th>
                 </tr>
@@ -712,6 +712,13 @@ div button {
   cursor: default;
   border-width: 2px;
   border-style: solid;
+}
+
+.gsp_table {
+  margin-left: 43%;
+  margin-bottom: 2vh;
+    border-collapse:separate;
+    border-spacing:0 5px;
 }
 </style>
         

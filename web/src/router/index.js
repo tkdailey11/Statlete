@@ -17,6 +17,7 @@ import GoalsPage from '@/components/Router/GoalsPage'
 import PlayerDetailView from '@/components/Router/PlayerDetailView'
 import PlayerHome from '@/components/Router/PlayerHome'
 import PlayerSettings from '@/components/Router/PlayerSettings'
+import PlayerStatsPage from '@/components/Router/PlayerStatsPage'
 import WizardPlayer from '@/components/Wizards/WizardPlayer'
 import WizardT from '@/components/Wizards/WizardT'
 import AnalysisPage from '@/components/Router/AnalysisPage'
@@ -101,6 +102,14 @@ let router = new Router({
       path: '/teamstats',
       name: 'TeamStatsPage',
       component: TeamStatsPage,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/playerstats',
+      name: 'PlayerStatsPage',
+      component: PlayerStatsPage,
       meta: {
         requiresAuth: true
       }

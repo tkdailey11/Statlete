@@ -20,6 +20,9 @@ Vue.component('new-player', NewPlayer);
 import NewGame from '@/components/MainPageTP/NewGame';
 Vue.component('new-game', NewGame);
 
+import NewAdmin from '@/components/NewAdmin';
+Vue.component('new-admin', NewAdmin);
+
 
 import NumericInput from '@/components/NumericInput';
 Vue.component('statlete-num-input', NumericInput)
@@ -83,6 +86,9 @@ import PlayerEntryBox from '@/components/Wizards/PlayerEntryBox';
 Vue.component('player-entry-box', PlayerEntryBox);
 import SelectSport from '@/components/Wizards/SelectSport';
 Vue.component('select-sport', SelectSport);
+
+import PSWizard from '@/components/Wizards/PSWizard';
+Vue.component('ps-wizard', PSWizard);
 
 
 

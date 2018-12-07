@@ -75,6 +75,7 @@
                     id="password"
                     type="password"
                     :rules="passwordRules"
+                    :counter="6"
                     v-model="password"
                     dark>
                   </v-text-field>
